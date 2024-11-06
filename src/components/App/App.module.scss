@@ -1,0 +1,38 @@
+@use '../../styles/variables' as vars;
+
+.app {
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  font-optical-sizing: auto;
+  font-style: normal;
+  position: relative;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+
+  &__bg {
+    top: -85px;
+    left: 120px;
+    position: absolute;
+    width: 264px;
+    height: 264px;
+    background: vars.$primary-color;
+    filter: blur(300px);
+    border-radius: 100%;
+    z-index: -1;
+  }
+
+  &__icon {
+    position: absolute;
+    width: 881px;
+    height: 886px;
+    right: -40px;
+    bottom: -40px;
+    z-index: -1;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
