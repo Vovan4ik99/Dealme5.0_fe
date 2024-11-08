@@ -1,9 +1,10 @@
-import {UserDataResponse} from "../../components/LoginPage/types.ts";
+import {UserDataResponse} from "../../components/LoginForm/loginFormTypes.ts";
 
 export enum AuthActionType {
 	LOGIN = 'LOGIN',
 	LOGOUT = 'LOGOUT',
 	SET_ERROR = 'SET_ERROR',
+	CREATE_USER = 'CREATE_USER'
 }
 
 export interface LoginAction {

@@ -1,0 +1,19 @@
+@use '../../styles/variables' as vars;
+
+.login-form {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+
+  &__link {
+    font-size: 14px;
+    line-height: 100%;
+    color: vars.$color-gray;
+    text-decoration: underline;
+
+    &-wrapper {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

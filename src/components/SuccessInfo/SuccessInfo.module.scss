@@ -1,0 +1,14 @@
+@use '../../styles/variables' as vars;
+
+.success-info {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  text-align: center;
+  background-color: vars.$color-success-pastel;
+  color: vars.$color-success;
+  font-size: 16px;
+  line-height: 120%;
+  border-radius: 12px;
+  font-weight: 400;
+}

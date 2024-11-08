@@ -1,5 +1,5 @@
 import {AuthAction, AuthActionType} from "./authActions.ts";
-import {IAuthInitialState} from "./AuthProvider.tsx";
+import {IAuthInitialState} from "./AuthContext.ts";
 
 export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuthInitialState => {
 	switch (action.type) {

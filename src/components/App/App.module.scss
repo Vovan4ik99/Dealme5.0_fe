@@ -1,14 +1,10 @@
 @use '../../styles/variables' as vars;
 
 .app {
-  font-family: "Outfit", sans-serif;
-  font-weight: 500;
-  font-optical-sizing: auto;
-  font-style: normal;
   position: relative;
   min-width: 100vw;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 
   &__bg {
     top: -85px;
@@ -23,12 +19,13 @@
   }
 
   &__icon {
-    position: absolute;
+    position: fixed;
     width: 881px;
     height: 886px;
     right: -40px;
     bottom: -40px;
     z-index: -1;
+    pointer-events: none;
 
     img {
       width: 100%;

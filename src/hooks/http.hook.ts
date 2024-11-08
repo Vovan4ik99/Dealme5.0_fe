@@ -17,19 +17,19 @@ interface RequestConfig {
 	onError: (status: number) => ErrorMessage;
 }
 
-interface HTTPResponse<T> {
+interface HTTPResponse {
 	loadingStatus: LoadingStatusOptions;
 	errorMessage: string | null;
-	sendRequest: (config: RequestConfig) => Promise<T | undefined>;
+	sendRequest: (config: RequestConfig) => Promise<any>;
 }
 
-export const useHttp = <T>(): HTTPResponse<T> => {
+export const useHttp = (): HTTPResponse => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusOptions>('idle');
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null);
 
 	const sendRequest = useCallback(async (
 		{url, method = 'GET', body = null, headers = {'Content-Type': 'application/json'}, onError} : RequestConfig,
-	): Promise<T | undefined> => {
+	): Promise<any> => {
 		setLoadingStatus('loading');
 		try {
 			const response = await fetch(url, {method, body, headers});
@@ -44,7 +44,7 @@ export const useHttp = <T>(): HTTPResponse<T> => {
 				}
 				return;
 			}
-			const data: T = await response.json();
+			const data = await response.json();
 			setLoadingStatus('idle');
 			return data;
 		} catch (e) {

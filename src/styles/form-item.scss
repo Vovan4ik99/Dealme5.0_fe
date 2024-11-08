@@ -1,0 +1,47 @@
+@use 'variables' as vars;
+
+.form-item {
+  position: relative;
+
+  &__label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 14px;
+    line-height: 120%;
+    color: vars.$color-black;
+  }
+
+  &__input {
+    border-radius: 12px;
+    border: 1px solid vars.$color-gray-border;
+    padding: 40px 16px 16px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 120%;
+    color: vars.$color-black;
+
+    &::placeholder {
+      font-size: 18px;
+      color: vars.$color-black;
+      line-height: 120%;
+      opacity: 0.4;
+    }
+
+    &:focus + .form-item__label,
+    &:not(:placeholder-shown) + .form-item__label {
+      color: vars.$color-gray;
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: vars.$color-black;
+    }
+
+    &--error {
+      border: 1px solid vars.$color-danger;
+    }
+  }
+}
+
+
+

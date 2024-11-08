@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {LoginData, UserDataResponse} from "../../components/LoginPage/types.ts";
+import {LoginData, UserDataResponse} from "../../components/LoginForm/loginFormTypes.ts";
 import {LoadingStatusOptions} from "../../hooks/http.hook.ts";
 
 export const InitialAuthState: IAuthInitialState = {
