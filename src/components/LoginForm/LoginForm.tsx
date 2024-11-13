@@ -1,22 +1,27 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {LoginData} from "./loginFormTypes.ts";
-import React, {useCallback, useContext} from "react";
-import {AuthContext} from "../../context/AuthContext/AuthContext.ts";
+import React, {useCallback} from "react";
 import styles from './LoginForm.module.scss';
 import InputError from "../InputError/InputError.tsx";
+import {LoginRequest, LoginResponse} from "../../shared/loginTypes.ts";
+import {useAuthService} from "../../services/authService.ts";
 
 const LoginForm = () => {
 
-	const {login, errorMessage, loadingStatus} = useContext(AuthContext);
-	const {register, handleSubmit, formState: {errors}} = useForm<LoginData>({
+	const {login, errorMessage, loadingStatus} = useAuthService();
+	const {register, handleSubmit, formState: {errors}} = useForm<LoginRequest>({
 		shouldFocusError: false,
 		mode: 'onChange'
 	});
+	const navigate = useNavigate();
 
-	const onSubmit = useCallback((data: LoginData) => {
-		login(data);
-	}, [login]);
+	const onSubmit = useCallback(async (request: LoginRequest) => {
+		await login(request)
+			.then((response: LoginResponse) => {
+				localStorage.setItem('token', response.token);
+				navigate('/');
+			}).catch(e => console.log(e));
+	}, [login, navigate]);
 
 	return (
 		<form className={styles['login-form']} onSubmit={handleSubmit(onSubmit)} noValidate={true}>

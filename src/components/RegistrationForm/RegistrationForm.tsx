@@ -2,7 +2,7 @@ import InputError from "../InputError/InputError.tsx";
 import React, {useCallback, useState} from "react";
 import {useForm} from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
-import {CreateUserData, RegistrationFormData, UserRole} from "./registrationFormTypes.ts";
+import {RegistrationFormData} from "./registrationFormTypes.ts";
 import freelancer_active from '../../assets/icons/freelancer_registration_active.svg';
 import freelancer_icon from '../../assets/icons/freelancer_registration.svg';
 import investor_active from '../../assets/icons/investor_registration_active.svg';
@@ -11,6 +11,7 @@ import {Link, useNavigate} from "react-router-dom";
 import checkbox_checked from '../../assets/icons/checkbox_checked.svg';
 import {useAuthService} from "../../services/authService.ts";
 import SuccessInfo from "../SuccessInfo/SuccessInfo.tsx";
+import {CreateUserRequest, UserRole} from "../../shared/userTypes.ts";
 
 const RegistrationForm = () => {
 	
@@ -35,7 +36,7 @@ const RegistrationForm = () => {
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
-		const createUserData: CreateUserData = {
+		const createUserData: CreateUserRequest = {
 			firstName: formData.firstName,
 			lastName: formData.lastName,
 			company: formData.company,

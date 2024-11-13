@@ -1,14 +1,6 @@
-export interface CreateUserData {
-	firstName: string;
-	lastName: string;
-	company: string;
-	email: string;
-	password: string;
-}
+import {CreateUserRequest} from "../../shared/userTypes.ts";
 
-export interface RegistrationFormData extends CreateUserData {
+export interface RegistrationFormData extends CreateUserRequest {
 	passwordConfirmation: string;
 	terms: boolean;
 }
-
-export type UserRole = "INVESTOR" | "FREELANCER";

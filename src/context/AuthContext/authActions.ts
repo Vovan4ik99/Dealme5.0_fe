@@ -1,15 +1,15 @@
-import {UserDataResponse} from "../../components/LoginForm/loginFormTypes.ts";
+import {LoggedUserData} from "../../shared/userTypes.ts";
 
 export enum AuthActionType {
 	LOGIN = 'LOGIN',
 	LOGOUT = 'LOGOUT',
 	SET_ERROR = 'SET_ERROR',
-	CREATE_USER = 'CREATE_USER'
+	SET_LOADING = 'SET_LOADING'
 }
 
 export interface LoginAction {
 	type: AuthActionType.LOGIN;
-	payload: UserDataResponse;
+	payload: LoggedUserData;
 }
 
 export interface LogoutAction {
@@ -21,4 +21,8 @@ export interface SetErrorAction {
 	payload: string;
 }
 
-export type AuthAction = LoginAction | LogoutAction | SetErrorAction;
+export interface LoadingStatusAction {
+	type: AuthActionType.SET_LOADING;
+}
+
+export type AuthAction = LoginAction | LogoutAction | SetErrorAction | LoadingStatusAction;

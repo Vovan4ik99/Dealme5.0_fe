@@ -23,6 +23,11 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				errorMessage: action.payload,
 				loadingStatus: 'error',
 			};
+		case AuthActionType.SET_LOADING:
+			return {
+				...state,
+				loadingStatus: 'loading'
+			}
 		default:
 			return state;
 	}
