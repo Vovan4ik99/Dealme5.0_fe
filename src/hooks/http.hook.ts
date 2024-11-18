@@ -1,44 +1,50 @@
 import {useCallback, useState} from "react";
-import {ErrorMessage} from "../constans/ErrorMessage.ts";
+import {ErrorMessages} from "../shared/errorMessages.ts";
+import {API_ROUTES} from "../constans/apiRoutes.ts";
+import {getErrorMessage} from "../utils/errorUtils.ts";
 
 type HTTPRequestMethods = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 export type LoadingStatusOptions = 'idle' | 'loading' | 'error';
 
-interface HTTPHeaders {
+interface IHTTPHeaders {
 	[key: string]: string;
 }
 
-interface RequestConfig {
+interface IRequestConfig {
 	url: string;
 	method?: HTTPRequestMethods;
 	body?: string | null;
-	headers?: HTTPHeaders;
-	onError: (status: number) => ErrorMessage;
+	headers?: IHTTPHeaders;
 }
 
-interface HTTPResponse {
+interface IHTTPResponse {
 	loadingStatus: LoadingStatusOptions;
 	errorMessage: string | null;
-	sendRequest: (config: RequestConfig) => Promise<any>;
+	sendRequest: (config: IRequestConfig) => Promise<any>;
+}
+
+interface IErrorResponse {
+	message: string;
+	status: number;
 }
 
 const baseUrl: string = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
-export const useHttp = (): HTTPResponse => {
+export const useHttp = (): IHTTPResponse => {
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusOptions>('idle');
-	const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null);
+	const [errorMessage, setErrorMessage] = useState<ErrorMessages | null>(null);
 
 	const sendRequest = useCallback(async (
-		{url, method = 'GET', body = null, headers = {}, onError}: RequestConfig,
+		{url, method = 'GET', body = null, headers = {}}: IRequestConfig,
 	): Promise<any> => {
 		setLoadingStatus('loading');
 
 		const locationPath = window.location.pathname;
-		const isAuthPage = locationPath === '/login' || locationPath === '/register';
+		const isAuthPage = locationPath === API_ROUTES.AUTH.LOGIN || locationPath === API_ROUTES.AUTH.REGISTER;
 
 		const token = localStorage.getItem('token');
-		const authHeaders: HTTPHeaders = {
+		const authHeaders: IHTTPHeaders = {
 			'Content-Type': 'application/json',
 			...(token && !isAuthPage ? { 'Authorization': `Bearer ${token}` } : {}),
 			...headers,
@@ -47,22 +53,17 @@ export const useHttp = (): HTTPResponse => {
 		try {
 			const response = await fetch(`${baseUrl}${url}`, {method, body, headers: authHeaders});
 			if (!response.ok) {
-				if (response.status === 500) {
-					setErrorMessage(ErrorMessage.SERVER_ERROR);
-				} else if (response.status === 403) {
-					setErrorMessage(ErrorMessage.TOKEN_EXPIRED_OR_INVALID)
-				} else {
-					const errorMessage = onError(response.status);
-					setErrorMessage(errorMessage);
-				}
+				const errorData: IErrorResponse = await response.json();
+				const errorMessage = getErrorMessage(response.status, errorData.message);
+				setErrorMessage(errorMessage);
 				setLoadingStatus('error');
-				return;
+				return Promise.reject(errorMessage);
 			}
 			const data = await response.json();
 			setLoadingStatus('idle');
 			return data;
 		} catch (e) {
-			setErrorMessage(ErrorMessage.SERVER_ERROR);
+			setErrorMessage(ErrorMessages.SERVER_ERROR);
 			setLoadingStatus('error');
 			console.log(e);
 		}

@@ -15,7 +15,42 @@
   outline: none;
   border: none;
 
-  &:hover {
+  &:hover, &:focus {
     background-color: vars.$color-black-hover;
+  }
+
+  &--mw134 {
+    max-width: 134px;
+  }
+
+  &--back {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-top: 0;
+    border: 1px solid vars.$color-gray-border;
+
+    &:hover, &:focus {
+      background-color: vars.$color-gray-hover;
+    }
+  }
+
+  &--more {
+    border: 1px solid vars.$color-gray-border;
+    background-color: #ffffff;
+    margin-top: 8px;
+    padding: 14px 16px;
+    color: vars.$color-gray;
+    font-size: 14px;
+    line-height: 100%;
+
+    &:hover, &:focus {
+      background-color: vars.$color-gray-hover;
+    }
   }
 }

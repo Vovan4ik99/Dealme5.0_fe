@@ -1,0 +1,21 @@
+.animated {
+  &-appear {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 500ms ease-in-out;
+    }
+  }
+
+  &--700 {
+    &-appear {
+      opacity: 0;
+
+      &-active {
+        opacity: 1;
+        transition: opacity 700ms ease-in-out;
+      }
+    }
+  }
+}

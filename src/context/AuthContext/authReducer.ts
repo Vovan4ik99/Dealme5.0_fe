@@ -3,7 +3,7 @@ import {IAuthInitialState} from "./AuthContext.ts";
 
 export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuthInitialState => {
 	switch (action.type) {
-		case AuthActionType.LOGIN:
+		case AuthActionType.GET_LOGGED_USER:
 			return {
 				...state,
 				user: action.payload,
@@ -23,11 +23,6 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				errorMessage: action.payload,
 				loadingStatus: 'error',
 			};
-		case AuthActionType.SET_LOADING:
-			return {
-				...state,
-				loadingStatus: 'loading'
-			}
 		default:
 			return state;
 	}

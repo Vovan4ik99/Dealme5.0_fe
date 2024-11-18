@@ -1,0 +1,57 @@
+@use '../../../styles/variables' as vars;
+
+.navbar {
+  max-width: 1320px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 100%;
+  color: vars.$color-gray;
+
+  &__logo {
+    display: block;
+    width: 117px;
+    height: 24px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__link {
+    display: block;
+    padding: 14px 16px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: inherit;
+    border: 1px solid vars.$color-gray-border;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    color: vars.$color-gray;
+
+    &:hover, &:focus {
+      outline: none;
+      background-color: vars.$color-gray-hover;
+    }
+  }
+
+  &__bg {
+    top: -80px;
+    left: -200px;
+    position: absolute;
+    width: 264px;
+    height: 264px;
+    background: vars.$primary-color;
+    filter: blur(300px);
+    border-radius: 1000px;
+    z-index: -1;
+  }
+
+}

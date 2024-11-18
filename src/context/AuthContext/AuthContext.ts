@@ -1,6 +1,7 @@
 import {createContext} from "react";
 import {LoadingStatusOptions} from "../../hooks/http.hook.ts";
-import {LoggedUserData} from "../../shared/userTypes.ts";
+import {ILoggedUserData} from "../../shared/userTypes.ts";
+import {ILoginRequest} from "../../shared/loginTypes.ts";
 
 export const InitialAuthState: IAuthInitialState = {
 	user: null,
@@ -9,20 +10,20 @@ export const InitialAuthState: IAuthInitialState = {
 }
 
 export interface IAuthInitialState {
-	user: LoggedUserData | null;
+	user: ILoggedUserData | null;
 	loadingStatus: LoadingStatusOptions;
 	errorMessage: string | null;
 }
 
-export interface AuthContextValue extends IAuthInitialState {
+export interface IAuthContextValue extends IAuthInitialState {
 	logout: () => void;
-	getLoggedUserData: (token: string) => Promise<void>;
+	login: (data: ILoginRequest) => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextValue>({
+export const AuthContext = createContext<IAuthContextValue>({
 	user: InitialAuthState.user,
 	loadingStatus: InitialAuthState.loadingStatus,
 	errorMessage: InitialAuthState.errorMessage,
 	logout: () => {},
-	getLoggedUserData: () => Promise.resolve()
+	login: () => Promise.resolve(),
 });

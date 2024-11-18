@@ -1,28 +1,24 @@
-import {LoggedUserData} from "../../shared/userTypes.ts";
+import {ILoggedUserData} from "../../shared/userTypes.ts";
 
 export enum AuthActionType {
-	LOGIN = 'LOGIN',
+	GET_LOGGED_USER = 'GET_LOGGED_USER',
 	LOGOUT = 'LOGOUT',
 	SET_ERROR = 'SET_ERROR',
-	SET_LOADING = 'SET_LOADING'
 }
 
-export interface LoginAction {
-	type: AuthActionType.LOGIN;
-	payload: LoggedUserData;
+export interface IGetLoggedUser {
+	type: AuthActionType.GET_LOGGED_USER;
+	payload: ILoggedUserData;
 }
 
-export interface LogoutAction {
+export interface ILogoutAction {
 	type: AuthActionType.LOGOUT;
 }
 
-export interface SetErrorAction {
+export interface ISetErrorAction {
 	type: AuthActionType.SET_ERROR;
 	payload: string;
 }
 
-export interface LoadingStatusAction {
-	type: AuthActionType.SET_LOADING;
-}
 
-export type AuthAction = LoginAction | LogoutAction | SetErrorAction | LoadingStatusAction;
+export type AuthAction = IGetLoggedUser | ILogoutAction | ISetErrorAction;

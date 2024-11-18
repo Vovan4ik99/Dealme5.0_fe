@@ -1,0 +1,76 @@
+@use '../../../../../styles/variables' as vars;
+
+.category {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: vars.$color-gray;
+
+  &--active {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 8px;
+    flex-direction: column;
+    color: vars.$color-black;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    border: 2px solid vars.$color-gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+
+    &--active {
+      border: 2px solid vars.$color-black;
+      opacity: 1;
+    }
+
+    &--finished {
+      border: none;
+      opacity: 1;
+      background-color: vars.$color-success-pastel;
+      img {
+        width: 8.344px;
+        height: 6px;
+      }
+    }
+
+    span {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      background-color: vars.$color-black;
+    }
+  }
+
+  &__text {
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: initial;
+    text-transform: initial;
+    font-weight: 400;
+    color: vars.$color-gray;
+    opacity: 0.5;
+
+    &--finished {
+      opacity: 1;
+    }
+
+    &--active {
+      color: vars.$color-black;
+      opacity: 1;
+    }
+  }
+}
