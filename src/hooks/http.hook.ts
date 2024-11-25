@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react";
-import {ErrorMessages} from "../shared/errorMessages.ts";
-import {API_ROUTES} from "../constans/apiRoutes.ts";
+import {ErrorMessages} from "@shared//errorMessages.ts";
+import {API_ROUTES} from "@constants/apiRoutes.ts";
 import {getErrorMessage} from "../utils/errorUtils.ts";
 
 type HTTPRequestMethods = 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -63,9 +63,10 @@ export const useHttp = (): IHTTPResponse => {
 			setLoadingStatus('idle');
 			return data;
 		} catch (e) {
-			setErrorMessage(ErrorMessages.SERVER_ERROR);
+			console.error(e);
 			setLoadingStatus('error');
-			console.log(e);
+			setErrorMessage(ErrorMessages.SERVER_ERROR);
+			return Promise.reject(ErrorMessages.SERVER_ERROR);
 		}
 	}, []);
 

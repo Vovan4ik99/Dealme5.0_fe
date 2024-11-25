@@ -1,4 +1,4 @@
-import {IActivity, ISalesTool, ISector, ISpecialization, ISubIndustry} from "./onboardingTypes.ts";
+import {IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry} from "./onboardingTypes.ts";
 
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 
@@ -18,6 +18,7 @@ export interface ICreateUserResponse {
 }
 
 export interface ILoggedUserResponse {
+	id: number;
 	firstName: string;
 	lastName: string;
 	experienceLevel: string;
@@ -28,7 +29,7 @@ export interface ILoggedUserResponse {
 	subIndustries: ISubIndustry[],
 	typeOfSales: string;
 	sectors: ISector[];
-	selectedActivities: IActivity[],
+	selectedActivities: IFreelancerActivity[],
 	salesTools: ISalesTool[];
 }
 

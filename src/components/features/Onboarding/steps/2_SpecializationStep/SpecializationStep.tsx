@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styles from '../../Onboarding.module.scss';
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import OnboardingSearchBar from "../../items/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import {useOnboardingService} from "../../../../../services/onboardingService.ts";
-import InputError from "../../../../ui/InputError/InputError.tsx";
-import {ISpecialization} from "../../../../../shared/onboardingTypes.ts";
+import {useOnboardingService} from "@services/onboardingService.ts";
+import InputError from "@ui/InputError/InputError.tsx";
+import {ISpecialization} from "@shared/onboardingTypes.ts";
 import SpecializationItem from "../../items/SpecializationItem/SpecializationItem.tsx";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import {ISpecializationStepProps} from "./specializationStepTypes.ts";
+import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 
-const SpecializationStep: React.FC<{onNext: () => void}> = ({onNext}) => {
+const SpecializationStep: React.FC<ISpecializationStepProps> = ({onNext, userSpecialization}) => {
 
 	const {loadingStatus, errorMessage, getSpecializations, patchSpecialization} = useOnboardingService();
-	const [selectedSpecialization, setSelectedSpecialization] = useState<ISpecialization | null>(null);
+	const [selectedSpecialization, setSelectedSpecialization] = useState<ISpecialization | null>(userSpecialization);
 	const [specializations, setSpecializations] = useState<ISpecialization[]>([]);
 	const [filteredSpecializations, setFilteredSpecializations] = useState<ISpecialization[]>([])
 	const [visibleItemsCount, setVisibleItemsCount] = useState<number>(10);
+	const {user} = useContext(AuthContext);
 
 	const selectItem = (item: ISpecialization) => {
 		setSelectedSpecialization(item);
@@ -38,8 +42,8 @@ const SpecializationStep: React.FC<{onNext: () => void}> = ({onNext}) => {
 	}, [specializations]);
 
 	const onSubmit = async () => {
-		if (selectedSpecialization) {
-			await patchSpecialization(selectedSpecialization.id, selectedSpecialization)
+		if (selectedSpecialization && user) {
+			await patchSpecialization(user.id, selectedSpecialization.id)
 				.then(() => {
 					onNext();
 				}).catch(e => console.log(e));
@@ -56,10 +60,14 @@ const SpecializationStep: React.FC<{onNext: () => void}> = ({onNext}) => {
 		return itemsToRender.slice(0, visibleItemsCount).map(
 			item => <SpecializationItem
 				key={item.id}
-				selectedItem={selectedSpecialization}
+				isSelected={selectedSpecialization !== null && selectedSpecialization.id === item.id}
 				item={item}
 				onSelect={() => selectItem(item)}/>
 		);
+	}
+
+	if (loadingStatus === 'loading') {
+		return <LoadingSpinner/>;
 	}
 
 	return (
@@ -69,16 +77,17 @@ const SpecializationStep: React.FC<{onNext: () => void}> = ({onNext}) => {
 				<OnboardingSearchBar onSearch={onSearch}/>
 				<p className={styles['onboarding-step__add-text']}>Najpopularniejsze</p>
 				{loadingStatus === 'idle' && renderSpecializationItems()}
-				{visibleItemsCount < specializations.length &&
+				{visibleItemsCount < filteredSpecializations.length &&
 					<button
 						className={'btn btn--more'}
-						onClick={() => changeVisibilityCount(specializations.length)}>
-						Rozwiń wszystkie (+{specializations.length - visibleItemsCount})
+						onClick={() => changeVisibilityCount(filteredSpecializations.length)}>
+						Rozwiń wszystkie (+{filteredSpecializations.length - visibleItemsCount})
 					</button>
 				}
 			</div>
 			<button disabled={selectedSpecialization === null}
-			        onClick={() => onSubmit()} className={'btn'}>Przejdź dalej
+			        onClick={() => onSubmit()}
+			        className={'btn'}>Przejdż dalej'
 			</button>
 			{errorMessage && <InputError text={errorMessage}/>}
 		</AnimatedStep>

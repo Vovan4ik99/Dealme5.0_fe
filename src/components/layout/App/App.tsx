@@ -1,9 +1,10 @@
 import styles from './App.module.scss'
-import bg_icon from '../../../assets/icons/bg_icon.svg'
+import bg_icon from '@icons/bg_icon.svg'
 import AppRouter from "../../features/Routing/AppRouter.tsx";
-import {AuthProvider} from "../../../context/AuthContext/AuthProvider.tsx";
+import {AuthProvider} from "@context/AuthContext/AuthProvider.tsx";
 
 function App() {
+
 	return (
 		<AuthProvider>
 			<div className={styles.app}>

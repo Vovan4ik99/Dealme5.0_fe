@@ -1,7 +1,7 @@
 import React from "react";
 import {IOnboardingModalCategoryProps} from "./onboardingModalCategoryTypes.ts";
 import styles from './OnboardingModalCategory.module.scss';
-import success_icon from '../../../../../assets/icons/success_icon.svg';
+import success_icon from '@icons/success_icon.svg';
 
 const OnboardingModalCategory: React.FC<IOnboardingModalCategoryProps> = ({kind, text, children}) => {
 

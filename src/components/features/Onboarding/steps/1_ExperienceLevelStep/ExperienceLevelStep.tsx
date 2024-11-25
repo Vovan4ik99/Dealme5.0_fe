@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import styles from '../../Onboarding.module.scss';
 import ExperienceLevelItem from "../../items/ExperienceLeveIItem/ExperienceLevelItem.tsx";
-import InputError from "../../../../ui/InputError/InputError.tsx";
-import {EXPERIENCE_LEVELS, ExperienceLevelKey} from "../../../../../constans/experienceLevel.ts";
-import {useOnboardingService} from "../../../../../services/onboardingService.ts";
+import InputError from "@ui/InputError/InputError.tsx";
+import {EXPERIENCE_LEVELS, ExperienceLevelKey} from "@constants/experienceLevel.ts";
+import {useOnboardingService} from "@services/onboardingService.ts";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
+import {IExperienceLevelProps} from "./experienceLevelStepTypes.ts";
+import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 
-const ExperienceLevelStep: React.FC<{onNext: () => void}> = ({onNext}) => {
-	const {errorMessage, patchExperienceLevel} = useOnboardingService();
-	const [selectedLevel, setSelectedLevel] = useState<ExperienceLevelKey | null>(null);
+const ExperienceLevelStep: React.FC<IExperienceLevelProps> = ({onNext, selectedExperience}) => {
+
+	const [selectedLevel, setSelectedLevel] = useState<ExperienceLevelKey | null>(selectedExperience as ExperienceLevelKey);
+
+	const {errorMessage, patchExperienceLevel, loadingStatus} = useOnboardingService();
 
 	const onItemChange = (selectedLevel: ExperienceLevelKey) => {
 		setSelectedLevel(selectedLevel);
@@ -37,6 +41,10 @@ const ExperienceLevelStep: React.FC<{onNext: () => void}> = ({onNext}) => {
 		});
 	}
 
+	if (loadingStatus === 'loading') {
+		return <LoadingSpinner/>;
+	}
+
 	return (
 		<AnimatedStep>
 			<h1 className={'title title--fs40'}>
@@ -46,7 +54,7 @@ const ExperienceLevelStep: React.FC<{onNext: () => void}> = ({onNext}) => {
 				{renderExperienceLevels()}
 			</div>
 			<button disabled={selectedLevel === null}
-			        onClick={() => onSubmit()} className={'btn'}>Przejdź dalej
+			        onClick={() => onSubmit()} className={'btn'}>Przejdż dalej
 			</button>
 			{errorMessage && <InputError text={errorMessage}/>}
 		</AnimatedStep>

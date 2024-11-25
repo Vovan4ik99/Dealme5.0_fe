@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom";
-import logo from "../../../assets/icons/logo.svg";
+import logo from "@icons/logo.svg";
 import styles from './Navbar.module.scss'
 import {useCallback, useContext} from "react";
-import {AuthContext} from "../../../context/AuthContext/AuthContext.ts";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const Navbar = () => {
 	const {user, logout} = useContext(AuthContext);

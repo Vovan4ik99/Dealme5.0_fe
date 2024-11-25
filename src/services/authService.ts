@@ -1,8 +1,8 @@
 import {useHttp} from "../hooks/http.hook.ts";
 import {useCallback} from "react";
-import {ICreateUserRequest, ICreateUserResponse, ILoggedUserResponse, UserRole} from "../shared/userTypes.ts";
-import {ILoginRequest, ILoginResponse} from "../shared/loginTypes.ts";
-import {API_ROUTES} from "../constans/apiRoutes.ts";
+import {ICreateUserRequest, ICreateUserResponse, ILoggedUserResponse, UserRole} from "@shared/userTypes.ts";
+import {ILoginRequest, ILoginResponse} from "@shared/loginTypes.ts";
+import {API_ROUTES} from "@constants/apiRoutes.ts";
 
 export const useAuthService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

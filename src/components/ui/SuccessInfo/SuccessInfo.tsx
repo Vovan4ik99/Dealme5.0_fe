@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
 import "./success-info.scss";
-import success_icon from '../../../assets/icons/success_icon.svg';
+import success_icon from '@icons/success_icon.svg';
 import {CSSTransition} from "react-transition-group";
 
 interface SuccessInfoProps {

@@ -1,5 +1,5 @@
 import {useContext, useEffect} from "react";
-import {AuthContext} from "../../../context/AuthContext/AuthContext.ts";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import {Outlet, useNavigate} from "react-router-dom";
 
 const PublicRoute = () => {

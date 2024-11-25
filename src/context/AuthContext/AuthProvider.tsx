@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useMemo, useReducer} from "react";
-import {useAuthService} from "../../services/authService.ts";
+import {useAuthService} from "@services/authService.ts";
 import {authReducer} from "./authReducer.ts";
 import {AuthActionType} from "./authActions.ts";
 import {AuthContext, IAuthContextValue, InitialAuthState} from "./AuthContext.ts";
-import {ILoggedUserResponse, UserRole} from "../../shared/userTypes.ts";
+import {ILoggedUserResponse, UserRole} from "@shared/userTypes.ts";
 import {jwtDecode} from "jwt-decode";
-import {ILoginRequest, ILoginResponse} from "../../shared/loginTypes.ts";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
-	const {loadingStatus, errorMessage, fetchLoggedUserData, login: authLogin} = useAuthService();
+	const {loadingStatus, errorMessage, fetchLoggedUserData} = useAuthService();
 	const [state, dispatch] = useReducer(authReducer, InitialAuthState);
 
 	const logout = useCallback(() => {
@@ -22,30 +21,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 			.then((response: ILoggedUserResponse) => {
 				dispatch({type: AuthActionType.GET_LOGGED_USER, payload: {role, ...response}})
 			}).catch(e => {
-				dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? 'Failed to fetch user data'});
+				dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e});
 				localStorage.removeItem('token');
 				console.log(e);
 			})
 	}, [fetchLoggedUserData, errorMessage]);
 
-	const login = useCallback(async (request: ILoginRequest) => {
-		return await authLogin(request)
-			.then((response: ILoginResponse) => {
-				localStorage.setItem('token', response.token);
-				getLoggedUserData(response.token);
-			}).catch((e) => {
-				console.log(e);
-				dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? 'Failed to login'})
-			});
-	}, [authLogin, errorMessage, getLoggedUserData])
-
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			getLoggedUserData(token)
-				.catch(e => console.log(e));
+				.catch(e => {
+					console.log(e);
+				});
 		}
-	}, [getLoggedUserData])
+	}, [errorMessage, getLoggedUserData])
 
 	const getUserRole = (currentToken: string): UserRole => {
 		const decodedToken = jwtDecode<{ roles: UserRole[] }>(currentToken);
@@ -57,9 +47,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 			...state,
 			loadingStatus,
 			logout,
-			login,
+			getLoggedUserData
 		}
-	), [loadingStatus, login, logout, state]);
+	), [getLoggedUserData, loadingStatus, logout, state]);
 
 	return <AuthContext.Provider value={value}>
 		{children}

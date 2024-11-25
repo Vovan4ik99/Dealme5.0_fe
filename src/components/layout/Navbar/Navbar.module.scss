@@ -1,4 +1,4 @@
-@use '../../../styles/variables' as vars;
+@use '@styles/variables' as vars;
 
 .navbar {
   max-width: 1320px;
@@ -11,6 +11,7 @@
   font-size: 14px;
   line-height: 100%;
   color: vars.$color-gray;
+  align-items: center;
 
   &__logo {
     display: block;
@@ -36,7 +37,7 @@
     transition: background-color 0.3s ease-in-out;
     color: vars.$color-gray;
 
-    &:hover, &:focus {
+    &:hover {
       outline: none;
       background-color: vars.$color-gray-hover;
     }

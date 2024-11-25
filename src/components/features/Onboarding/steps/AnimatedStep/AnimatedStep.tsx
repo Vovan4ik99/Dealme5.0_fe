@@ -6,7 +6,7 @@ const AnimatedStep: React.FC<{children: React.ReactNode}> = ({children}) => {
 
 	return (
 		<CSSTransition in appear timeout={{enter: 500, exit: 500}} unmountOnExit nodeRef={ref} classNames='animated'>
-			<div className={'animated'} ref={ref}>
+			<div style={{width: '100%'}} className={'animated'} ref={ref}>
 				{children}
 			</div>
 		</CSSTransition>

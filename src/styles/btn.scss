@@ -15,12 +15,16 @@
   outline: none;
   border: none;
 
-  &:hover, &:focus {
+  &:hover {
     background-color: vars.$color-black-hover;
   }
 
   &--mw134 {
     max-width: 134px;
+  }
+
+  &--mt0 {
+    margin-top: 0;
   }
 
   &--back {
@@ -35,7 +39,7 @@
     margin-top: 0;
     border: 1px solid vars.$color-gray-border;
 
-    &:hover, &:focus {
+    &:hover {
       background-color: vars.$color-gray-hover;
     }
   }
@@ -49,7 +53,7 @@
     font-size: 14px;
     line-height: 100%;
 
-    &:hover, &:focus {
+    &:hover {
       background-color: vars.$color-gray-hover;
     }
   }

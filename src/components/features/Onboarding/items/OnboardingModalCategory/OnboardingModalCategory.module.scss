@@ -1,4 +1,4 @@
-@use '../../../../../styles/variables' as vars;
+@use '@styles/variables' as vars;
 
 .category {
   font-size: 12px;
@@ -40,8 +40,9 @@
       border: none;
       opacity: 1;
       background-color: vars.$color-success-pastel;
+
       img {
-        width: 8.344px;
+        width: 9px;
         height: 6px;
       }
     }

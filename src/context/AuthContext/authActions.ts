@@ -1,4 +1,4 @@
-import {ILoggedUserData} from "../../shared/userTypes.ts";
+import {ILoggedUserData} from "@shared/userTypes.ts";
 
 export enum AuthActionType {
 	GET_LOGGED_USER = 'GET_LOGGED_USER',

@@ -1,4 +1,4 @@
-import search_icon from '../../../../../assets/icons/search_icon.svg';
+import search_icon from '@icons/search_icon.svg';
 import styles from './OnboardingSearchNavbar.module.scss';
 import React from "react";
 

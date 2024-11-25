@@ -1,17 +1,17 @@
-import InputError from "../../../ui/InputError/InputError.tsx";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import InputError from "@ui/InputError/InputError.tsx";
+import React, {useCallback, useRef, useState} from "react";
 import {useForm, useWatch} from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
 import {RegistrationFormData} from "./registrationFormTypes.ts";
-import freelancer_active from '../../../../assets/icons/freelancer_registration_active.svg';
-import freelancer_icon from '../../../../assets/icons/freelancer_registration.svg';
-import investor_active from '../../../../assets/icons/investor_registration_active.svg';
-import investor_icon from '../../../../assets/icons/investor_registration.svg';
+import freelancer_active from '@icons/freelancer_registration_active.svg';
+import freelancer_icon from '@icons/freelancer_registration.svg';
+import investor_active from '@icons/investor_registration_active.svg';
+import investor_icon from '@icons/investor_registration.svg';
 import {Link, useNavigate} from "react-router-dom";
-import checkbox_checked from '../../../../assets/icons/checkbox_checked.svg';
-import {useAuthService} from "../../../../services/authService.ts";
-import SuccessInfo from "../../../ui/SuccessInfo/SuccessInfo.tsx";
-import {ICreateUserRequest, UserRole} from "../../../../shared/userTypes.ts";
+import checkbox_checked from '@icons/checkbox_checked.svg';
+import {useAuthService} from "@services/authService.ts";
+import SuccessInfo from "@ui/SuccessInfo/SuccessInfo.tsx";
+import {ICreateUserRequest, UserRole} from "@shared/userTypes.ts";
 
 const RegistrationForm = () => {
 	
@@ -25,6 +25,7 @@ const RegistrationForm = () => {
 	const handleToggle = (e: React.MouseEvent) => {
 		e.preventDefault();
 		setIsFreelancer((prev) => !prev);
+		reset();
 	};
 
 	const {createUser, loadingStatus, errorMessage} = useAuthService();
@@ -35,12 +36,6 @@ const RegistrationForm = () => {
 	});
 
 	const password = useWatch({ name: 'password', control, defaultValue: '' });
-
-	useEffect(() => {
-		return () => {
-			reset();
-		};
-	}, [reset]);
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
@@ -54,6 +49,7 @@ const RegistrationForm = () => {
 		createUser(createUserData, role)
 			.then(() => {
 				setIsUserCreated(true);
+				reset();
 				timeoutRef.current = setTimeout(() => {
 					setIsUserCreated(false);
 					navigate('/login');
@@ -66,7 +62,7 @@ const RegistrationForm = () => {
 				clearTimeout(timeoutRef.current);
 			}
 		};
-	}, [createUser, isFreelancer, navigate]);
+	}, [createUser, isFreelancer, navigate, reset]);
 	
 	return (
 		<form name={'registration-form'} className={styles['registration-form']}

@@ -1,4 +1,4 @@
-import {ErrorMessages} from "../shared/errorMessages.ts";
+import {ErrorMessages} from "@shared/errorMessages.ts";
 
 export type ErrorHandler = (status: number, message?: string) => ErrorMessages;
 

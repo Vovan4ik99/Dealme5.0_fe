@@ -1,4 +1,4 @@
-import welcome_icon from '../../../../../assets/icons/freelancer_registration_active.svg';
+import welcome_icon from '@icons/freelancer_registration_active.svg';
 import React from "react";
 import styles from "./WelcomeStep.module.scss";
 import {IWelcomeStepProps} from "./welcomeStepTypes.ts";

@@ -1,25 +1,53 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import React, {useCallback, useContext} from "react";
+import React, {useCallback, useContext, useState} from "react";
 import styles from './LoginForm.module.scss';
 import InputError from "../../../ui/InputError/InputError.tsx";
-import {ILoginRequest} from "../../../../shared/loginTypes.ts";
-import {AuthContext} from "../../../../context/AuthContext/AuthContext.ts";
+import {ILoginRequest, ILoginResponse} from "@shared/loginTypes.ts";
+import {useAuthService} from '@services/authService.ts';
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const LoginForm = () => {
-	
-	const {login, errorMessage, loadingStatus} = useContext(AuthContext);
+
+	const {login, errorMessage, loadingStatus} = useAuthService();
+	const {getLoggedUserData} = useContext(AuthContext);
+
+	const [formData, setFormData] = useState<ILoginRequest>({
+		email: '',
+		password: '',
+	});
+
 	const {register, handleSubmit, formState: {errors}} = useForm<ILoginRequest>({
 		shouldFocusError: false,
-		mode: 'onChange'
+		mode: 'onChange',
+		defaultValues: formData,
 	});
+
 	const navigate = useNavigate();
+
+	const loginUser = useCallback((token: string) => {
+		getLoggedUserData(token)
+			.then(() => navigate('/'))
+			.catch((error) => {
+					console.log(error);
+					setFormData({
+						email: '',
+						password: '',
+					});
+				});
+	}, [getLoggedUserData, navigate]);
 
 	const onSubmit = useCallback((request: ILoginRequest) => {
 		login(request)
-			.then(() => navigate('/'))
-			.catch((error) => console.log(error));
-	}, [login, navigate]);
+			.then((response: ILoginResponse) => {
+				localStorage.setItem('token', response.token);
+				loginUser(response.token);
+			}).catch((error) => {
+				console.log(error);
+				setFormData(request);
+			});
+		setFormData(request);
+	}, [login, loginUser]);
 
 	return (
 		<form className={styles['login-form']} onSubmit={handleSubmit(onSubmit)} noValidate={true}>

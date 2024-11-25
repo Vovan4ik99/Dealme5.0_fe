@@ -1,8 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import AuthPage from "../../../pages/AuthPage/AuthPage.tsx";
+import AuthPage from "@pages/AuthPage/AuthPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
-import OnboardingPage from "../../../pages/OnboardingPage/OnboardingPage.tsx";
+import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
 import PublicRoute from "./PublicRoute.tsx";
+import Dashboard from "@pages/Dashboard/Dashboard.tsx";
 
 const AppRouter = () => {
 	return (
@@ -15,7 +16,7 @@ const AppRouter = () => {
 
 				<Route element={<ProtectedRoute/>}>
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>
-					<Route path={'/'} element={<></>}/>
+					<Route path={'/'} element={<Dashboard/>}/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

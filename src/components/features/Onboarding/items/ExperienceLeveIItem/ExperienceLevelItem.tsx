@@ -1,23 +1,23 @@
 import React from "react";
 import {IExperienceLevelItemProps} from "./experienceLevelItemTypes.ts";
-import styles from "./ExperienceLevelItem.module.scss";
+import styles from "../OnboardingItems.module.scss";
 
 const ExperienceLevelItem: React.FC<IExperienceLevelItemProps> = ({title, info, id, onChange, isSelected}) => {
 
 	return (
-		<div className={`${styles['item']} ${isSelected ? styles['item__selected'] : ''}`}>
+		<button className={`${styles['item']} ${isSelected && styles['item--selected']}`}>
 			<label htmlFor={id}>
 				<input id={id} type={'radio'} name={'experience_level'}/>
-				<button className={styles['item__wrapper']} onClick={() => onChange()}>
-					<div className={styles['item__radio']}></div>
+				<div style={{alignItems: 'flex-start'}} className={`${styles['item__wrapper']} ${styles['item__wrapper--centered']}`}
+				        onClick={() => onChange()}>
+					<div className={`${styles['item__radio']} ${isSelected && styles['item__radio--selected']}`}></div>
 					<div className={styles['item__text']}>
-						<p className={styles['item__title']}>{title}</p>
-						<p className={styles['item__info']}>{info}</p>
+						<p className={`${styles['item__text']} ${styles['item__text--title']}`}>{title}</p>
+						<p className={`${styles['item__text']} ${styles['item__text--gray']}`}>{info}</p>
 					</div>
-				</button>
-				<div className={''}></div>
+				</div>
 			</label>
-		</div>
+		</button>
 	)
 }
 

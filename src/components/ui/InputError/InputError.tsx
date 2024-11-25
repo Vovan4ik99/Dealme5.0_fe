@@ -1,5 +1,5 @@
 import styles from './InputError.module.scss';
-import error_icon from '../../../assets/icons/error_icon.svg';
+import error_icon from '@icons/error_icon.svg';
 import React from "react";
 
 interface IInputErrorProps {

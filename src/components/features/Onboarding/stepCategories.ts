@@ -11,8 +11,8 @@ export const stepCategories = [
 		id: 2,
 		title: 'Dostępność i zarobki (3)',
 		steps: [
-			{ id: '2_1', text: 'Dni dostępности', stepNumber: 3 },
-			{ id: '2_2', text: 'Dostępность godzinowa', stepNumber: 4 },
+			{ id: '2_1', text: 'Dni dostępności', stepNumber: 3 },
+			{ id: '2_2', text: 'Dostępność godzinowa ', stepNumber: 4 },
 			{ id: '2_3', text: 'Оczekiwane zarobki', stepNumber: 5 },
 		],
 	},
