@@ -9,11 +9,11 @@ const ProtectedRoute = () => {
 
 	useEffect(() => {
 		if (!user) {
-			navigate("/login");
+			navigate("/login", { replace: true });
 			return;
 		}
 		if (!isProfileCompleted(user)) {
-			navigate("/onboarding");
+			navigate("/onboarding", { replace: true });
 			return;
 		}
 	}, [navigate, user]);
@@ -23,9 +23,12 @@ const ProtectedRoute = () => {
 			.filter(([key]) => key !== 'crm')
 			.map(([, value]) => value)
 			.some(value => value === null || (Array.isArray(value) && value.length === 0));
-	}
+	};
 
-	return <Outlet/>;
-}
+	if (!user) return null;
+
+	return <Outlet />;
+};
+
 
 export default ProtectedRoute;
