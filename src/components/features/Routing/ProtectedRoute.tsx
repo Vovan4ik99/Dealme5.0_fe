@@ -29,6 +29,7 @@ const ProtectedRoute = () => {
   };
 
   if (!user) return null;
+  console.log(user)
 
   return <Outlet />;
 };
