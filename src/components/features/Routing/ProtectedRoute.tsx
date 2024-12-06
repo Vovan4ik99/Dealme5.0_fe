@@ -9,11 +9,11 @@ const ProtectedRoute = () => {
 
 	useEffect(() => {
 		if (!user) {
-			navigate("/login", { replace: true });
+			navigate("/login");
 			return;
 		}
 		if (!isProfileCompleted(user)) {
-			navigate("/onboarding", { replace: true });
+			navigate("/onboarding");
 			return;
 		}
 	}, [navigate, user]);
