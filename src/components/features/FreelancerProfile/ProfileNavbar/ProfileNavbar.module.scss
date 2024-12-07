@@ -15,22 +15,25 @@
   
     &__logo {
       display: block;
-      width: 117px;
-      height: 24px;
+      width: 116px;
+      height: 30px;
       margin-right: 48px;
     }
   
+    &_items{
+        display: flex;
+        gap: 40px
+    }
+
     &__item {
       display: flex;
       align-items: center;
-      margin-right: 40px;
+      gap: 8px;
 
       img {
         width: 15px; 
         height: 15px;
-        margin-right: 8px; 
       }
-  
     }
   
     &__wrapper {
@@ -47,16 +50,15 @@
         border-radius: 8px;
         color: vars.$color-gray;
         background-color: vars.$color-gray-light;
+        border: 1px solid vars.$color-gray-light;
         opacity: 100%;
-    
-        img {
-          width: 30px;
-          height: 30px;
+        cursor: pointer;
+
+        &:hover {
+            border: 1px solid vars.$color-black;
+            color: vars.$color-black;
         }
-        img:nth-child(2) {
-            width: 8px;  
-            height: 4.36px;
-          }
+    
       }
       &__button {
         display: flex;
@@ -69,9 +71,16 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
-    
+        color: vars.$color-gray;
+        border: 1px solid vars.$color-gray-border;
+
+        img{
+            fill: red;
+        }
+
         &:hover {
             border: 1px solid vars.$color-black;
+            color: vars.$color-black;
         }
       }
   
