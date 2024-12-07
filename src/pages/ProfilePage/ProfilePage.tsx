@@ -1,12 +1,12 @@
-import styles from "./Dashboard.module.scss";
-import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
+import styles from "./ProfilePage.module.scss";
 import Footer from "../../components/layout/Footer/Footer.tsx";
+import ProfileNavbar from "../../components/features/FreelancerProfile/ProfileNavbar/ProfileNavbar.tsx";
 
 const ProfilePage = () => {
 	return (
-		<section className={styles['dashboard']}>
-			<Navbar/>
-			<h1 className={'title'}>Strona główna</h1>
+		<section className={styles['profile']}>
+			<ProfileNavbar/>
+			<h1 className={'title'}>Strona</h1>
 			<Footer isHyphenated={false} isCentered={true}/>
 		</section>
 	);

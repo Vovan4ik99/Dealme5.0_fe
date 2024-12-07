@@ -1,0 +1,88 @@
+@use '@styles/variables' as vars;
+
+.navbar {
+    max-width: 1320px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    width: 100%;
+    font-size: 15px;
+    line-height: 100%;
+    color: vars.$color-black;
+    align-items: center;
+  
+    &__logo {
+      display: block;
+      width: 117px;
+      height: 24px;
+    }
+  
+    &__item {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 15px; 
+        height: 15px;
+        margin-right: 8px; 
+      }
+  
+    }
+  
+    &__wrapper {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+    &__profile {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 16px;
+        border-radius: 8px;
+        color: vars.$color-gray;
+        background-color: vars.$color-gray-light;
+        opacity: 100%;
+    
+        img {
+          width: 30px;
+          height: 30px;
+        }
+        img:nth-child(2) {
+            width: 8px;  
+            height: 4.36px;
+          }
+      }
+      &__button {
+        display: flex;
+        align-items: center;
+        padding: 14px 16px;
+        gap: 8px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        background-color: transparent;
+        border: 1px solid vars.$color-black;
+    
+        // &:hover {
+        //   background-color: vars.$primary-color;
+        //   color: vars.$color-white;
+        // }
+      }
+  
+    &__bg {
+      top: -80px;
+      left: -200px;
+      position: absolute;
+      width: 264px;
+      height: 264px;
+      background: vars.$primary-color;
+      filter: blur(300px);
+      border-radius: 1000px;
+      z-index: -1;
+    }
+  }
+  
