@@ -43,8 +43,8 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 	}, [userActivities]);
 
 	const onSubmit = () => {
-		if (filledInActivities.size !== activities.length) {
-			setLocalError('Aby kontynuować, proszę wybrać ocenę dla każdej z umiejętności');
+		if (filledInActivities.size < 1) {
+			setLocalError('Aby kontynuować, proszę wybrać ocenę dla przynajmniej jednej z umiejętności');
 			return;
 		}
 		const activityArray: IActivityRequest[] = Array.from(filledInActivities,

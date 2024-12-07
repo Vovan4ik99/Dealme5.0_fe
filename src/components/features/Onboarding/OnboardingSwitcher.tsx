@@ -99,29 +99,30 @@ const OnboardingSwitcher = () => {
 	}
 
 	const renderStepComponent = useCallback(() => {
+		if(!user) return null
 		switch (step) {
 			case 0:
-				return <WelcomeStep onNext={incrementStep} username={user?.firstName + " " + user?.lastName}/>;
+				return <WelcomeStep onNext={incrementStep} username={user.firstName + " " + user.lastName}/>;
 			case 1:
-				return <ExperienceLevelStep selectedExperience={user!.experienceLevel} onNext={incrementStep}/>;
+				return <ExperienceLevelStep selectedExperience={user.experienceLevel} onNext={incrementStep}/>;
 			case 2:
-				return <SpecializationStep userSpecialization={user!.specialization} onNext={incrementStep}/>;
+				return <SpecializationStep userSpecialization={user.specialization} onNext={incrementStep}/>;
 			case 3:
-				return <WorkingDaysStep userWorkingDays={user!.workingDays as WorkingDayKey[]} onNext={incrementStep}/>;
+				return <WorkingDaysStep userWorkingDays={user.workingDays as WorkingDayKey[]} onNext={incrementStep}/>;
 			case 4:
-				return <WorkingHoursStep userWorkingHours={user!.workingHours} onNext={incrementStep}/>;
+				return <WorkingHoursStep userWorkingHours={user.workingHours} onNext={incrementStep}/>;
 			case 5:
-				return <IncomeGoalStep userGoal={user!.incomeGoal} onNext={incrementStep}/>;
+				return <IncomeGoalStep userGoal={user.incomeGoal} onNext={incrementStep}/>;
 			case 6:
-				return <IndustryStep userSubIndustries={user!.subIndustries} onNext={incrementStep}/>;
+				return <IndustryStep userSubIndustries={user.subIndustries} onNext={incrementStep}/>;
 			case 7:
-				return <TypeOfSalesStep userTypeOfSales={user!.typeOfSales} onNext={incrementStep}/>;
+				return <TypeOfSalesStep userTypeOfSales={user.typeOfSales} onNext={incrementStep}/>;
 			case 8:
-				return <SectorStep userSectors={user!.sectors} onNext={incrementStep}/>;
+				return <SectorStep userSectors={user.sectors} onNext={incrementStep}/>;
 			case 9:
-				return <ActivitiesStep userActivities={user!.selectedActivities} onNext={incrementStep}/>
+				return <ActivitiesStep userActivities={user.selectedActivities} onNext={incrementStep}/>
 			case 10:
-				return <SalesToolsStep userTools={user!.salesTools} onNext={incrementStep}/>
+				return <SalesToolsStep userTools={user.salesTools} onNext={incrementStep}/>
 			default:
 				return <></>;
 		}
