@@ -17,11 +17,13 @@
       display: block;
       width: 117px;
       height: 24px;
+      margin-right: 48px;
     }
   
     &__item {
       display: flex;
       align-items: center;
+      margin-right: 40px;
 
       img {
         width: 15px; 
@@ -33,15 +35,15 @@
   
     &__wrapper {
       display: flex;
-      justify-content: space-between;
       gap: 8px;
       align-items: center;
+      margin-left: auto;
     }
     &__profile {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 14px 16px;
+        padding: 6px 16px 6px 6px;
         border-radius: 8px;
         color: vars.$color-gray;
         background-color: vars.$color-gray-light;
@@ -65,12 +67,12 @@
         font-weight: 500;
         font-size: 14px;
         background-color: transparent;
-        border: 1px solid vars.$color-black;
+        border: none;
+        cursor: pointer;
     
-        // &:hover {
-        //   background-color: vars.$primary-color;
-        //   color: vars.$color-white;
-        // }
+        &:hover {
+            border: 1px solid vars.$color-black;
+        }
       }
   
     &__bg {

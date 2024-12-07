@@ -51,5 +51,4 @@ const ProfileNavbar = () => {
 		</nav>
 	);
 };
-
 export default ProfileNavbar;
