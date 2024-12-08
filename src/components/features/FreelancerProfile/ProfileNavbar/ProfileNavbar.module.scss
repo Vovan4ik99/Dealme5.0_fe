@@ -1,99 +1,101 @@
-@use '@styles/variables' as vars;
+@use "@styles/variables" as vars;
 
 .navbar {
-    max-width: 1320px;
-    position: relative;
+  max-width: 1320px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  width: 100%;
+  font-size: 15px;
+  line-height: 100%;
+  color: vars.$color-black;
+  align-items: center;
+
+  &__logo {
+    display: block;
+    width: 116px;
+    height: 30px;
+    margin-right: 48px;
+  }
+
+  &_items {
     display: flex;
-    justify-content: space-between;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    width: 100%;
-    font-size: 15px;
-    line-height: 100%;
-    color: vars.$color-black;
+    gap: 40px;
+  }
+
+  &__item {
+    display: flex;
     align-items: center;
-  
-    &__logo {
-      display: block;
-      width: 116px;
-      height: 30px;
-      margin-right: 48px;
-    }
-  
-    &_items{
-        display: flex;
-        gap: 40px
-    }
+    gap: 8px;
 
-    &__item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      img {
-        width: 15px; 
-        height: 15px;
-      }
-    }
-  
-    &__wrapper {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-left: auto;
-    }
-    &__profile {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px 6px 6px;
-        border-radius: 8px;
-        color: vars.$color-gray;
-        background-color: vars.$color-gray-light;
-        border: 1px solid vars.$color-gray-light;
-        opacity: 100%;
-        cursor: pointer;
-
-        &:hover {
-            border: 1px solid vars.$color-black;
-            color: vars.$color-black;
-        }
-    
-      }
-      &__button {
-        display: flex;
-        align-items: center;
-        padding: 14px 16px;
-        gap: 8px;
-        border-radius: 8px;
-        font-weight: 500;
-        font-size: 14px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        color: vars.$color-gray;
-        border: 1px solid vars.$color-gray-border;
-
-        img{
-            fill: red;
-        }
-
-        &:hover {
-            border: 1px solid vars.$color-black;
-            color: vars.$color-black;
-        }
-      }
-  
-    &__bg {
-      top: -80px;
-      left: -200px;
-      position: absolute;
-      width: 264px;
-      height: 264px;
-      background: vars.$primary-color;
-      filter: blur(300px);
-      border-radius: 1000px;
-      z-index: -1;
+    img {
+      width: 15px;
+      height: 15px;
     }
   }
-  
+
+  &__wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: auto;
+  }
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 6px 6px;
+    border-radius: 8px;
+    color: vars.$color-gray;
+    background-color: vars.$color-gray-light;
+    border: 1px solid vars.$color-gray-light;
+    opacity: 100%;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid vars.$color-black;
+      color: vars.$color-black;
+
+      .navbar__arrow {
+        content: url("@icons/profile_navbar/arrowHover.svg");
+      }
+    }
+  }
+  &__button {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: vars.$color-gray;
+    border: 1px solid vars.$color-gray-border;
+
+    &:hover {
+      border: 1px solid vars.$color-black;
+      color: vars.$color-black;
+
+      img {
+        content: url("@icons/profile_navbar/plusHover.svg");
+      }
+    }
+  }
+
+  &__bg {
+    top: -80px;
+    left: -200px;
+    position: absolute;
+    width: 264px;
+    height: 264px;
+    background: vars.$primary-color;
+    filter: blur(300px);
+    border-radius: 1000px;
+    z-index: -1;
+  }
+}
