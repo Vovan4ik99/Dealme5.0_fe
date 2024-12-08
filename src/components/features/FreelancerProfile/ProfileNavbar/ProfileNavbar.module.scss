@@ -34,6 +34,16 @@
       width: 15px;
       height: 15px;
     }
+
+    &.guardianImg img {
+      width: 12px;
+      height: 14.4px;
+    }
+
+    &.paymentsImg img {
+      width: 16px;
+      height: 12px;
+    }
   }
 
   &__wrapper {
@@ -54,14 +64,11 @@
     border: 1px solid vars.$color-gray-light;
     opacity: 100%;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       border: 1px solid vars.$color-black;
       color: vars.$color-black;
-
-      .navbar__arrow {
-        content: url("@icons/profile_navbar/arrowHover.svg");
-      }
     }
   }
 
@@ -82,10 +89,6 @@
     &:hover {
       border: 1px solid vars.$color-black;
       color: vars.$color-black;
-
-      img {
-        content: url("@icons/profile_navbar/plusHover.svg");
-      }
     }
   }
 
