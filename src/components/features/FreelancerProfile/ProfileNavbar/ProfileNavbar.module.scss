@@ -42,6 +42,7 @@
     align-items: center;
     margin-left: auto;
   }
+
   &__profile {
     display: flex;
     align-items: center;
@@ -63,6 +64,7 @@
       }
     }
   }
+
   &__button {
     display: flex;
     align-items: center;
@@ -72,10 +74,10 @@
     font-weight: 500;
     font-size: 14px;
     background-color: transparent;
-    border: none;
     cursor: pointer;
     color: vars.$color-gray;
     border: 1px solid vars.$color-gray-border;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       border: 1px solid vars.$color-black;

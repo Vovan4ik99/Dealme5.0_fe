@@ -64,8 +64,7 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 				return <ActivityItem key={activity.id}
 				                     {...activity}
 				                     level={filledInActivities.has(activity.id) ? filledInActivities.get(activity.id)! : 0}
-				                     onSelect={onSelect}
-				/>;
+				                     onSelect={onSelect}/>;
 			})
 		}
 	}, [activities, filledInActivities]);
