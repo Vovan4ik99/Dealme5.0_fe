@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 					console.log(e);
 				});
 		}
-	}, [errorMessage, getLoggedUserData])
+	}, [errorMessage, getLoggedUserData]);
 
 	const getUserRole = (currentToken: string): UserRole => {
 		const decodedToken = jwtDecode<{ roles: UserRole[] }>(currentToken);

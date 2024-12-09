@@ -1,5 +1,5 @@
 import React from "react";
-import {IWorkDayItemProps} from "./workDayItemTypes.ts";
+import {IWorkDayItemProps} from "./workingDayItemTypes.ts";
 import styles from '../OnboardingItems.module.scss';
 import checkbox_icon from '@icons/checkbox_checked.svg';
 
