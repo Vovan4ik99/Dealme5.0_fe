@@ -23,7 +23,6 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
-  const [isDraggingOver, setIsDraggingOver] = useState(false);
 
   const handleDrag = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!dragging) return;
@@ -34,19 +33,10 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
       y: prev.y + movementY,
     }));
   };
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDraggingOver(true);
-  };
-  
-  const handleDragLeave = () => {
-    setIsDraggingOver(false);
-  };
-  
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsDraggingOver(false);
-  
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       if (file.size > 3 * 1024 * 1024) {
@@ -62,7 +52,6 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
       reader.readAsDataURL(file);
     }
   };
-  
 
   const handleMouseDown = () => setDragging(true);
 
@@ -115,8 +104,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
           </header>
           <div className={styles.editArea}>
             <div
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
+              onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
               className={styles.importLayout}
             >
