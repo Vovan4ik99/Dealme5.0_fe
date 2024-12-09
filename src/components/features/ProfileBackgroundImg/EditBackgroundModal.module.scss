@@ -9,7 +9,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     z-index: 1000;
 }
@@ -57,26 +57,95 @@
 
         .editArea {
             width: 100%;
-            height: 272px;
+            height: auto;
             padding: 16px;
             border-radius: 12px;
             opacity: 100%;
-            overflow: hidden;
             border: 1px dashed vars.$color-gray-border;
             background-color: rgba(vars.$color-gray-light, 0.4);
             margin-top: 40px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
 
-            .editableImage {
-                width: auto;
+            .importLayout {
+                background-color: white;
+                border-radius: 8px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 24px;
+                font-size: 16px;
+                font-weight: 500;
                 height: 100%;
-                cursor: grab;
-                position: absolute;
+                gap: 16px;
+                color: vars.$color-black;
 
-                img {
-                    width: 100%;
-                    height: auto;
+                .import {
+                    display: none;
                 }
+                .grabText {
+                    font-weight: 400;
+                }
+                .dividerContainer {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    width: 100%;
+
+                    .line {
+                        border: 1px solid vars.$color-gray-border;
+                        flex-grow: 1;
+                    }
+
+                    .orText {
+                        font-size: 14px;
+                        color: vars.$color-gray;
+                        font-weight: 500;
+                        line-height: 120%;
+                    }
+                }
+
+                .fileButton {
+                    display: flex;
+                    padding: 14px 16px;
+                    font-size: 14px;
+                    border-radius: 8px;
+                    border: 1px solid vars.$color-gray-border;
+                    color: vars.$color-gray;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 300ms ease-in-out;
+
+                    &:hover {
+                        color: vars.$color-black;
+                        border-color: vars.$color-black;
+                    }
+                }
+
+                .editableImage {
+                    width: 100%;
+                    height: 200px;
+                    cursor: grab;
+                    position: absolute;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+
+                    img {
+                        width: 100%;
+                        height: auto;
+                    }
+                }
+            }
+            .imageFormats {
+                color: vars.$color-gray;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                margin-top: auto;
+                font-weight: 300;
             }
         }
     }
