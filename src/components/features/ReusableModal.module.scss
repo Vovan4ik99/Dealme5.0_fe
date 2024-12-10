@@ -9,9 +9,10 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     z-index: 1000;
+    
   }
   
   .reusableModal__content {
@@ -21,7 +22,6 @@
     height: 100%;
     position: relative;
     text-align: justify;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
   
@@ -63,4 +63,3 @@
       width: 100%;
     }
   }
-  

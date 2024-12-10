@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import styles from "./EditBackgroundModal.module.scss";
 import ReusableModal from "../ReusableModal";
 import getCroppedImg from "./getCroppedImg";
-import Cropper from "react-easy-crop";
 import CroppingModal from "./CroppingModal";
 
 interface EditBackgroundModalProps {
@@ -62,9 +61,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
   return (
     <div className={styles.editBackgroundModal__wrapper}>
       <div
-        className={`${styles.editBackgroundModal__container} ${
-          croppingVisible ? styles.editBackgroundModal__withCropping : ""
-        }`}
+        className={styles.editBackgroundModal__container}
       >
         <ReusableModal
           title="Edytuj zdjęcie w tle"

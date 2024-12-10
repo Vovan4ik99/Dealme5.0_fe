@@ -44,6 +44,12 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
   };
 
   return (
+    <ReusableModal
+      title="Przytnij obrazek"
+      onClose={onClose}
+      onSave={handleSave}
+      width="800px"
+    >
       <div className={styles.cropperContainer}>
         <Cropper
           image={imageUrl}
@@ -53,8 +59,10 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
           onCropChange={setCrop}
           onZoomChange={setZoom}
           onCropComplete={onCropComplete}
+          
         />
         <div className={styles.controls}>
+          <label>Zoom</label>
           <input
             type="range"
             min={1}
@@ -65,6 +73,7 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
           />
         </div>
       </div>
+    </ReusableModal>
   );
 };
 

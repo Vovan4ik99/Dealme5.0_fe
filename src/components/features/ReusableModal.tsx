@@ -8,6 +8,7 @@ interface ReusableModalProps {
   onClose: () => void;
   onSave: () => void;
   children: ReactNode;
+  width?:string;
 }
 
 const ReusableModal: React.FC<ReusableModalProps> = ({
@@ -15,11 +16,13 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   onClose,
   onSave,
   children,
+  width
 }) => {
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div
         className={styles.reusableModal__content}
+        style={{width: width ||"600px"}}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.reusableModal__content__mainContent}>
@@ -42,7 +45,7 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
             </div>
           </button>
           <header className="title title--fs32">{title}</header>
-          <div className={styles.reusableModal__contentArea}>{children}</div>
+          <div>{children}</div>
         </div>
         <div className={styles.reusableModal__content__footer}>
           <button className="btn btn--mt0" onClick={onSave}>
