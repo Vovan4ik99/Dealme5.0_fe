@@ -7,7 +7,7 @@ interface ReusableModalProps {
   title: string;
   onClose: () => void;
   onSave: () => void;
-  children: ReactNode; 
+  children: ReactNode;
 }
 
 const ReusableModal: React.FC<ReusableModalProps> = ({
@@ -19,12 +19,15 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div
-        className={styles.modalContent}
+        className={styles.reusableModal__content}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.mainContent}>
-          <button className={styles.closeBtn} onClick={onClose}>
-            <div className={styles.closeIcon}>
+        <div className={styles.reusableModal__content__mainContent}>
+          <button
+            className={styles.reusableModal__content__mainContent__closeBtn}
+            onClick={onClose}
+          >
+            <div className={styles.reusableModal__content__mainContent__closeBtn__closeIcon}>
               <svg
                 width="10"
                 height="10"
@@ -39,9 +42,9 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
             </div>
           </button>
           <header className="title title--fs32">{title}</header>
-          <div className={styles.content}>{children}</div>
+          <div className={styles.reusableModal__contentArea}>{children}</div>
         </div>
-        <div className={styles.footer}>
+        <div className={styles.reusableModal__content__footer}>
           <button className="btn btn--mt0" onClick={onSave}>
             Zapisz zmiany
           </button>
@@ -52,3 +55,4 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
 };
 
 export default ReusableModal;
+
