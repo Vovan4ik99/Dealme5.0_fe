@@ -27,7 +27,7 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
     y: number;
   }>(null);
 
-  const onCropComplete = useCallback((_croppedArea, croppedAreaPixels) => {
+  const onCropComplete = useCallback((_croppedAreaPercentage, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
@@ -55,7 +55,7 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
           image={imageUrl}
           crop={crop}
           zoom={zoom}
-          aspect={16 / 9}
+          aspect={1320 / 250}
           onCropChange={setCrop}
           onZoomChange={setZoom}
           onCropComplete={onCropComplete}

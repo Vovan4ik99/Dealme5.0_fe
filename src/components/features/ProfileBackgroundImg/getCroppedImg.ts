@@ -18,8 +18,8 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area) => {
     return null;
   }
 
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
+  canvas.width = 1320;
+  canvas.height = 250;
 
   ctx.drawImage(
     image,
@@ -29,8 +29,8 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area) => {
     pixelCrop.height,
     0,
     0,
-    pixelCrop.width,
-    pixelCrop.height
+    1320,
+    250 
   );
 
   return new Promise<string>((resolve) => {
