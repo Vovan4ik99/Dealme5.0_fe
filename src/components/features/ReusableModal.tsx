@@ -25,12 +25,12 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
         style={{width: width ||"600px"}}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.reusableModal__content__mainContent}>
+        <div className={styles.reusableModal__mainContent}>
           <button
-            className={styles.reusableModal__content__mainContent__closeBtn}
+            className={styles.reusableModal__closeBtn}
             onClick={onClose}
           >
-            <div className={styles.reusableModal__content__mainContent__closeBtn__closeIcon}>
+            <div className={styles.reusableModal__closeIcon}>
               <svg
                 width="10"
                 height="10"
@@ -47,7 +47,7 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
           <header className="title title--fs32">{title}</header>
           <div>{children}</div>
         </div>
-        <div className={styles.reusableModal__content__footer}>
+        <div className={styles.reusableModal__footer}>
           <button className="btn btn--mt0" onClick={onSave}>
             Zapisz zmiany
           </button>

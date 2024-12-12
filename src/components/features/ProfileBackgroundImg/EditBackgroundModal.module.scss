@@ -1,87 +1,134 @@
 @use "@styles/variables" as vars;
 
-.editBackgroundModal__wrapper {
-  position: fixed;
-  padding: 8px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  z-index: 1000;
-}
-
-.editBackgroundModal__container {
+.editBackgroundModal {
+  &__wrapper {
     position: fixed;
     padding: 8px;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center; 
+    justify-content: right;
     align-items: center;
-    gap: 16px; 
-}
-.editBackgroundModal__preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.editBackgroundModal__previewImage {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.editBackgroundModal__editButton {
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #0056b3;
+    z-index: 1000;
   }
-}
-.editBackgroundModal__editArea {
-  padding: 64px 48px 0 48px;
-  width: 100%;
-  height: auto;
-  padding: 16px;
-  border-radius: 12px;
-  opacity: 100%;
-  border: 1px dashed vars.$color-gray-border;
-  background-color: rgba(vars.$color-gray-light, 0.4);
-  margin-top: 40px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
 
-.editBackgroundModal__importLayout {
-  background-color: white;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 24px;
-  font-size: 16px;
-  font-weight: 500;
-  height: 100%;
-  gap: 16px;
-  color: vars.$color-black;
+  &__container {
+    position: fixed;
+    padding: 8px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+ &__imageWrapper {
+    position: relative;
+  }
+
+  &__previewImage {
+    display: block;
+    width: 472px;
+    height: 151px;
+    border-radius: 8px;
+  }
+  &__icons {
+    position: absolute;
+    top: 8px; 
+    right: 8px; 
+    display: flex;
+    gap: 8px; 
+  }
+  &__icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: vars.$color-gray-light;
+    color: vars.$color-gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+  
+    &:hover {
+      color: vars.$color-black;
+      background-color: vars.$color-gray-border;
+    }
+  }
+
+  &__previewText {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__fileName {
+    line-height: 120%;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &__imageHeader {
+    color: vars.$color-gray;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+
+  &__editButton {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+  &__editArea {
+    padding: 64px 48px 0 48px;
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    border-radius: 12px;
+    opacity: 100%;
+    border: 1px dashed vars.$color-gray-border;
+    background-color: rgba(vars.$color-gray-light, 0.4);
+    margin-top: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__importLayout {
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    height: 100%;
+    gap: 16px;
+    color: vars.$color-black;
+  }
 
   &__import {
     display: none;
@@ -96,18 +143,18 @@
     align-items: center;
     gap: 12px;
     width: 100%;
+  }
 
-    &__line {
-      border: 1px solid vars.$color-gray-border;
-      flex-grow: 1;
-    }
+  &__line {
+    border: 1px solid vars.$color-gray-border;
+    flex-grow: 1;
+  }
 
-    &__orText {
-      font-size: 14px;
-      color: vars.$color-gray;
-      font-weight: 500;
-      line-height: 120%;
-    }
+  &__orText {
+    font-size: 14px;
+    color: vars.$color-gray;
+    font-weight: 500;
+    line-height: 120%;
   }
 
   &__fileButton {
@@ -126,14 +173,15 @@
       border-color: vars.$color-black;
     }
   }
-}
 
-.editBackgroundModal__imageFormats {
-  color: vars.$color-gray;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: auto;
-  font-weight: 300;
+  &__imageFormats {
+    color: vars.$color-gray;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    font-weight: 300;
+    line-height: 100%;
+  }
 }

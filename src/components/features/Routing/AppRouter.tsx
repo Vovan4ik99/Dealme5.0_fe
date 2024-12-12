@@ -14,10 +14,10 @@ const AppRouter = () => {
 					<Route path={'/registration'} element={<AuthPage isLogin={false}/>} />
 				</Route>
 
-				<Route element={<ProtectedRoute/>}>
+
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>
 					<Route path={'/'} element={<Dashboard/>}/>
-				</Route>
+		
 			</Routes>
 		</BrowserRouter>
 	)

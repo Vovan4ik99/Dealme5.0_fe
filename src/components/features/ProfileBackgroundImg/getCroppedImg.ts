@@ -33,9 +33,8 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area) => {
     250 
   );
 
-  return new Promise<string>((resolve) => {
-    canvas.toDataURL("image/jpeg", (dataUrl) => resolve(dataUrl));
-  });
+  const dataUrl = canvas.toDataURL("image/jpg")
+  return dataUrl
 };
 
 export default getCroppedImg;
