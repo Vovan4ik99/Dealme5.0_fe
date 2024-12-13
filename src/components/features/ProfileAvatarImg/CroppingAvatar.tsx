@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
-import Cropper, { Area } from "react-easy-crop";
-import styles from "./CroppingModal.module.scss";
+import Cropper, {Area} from "react-easy-crop";
+import styles from "./CroppingAvatar.module.scss";
 import ReusableModal from "../ReusableModal";
-import getCroppedImg from "./getCroppedImg";
+import getCroppedImg from "../ProfileBackgroundImg/getCroppedImg";
 
 interface CroppingModalProps {
   imageUrl: string;
@@ -53,7 +53,7 @@ const CroppingModal: React.FC<CroppingModalProps> = ({
           image={imageUrl}
           crop={crop}
           zoom={zoom}
-          aspect={1320 / 250}
+          aspect={160/160}
           onCropChange={setCrop}
           onZoomChange={setZoom}
           onCropComplete={onCropComplete}

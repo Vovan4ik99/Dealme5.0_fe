@@ -15,8 +15,10 @@ const AppRouter = () => {
 				</Route>
 
 
+				<Route element={<ProtectedRoute/>}>
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>
 					<Route path={'/'} element={<Dashboard/>}/>
+				</Route>
 		
 			</Routes>
 		</BrowserRouter>

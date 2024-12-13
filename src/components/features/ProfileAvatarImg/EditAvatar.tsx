@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./EditBackgroundModal.module.scss";
+import styles from "./EditAvatar.module.scss";
 import ReusableModal from "../ReusableModal";
-import CroppingModal from "./CroppingModal";
+import CroppingAvatar from "./CroppingAvatar";
 import { useFreelancerProfileService } from "@services/freelancerProfileService";
 
 interface EditBackgroundModalProps {
@@ -216,7 +216,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
           </div>
         </ReusableModal>
         {croppingVisible && imageUrl && (
-          <CroppingModal
+          <CroppingAvatar
             imageUrl={imageUrl}
             onClose={handleCroppingClose}
             onSave={({ imageUrl }) => {

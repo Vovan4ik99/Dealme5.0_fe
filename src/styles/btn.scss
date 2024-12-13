@@ -59,26 +59,29 @@
   }
 
 
-  &--tab {
-    display: flex;
-    margin-top: 0;
-    width: auto;
-    padding: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 100%;
-    border-radius: 8px;
-    border: 1px solid vars.$color-gray-border;
-    color: vars.$color-gray;
-    background-color: transparent;
-    text-align: center;
-    cursor: pointer;
-    transition: all 300ms ease-in-out;
+&--tab {
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-top: 50px; 
+  padding: 12px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 100%;
+  border-radius: 8px;
+  border: 1px solid vars.$color-gray-border;
+  color: vars.$color-gray;
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
 
-    &:hover {
-        color: vars.$color-black;
-        border-color: vars.$color-black;
-        background-color: transparent;
-    }
+  &:hover {
+    color: vars.$color-black;
+    border-color: vars.$color-black;
+    background-color: transparent;
+  }
 }
+
 }

@@ -2,7 +2,7 @@ import { useHttp } from "../hooks/http.hook";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 
-export const useProfileService = () => {
+export const useFreelancerProfileService = () => {
   const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
   const getBackgroundPicture = useCallback(async (): Promise<void> => {
