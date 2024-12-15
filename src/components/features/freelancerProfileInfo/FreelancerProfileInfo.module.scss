@@ -11,9 +11,8 @@
     line-height: 100%;
     color: #000000;
     margin-bottom: 8px;
-
 }
-.infoContainer{
+.infoContainer {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -50,24 +49,34 @@
     margin-bottom: 24px;
 }
 
+.badgeIcon{
+    width: 10px;
+    height: 10px;
+}
+
 .badgeRecommended {
-    background-color: #fff3d1;
-    color: #f6a500;
-    font-size: 0.8rem;
-    padding: 5px 10px;
-    border-radius: 5px;
+    background-color: vars.$color-primary-pastel;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: vars.$primary-color;
+    font-size: 12px;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 .badgeLimited {
-    background-color: #ffe5e8;
+    display: flex;
+    align-items: center;
     color: #d80027;
-    font-size: 0.8rem;
-    padding: 5px 10px;
-    border-radius: 5px;
+    font-size: 12px;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 .details {
-    border: 1px solid #e6f0f6;
+    border: 1px solid vars.$color-gray-border;
+    border-bottom: none;
     border-radius: 8px;
     margin-bottom: 15px;
 }
@@ -75,10 +84,26 @@
 .detail {
     display: flex;
     align-items: center;
+    color: vars.$color-gray;
     gap: 10px;
-    margin-bottom: 10px;
+    font-size: 15px;
+    padding: 16px;
+    border-bottom: 1px solid vars.$color-gray-border;
 }
 
+.infoFooter{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+.footer {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 120%;
+    color: vars.$color-gray;
+    letter-spacing: 1px;
+}
 .sectors {
     display: flex;
     flex-wrap: wrap;

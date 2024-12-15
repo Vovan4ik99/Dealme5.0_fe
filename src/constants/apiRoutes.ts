@@ -33,12 +33,9 @@ export const API_ROUTES = {
 	},
 	PROFILE: {
 		FREELANCER: {
-			GET_BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
-			DELETE_BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
-			PATCH_BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
-			GET_AVATAR: '/user/avatar',
-			DELETED_AVATAR: '/user/avatar',
-			PATCH_AVATAR: '/user/avatar',
+			BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
+			AVATAR: '/user/avatar',
+			INFO: '/freelancer/bar'
 		}
 	}
 } as const;

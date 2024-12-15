@@ -33,7 +33,7 @@
     gap: 1rem;
   }
 
- &__imageWrapper {
+  &__imageWrapper {
     position: relative;
   }
 
@@ -45,10 +45,10 @@
   }
   &__icons {
     position: absolute;
-    top: 8px; 
-    right: 8px; 
+    top: 8px;
+    right: 8px;
     display: flex;
-    gap: 8px; 
+    gap: 8px;
   }
   &__icon {
     width: 32px;
@@ -61,7 +61,7 @@
     border-radius: 50%;
     cursor: pointer;
     transition: all 300ms ease-in-out;
-  
+
     &:hover {
       color: vars.$color-black;
       background-color: vars.$color-gray-border;
@@ -161,13 +161,18 @@
     }
   }
 
+  &__imageFormatsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+  }
+
   &__imageFormats {
     color: vars.$color-gray;
     font-size: 14px;
     display: flex;
-    align-items: center;
     gap: 4px;
-    margin-top: auto;
     font-weight: 300;
     line-height: 100%;
   }

@@ -87,18 +87,18 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
     setCroppingVisible(false);
   };
 
-  const handleEditPicture = () =>{
+  const handleEditPicture = () => {
     if (croppedImageUrl) {
       setImageUrl(imageUrl);
       setCroppingVisible(true);
     }
-  }
+  };
 
   return (
     <div className={styles.editBackgroundModal__wrapper}>
       <div className={styles.editBackgroundModal__container}>
         <ReusableModal
-          title="Edytuj zdjęcie w tle"
+          title="Edytuj awatar"
           onClose={onClose}
           onSave={handleSave}
         >
@@ -107,7 +107,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
               <div className={styles.editBackgroundModal__preview}>
                 <div className={styles.editBackgroundModal__previewText}>
                   <div className={styles.editBackgroundModal__imageHeader}>
-                    Zdjęcie w tle (opcjonalnie)
+                    Awatar (opcjonalnie)
                   </div>
                   <div className={styles.editBackgroundModal__fileName}>
                     {fileName}
@@ -210,8 +210,54 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
                 </div>
               </div>
             )}
-            <footer className={styles.editBackgroundModal__imageFormats}>
-              Akceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB
+            <footer
+              className={styles.editBackgroundModal__imageFormatsContainer}
+            >
+              <div className={styles.editBackgroundModal__imageFormats}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 0C3.1402 0 0 3.14024 0 7.00004C0 10.8598 3.1402 14 7 14C10.8598 14 14 10.8598 14 7.00004C14 3.14024 10.8598 0 7 0ZM7 12.7273C3.84194 12.7273 1.27273 10.1581 1.27273 7.00004C1.27273 3.84202 3.84194 1.27273 7 1.27273C10.1581 1.27273 12.7273 3.84202 12.7273 7.00004C12.7273 10.1581 10.158 12.7273 7 12.7273Z"
+                    fill="#75778A"
+                  />
+                  <path
+                    d="M6.99992 2.9697C6.53215 2.9697 6.1516 3.3505 6.1516 3.81856C6.1516 4.28621 6.53215 4.66667 6.99992 4.66667C7.46769 4.66667 7.84823 4.28621 7.84823 3.81856C7.84823 3.3505 7.46769 2.9697 6.99992 2.9697Z"
+                    fill="#75778A"
+                  />
+                  <path
+                    d="M7 5.93939C6.64856 5.93939 6.36364 6.22432 6.36364 6.57576V10.3939C6.36364 10.7454 6.64856 11.0303 7 11.0303C7.35144 11.0303 7.63636 10.7454 7.63636 10.3939V6.57576C7.63636 6.22432 7.35144 5.93939 7 5.93939Z"
+                    fill="#75778A"
+                  />
+                </svg>
+                Akceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB
+              </div>
+              <p className={styles.editBackgroundModal__imageFormats}>
+                {" "}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 0C3.1402 0 0 3.14024 0 7.00004C0 10.8598 3.1402 14 7 14C10.8598 14 14 10.8598 14 7.00004C14 3.14024 10.8598 0 7 0ZM7 12.7273C3.84194 12.7273 1.27273 10.1581 1.27273 7.00004C1.27273 3.84202 3.84194 1.27273 7 1.27273C10.1581 1.27273 12.7273 3.84202 12.7273 7.00004C12.7273 10.1581 10.158 12.7273 7 12.7273Z"
+                    fill="#75778A"
+                  />
+                  <path
+                    d="M6.99992 2.9697C6.53215 2.9697 6.1516 3.3505 6.1516 3.81856C6.1516 4.28621 6.53215 4.66667 6.99992 4.66667C7.46769 4.66667 7.84823 4.28621 7.84823 3.81856C7.84823 3.3505 7.46769 2.9697 6.99992 2.9697Z"
+                    fill="#75778A"
+                  />
+                  <path
+                    d="M7 5.93939C6.64856 5.93939 6.36364 6.22432 6.36364 6.57576V10.3939C6.36364 10.7454 6.64856 11.0303 7 11.0303C7.35144 11.0303 7.63636 10.7454 7.63636 10.3939V6.57576C7.63636 6.22432 7.35144 5.93939 7 5.93939Z"
+                    fill="#75778A"
+                  />
+                </svg>
+                Zalecany rozmiar: 160px na 160px
+              </p>
             </footer>
           </div>
         </ReusableModal>

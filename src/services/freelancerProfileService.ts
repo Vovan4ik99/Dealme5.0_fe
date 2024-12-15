@@ -7,13 +7,13 @@ export const useFreelancerProfileService = () => {
 
   const getBackgroundPicture = useCallback(async (): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.GET_BACKGROUND_PICTURE,
+      url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
     });
   }, [sendRequest]);
 
   const patchBackgroundPicture = useCallback(async (request: { id: number; freelancerId: number; pictureData: string[] }): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.PATCH_BACKGROUND_PICTURE,
+      url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
       method: "PATCH",
       body: JSON.stringify(request),
     });
@@ -21,7 +21,7 @@ export const useFreelancerProfileService = () => {
 
   const deleteBackgroundPicture = useCallback(async (): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.DELETE_BACKGROUND_PICTURE,
+      url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
       method: "DELETE",
     });
   }, [sendRequest]);
@@ -29,13 +29,13 @@ export const useFreelancerProfileService = () => {
 
   const getAvatar = useCallback(async (): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.GET_AVATAR,
+      url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
     });
   }, [sendRequest]);
 
   const patchAvatar = useCallback(async (request: { pictureId: number; picture: string[] }): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.PATCH_AVATAR,
+      url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
       method: "PATCH",
       body: JSON.stringify(request),
     });
@@ -43,8 +43,14 @@ export const useFreelancerProfileService = () => {
 
   const deleteAvatar = useCallback(async (): Promise<void> => {
     return await sendRequest({
-      url: API_ROUTES.PROFILE.FREELANCER.DELETED_AVATAR,
+      url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
       method: "DELETE",
+    });
+  }, [sendRequest]);
+
+  const getFreelancerBar = useCallback(async (): Promise<any> => {
+    return await sendRequest({
+      url: API_ROUTES.PROFILE.FREELANCER.INFO,
     });
   }, [sendRequest]);
 
@@ -57,5 +63,6 @@ export const useFreelancerProfileService = () => {
     getAvatar,
     patchAvatar,
     deleteAvatar,
+    getFreelancerBar,
   };
 };

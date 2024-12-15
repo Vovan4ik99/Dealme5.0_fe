@@ -1,9 +1,117 @@
+import { useEffect, useState } from "react";
 import styles from "./FreelancerProfileInfo.module.scss";
+import { useFreelancerProfileService } from "@services/freelancerProfileService";
+
+interface ISector {
+  id: number;
+  name: string;
+  description: string;
+}
 
 const FreelancerProfileInfo = () => {
+  const { getFreelancerBar, loadingStatus, errorMessage } =
+    useFreelancerProfileService();
+
+  const [freelancerName, setFreelancerName] = useState<string>("");
+  const [languages, setLanguages] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [rate, setRate] = useState<number>(0);
+  const [count, setCount] = useState<number>(0);
+  const [workingHours, setWorkingHours] = useState<string>("");
+  const [workingDays, setWorkingDays] = useState<string>("");
+  const [sectors, setSectors] = useState<ISector[]>([]);
+
+  const ALL_DAYS = [
+    "Poniedziałek",
+    "Wtorek",
+    "Środa",
+    "Czwartek",
+    "Piątek",
+    "Sobota",
+    "Niedziela",
+  ];
+  const WORK_DAYS = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
+
+  const formatWorkingDays = (days: string[]): string => {
+    if (days.length === 0) {
+      return "Brak dni";
+    }
+  
+    if (days.length === 7 && days.every(day => ALL_DAYS.includes(day))) {
+      return "Wszystkie dni tygodnia";
+    }
+  
+    if (days.length === 5 && WORK_DAYS.every(day => days.includes(day))) {
+      return "Dni robocze";
+    }
+  
+    const sortedDays = days
+      .filter(day => ALL_DAYS.includes(day)) // usun nieprawidłowe dni
+      .sort((a, b) => ALL_DAYS.indexOf(a) - ALL_DAYS.indexOf(b)); // sortuj według ALL_DAYS
+  
+    if (isConsecutiveDays(sortedDays)) {
+      return `${sortedDays[0]} - ${sortedDays[sortedDays.length - 1]}`;
+    }
+  
+    return sortedDays.join(", ");
+  };
+  
+
+  const isConsecutiveDays = (days: string[]): boolean => {
+    const sortedDays = days
+      .map(day => ALL_DAYS.indexOf(day)) // zmapuj dni na indeksy w ALL_DAYS
+      .filter(index => index !== -1)    // usun nieprawidłowe indeksy
+      .sort((a, b) => a - b);           // posortuj indeksy
+  
+    // sprawdz, czy indeksy są kolejne
+    return sortedDays.length > 1 && sortedDays.every((value, index, array) =>
+      index === 0 || value === array[index - 1] + 1
+    );
+  };
+  
+  const formatWorkingHours = (hours: string): string => {
+    const hoursMap: { [key: string]: string } = {
+      UP_TO_FOUR: "Do 4 godzin / tydzień",
+      FOUR_TO_EIGHT: "4-8 godzin / tydzień",
+      EIGHT_TO_SIXTEEN: "8-16 godzin / tydzień",
+      SIXTEEN_TO_THIRTY_TWO: "16-32 godzin / tydzień",
+      THIRTY_TWO_PLUS: "Ponad 32 godzin / tydzień",
+    };
+    return hoursMap[hours] || "Brak danych";
+  };
+
+  useEffect(() => {
+    const fetchFreelancerData = async () => {
+      try {
+        const data = await getFreelancerBar();
+
+        setFreelancerName(`${data.firstName} ${data.lastName}`);
+        setLanguages(data.localization?.languages?.join(", ") || "Brak danych");
+        setLocation(
+          [
+            data.localization?.city,
+            data.localization?.state,
+            data.localization?.country,
+          ]
+            .filter(Boolean)
+            .join(", ") || "Brak lokalizacji"
+        );
+        setRate(data.rate || 0);
+        setCount(data.count || 0);
+        setWorkingDays(formatWorkingDays(data.workingDays || []));
+        setWorkingHours(formatWorkingHours(data.workingHours || ""));
+        setSectors(data.sectors || []);
+      } catch (error) {
+        console.error("Failed to fetch freelancer data:", error);
+      }
+    };
+
+    fetchFreelancerData();
+  }, [getFreelancerBar]);
+
   return (
     <div className={styles.profileCard}>
-      <h2 className={styles.name}>Joanna Kowalska</h2>
+      <h2 className={styles.name}>{freelancerName}</h2>
       <div className={styles.infoContainer}>
         <p className={styles.role}>Specjalista ds. rozwoju sprzedaży</p>
         <div className={styles.ratings}>
@@ -15,7 +123,7 @@ const FreelancerProfileInfo = () => {
             >
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
             </svg>
-            4.87
+            {rate.toFixed(2)}
           </span>
           <span className={styles.points}>
             <svg
@@ -25,11 +133,34 @@ const FreelancerProfileInfo = () => {
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
             </svg>
-            175 pkt
+            {count}
           </span>
         </div>
         <div className={styles.badges}>
-          <span className={styles.badgeRecommended}>Polecany specjalista</span>
+          <span className={styles.badgeRecommended}>
+            <svg
+              width="12"
+              height="13"
+              viewBox="0 0 12 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={styles.badgeIcon}
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M5.95674 5.17418C5.25923 5.17418 4.69389 5.73952 4.69389 6.43704C4.69389 7.13437 5.25923 7.69971 5.95674 7.69971C6.65426 7.69971 7.2196 7.13437 7.2196 6.43704C7.2196 5.73952 6.65426 5.17418 5.95674 5.17418Z"
+                fill="#00C3DF"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.67292 10.4913L5.96931 10.4911C5.96875 10.4911 5.96818 10.4913 5.9678 10.4913C5.96724 10.4913 5.96667 10.4911 5.96629 10.4911H5.95667C5.2397 10.4894 4.59127 10.3134 4.01102 9.96163C3.42679 9.6089 2.96492 9.1257 2.62712 8.51334C2.28837 7.90099 2.11861 7.21215 2.11861 6.44855C2.11861 5.66983 2.28837 4.97477 2.62712 4.36165C2.96492 3.7493 3.42679 3.26609 4.01102 2.91337C4.5943 2.5597 5.24631 2.38277 5.9678 2.38277C6.70233 2.38277 7.35869 2.5597 7.93498 2.91337C8.51127 3.26609 8.9654 3.7493 9.29697 4.36165C9.62874 4.97477 9.7949 5.66983 9.7949 6.44855V10.4911H9.70786L9.67292 10.4913ZM8.99429 1.22679C8.10039 0.700722 7.09207 0.4375 5.9678 0.4375C4.84335 0.4375 3.83069 0.700722 2.9298 1.22679C2.02873 1.75285 1.31516 2.47001 0.789099 3.37788C0.262089 4.28594 0 5.31012 0 6.44855C0 7.58697 0.24094 8.60757 0.723954 9.5077C1.20697 10.4086 1.86597 11.1221 2.70265 11.6482C3.53858 12.1752 4.4827 12.4375 5.53483 12.4375C7.21461 12.4375 11.9135 12.3731 11.9135 12.3731V6.44855C11.9135 5.31012 11.6505 4.28594 11.1244 3.37788C10.5984 2.47001 9.88818 1.75285 8.99429 1.22679Z"
+                fill="#00C3DF"
+              />
+            </svg>
+            Polecany specjalista
+          </span>
           <span className={styles.badgeLimited}>Ograniczona dostępność</span>
         </div>
       </div>
@@ -63,7 +194,7 @@ const FreelancerProfileInfo = () => {
               fill="#75778A"
             />
           </svg>
-          Poniedziałek - Piątek
+          {workingDays}
         </div>
         <div className={styles.detail}>
           <svg
@@ -82,7 +213,7 @@ const FreelancerProfileInfo = () => {
               fill="#75778A"
             />
           </svg>
-          8-16 godzin / tydzień
+          {workingHours}
         </div>
         <div className={styles.detail}>
           <svg
@@ -101,7 +232,7 @@ const FreelancerProfileInfo = () => {
               fill="#75778A"
             />
           </svg>
-          Poznań, Wielkopolskie
+          {location}
         </div>
         <div className={styles.detail}>
           <svg
@@ -116,16 +247,21 @@ const FreelancerProfileInfo = () => {
               fill="#75778A"
             />
           </svg>
-          Polski, Angielski, Niemiecki
+          {languages}
         </div>
       </div>
-      <div className={styles.sectors}>
-        <span>Finanse i bankowość</span>
-        <span>Telekomunikacja oraz IT</span>
-        <span>Edukacja i szkolenia</span>
-        <span>Przemysł i produkcja</span>
-        <span>+1</span>
-      </div>
+      <section className={styles.infoFooter}>
+        <footer className={styles.footer}>SEKTORY</footer>
+        <div className={styles.sectors}>
+          {sectors.length > 0 ? (
+            sectors.map((sector) => (
+              <span key={sector.id}>{sector.name}</span>
+            ))
+          ) : (
+            <span>Brak sektorów</span>
+          )}
+        </div>
+      </section>
     </div>
   );
 };
