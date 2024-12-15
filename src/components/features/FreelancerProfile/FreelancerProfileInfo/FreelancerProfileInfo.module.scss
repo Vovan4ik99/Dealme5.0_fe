@@ -27,7 +27,17 @@
 .ratings {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+}
+
+.ratingText{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 100%;
+    font-weight: 500;
+    gap: 4px;
+    color: vars.$color-black;
 }
 
 .points {
@@ -37,10 +47,15 @@
     gap: 5px;
 }
 
-.icon {
-    width: 16px;
-    height: 16px;
-    fill: #f9b233;
+.starIcon {
+    width: 12px;
+    height: 11.62px;
+    color: vars.$color-warning
+}
+.dealmeIcon {
+    width: 11.91px;
+    height: 12px;
+    color: vars.$color-black;
 }
 
 .badges {
@@ -54,7 +69,7 @@
     height: 10px;
 }
 
-.badgeRecommended {
+.badgeRecommendedIconWithText {
     background-color: vars.$color-primary-pastel;
     display: flex;
     align-items: center;
@@ -65,10 +80,12 @@
     border-radius: 8px;
 }
 
-.badgeLimited {
+.badgeLimitedIconWithText {
+    background-color: vars.$color-danger-pastel;
     display: flex;
     align-items: center;
-    color: #d80027;
+    gap: 4px;
+    color: vars.$color-danger;
     font-size: 12px;
     padding: 8px;
     border-radius: 8px;

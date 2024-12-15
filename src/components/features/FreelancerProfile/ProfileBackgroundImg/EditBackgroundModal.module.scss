@@ -27,10 +27,11 @@
     align-items: center;
     gap: 16px;
   }
+  
   &__preview {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
   }
 
   &__imageWrapper {

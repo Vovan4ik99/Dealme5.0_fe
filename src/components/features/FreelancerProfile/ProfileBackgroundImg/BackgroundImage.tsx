@@ -1,8 +1,8 @@
 import { useState } from "react";
-import styles from "./UserProfile.module.scss";
+import styles from "./BackgroundImage.module.scss";
 import EditBackgroundModal from "./EditBackgroundModal";
 
-const UserProfile = () => {
+const BackgroundImage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>(
     ""
@@ -47,4 +47,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default BackgroundImage;

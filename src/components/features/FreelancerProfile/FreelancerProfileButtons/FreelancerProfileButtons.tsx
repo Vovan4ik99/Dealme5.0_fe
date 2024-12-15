@@ -1,4 +1,4 @@
-import "../../../styles/btn.scss";
+import "../../../../styles/btn.scss";
 import styles from "./FreelancerProfileButtons.module.scss";
 
 const BUTTONS = [

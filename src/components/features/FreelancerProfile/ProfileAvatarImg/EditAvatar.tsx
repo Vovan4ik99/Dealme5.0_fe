@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./EditBackgroundModal.module.scss";
-import ReusableModal from "../ReusableModal";
-import CroppingModal from "./CroppingModal";
+import styles from "./EditAvatar.module.scss";
+import ReusableModal from "../../ReusableModal";
+import CroppingAvatar from "./CroppingAvatar";
 import { useFreelancerProfileService } from "@services/freelancerProfileService";
 
 interface EditBackgroundModalProps {
@@ -98,7 +98,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
     <div className={styles.editBackgroundModal__wrapper}>
       <div className={styles.editBackgroundModal__container}>
         <ReusableModal
-          title="Edytuj zdjęcie w tle"
+          title="Edytuj awatar"
           onClose={onClose}
           onSave={handleSave}
         >
@@ -107,7 +107,7 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
               <div className={styles.editBackgroundModal__preview}>
                 <div className={styles.editBackgroundModal__previewText}>
                   <div className={styles.editBackgroundModal__imageHeader}>
-                    Zdjęcie w tle (opcjonalnie)
+                    Awatar (opcjonalnie)
                   </div>
                   <div className={styles.editBackgroundModal__fileName}>
                     {fileName}
@@ -256,13 +256,13 @@ const EditBackgroundModal: React.FC<EditBackgroundModalProps> = ({
                     fill="#75778A"
                   />
                 </svg>
-                Zalecany rozmiar: 1320px na 250px
+                Zalecany rozmiar: 160px na 160px
               </p>
             </footer>
           </div>
         </ReusableModal>
         {croppingVisible && imageUrl && (
-          <CroppingModal
+          <CroppingAvatar
             imageUrl={imageUrl}
             onClose={handleCroppingClose}
             onSave={({ imageUrl }) => {

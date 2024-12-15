@@ -36,39 +36,41 @@ const FreelancerProfileInfo = () => {
     if (days.length === 0) {
       return "Brak dni";
     }
-  
-    if (days.length === 7 && days.every(day => ALL_DAYS.includes(day))) {
+
+    if (days.length === 7 && days.every((day) => ALL_DAYS.includes(day))) {
       return "Wszystkie dni tygodnia";
     }
-  
-    if (days.length === 5 && WORK_DAYS.every(day => days.includes(day))) {
+
+    if (days.length === 5 && WORK_DAYS.every((day) => days.includes(day))) {
       return "Dni robocze";
     }
-  
+
     const sortedDays = days
-      .filter(day => ALL_DAYS.includes(day)) // usun nieprawidłowe dni
+      .filter((day) => ALL_DAYS.includes(day)) // usun nieprawidłowe dni
       .sort((a, b) => ALL_DAYS.indexOf(a) - ALL_DAYS.indexOf(b)); // sortuj według ALL_DAYS
-  
+
     if (isConsecutiveDays(sortedDays)) {
       return `${sortedDays[0]} - ${sortedDays[sortedDays.length - 1]}`;
     }
-  
+
     return sortedDays.join(", ");
   };
-  
 
   const isConsecutiveDays = (days: string[]): boolean => {
     const sortedDays = days
-      .map(day => ALL_DAYS.indexOf(day)) // zmapuj dni na indeksy w ALL_DAYS
-      .filter(index => index !== -1)    // usun nieprawidłowe indeksy
-      .sort((a, b) => a - b);           // posortuj indeksy
-  
+      .map((day) => ALL_DAYS.indexOf(day)) // zmapuj dni na indeksy w ALL_DAYS
+      .filter((index) => index !== -1) // usun nieprawidłowe indeksy
+      .sort((a, b) => a - b); // posortuj indeksy
+
     // sprawdz, czy indeksy są kolejne
-    return sortedDays.length > 1 && sortedDays.every((value, index, array) =>
-      index === 0 || value === array[index - 1] + 1
+    return (
+      sortedDays.length > 1 &&
+      sortedDays.every(
+        (value, index, array) => index === 0 || value === array[index - 1] + 1
+      )
     );
   };
-  
+
   const formatWorkingHours = (hours: string): string => {
     const hoursMap: { [key: string]: string } = {
       UP_TO_FOUR: "Do 4 godzin / tydzień",
@@ -115,29 +117,48 @@ const FreelancerProfileInfo = () => {
       <div className={styles.infoContainer}>
         <p className={styles.role}>Specjalista ds. rozwoju sprzedaży</p>
         <div className={styles.ratings}>
-          <span className={styles.rating}>
+          <span className={styles.ratingText}>
             <svg
-              className={styles.icon}
-              viewBox="0 0 24 24"
+              className={styles.starIcon}
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              <path
+                d="M0.659564 6.29733L2.44054 7.59804L1.76417 9.6927C1.65487 10.0176 1.65348 10.3691 1.76022 10.6948C1.86697 11.0205 2.07612 11.303 2.3565 11.5002C2.63207 11.7037 2.96603 11.8127 3.3086 11.811C3.65117 11.8093 3.98401 11.6969 4.25754 11.4907L5.999 10.209L7.74096 11.4892C8.01604 11.6915 8.34819 11.8014 8.68966 11.8031C9.03114 11.8047 9.36435 11.6981 9.64139 11.4984C9.91842 11.2988 10.125 11.0164 10.2315 10.692C10.3379 10.3675 10.3387 10.0177 10.2338 9.6927L9.55746 7.59804L11.3384 6.29733C11.6132 6.09647 11.8174 5.81394 11.9219 5.49008C12.0265 5.16622 12.026 4.81761 11.9206 4.49403C11.8152 4.17045 11.6102 3.88847 11.3349 3.68835C11.0597 3.48823 10.7282 3.38021 10.3879 3.37973H8.20021L7.53634 1.31059C7.43195 0.984888 7.22681 0.70076 6.95051 0.499174C6.67421 0.297589 6.34102 0.188965 5.999 0.188965C5.65698 0.188965 5.32379 0.297589 5.04749 0.499174C4.77119 0.70076 4.56605 0.984888 4.46165 1.31059L3.79779 3.37973H1.61209C1.27177 3.38021 0.940315 3.48823 0.665057 3.68835C0.3898 3.88847 0.184824 4.17045 0.0794063 4.49403C-0.0260113 4.81761 -0.0264779 5.16622 0.0780731 5.49008C0.182624 5.81394 0.386845 6.09647 0.661566 6.29733H0.659564Z"
+                fill="currentColor"
+              />
             </svg>
+
             {rate.toFixed(2)}
           </span>
-          <span className={styles.points}>
+          <span className={styles.ratingText}>
             <svg
-              className={styles.icon}
-              viewBox="0 0 24 24"
+              className={styles.dealmeIcon}
+              width="12"
+              height="13"
+              viewBox="0 0 12 13"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M5.95674 5.17418C5.25923 5.17418 4.69389 5.73952 4.69389 6.43704C4.69389 7.13437 5.25923 7.69971 5.95674 7.69971C6.65426 7.69971 7.2196 7.13437 7.2196 6.43704C7.2196 5.73952 6.65426 5.17418 5.95674 5.17418Z"
+                fill="currentColor"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.67292 10.4913L5.96931 10.4911C5.96875 10.4911 5.96818 10.4913 5.9678 10.4913C5.96724 10.4913 5.96667 10.4911 5.96629 10.4911H5.95667C5.2397 10.4894 4.59127 10.3134 4.01102 9.96163C3.42679 9.6089 2.96492 9.1257 2.62712 8.51334C2.28837 7.90099 2.11861 7.21215 2.11861 6.44855C2.11861 5.66983 2.28837 4.97477 2.62712 4.36165C2.96492 3.7493 3.42679 3.26609 4.01102 2.91337C4.5943 2.5597 5.24631 2.38277 5.9678 2.38277C6.70233 2.38277 7.35869 2.5597 7.93498 2.91337C8.51127 3.26609 8.9654 3.7493 9.29697 4.36165C9.62874 4.97477 9.7949 5.66983 9.7949 6.44855V10.4911H9.70786L9.67292 10.4913ZM8.99429 1.22679C8.10039 0.700722 7.09207 0.4375 5.9678 0.4375C4.84335 0.4375 3.83069 0.700722 2.9298 1.22679C2.02873 1.75285 1.31516 2.47001 0.789099 3.37788C0.262089 4.28594 0 5.31012 0 6.44855C0 7.58697 0.24094 8.60757 0.723954 9.5077C1.20697 10.4086 1.86597 11.1221 2.70265 11.6482C3.53858 12.1752 4.4827 12.4375 5.53483 12.4375C7.21461 12.4375 11.9135 12.3731 11.9135 12.3731V6.44855C11.9135 5.31012 11.6505 4.28594 11.1244 3.37788C10.5984 2.47001 9.88818 1.75285 8.99429 1.22679Z"
+                fill="currentColor"
+              />
             </svg>
-            {count}
+            {count} pkt
           </span>
         </div>
         <div className={styles.badges}>
-          <span className={styles.badgeRecommended}>
+          <span className={styles.badgeRecommendedIconWithText}>
             <svg
               width="12"
               height="13"
@@ -161,11 +182,25 @@ const FreelancerProfileInfo = () => {
             </svg>
             Polecany specjalista
           </span>
-          <span className={styles.badgeLimited}>Ograniczona dostępność</span>
+          <span className={styles.badgeLimitedIconWithText}>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.8235 6C11.8235 9.3085 9.132 12 5.8235 12C4.354 12 2.9395 11.463 1.8415 10.4885C1.532 10.2135 1.5035 9.7395 1.779 9.4295C2.054 9.12 2.528 9.0915 2.8375 9.367C3.661 10.0975 4.7215 10.5005 5.8235 10.5005C8.305 10.5005 10.3235 8.4815 10.3235 6.0005C10.3235 4.8355 9.865 3.731 9.0765 2.902L8.6145 3.364C8.3225 3.656 7.8235 3.449 7.8235 3.0365V0.9635C7.8235 0.7075 8.031 0.5 8.287 0.5H10.3595C10.772 0.5 10.979 0.999 10.687 1.291L10.1355 1.8425C11.2025 2.951 11.8235 4.434 11.8235 6ZM4.0735 8.0455C4.0735 8.2965 4.273 8.5 4.519 8.5H7.128C7.374 8.5 7.5735 8.2965 7.5735 8.0455C7.5735 7.098 6.9715 6.4095 6.4665 6C6.9715 5.5905 7.5735 4.902 7.5735 3.9545C7.5735 3.7035 7.374 3.5 7.128 3.5H4.519C4.273 3.5 4.0735 3.7035 4.0735 3.9545C4.0735 4.905 4.6795 5.5915 5.185 6C4.679 6.4085 4.0735 7.095 4.0735 8.0455ZM2.34 2.753C2.754 2.753 3.09 2.417 3.09 2.003C3.09 1.589 2.754 1.253 2.34 1.253C1.926 1.253 1.59 1.589 1.59 2.003C1.59 2.417 1.926 2.753 2.34 2.753ZM0.75 3.753C0.336 3.753 0 4.089 0 4.503C0 4.917 0.336 5.253 0.75 5.253C1.164 5.253 1.5 4.917 1.5 4.503C1.5 4.089 1.164 3.753 0.75 3.753ZM0.75 6.7665C0.336 6.7665 0 7.1025 0 7.5165C0 7.9305 0.336 8.2665 0.75 8.2665C1.164 8.2665 1.5 7.9305 1.5 7.5165C1.5 7.1025 1.164 6.7665 0.75 6.7665ZM5.0735 1.5C5.4875 1.5 5.8235 1.164 5.8235 0.75C5.8235 0.336 5.4875 0 5.0735 0C4.6595 0 4.3235 0.336 4.3235 0.75C4.3235 1.164 4.6595 1.5 5.0735 1.5Z"
+                fill="#DF003B"
+              />
+            </svg>
+            Ograniczona dostępność
+          </span>
         </div>
       </div>
 
-      <div className={styles.details}>
+      <section className={styles.details}>
         <div className={styles.detail}>
           <svg
             width="14"
@@ -249,14 +284,12 @@ const FreelancerProfileInfo = () => {
           </svg>
           {languages}
         </div>
-      </div>
+      </section>
       <section className={styles.infoFooter}>
         <footer className={styles.footer}>SEKTORY</footer>
         <div className={styles.sectors}>
           {sectors.length > 0 ? (
-            sectors.map((sector) => (
-              <span key={sector.id}>{sector.name}</span>
-            ))
+            sectors.map((sector) => <span key={sector.id}>{sector.name}</span>)
           ) : (
             <span>Brak sektorów</span>
           )}

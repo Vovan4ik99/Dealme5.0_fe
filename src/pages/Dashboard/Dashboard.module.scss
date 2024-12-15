@@ -3,39 +3,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.imageContainer{
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.avatar{
-  position: absolute;
-  left: 24px;
-  bottom: -37px;
-}
-
-.profileInfo {
-  display: flex;
-  width: 100%; 
-  max-width: 1320px; 
-  justify-content: flex-start; 
-  align-items: flex-start; 
-  margin-top: 54px;
-}
-
-.gridContainer {
-  display: grid;
-  grid-template-columns: 342px 1fr; 
-  column-gap: 80px; 
-  width: 100%; 
-  max-width: 1320px; 
 
 }
-.rightColumn{
-  display: flex;
-  flex-direction: column;
-  gap:16px;
-  padding-right: 24px;
-}
+
