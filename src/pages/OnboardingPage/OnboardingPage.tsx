@@ -1,4 +1,4 @@
-import Navbar from "../../components/layout/Navbar/Navbar.tsx";
+import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
 import styles from "./OnboardingPage.module.scss";
 import OnboardingSwitcher from "../../components/features/Onboarding/OnboardingSwitcher.tsx";
 

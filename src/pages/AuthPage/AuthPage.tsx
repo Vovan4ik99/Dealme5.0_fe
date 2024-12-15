@@ -1,5 +1,5 @@
 import styles from "./AuthPage.module.scss";
-import Navbar from "../../components/layout/Navbar/Navbar.tsx";
+import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
 import google_icon from "@icons/google_login.svg";
 import facebook_icon from "@icons/facebook_login.svg";
 import React from "react";

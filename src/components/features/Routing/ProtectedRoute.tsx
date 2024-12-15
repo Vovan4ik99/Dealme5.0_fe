@@ -7,16 +7,15 @@ const ProtectedRoute = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-    if (!isProfileCompleted(user)) {
-      navigate("/onboarding");
-      return;
-    }
-  }, [navigate, user]);
+	useEffect(() => {
+		if (!user) {
+			navigate("/login");
+			return;
+		}
+		if (!isProfileCompleted(user)) {
+			navigate("/onboarding");
+		}
+	}, [navigate, user]);
 
   const isProfileCompleted = (user: ILoggedUserData) => {
     return !Object.entries(user)
@@ -28,7 +27,7 @@ const ProtectedRoute = () => {
       );
   };
 
-  return <Outlet />;
-};
+	return <Outlet/>;
+}
 
 export default ProtectedRoute;
