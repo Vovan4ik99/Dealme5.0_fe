@@ -1,0 +1,25 @@
+@use "@styles/variables" as vars;
+
+.subIndustries {
+    &__wrapper{
+        display: flex;
+        gap: 8px;
+    }
+    &__details {
+        border: 1px solid vars.$color-gray-border;
+        border-bottom: none;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        width: 318px;
+    }
+
+    &__detail {
+        display: flex;
+        align-items: center;
+        color: vars.$color-gray;
+        justify-content: space-between;
+        font-size: 15px;
+        padding: 16px;
+        border-bottom: 1px solid vars.$color-gray-border;
+    }
+}

@@ -1,0 +1,27 @@
+@use "@styles/variables" as vars;
+
+.asideProfile {
+    &__profileCard {
+        margin-left: 24px;
+        color: #2b2b2b;
+    }
+
+    &__name {
+        font-size: 26px;
+        font-weight: 600;
+        line-height: 100%;
+        color: #000000;
+        margin-bottom: 8px;
+    }
+    &__infoContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    &__role {
+        font-size: 15px;
+        font-weight: 500;
+        color: vars.$color-gray;
+        line-height: 100%;
+    }
+}

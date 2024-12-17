@@ -1,0 +1,35 @@
+@use "@styles/variables" as vars;
+
+.aboutme{
+    &__section{
+        display: flex;
+        flex-direction: column;
+        gap:24px;
+        width: 100%;
+    }
+
+    &__gridContainer{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 40px;
+    }
+
+    &__textArea{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__header{
+        font-size: 18px;
+        line-height: 130%;
+        font-weight: 400;
+        color: vars.$color-black
+    }
+    &__description{
+        font-size: 15px;
+        line-height: 130%;
+        font-weight: 400;
+        color: vars.$color-black
+    }
+}
