@@ -1,14 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useRef } from "react";
 import styles from "./ReusableModal.module.scss";
-import "../../styles/btn.scss";
-import "../../styles/title.scss";
+import "../../../../../styles/btn.scss";
+import "../../../../../styles/title.scss";
+import  useOnClickOutside  from "../../../../../hooks/useOnClickOutside";
 
 interface ReusableModalProps {
   title: string;
   onClose: () => void;
   onSave: () => void;
   children: ReactNode;
-  width?:string;
+  width?: string;
+  additionalRefs?: React.RefObject<HTMLElement>[];
 }
 
 const ReusableModal: React.FC<ReusableModalProps> = ({
@@ -16,20 +18,21 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   onClose,
   onSave,
   children,
-  width
+  width,
+  additionalRefs =[]
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(modalRef, onClose, additionalRefs);
+
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
+    <div className={styles.reusableModal__modalOverlay}>
       <div
+      ref={modalRef}
         className={styles.reusableModal__content}
-        style={{width: width ||"600px"}}
-        onClick={(e) => e.stopPropagation()}
+        style={{ width: width || "600px" }}
       >
         <div className={styles.reusableModal__mainContent}>
-          <button
-            className={styles.reusableModal__closeBtn}
-            onClick={onClose}
-          >
+          <button className={styles.reusableModal__closeBtn} onClick={onClose}>
             <div className={styles.reusableModal__closeIcon}>
               <svg
                 width="10"
@@ -58,4 +61,3 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
 };
 
 export default ReusableModal;
-

@@ -1,74 +1,75 @@
 @use "@styles/variables" as vars;
 
-.progressBarContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px; 
-    background-color: vars.$color-primary-pastel;
-    padding: 16px;
-    border-radius: 8px;
-    width: 100%;
-    margin-bottom: 64px;
-}
+.bar {
+    &__progressBarContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        background-color: vars.$color-primary-pastel;
+        padding: 16px;
+        border-radius: 8px;
+        width: 100%;
+    }
 
-.textContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 8px;
-}
-.infoText {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 500;
-    color: vars.$color-gray;
-    font-size: 15px;
-    line-height: 100%;
-}
+    &__textContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+    &__infoText {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+        color: vars.$color-gray;
+        font-size: 15px;
+        line-height: 100%;
+    }
 
-.percentage {
-    font-weight: 600;
-    color: vars.$color-gray;
-    font-size: 14px;
-    line-height: 120%;
-}
+    &__percentage {
+        font-weight: 600;
+        color: vars.$color-gray;
+        font-size: 14px;
+        line-height: 120%;
+    }
 
-.progressBar {
-    background-color: vars.$color-white;
-    padding: 2px;
-    border-radius: 4px;
-    height: 7px;
-}
+    &__progressBar {
+        background-color: vars.$color-white;
+        padding: 2px;
+        border-radius: 4px;
+        height: 7px;
+    }
 
-.progress {
-    height: 3px;
-    background-color: vars.$primary-color;
-    border-radius: 4px;
-}
+    &__progress {
+        height: 3px;
+        background-color: vars.$primary-color;
+        border-radius: 4px;
+    }
 
-.updateButton {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 16px;
-    background-color: vars.$primary-color;
-    color: vars.$color-white;
-    white-space: nowrap;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 400;
-    transition: all 0.3s ease-in-out;
+    &__updateButton {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 16px;
+        background-color: vars.$primary-color;
+        color: vars.$color-white;
+        white-space: nowrap;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        transition: all 0.3s ease-in-out;
 
-    &:hover {
-        background-color: #008c9e;
+        &:hover {
+            background-color: #008c9e;
+        }
     }
 }

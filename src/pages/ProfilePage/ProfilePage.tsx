@@ -7,30 +7,34 @@ import FreelancerProfileButtons from "../../components/features/FreelancerProfil
 import VisibilityBarForClients from "../../components/features/FreelancerProfile/VisibilityBarForClients/VisibilityBarForClients.tsx";
 import FreelancerProfileInfo from "../../components/features/FreelancerProfile/FreelancerProfileInfo/FreelancerProfileInfo.tsx";
 import Statistics from "../../components/features/FreelancerProfile/Statistics/Statistics.tsx";
+import Opinions from "../../components/features/FreelancerProfile/Opinions/Opinions.tsx";
+import AboutMe from "../../components/features/FreelancerProfile/AboutMe/AboutMe.tsx";
 
 const ProfilePage = () => {
-	return (
-		<section className={styles['profile']}>
-			<ProfileNavbar/>
-			<div className={styles["imageContainer"]}>
+  return (
+    <section className={styles["profile"]}>
+      <ProfileNavbar />
+      <section className={styles["imageContainer"]}>
         <BackgroundImage />
         <div className={styles["avatar"]}>
           <Avatar />
         </div>
-      </div>
+      </section>
       <div className={styles["gridContainer"]}>
-        <div className={styles["profileInfo"]}>
+        <aside className={styles["profileInfo"]}>
           <FreelancerProfileInfo />
-        </div>
+        </aside>
         <div className={styles["rightColumn"]}>
           <FreelancerProfileButtons />
           <VisibilityBarForClients progress={58} />
-		  <Statistics />
+          <Statistics />
+          <AboutMe />
+          <Opinions />
         </div>
       </div>
-			<Footer isHyphenated={false} isCentered={true}/>
-		</section>
-	);
+      <Footer isHyphenated={false} isCentered={true} />
+    </section>
+  );
 };
 
 export default ProfilePage;

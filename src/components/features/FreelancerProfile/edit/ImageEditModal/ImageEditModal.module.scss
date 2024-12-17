@@ -1,6 +1,6 @@
 @use "@styles/variables" as vars;
 
-.editBackgroundModal {
+.editModal {
   &__wrapper {
     position: fixed;
     padding: 8px;
@@ -94,7 +94,6 @@
   }
 
   &__editArea {
-    padding: 64px 48px 0 48px;
     width: 100%;
     height: auto;
     padding: 16px;

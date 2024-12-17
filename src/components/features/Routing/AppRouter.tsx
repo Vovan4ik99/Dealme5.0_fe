@@ -6,7 +6,6 @@ import PublicRoute from "./PublicRoute.tsx";
 import Dashboard from "@pages/Dashboard/Dashboard.tsx";
 import ProfilePage from "@pages/ProfilePage/ProfilePage.tsx"
 
-
 const AppRouter = () => {
 	return (
 		<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -16,11 +15,11 @@ const AppRouter = () => {
 					<Route path={'/registration'} element={<AuthPage isLogin={false}/>} />
 				</Route>
 
-
+				<Route element={<ProtectedRoute/>}>
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>
 					<Route path={'/profile'} element={<ProfilePage/>}/>
 					<Route path={'/'} element={<Dashboard/>}/>
-
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	)

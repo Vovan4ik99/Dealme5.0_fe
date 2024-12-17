@@ -15,13 +15,13 @@ const BUTTONS = [
 
 const FreelancerProfileButtons = () => {
   return (
-    <div className={styles["container"]}>
+    <section className={styles["container"]}>
       {BUTTONS.map((button, index) => (
         <button key={index} className="btn btn--tab">
           {button}
         </button>
       ))}
-    </div>
+    </section>
   );
 };
 

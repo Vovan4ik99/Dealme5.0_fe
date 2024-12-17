@@ -21,4 +21,10 @@
     font-weight: 700;
     line-height: 120%;
   }
+  &--fs20 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 100%;
+    color: vars.$color-black;
+  }
 }

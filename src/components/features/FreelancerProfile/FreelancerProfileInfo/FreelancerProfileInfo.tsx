@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./FreelancerProfileInfo.module.scss";
 import { useFreelancerProfileService } from "@services/freelancerProfileService";
+import SubIndustries from "./SubIndustries/SubIndustries";
+import Sectors from "./Sectors/Sectors";
+import RatingAndAccStatus from "./RatingAndAccStatus/RatingAndAccStatus";
+import { useContext } from "react";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
 interface ISector {
   id: number;
@@ -12,7 +17,12 @@ const FreelancerProfileInfo = () => {
   const { getFreelancerBar, loadingStatus, errorMessage } =
     useFreelancerProfileService();
 
+  const { user } = useContext(AuthContext);
+
   const [freelancerName, setFreelancerName] = useState<string>("");
+  const [specialization, setSpecialization] = useState<string>("");
+  const [accountStatus, setAccountStatus] = useState<string>("");
+  const [visibilityStatus, setVisibilityStatus] = useState<string>("");
   const [languages, setLanguages] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [rate, setRate] = useState<number>(0);
@@ -20,74 +30,84 @@ const FreelancerProfileInfo = () => {
   const [workingHours, setWorkingHours] = useState<string>("");
   const [workingDays, setWorkingDays] = useState<string>("");
   const [sectors, setSectors] = useState<ISector[]>([]);
+  const [subIndustries, setSubIndustries] = useState<ISector[]>([]);
 
   const ALL_DAYS = [
-    "Poniedziałek",
-    "Wtorek",
-    "Środa",
-    "Czwartek",
-    "Piątek",
-    "Sobota",
-    "Niedziela",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY",
   ];
-  const WORK_DAYS = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
-
+  
+  const WORK_DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
+  
+  const DAYS_TRANSLATIONS: Record<string, string> = {
+    MONDAY: "Poniedziałek",
+    TUESDAY: "Wtorek",
+    WEDNESDAY: "Środa",
+    THURSDAY: "Czwartek",
+    FRIDAY: "Piątek",
+    SATURDAY: "Sobota",
+    SUNDAY: "Niedziela",
+  };
+  
+  // Główna funkcja formatowania
   const formatWorkingDays = (days: string[]): string => {
-    if (days.length === 0) {
-      return "Brak dni";
-    }
-
+    if (days.length === 0) return "Brak dni";
+  
+    // Wszystkie dni tygodnia
     if (days.length === 7 && days.every((day) => ALL_DAYS.includes(day))) {
       return "Wszystkie dni tygodnia";
     }
-
+  
+    // Dni robocze
     if (days.length === 5 && WORK_DAYS.every((day) => days.includes(day))) {
       return "Dni robocze";
     }
-
+  
+    // Posortowanie dni na podstawie indeksów w ALL_DAYS
     const sortedDays = days
-      .filter((day) => ALL_DAYS.includes(day)) // usun nieprawidłowe dni
-      .sort((a, b) => ALL_DAYS.indexOf(a) - ALL_DAYS.indexOf(b)); // sortuj według ALL_DAYS
-
-    if (isConsecutiveDays(sortedDays)) {
-      return `${sortedDays[0]} - ${sortedDays[sortedDays.length - 1]}`;
+      .slice() // Kopia oryginalnej tablicy
+      .sort((a, b) => ALL_DAYS.indexOf(a) - ALL_DAYS.indexOf(b));
+  
+    // Zamiana dni na ich tłumaczenia
+    const translatedDays = sortedDays.map((day) => DAYS_TRANSLATIONS[day]);
+  
+    // Jeśli jest tylko jeden dzień, zwracamy jego nazwę
+    if (translatedDays.length === 1) {
+      return translatedDays[0];
     }
-
-    return sortedDays.join(", ");
+  
+    // Jeśli dni są po kolei, zwracamy zakres np. "Poniedziałek - Środa"
+    if (isConsecutiveDays(sortedDays)) {
+      const startDay = DAYS_TRANSLATIONS[sortedDays[0]];
+      const endDay = DAYS_TRANSLATIONS[sortedDays[sortedDays.length - 1]];
+      return `${startDay} - ${endDay}`;
+    }
+  
+    // Jeśli dni są losowe, zwracamy je po przecinku
+    return translatedDays.join(", ");
   };
-
+  
+  // Funkcja sprawdzająca, czy dni są po kolei
   const isConsecutiveDays = (days: string[]): boolean => {
-    const sortedDays = days
-      .map((day) => ALL_DAYS.indexOf(day)) // zmapuj dni na indeksy w ALL_DAYS
-      .filter((index) => index !== -1) // usun nieprawidłowe indeksy
-      .sort((a, b) => a - b); // posortuj indeksy
-
-    // sprawdz, czy indeksy są kolejne
-    return (
-      sortedDays.length > 1 &&
-      sortedDays.every(
-        (value, index, array) => index === 0 || value === array[index - 1] + 1
-      )
+    const indices = days.map((day) => ALL_DAYS.indexOf(day));
+    return indices.every(
+      (value, index, array) => index === 0 || value === array[index - 1] + 1
     );
   };
-
-  const formatWorkingHours = (hours: string): string => {
-    const hoursMap: { [key: string]: string } = {
-      UP_TO_FOUR: "Do 4 godzin / tydzień",
-      FOUR_TO_EIGHT: "4-8 godzin / tydzień",
-      EIGHT_TO_SIXTEEN: "8-16 godzin / tydzień",
-      SIXTEEN_TO_THIRTY_TWO: "16-32 godzin / tydzień",
-      THIRTY_TWO_PLUS: "Ponad 32 godzin / tydzień",
-    };
-    return hoursMap[hours] || "Brak danych";
-  };
-
+  
   useEffect(() => {
     const fetchFreelancerData = async () => {
       try {
         const data = await getFreelancerBar();
-
         setFreelancerName(`${data.firstName} ${data.lastName}`);
+        setSpecialization(user?.specialization.name || "Brak specjalizacji");
+        setAccountStatus(data.accountStatus);
+        setVisibilityStatus(data.visibilityStatus);
         setLanguages(data.localization?.languages?.join(", ") || "Brak danych");
         setLocation(
           [
@@ -101,201 +121,40 @@ const FreelancerProfileInfo = () => {
         setRate(data.rate || 0);
         setCount(data.count || 0);
         setWorkingDays(formatWorkingDays(data.workingDays || []));
-        setWorkingHours(formatWorkingHours(data.workingHours || ""));
+        setWorkingHours(data.workingHours.description);
         setSectors(data.sectors || []);
+        setSubIndustries(data.subIndustries || []);
+        console.log(data.workingDays);
       } catch (error) {
         console.error("Failed to fetch freelancer data:", error);
       }
     };
 
     fetchFreelancerData();
-  }, [getFreelancerBar]);
+  }, [getFreelancerBar, user]);
 
   return (
-    <div className={styles.profileCard}>
-      <h2 className={styles.name}>{freelancerName}</h2>
-      <div className={styles.infoContainer}>
-        <p className={styles.role}>Specjalista ds. rozwoju sprzedaży</p>
-        <div className={styles.ratings}>
-          <span className={styles.ratingText}>
-            <svg
-              className={styles.starIcon}
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0.659564 6.29733L2.44054 7.59804L1.76417 9.6927C1.65487 10.0176 1.65348 10.3691 1.76022 10.6948C1.86697 11.0205 2.07612 11.303 2.3565 11.5002C2.63207 11.7037 2.96603 11.8127 3.3086 11.811C3.65117 11.8093 3.98401 11.6969 4.25754 11.4907L5.999 10.209L7.74096 11.4892C8.01604 11.6915 8.34819 11.8014 8.68966 11.8031C9.03114 11.8047 9.36435 11.6981 9.64139 11.4984C9.91842 11.2988 10.125 11.0164 10.2315 10.692C10.3379 10.3675 10.3387 10.0177 10.2338 9.6927L9.55746 7.59804L11.3384 6.29733C11.6132 6.09647 11.8174 5.81394 11.9219 5.49008C12.0265 5.16622 12.026 4.81761 11.9206 4.49403C11.8152 4.17045 11.6102 3.88847 11.3349 3.68835C11.0597 3.48823 10.7282 3.38021 10.3879 3.37973H8.20021L7.53634 1.31059C7.43195 0.984888 7.22681 0.70076 6.95051 0.499174C6.67421 0.297589 6.34102 0.188965 5.999 0.188965C5.65698 0.188965 5.32379 0.297589 5.04749 0.499174C4.77119 0.70076 4.56605 0.984888 4.46165 1.31059L3.79779 3.37973H1.61209C1.27177 3.38021 0.940315 3.48823 0.665057 3.68835C0.3898 3.88847 0.184824 4.17045 0.0794063 4.49403C-0.0260113 4.81761 -0.0264779 5.16622 0.0780731 5.49008C0.182624 5.81394 0.386845 6.09647 0.661566 6.29733H0.659564Z"
-                fill="currentColor"
-              />
-            </svg>
-
-            {rate.toFixed(2)}
-          </span>
-          <span className={styles.ratingText}>
-            <svg
-              className={styles.dealmeIcon}
-              width="12"
-              height="13"
-              viewBox="0 0 12 13"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M5.95674 5.17418C5.25923 5.17418 4.69389 5.73952 4.69389 6.43704C4.69389 7.13437 5.25923 7.69971 5.95674 7.69971C6.65426 7.69971 7.2196 7.13437 7.2196 6.43704C7.2196 5.73952 6.65426 5.17418 5.95674 5.17418Z"
-                fill="currentColor"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.67292 10.4913L5.96931 10.4911C5.96875 10.4911 5.96818 10.4913 5.9678 10.4913C5.96724 10.4913 5.96667 10.4911 5.96629 10.4911H5.95667C5.2397 10.4894 4.59127 10.3134 4.01102 9.96163C3.42679 9.6089 2.96492 9.1257 2.62712 8.51334C2.28837 7.90099 2.11861 7.21215 2.11861 6.44855C2.11861 5.66983 2.28837 4.97477 2.62712 4.36165C2.96492 3.7493 3.42679 3.26609 4.01102 2.91337C4.5943 2.5597 5.24631 2.38277 5.9678 2.38277C6.70233 2.38277 7.35869 2.5597 7.93498 2.91337C8.51127 3.26609 8.9654 3.7493 9.29697 4.36165C9.62874 4.97477 9.7949 5.66983 9.7949 6.44855V10.4911H9.70786L9.67292 10.4913ZM8.99429 1.22679C8.10039 0.700722 7.09207 0.4375 5.9678 0.4375C4.84335 0.4375 3.83069 0.700722 2.9298 1.22679C2.02873 1.75285 1.31516 2.47001 0.789099 3.37788C0.262089 4.28594 0 5.31012 0 6.44855C0 7.58697 0.24094 8.60757 0.723954 9.5077C1.20697 10.4086 1.86597 11.1221 2.70265 11.6482C3.53858 12.1752 4.4827 12.4375 5.53483 12.4375C7.21461 12.4375 11.9135 12.3731 11.9135 12.3731V6.44855C11.9135 5.31012 11.6505 4.28594 11.1244 3.37788C10.5984 2.47001 9.88818 1.75285 8.99429 1.22679Z"
-                fill="currentColor"
-              />
-            </svg>
-            {count} pkt
-          </span>
-        </div>
-        <div className={styles.badges}>
-          <span className={styles.badgeRecommendedIconWithText}>
-            <svg
-              width="12"
-              height="13"
-              viewBox="0 0 12 13"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className={styles.badgeIcon}
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M5.95674 5.17418C5.25923 5.17418 4.69389 5.73952 4.69389 6.43704C4.69389 7.13437 5.25923 7.69971 5.95674 7.69971C6.65426 7.69971 7.2196 7.13437 7.2196 6.43704C7.2196 5.73952 6.65426 5.17418 5.95674 5.17418Z"
-                fill="#00C3DF"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.67292 10.4913L5.96931 10.4911C5.96875 10.4911 5.96818 10.4913 5.9678 10.4913C5.96724 10.4913 5.96667 10.4911 5.96629 10.4911H5.95667C5.2397 10.4894 4.59127 10.3134 4.01102 9.96163C3.42679 9.6089 2.96492 9.1257 2.62712 8.51334C2.28837 7.90099 2.11861 7.21215 2.11861 6.44855C2.11861 5.66983 2.28837 4.97477 2.62712 4.36165C2.96492 3.7493 3.42679 3.26609 4.01102 2.91337C4.5943 2.5597 5.24631 2.38277 5.9678 2.38277C6.70233 2.38277 7.35869 2.5597 7.93498 2.91337C8.51127 3.26609 8.9654 3.7493 9.29697 4.36165C9.62874 4.97477 9.7949 5.66983 9.7949 6.44855V10.4911H9.70786L9.67292 10.4913ZM8.99429 1.22679C8.10039 0.700722 7.09207 0.4375 5.9678 0.4375C4.84335 0.4375 3.83069 0.700722 2.9298 1.22679C2.02873 1.75285 1.31516 2.47001 0.789099 3.37788C0.262089 4.28594 0 5.31012 0 6.44855C0 7.58697 0.24094 8.60757 0.723954 9.5077C1.20697 10.4086 1.86597 11.1221 2.70265 11.6482C3.53858 12.1752 4.4827 12.4375 5.53483 12.4375C7.21461 12.4375 11.9135 12.3731 11.9135 12.3731V6.44855C11.9135 5.31012 11.6505 4.28594 11.1244 3.37788C10.5984 2.47001 9.88818 1.75285 8.99429 1.22679Z"
-                fill="#00C3DF"
-              />
-            </svg>
-            Polecany specjalista
-          </span>
-          <span className={styles.badgeLimitedIconWithText}>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M11.8235 6C11.8235 9.3085 9.132 12 5.8235 12C4.354 12 2.9395 11.463 1.8415 10.4885C1.532 10.2135 1.5035 9.7395 1.779 9.4295C2.054 9.12 2.528 9.0915 2.8375 9.367C3.661 10.0975 4.7215 10.5005 5.8235 10.5005C8.305 10.5005 10.3235 8.4815 10.3235 6.0005C10.3235 4.8355 9.865 3.731 9.0765 2.902L8.6145 3.364C8.3225 3.656 7.8235 3.449 7.8235 3.0365V0.9635C7.8235 0.7075 8.031 0.5 8.287 0.5H10.3595C10.772 0.5 10.979 0.999 10.687 1.291L10.1355 1.8425C11.2025 2.951 11.8235 4.434 11.8235 6ZM4.0735 8.0455C4.0735 8.2965 4.273 8.5 4.519 8.5H7.128C7.374 8.5 7.5735 8.2965 7.5735 8.0455C7.5735 7.098 6.9715 6.4095 6.4665 6C6.9715 5.5905 7.5735 4.902 7.5735 3.9545C7.5735 3.7035 7.374 3.5 7.128 3.5H4.519C4.273 3.5 4.0735 3.7035 4.0735 3.9545C4.0735 4.905 4.6795 5.5915 5.185 6C4.679 6.4085 4.0735 7.095 4.0735 8.0455ZM2.34 2.753C2.754 2.753 3.09 2.417 3.09 2.003C3.09 1.589 2.754 1.253 2.34 1.253C1.926 1.253 1.59 1.589 1.59 2.003C1.59 2.417 1.926 2.753 2.34 2.753ZM0.75 3.753C0.336 3.753 0 4.089 0 4.503C0 4.917 0.336 5.253 0.75 5.253C1.164 5.253 1.5 4.917 1.5 4.503C1.5 4.089 1.164 3.753 0.75 3.753ZM0.75 6.7665C0.336 6.7665 0 7.1025 0 7.5165C0 7.9305 0.336 8.2665 0.75 8.2665C1.164 8.2665 1.5 7.9305 1.5 7.5165C1.5 7.1025 1.164 6.7665 0.75 6.7665ZM5.0735 1.5C5.4875 1.5 5.8235 1.164 5.8235 0.75C5.8235 0.336 5.4875 0 5.0735 0C4.6595 0 4.3235 0.336 4.3235 0.75C4.3235 1.164 4.6595 1.5 5.0735 1.5Z"
-                fill="#DF003B"
-              />
-            </svg>
-            Ograniczona dostępność
-          </span>
-        </div>
+    <section className={styles.asideProfile__profileCard}>
+      <h2 className={styles.asideProfile__name}>{freelancerName}</h2>
+      <div className={styles.asideProfile__infoContainer}>
+        <p className={styles.asideProfile__role}>{specialization}</p>
+        <RatingAndAccStatus
+          rate={rate}
+          count={count}
+          accountStatus={accountStatus}
+          visibilityStatus={visibilityStatus}
+        />
       </div>
-
-      <section className={styles.details}>
-        <div className={styles.detail}>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.29167 10.5H6.70833C6.38633 10.5 6.125 10.2387 6.125 9.91667V9.33333C6.125 9.01133 6.38633 8.75 6.70833 8.75H7.29167C7.61367 8.75 7.875 9.01133 7.875 9.33333V9.91667C7.875 10.2387 7.61367 10.5 7.29167 10.5ZM7.875 4.08333V3.5C7.875 3.178 7.61367 2.91667 7.29167 2.91667H6.70833C6.38633 2.91667 6.125 3.178 6.125 3.5V4.08333C6.125 4.40533 6.38633 4.66667 6.70833 4.66667H7.29167C7.61367 4.66667 7.875 4.40533 7.875 4.08333ZM7.875 7V6.41667C7.875 6.09467 7.61367 5.83333 7.29167 5.83333H6.70833C6.38633 5.83333 6.125 6.09467 6.125 6.41667V7C6.125 7.322 6.38633 7.58333 6.70833 7.58333H7.29167C7.61367 7.58333 7.875 7.322 7.875 7ZM11.0833 9.91667V9.33333C11.0833 9.01133 10.822 8.75 10.5 8.75H9.91667C9.59467 8.75 9.33333 9.01133 9.33333 9.33333V9.91667C9.33333 10.2387 9.59467 10.5 9.91667 10.5H10.5C10.822 10.5 11.0833 10.2387 11.0833 9.91667ZM4.66667 9.91667V9.33333C4.66667 9.01133 4.40533 8.75 4.08333 8.75H3.5C3.178 8.75 2.91667 9.01133 2.91667 9.33333V9.91667C2.91667 10.2387 3.178 10.5 3.5 10.5H4.08333C4.40533 10.5 4.66667 10.2387 4.66667 9.91667ZM11.0833 7V6.41667C11.0833 6.09467 10.822 5.83333 10.5 5.83333H9.91667C9.59467 5.83333 9.33333 6.09467 9.33333 6.41667V7C9.33333 7.322 9.59467 7.58333 9.91667 7.58333H10.5C10.822 7.58333 11.0833 7.322 11.0833 7ZM14 10.7917V6.125C14 4.45025 12.7102 3.07125 11.0711 2.92892C10.9288 1.29033 9.54975 0 7.875 0H6.125C4.35575 0 2.91667 1.43967 2.91667 3.20833V5.84617C1.28392 5.99375 0 7.37042 0 9.04167V10.7917C0 12.5603 1.43908 14 3.20833 14H10.7917C12.5609 14 14 12.5603 14 10.7917ZM3.79167 7.58333C4.27525 7.58333 4.66667 7.19133 4.66667 6.70833V3.20833C4.66667 2.40392 5.32117 1.75 6.125 1.75H7.875C8.67883 1.75 9.33333 2.40392 9.33333 3.20833V3.79167C9.33333 4.27467 9.72475 4.66667 10.2083 4.66667H10.7917C11.5955 4.66667 12.25 5.32058 12.25 6.125V10.7917C12.25 11.5961 11.5955 12.25 10.7917 12.25H3.20833C2.4045 12.25 1.75 11.5961 1.75 10.7917V9.04167C1.75 8.23725 2.4045 7.58333 3.20833 7.58333H3.79167Z"
-              fill="#75778A"
-            />
-          </svg>
-          Oprogramowanie IT oraz SaaS, Platformy internetowe, Usługi IT, +2
-        </div>
-        <div className={styles.detail}>
-          <svg
-            width="14"
-            height="13"
-            viewBox="0 0 14 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10.25 1.5H10V1.25C10 1.05109 9.92098 0.860322 9.78033 0.71967C9.63968 0.579018 9.44891 0.5 9.25 0.5C9.05109 0.5 8.86032 0.579018 8.71967 0.71967C8.57902 0.860322 8.5 1.05109 8.5 1.25V1.5H5.5V1.25C5.5 1.05109 5.42098 0.860322 5.28033 0.71967C5.13968 0.579018 4.94891 0.5 4.75 0.5C4.55109 0.5 4.36032 0.579018 4.21967 0.71967C4.07902 0.860322 4 1.05109 4 1.25V1.5H3.75C3.02065 1.5 2.32118 1.78973 1.80546 2.30546C1.28973 2.82118 1 3.52065 1 4.25L1 9.75C1 10.4793 1.28973 11.1788 1.80546 11.6945C2.32118 12.2103 3.02065 12.5 3.75 12.5H10.25C10.9793 12.5 11.6788 12.2103 12.1945 11.6945C12.7103 11.1788 13 10.4793 13 9.75V4.25C13 3.52065 12.7103 2.82118 12.1945 2.30546C11.6788 1.78973 10.9793 1.5 10.25 1.5ZM10.25 11H3.75C3.41848 11 3.10054 10.8683 2.86612 10.6339C2.6317 10.3995 2.5 10.0815 2.5 9.75V4.5H11.5V9.75C11.5 10.0815 11.3683 10.3995 11.1339 10.6339C10.8995 10.8683 10.5815 11 10.25 11Z"
-              fill="#75778A"
-            />
-          </svg>
-          {workingDays}
-        </div>
-        <div className={styles.detail}>
-          <svg
-            width="14"
-            height="15"
-            viewBox="0 0 14 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 0.5C5.61553 0.5 4.26215 0.910543 3.11101 1.67971C1.95987 2.44888 1.06266 3.54213 0.532846 4.82122C0.00303302 6.1003 -0.13559 7.50776 0.134506 8.86563C0.404603 10.2235 1.07129 11.4708 2.05026 12.4497C3.02922 13.4287 4.2765 14.0954 5.63437 14.3655C6.99224 14.6356 8.3997 14.497 9.67879 13.9672C10.9579 13.4373 12.0511 12.5401 12.8203 11.389C13.5895 10.2378 14 8.88447 14 7.5C13.998 5.6441 13.2599 3.86479 11.9475 2.55247C10.6352 1.24015 8.8559 0.502007 7 0.5ZM7 12.75C5.96165 12.75 4.94662 12.4421 4.08326 11.8652C3.2199 11.2883 2.547 10.4684 2.14964 9.50909C1.75228 8.54977 1.64831 7.49417 1.85088 6.47577C2.05345 5.45737 2.55347 4.52191 3.28769 3.78769C4.02192 3.05346 4.95738 2.55345 5.97578 2.35088C6.99418 2.1483 8.04978 2.25227 9.00909 2.64963C9.9684 3.04699 10.7883 3.7199 11.3652 4.58326C11.9421 5.44661 12.25 6.46165 12.25 7.5C12.2485 8.89191 11.6948 10.2264 10.7106 11.2106C9.72637 12.1948 8.39191 12.7485 7 12.75Z"
-              fill="#75778A"
-            />
-            <path
-              d="M6.125 6.94875L4.725 7.82375C4.62757 7.88474 4.54312 7.96434 4.47647 8.05798C4.40981 8.15162 4.36226 8.25748 4.33653 8.36951C4.3108 8.48153 4.30739 8.59753 4.3265 8.71088C4.34561 8.82422 4.38687 8.93269 4.44792 9.03008C4.50891 9.12751 4.5885 9.21196 4.68215 9.27861C4.77579 9.34527 4.88165 9.39282 4.99368 9.41855C5.1057 9.44428 5.2217 9.44769 5.33504 9.42858C5.44839 9.40946 5.55685 9.36821 5.65425 9.30716L7.32783 8.25716C7.49575 8.15194 7.63409 8.00568 7.72983 7.83218C7.82556 7.65868 7.87552 7.46366 7.875 7.2655V5.03366C7.875 4.8016 7.78281 4.57904 7.61872 4.41495C7.45462 4.25085 7.23206 4.15867 7 4.15867C6.76793 4.15867 6.54537 4.25085 6.38128 4.41495C6.21719 4.57904 6.125 4.8016 6.125 5.03366V6.94875Z"
-              fill="#75778A"
-            />
-          </svg>
-          {workingHours}
-        </div>
-        <div className={styles.detail}>
-          <svg
-            width="14"
-            height="15"
-            viewBox="0 0 14 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.00021 0.5C5.37632 0.502007 3.81951 1.14798 2.67125 2.29625C1.52298 3.44451 0.877007 5.00132 0.875 6.62521C0.875 8.27377 2.15838 10.5722 4.69072 13.4557C4.9795 13.7839 5.33489 14.0467 5.73321 14.2268C6.13154 14.4069 6.56366 14.5 7.00079 14.5C7.43793 14.5 7.87005 14.4069 8.26837 14.2268C8.6667 14.0467 9.02209 13.7839 9.31087 13.4557C11.842 10.5728 13.1254 8.27435 13.1254 6.62521C13.1234 5.00132 12.4774 3.44451 11.3292 2.29625C10.1809 1.14798 8.6241 0.502007 7.00021 0.5ZM7.99541 12.3018C7.86821 12.4386 7.71419 12.5476 7.54296 12.6222C7.37173 12.6968 7.18697 12.7353 7.00021 12.7353C6.81345 12.7353 6.62869 12.6968 6.45746 12.6222C6.28624 12.5476 6.13221 12.4386 6.00501 12.3018C3.85652 9.85466 2.62156 7.7855 2.62156 6.62579C2.62156 5.46543 3.08251 4.3526 3.90301 3.5321C4.72351 2.7116 5.83635 2.25064 6.99671 2.25064C8.15707 2.25064 9.26991 2.7116 10.0904 3.5321C10.9109 4.3526 11.3719 5.46543 11.3719 6.62579C11.3754 7.7855 10.1439 9.85466 7.99541 12.3018Z"
-              fill="#75778A"
-            />
-            <path
-              d="M7.00021 4.03221C6.49682 4.03221 6.00474 4.18148 5.58619 4.46114C5.16764 4.74081 4.84142 5.13831 4.64878 5.60338C4.45614 6.06845 4.40574 6.5802 4.50394 7.07391C4.60215 7.56763 4.84455 8.02114 5.2005 8.37708C5.55645 8.73303 6.00996 8.97544 6.50367 9.07364C6.99739 9.17185 7.50914 9.12145 7.97421 8.92881C8.43928 8.73617 8.83678 8.40995 9.11644 7.9914C9.39611 7.57285 9.54538 7.08076 9.54538 6.57738C9.54461 5.90259 9.27621 5.25567 8.79907 4.77852C8.32192 4.30138 7.675 4.03298 7.00021 4.03221ZM7.00021 7.37249C6.84295 7.37249 6.68923 7.32585 6.55847 7.23849C6.42772 7.15112 6.3258 7.02694 6.26562 6.88165C6.20544 6.73636 6.1897 6.57649 6.22038 6.42226C6.25106 6.26802 6.32679 6.12635 6.43798 6.01515C6.54918 5.90395 6.69086 5.82822 6.84509 5.79754C6.99933 5.76686 7.1592 5.78261 7.30449 5.84279C7.44977 5.90297 7.57395 6.00488 7.66132 6.13564C7.74869 6.26639 7.79532 6.42012 7.79532 6.57738C7.79517 6.78821 7.71135 6.99036 7.56227 7.13943C7.41319 7.28851 7.21104 7.37233 7.00021 7.37249Z"
-              fill="#75778A"
-            />
-          </svg>
-          {location}
-        </div>
-        <div className={styles.detail}>
-          <svg
-            width="12"
-            height="13"
-            viewBox="0 0 12 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6 0.5C4.81331 0.5 3.65328 0.851894 2.66658 1.51118C1.67989 2.17047 0.910851 3.10754 0.456725 4.2039C0.00259972 5.30026 -0.11622 6.50665 0.115291 7.67054C0.346802 8.83443 0.918247 9.90352 1.75736 10.7426C2.59648 11.5818 3.66557 12.1532 4.82946 12.3847C5.99335 12.6162 7.19975 12.4974 8.2961 12.0433C9.39246 11.5891 10.3295 10.8201 10.9888 9.83342C11.6481 8.84673 12 7.68669 12 6.5C11.9983 4.90923 11.3656 3.3841 10.2407 2.25926C9.1159 1.13441 7.59077 0.501721 6 0.5ZM10.4705 6H8.7315C8.61812 4.69745 8.22792 3.43412 7.587 2.2945C8.36175 2.5875 9.04077 3.08835 9.54946 3.74205C10.0581 4.39575 10.3768 5.17701 10.4705 6ZM4.8425 7.5H7.1575C6.96062 8.54738 6.56792 9.54821 6 10.45C5.43199 9.54825 5.03929 8.5474 4.8425 7.5ZM4.7765 6C4.91653 4.77189 5.33499 3.59193 6 2.55C6.66509 3.59189 7.08356 4.77187 7.2235 6H4.7765ZM4.413 2.2945C3.77208 3.43412 3.38189 4.69745 3.2685 6H1.5295C1.62318 5.17701 1.94186 4.39575 2.45055 3.74205C2.95924 3.08835 3.63825 2.5875 4.413 2.2945ZM1.616 7.5H3.3205C3.48874 8.62555 3.85885 9.71147 4.413 10.7055C3.71907 10.4425 3.10075 10.0124 2.61285 9.45322C2.12495 8.89406 1.78255 8.22316 1.616 7.5ZM7.587 10.7055C8.14138 9.71157 8.51149 8.62561 8.6795 7.5H10.384C10.2175 8.22316 9.87506 8.89406 9.38716 9.45322C8.89926 10.0124 8.28093 10.4425 7.587 10.7055Z"
-              fill="#75778A"
-            />
-          </svg>
-          {languages}
-        </div>
-      </section>
-      <section className={styles.infoFooter}>
-        <footer className={styles.footer}>SEKTORY</footer>
-        <div className={styles.sectors}>
-          {sectors.length > 0 ? (
-            sectors.map((sector) => <span key={sector.id}>{sector.name}</span>)
-          ) : (
-            <span>Brak sektorów</span>
-          )}
-        </div>
-      </section>
-    </div>
+      <SubIndustries
+        subIndustries={subIndustries}
+        workingDays={workingDays}
+        workingHours={workingHours}
+        location={location}
+        languages={languages}
+        onUpdateWorkingHours={(newHours) => setWorkingHours(newHours)}
+      />
+      <Sectors sectors={sectors} />
+    </section>
   );
 };
 
