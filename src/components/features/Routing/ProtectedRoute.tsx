@@ -7,19 +7,36 @@ const ProtectedRoute = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!user) {
-			navigate("/login");
-			return;
-		}
-		if (!isProfileCompleted(user)) {
-			navigate("/onboarding");
-		}
-	}, [navigate, user]);
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    if (!isProfileCompleted(user)) {
+      navigate("/onboarding");
+    }
+  }, [navigate, user]);
 
   const isProfileCompleted = (user: ILoggedUserData) => {
+    const requiredFields = [
+      "email",
+      "experienceLevel",
+      "firstName",
+      "id",
+      "lastName",
+      "role",
+      "incomeGoal",
+      "salesTools",
+      "sectors",
+      "selectedActivities",
+      "specialization",
+      "subIndustries",
+      "typeOfSales",
+      "workingDays",
+      "workingHours",
+    ];
     return !Object.entries(user)
-      .filter(([key]) => key !== "crm")
+      .filter(([key]) => requiredFields.includes(key))
       .map(([, value]) => value)
       .some(
         (value) =>
@@ -27,7 +44,7 @@ const ProtectedRoute = () => {
       );
   };
 
-	return <Outlet/>;
-}
+  return <Outlet />;
+};
 
-export default ProtectedRoute;
+export default ProtectedRoute

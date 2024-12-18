@@ -29,6 +29,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
 
     img {
       width: 15px;
@@ -44,6 +45,23 @@
       width: 16px;
       height: 12px;
     }
+
+    &:hover::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      bottom: -12px;
+      left: -16px;
+      right: -16px;
+      border: 1px solid vars.$color-black;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &__itemActive {
+    color: vars.$primary-color;
+    background-color: vars.$color-primary-pastel;
   }
 
   &__wrapper {
