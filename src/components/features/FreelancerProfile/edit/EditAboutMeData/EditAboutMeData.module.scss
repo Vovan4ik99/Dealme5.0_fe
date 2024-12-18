@@ -1,0 +1,48 @@
+@use "@styles/variables" as vars;
+
+.editAboutMeData {
+    &__main {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__title {
+        font-size: 14px;
+        line-height: 120%;
+        color: vars.$color-gray;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        padding: 16px 24px 16px 16px;
+        gap: 4px;
+        max-height: 490px;
+        min-height: 95px;
+        border-radius: 12px;
+        border: 1px solid vars.$color-gray-border;
+        background-color: vars.$color-white;
+    }
+
+    &__description{
+        border: none;
+        font-size: 18px;
+        line-height: 120%;
+        color: vars.$color-black;
+        resize: vertical;
+        border: none;
+    }
+
+    &--secondDescription{
+        @extend .editAboutMeData__description;
+        font-weight: 400;
+    }
+    
+}
+
+
