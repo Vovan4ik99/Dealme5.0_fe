@@ -30,5 +30,12 @@ export const API_ROUTES = {
 			GET_SALES_TOOLS: '/tools',
 			PATCH_SALES_TOOLS: '/freelancer/tools',
 		}
+	},
+	PROFILE: {
+		FREELANCER: {
+			BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
+			AVATAR: '/user/avatar',
+			INFO: '/freelancer/bar'
+		}
 	}
 } as const;

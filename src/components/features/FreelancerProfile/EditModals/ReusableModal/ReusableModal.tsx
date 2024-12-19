@@ -61,8 +61,9 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
-  , modalsContiner);
+    </div>,
+    modalsContiner
+  );
 };
 
 export default ReusableModal;
