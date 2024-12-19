@@ -5,5 +5,6 @@ export interface IImageEditModalProps {
     onClose: () => void;
     onSave: (imageBlob: Blob) => void;
     deleteImage?: () => Promise<void>;
-    classname: string
+    classname: string;
+    initialImage: string | undefined;
   }

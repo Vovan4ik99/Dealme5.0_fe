@@ -5,7 +5,8 @@ const EditBackground: React.FC<{
   onClose: () => void;
   onSave: (imageBlob: Blob) => void;
   classname: string,
-}> = ({ onClose, onSave, classname }) => {
+  initialImage: string | undefined;
+}> = ({ onClose, onSave, classname, initialImage }) => {
   const { deleteBackgroundPicture } = useFreelancerProfileService();
 
   return (
@@ -17,6 +18,7 @@ const EditBackground: React.FC<{
       onSave={onSave}
       deleteImage={deleteBackgroundPicture}
       classname={classname}
+      initialImage={initialImage}
     />
   );
 };

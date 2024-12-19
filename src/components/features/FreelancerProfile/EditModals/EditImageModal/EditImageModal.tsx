@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EditImageModal.module.scss";
 import ReusableModal from "../ReusableModal/ReusableModal";
 import CroppingModal from "./CroppingModal";
@@ -16,10 +16,13 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   onSave,
   deleteImage,
   classname,
+  initialImage,
 }) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [croppedImageBlob, setCroppedImageBlob] = useState<Blob | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    initialImage ?? null
+  );
   const [croppingVisible, setCroppingVisible] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
