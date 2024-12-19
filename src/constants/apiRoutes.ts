@@ -30,5 +30,8 @@ export const API_ROUTES = {
 			GET_SALES_TOOLS: '/tools',
 			PATCH_SALES_TOOLS: '/freelancer/tools',
 		}
+	},
+	FREELANCER: {
+		GET_AVATAR: '/user/avatar'
 	}
 } as const;
