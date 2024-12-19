@@ -3,7 +3,7 @@ import EditImageModal from "../EditModals/EditImageModal/EditImageModal";
 
 const EditBackground: React.FC<{
   onClose: () => void;
-  onSave: (data: { imageUrl: string }) => void;
+  onSave: (imageBlob: Blob) => void;
   classname: string,
 }> = ({ onClose, onSave, classname }) => {
   const { deleteBackgroundPicture } = useFreelancerProfileService();

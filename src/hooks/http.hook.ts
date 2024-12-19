@@ -14,7 +14,7 @@ interface IHTTPHeaders {
 interface IRequestConfig {
 	url: string;
 	method?: HTTPRequestMethods;
-	body?: string | null;
+	body?: string | FormData | null;
 	headers?: IHTTPHeaders;
 }
 
@@ -45,7 +45,7 @@ export const useHttp = (): IHTTPResponse => {
 
 		const token = localStorage.getItem('token');
 		const authHeaders: IHTTPHeaders = {
-			'Content-Type': 'application/json',
+			...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }), 
 			...(token && !isAuthPage ? { 'Authorization': `Bearer ${token}` } : {}),
 			...headers,
 		};

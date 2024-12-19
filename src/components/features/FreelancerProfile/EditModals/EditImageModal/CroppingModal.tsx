@@ -21,18 +21,23 @@ const CroppingModal: React.FC<ICroppingModalProps> = ({
     },
     []
   );
-
   const handleSave = async () => {
     if (croppedAreaPixels) {
       try {
-        const croppedImage = await getCroppedImg(imageUrl, croppedAreaPixels);
-        onSave({ position: { x: 0, y: 0 }, imageUrl: croppedImage });
+        const croppedBlob = await getCroppedImg(imageUrl, croppedAreaPixels);
+        console.log("Cropped Blob:", croppedBlob);
+        onSave({
+            position: { x: crop.x, y: crop.y },
+            blob: croppedBlob, // Przekazujesz Blob
+          });
         onClose();
       } catch (error) {
         console.error("Error cropping image:", error);
       }
     }
   };
+  
+  
 
   return (
     <ReusableModal

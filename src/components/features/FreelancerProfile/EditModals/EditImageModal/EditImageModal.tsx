@@ -3,9 +3,9 @@ import styles from "./EditImageModal.module.scss";
 import ReusableModal from "../ReusableModal/ReusableModal";
 import CroppingModal from "./CroppingModal";
 import {
-    edit_click,
-    info,
-    } from "@icons/freelancerProfile/uploadImgModal/uploadImg"
+  edit_click,
+  info,
+} from "@icons/freelancerProfile/uploadImgModal/uploadImg";
 import { IImageEditModalProps } from "./EditImageModalTypes";
 
 const EditImageModal: React.FC<IImageEditModalProps> = ({
@@ -17,10 +17,29 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   deleteImage,
   classname,
 }) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [croppedImageBlob, setCroppedImageBlob] = useState<Blob | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [croppingVisible, setCroppingVisible] = useState(false);
-  const [croppedImageUrl, setCroppedImageUrl] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+
+  const validateFile = (file: File): boolean => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert(
+        "Nieprawidłowy format pliku. Akceptowalne formaty to: JPG, PNG, WEBP."
+      );
+      return false;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Plik jest za duży! Maksymalny rozmiar to 3 MB.");
+      return false;
+    }
+
+    return true;
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -30,19 +49,14 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   };
 
   const processFile = (file: File) => {
-    if (file.size > 3 * 1024 * 1024) {
-      alert("Plik jest za duży! Maksymalny rozmiar to 3 MB.");
+    if (!validateFile(file)) {
       return;
     }
+
     setFileName(file.name);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (reader.result) {
-        setImageUrl(reader.result as string);
-        setCroppingVisible(true);
-      }
-    };
-    reader.readAsDataURL(file);
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setCroppingVisible(true);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -64,60 +78,74 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
     }
   };
 
-  const handleSave = () => {
-    if (croppedImageUrl) {
-      onSave({ imageUrl: croppedImageUrl });
-      onClose();
-    }
+  const handleSave = async (croppedBlob: Blob) => {
+    console.log("Cropped Blob in EditImageModal:", croppedBlob);
+    onSave(croppedBlob);
+    onClose();
   };
 
   const handleDelete = async () => {
     if (deleteImage) {
       try {
         await deleteImage();
-        setCroppedImageUrl(null);
-        setImageUrl(null);
+        setCroppedImageBlob(null);
+        setPreviewUrl(null);
+        setImageFile(null);
         alert("Zdjęcie zostało usunięte.");
       } catch (error) {
-        console.error("Error deleting image:", error);
+        console.error("Błąd podczas usuwania obrazu:", error);
       }
     }
   };
 
   const handleCroppingClose = () => setCroppingVisible(false);
 
-  const handleEditPicture = () => {
-    if (croppedImageUrl) {
-      setImageUrl(imageUrl);
-      setCroppingVisible(true);
+  const handleCroppingSave = (imageData: {
+    position: { x: number; y: number };
+    blob: Blob | null;
+  }) => {
+    if (imageData.blob) {
+      setCroppedImageBlob(imageData.blob);
+      setPreviewUrl(URL.createObjectURL(imageData.blob));
+    } else {
+      console.error("Blob is null!");
     }
+    setCroppingVisible(false);
   };
 
   return (
     <div className={styles.editModal__wrapper}>
       <div className={styles.editModal__container}>
-        <ReusableModal title={title} onClose={onClose} onSave={handleSave}>
-        <div className={styles.editModal__editArea}>
-            {croppedImageUrl ? (
+        <ReusableModal
+          title={title}
+          onClose={onClose}
+          onSave={() => {
+            if (croppedImageBlob) {
+              handleSave(croppedImageBlob);
+            } else {
+              console.error("No cropped image available to save");
+            }
+          }}
+        >
+          <div className={styles.editModal__editArea}>
+            {previewUrl ? (
               <div className={styles.editModal__preview}>
                 <div className={styles.editModal__previewText}>
                   <div className={styles.editModal__imageHeader}>
                     Zdjęcie w tle (opcjonalnie)
                   </div>
-                  <div className={styles.editModal__fileName}>
-                    {fileName}
-                  </div>
+                  <div className={styles.editModal__fileName}>{fileName}</div>
                 </div>
                 <div className={styles.editModal__imageWrapper}>
                   <img
-                    src={croppedImageUrl}
+                    src={previewUrl}
                     alt="Cropped background"
                     className={classname}
                   />
                   <div className={styles.editModal__icons}>
                     <button
                       className={styles.editModal__icon}
-                      onClick={handleEditPicture}
+                      onClick={() => setCroppingVisible(true)}
                     >
                       <svg
                         width="14"
@@ -161,28 +189,28 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
                 </div>
               </div>
             ) : (
-              <div
+              <section
                 className={styles.editModal__dropZone}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
+                aria-label="Drop zone for uploading files"
               >
                 <div className={styles.editModal__importLayout}>
                   <img src={edit_click} alt="Click to edit" />
                   <div className={styles.editModal__grabText}>
-                    Przeciągnij i upuść plik tutaj aby dodać
+                    Przeciągnij i upuść plik tutaj, aby dodać
                   </div>
                   <div className={styles.editModal__dividerContainer}>
                     <hr className={styles.editModal__line} />
-                    <span className={styles.editModal__orText}>
-                      lub
-                    </span>
+                    <span className={styles.editModal__orText}>lub</span>
                     <hr className={styles.editModal__line} />
                   </div>
                   <input
                     type="file"
                     onChange={handleFileChange}
                     className={styles.editModal__import}
+                    accept="image/jpeg, image/png, image/webp"
                     id="fileInput"
                   />
                   <label
@@ -192,31 +220,24 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
                     Wybierz z dysku
                   </label>
                 </div>
-              </div>
+              </section>
             )}
-            <footer
-              className={styles.editModal__imageFormatsContainer}
-            >
-              <div className={styles.editModal__imageFormats}>
-                <img src={info} alt="Info" />{" "}
-                Akceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB
-              </div>
-              <p className={styles.editModal__imageFormats}>
+            <footer className={styles.editModal__items}>
+              <p className={styles.editModal__itemAndIcon}>
                 <img src={info} alt="Info" />
                 Zalecany rozmiar: {recommendedSize}
               </p>
+              <div className={styles.editModal__item}>
+                Akceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB
+              </div>
             </footer>
           </div>
         </ReusableModal>
-        {croppingVisible && imageUrl && (
+        {croppingVisible && imageFile && (
           <CroppingModal
-            imageUrl={imageUrl}
+            imageUrl={URL.createObjectURL(imageFile)}
             onClose={handleCroppingClose}
-            onSave={({ imageUrl }) => {
-              setCroppedImageUrl(imageUrl);
-              setCroppingVisible(false);
-              
-            }}
+            onSave={handleCroppingSave}
             aspect={aspect}
           />
         )}

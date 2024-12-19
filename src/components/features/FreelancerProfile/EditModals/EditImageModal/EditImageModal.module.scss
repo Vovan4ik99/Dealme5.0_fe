@@ -158,19 +158,28 @@
         }
     }
 
-    &__imageFormatsContainer {
+    &__items {
         display: flex;
         flex-direction: column;
         gap: 4px;
         margin-top: auto;
     }
 
-    &__imageFormats {
+    @mixin itemAndIconStyles {
         color: vars.$color-gray;
         font-size: 14px;
         display: flex;
         gap: 4px;
         font-weight: 300;
         line-height: 100%;
+    }
+
+    &__itemAndIcon {
+        @include itemAndIconStyles;
+    }
+
+    &__item {
+        @include itemAndIconStyles;
+        margin-left: 18px;
     }
 }

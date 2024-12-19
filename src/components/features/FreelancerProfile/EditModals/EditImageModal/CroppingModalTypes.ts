@@ -3,7 +3,7 @@ export interface ICroppingModalProps {
     onClose: () => void;
     onSave: (imageData: {
       position: { x: number; y: number };
-      imageUrl: string | null;
+      blob: Blob | null;
     }) => void;
     aspect?: number;
   }

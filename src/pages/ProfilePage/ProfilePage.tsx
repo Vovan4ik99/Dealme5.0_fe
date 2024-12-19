@@ -4,14 +4,16 @@ import ProfileNavbar from "../../components/features/FreelancerProfile/ProfileNa
 import BackgroundImage from "../../components/features/FreelancerProfile/BackgroundImage/BackgroundImage.tsx";
 
 const ProfilePage = () => {
-	return (
-		<section className={styles['profile']}>
-			<ProfileNavbar/>
-			<h1 className={'title'}>Strona</h1>
-			<BackgroundImage />
-			<Footer isHyphenated={false} isCentered={true}/>
-		</section>
-	);
+  return (
+    <section className={styles["profile"]}>
+      <ProfileNavbar />
+      <section className={styles["imageContainer"]}>
+        <BackgroundImage />
+        <div className={styles["avatar"]}>{/* <Avatar /> */}</div>
+      </section>
+      <Footer isHyphenated={false} isCentered={true} />
+    </section>
+  );
 };
 
 export default ProfilePage;

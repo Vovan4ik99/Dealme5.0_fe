@@ -12,13 +12,15 @@ export const useFreelancerProfileService = () => {
     });
   }, [sendRequest]);
 
-  const patchBackgroundPicture = useCallback(async (request: { id?: number; freelancerId?: number; pictureData: string }): Promise<void> => {
+  const patchBackgroundPicture = useCallback(async (formData: FormData): Promise<void> => {
     return await sendRequest({
       url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
       method: "PATCH",
-      body: JSON.stringify(request),
+      body: formData,
+
     });
   }, [sendRequest]);
+  
 
   const deleteBackgroundPicture = useCallback(async (): Promise<void> => {
     return await sendRequest({

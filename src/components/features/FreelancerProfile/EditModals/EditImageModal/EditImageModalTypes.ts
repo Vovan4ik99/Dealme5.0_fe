@@ -3,7 +3,7 @@ export interface IImageEditModalProps {
     recommendedSize: string;
     aspect: number;
     onClose: () => void;
-    onSave: (imageData: { imageUrl: string }) => void;
+    onSave: (imageBlob: Blob) => void;
     deleteImage?: () => Promise<void>;
     classname: string
   }
