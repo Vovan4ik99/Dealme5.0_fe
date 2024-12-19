@@ -22,6 +22,7 @@ export default defineConfig({
             '@ui': path.resolve(__dirname, './src/components/ui'),
             '@constants': path.resolve(__dirname, './src/constants'),
             '@pages': path.resolve(__dirname, './src/pages'),
+			'@editModals': path.resolve(__dirname, './src/components/features/FreelancerProfile/EditModals'),
 		},
 	},
 })
