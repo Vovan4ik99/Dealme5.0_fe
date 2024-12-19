@@ -1,9 +1,10 @@
 import { IReusableModalProps } from "./ReusableModalTypes";
-
 import React, { useState } from "react";
 import styles from "./ReusableModal.module.scss";
 import "@styles/btn.scss";
 import "@styles/title.scss";
+import { createPortal } from "react-dom";
+import { modalsContiner } from "../../../../../main";
 
 const ReusableModal: React.FC<IReusableModalProps> = ({
   title,
@@ -11,30 +12,28 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
   onSave,
   children,
   width,
+  button,
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
     setIsClosing(true);
-    setTimeout(() => {
-      onClose();
-      setIsClosing(false);
-    }, 300);
+    onClose();
   };
 
-  return (
+  return createPortal(
     <div
       className={`${styles.reusableModal__modalOverlay} ${
         isClosing ? "" : "is-visible"
       }`}
     >
       <div
-        className={`${styles.reusableModal__content} ${
+        className={`${styles.reusableModal__items} ${
           isClosing ? "closing" : ""
         }`}
-        style={{ width: width || "600px" }}
+        style={{ width: width ?? "600px" }}
       >
-        <div className={styles.reusableModal__mainContent}>
+        <div className={styles.reusableModal__mainContainer}>
           <button
             className={styles.reusableModal__closeBtn}
             onClick={handleClose}
@@ -53,17 +52,17 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
               </svg>
             </div>
           </button>
-          <header className="title title--fs32">{title}</header>
+          <header className="title title--modal-fs32">{title}</header>
           <div>{children}</div>
         </div>
         <div className={styles.reusableModal__footer}>
           <button className="btn btn--mt0" onClick={onSave}>
-            Zapisz zmiany
+            {button ?? "Zapisz zmiany"}
           </button>
         </div>
       </div>
     </div>
-  );
+  , modalsContiner);
 };
 
 export default ReusableModal;

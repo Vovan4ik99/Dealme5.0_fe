@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReusableModal from "../EditModals/ReusableModal/ReusableModal";
 
 const ParentComponent = () => {

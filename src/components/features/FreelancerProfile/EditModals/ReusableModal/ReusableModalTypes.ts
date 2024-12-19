@@ -6,4 +6,5 @@ export interface IReusableModalProps {
     onSave: () => void;
     children: ReactNode;
     width?: string;
+    button?:string;
   }
