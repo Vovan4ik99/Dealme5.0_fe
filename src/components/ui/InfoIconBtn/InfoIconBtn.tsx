@@ -11,7 +11,7 @@ const InfoIconBtn: React.FC<IInfoIconBtnProps> = ({text, isLeft = false}) => {
 
 	return (
 		<div className={styles['info']}>
-			<button className={`${styles['info__icon']} ${isLeft && styles['info__icon--mt2']}`} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+			<div className={`${styles['info__icon']} ${isLeft && styles['info__icon--mt2']}`} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
 				<svg width="14" height="14" className={styles['icon']} viewBox="0 0 14 14" fill="none"
 				     xmlns="http://www.w3.org/2000/svg">
 					<g id="Vector">
@@ -26,7 +26,7 @@ const InfoIconBtn: React.FC<IInfoIconBtnProps> = ({text, isLeft = false}) => {
 							fill="#75778A"/>
 					</g>
 				</svg>
-			</button>
+			</div>
 			<CSSTransition in={isOpen} timeout={300} unmountOnExit nodeRef={modalRef}
 			               classNames={{
 				               enter: styles['info__modal-enter'],

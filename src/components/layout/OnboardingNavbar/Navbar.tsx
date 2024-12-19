@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom";
-import logo from "@icons/logo.svg";
 import styles from './Navbar.module.scss'
 import {useCallback, useContext} from "react";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import Logo from "@ui/Logo/Logo.tsx";
 
 const Navbar = () => {
 	const {user, logout} = useContext(AuthContext);
@@ -30,10 +30,7 @@ const Navbar = () => {
 
 	return (
 		<nav className={styles.navbar}>
-			<div className={styles.navbar__bg}></div>
-			<Link to={'/'} className={styles.navbar__logo}>
-				<img src={logo} alt={'logo'}/>
-			</Link>
+			<Logo/>
 			<div className={styles.navbar__wrapper}>
 				{renderContent()}
 			</div>

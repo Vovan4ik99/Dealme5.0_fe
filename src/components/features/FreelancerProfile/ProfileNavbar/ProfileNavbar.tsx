@@ -1,29 +1,36 @@
-import {Link} from "react-router-dom";
-import logo from "@icons/logo.svg";
-import avatar from "@icons/profile_navbar/avatar.svg";
+import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
-import {useState} from "react";
+import Logo from "@ui/Logo/Logo.tsx";
+import {useEffect, useState} from "react";
+import {useFreelancerService} from "@services/freelancerService.ts";
+import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import avatar from '@icons/profile_navbar/default_avatar.svg'
 
 const ProfileNavbar = () => {
-	const [activeLink, setActiveLink] = useState<string | null>(null);
 
-	const handleClick = (id: string) => {
-		setActiveLink(id);
-	};
+	const {loadingStatus, getAvatar} = useFreelancerService();
+	const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (avatarUrl === null) {
+			getAvatar()
+				.then(
+					(response) =>
+						setAvatarUrl(response.picture !== undefined ? response.picture : null)
+				).catch((error) => console.log(error));
+		}
+	}, [avatarUrl, getAvatar]);
+
+	if (loadingStatus === 'loading') {
+		return <LoadingSpinner/>
+	}
+
 	return (
 		<nav className={styles.navbar}>
-			<div className={styles.navbar__bg}></div>
-			<Link to={"/"} className={styles.navbar__logo}>
-				<img src={logo} alt={"logo"}/>
-			</Link>
-			<div className={styles.navbar_items}>
-				<a
-					href="/"
-					onClick={() => handleClick("desktop")}
-					className={`${styles.navbar__item} ${
-						activeLink === "desktop" ? styles.navbar__itemActive : ""
-					}`}
-				>
+			<Logo/>
+			<div className={styles.navbar__wrapper}>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
 					<svg
 						width="16"
 						height="16"
@@ -36,16 +43,10 @@ const ProfileNavbar = () => {
 							fill="currentColor"
 						/>
 					</svg>
-
-					<span className={styles.navbar__label}>Pulpit</span>
-				</a>
-				<a
-					href="/"
-					onClick={() => handleClick("orders")}
-					className={`${styles.navbar__item} ${
-						activeLink === "orders" ? styles.navbar__itemActive : ""
-					}`}
-				>
+					Pulpit
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
 					<svg
 						width="16"
 						height="16"
@@ -58,16 +59,10 @@ const ProfileNavbar = () => {
 							fill="currentColor"
 						/>
 					</svg>
-
-					<span className={styles.navbar__label}>Zlecenia</span>
-				</a>
-				<a
-					href="/"
-					onClick={() => handleClick("products")}
-					className={`${styles.navbar__item} ${
-						activeLink === "products" ? styles.navbar__itemActive : ""
-					}`}
-				>
+					Zlecenia
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
 					<svg
 						width="16"
 						height="16"
@@ -84,16 +79,10 @@ const ProfileNavbar = () => {
 							fill="currentColor"
 						/>
 					</svg>
-
-					<span className={styles.navbar__label}>Produkty</span>
-				</a>
-				<a
-					href="/"
-					onClick={() => handleClick("guardian")}
-					className={`${styles.navbar__item} ${styles.guardianImg} ${
-						activeLink === "guardian" ? styles.navbar__itemActive : ""
-					}`}
-				>
+					Produkty
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
 					<svg
 						width="13"
 						height="16"
@@ -106,16 +95,10 @@ const ProfileNavbar = () => {
 							fill="currentColor"
 						/>
 					</svg>
-
-					<span className={styles.navbar__label}>Opiekun</span>
-				</a>
-				<a
-					href="/"
-					onClick={() => handleClick("payments")}
-					className={`${styles.navbar__item} ${styles.paymentsImg} ${
-						activeLink === "payments" ? styles.navbar__itemActive : ""
-					}`}
-				>
+					Opiekun
+				</NavLink>
+				<NavLink to="/profile" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
 					<svg
 						width="17"
 						height="12"
@@ -132,12 +115,11 @@ const ProfileNavbar = () => {
 							fill="currentColor"
 						/>
 					</svg>
-
-					<span className={styles.navbar__label}>Płatności</span>
-				</a>
+					Płatności
+				</NavLink>
 			</div>
-			<div className={styles.navbar__wrapper}>
-				<a href="/" className={styles.navbar__button}>
+			<div className={styles['navbar__add-wrapper']}>
+				<button className={`btn btn--more btn--flex`}>
 					<svg
 						width="12"
 						height="12"
@@ -151,9 +133,11 @@ const ProfileNavbar = () => {
 						/>
 					</svg>
 					Przyjmij zlecenie
-				</a>
-				<button className={styles.navbar__profile}>
-					<img src={avatar} alt="avatar" className={styles.navbar__avatar}/>{" "}
+				</button>
+				<button className={`btn btn--more btn--flex btn--user`}>
+					<div className={styles['navbar__avatar']}>
+						<img src={avatarUrl === null ? avatar : avatarUrl} alt="avatar"/>
+					</div>
 					Adam Gontier
 					<svg
 						width="10"

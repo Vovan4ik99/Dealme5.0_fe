@@ -1,7 +1,6 @@
 @use '@styles/variables' as vars;
 
 .navbar {
-  max-width: 1320px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -42,17 +41,4 @@
       background-color: vars.$color-gray-hover;
     }
   }
-
-  &__bg {
-    top: -80px;
-    left: -200px;
-    position: absolute;
-    width: 264px;
-    height: 264px;
-    background: vars.$primary-color;
-    filter: blur(300px);
-    border-radius: 1000px;
-    z-index: -1;
-  }
-
 }
