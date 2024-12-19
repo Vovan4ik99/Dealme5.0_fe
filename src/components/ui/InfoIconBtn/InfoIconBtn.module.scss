@@ -6,6 +6,8 @@
     display: flex;
     align-self: center;
     cursor: pointer;
+    border: none;
+    background: none;
 
     path {
       transition: fill 0.3s ease;
