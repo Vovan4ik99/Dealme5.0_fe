@@ -40,22 +40,36 @@
             opacity: 1;
             visibility: visible;
         }
+
+        &--noBackground {
+            background-color: none; 
+          }
     }
     &__items {
         background: white;
         border-radius: 24px;
-        width: 600px;
         height: 100%;
-        position: relative;
+        position: fixed;
         text-align: justify;
         display: flex;
         flex-direction: column;
         animation: slideInFromRight 0.3s ease-in-out forwards;
 
-        &--closing {
+        &.closing {
             animation: slideOutToRight 0.3s ease-in-out forwards;
         }
     }
+
+    &__items--cropping {
+        @extend .reusableModal__items;
+        right: 300px;
+        animation: slideInFromRight 0.3s ease-in-out forwards;
+
+        &.closing {
+            animation: slideOutToRight 0.3s ease-in-out forwards;
+        }
+    }
+
     &__mainContainer {
         padding: 64px 48px 0 48px;
     }

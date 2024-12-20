@@ -13,6 +13,8 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
   children,
   width,
   button,
+  positionClass,
+  disableOverlayBackground = false,
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
@@ -24,15 +26,15 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
   return createPortal(
     <div
       className={`${styles.reusableModal__modalOverlay} ${
-        isClosing ? "" : "is-visible"
-      }`}
+        disableOverlayBackground ? styles.noBackground : ""
+      } ${isClosing ? "" : styles["is-visible"]}`}
     >
-      <div
-        className={`${styles.reusableModal__items} ${
-          isClosing ? "closing" : ""
-        }`}
-        style={{ width: width ?? "600px" }}
-      >
+<div
+  className={`${
+    styles.reusableModal__items
+  } ${positionClass ? styles[positionClass] : ""} ${isClosing ? "closing" : ""}`}
+  style={{ width: width ?? "600px" }}
+>
         <div className={styles.reusableModal__mainContainer}>
           <button
             className={styles.reusableModal__closeBtn}

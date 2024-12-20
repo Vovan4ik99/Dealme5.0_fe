@@ -43,6 +43,8 @@ const CroppingModal: React.FC<ICroppingModalProps> = ({
       onClose={onClose}
       onSave={handleSave}
       width="800px"
+      positionClass="reusableModal__items--cropping"
+      disableOverlayBackground={true}
     >
       <div className={styles.cropperContainer}>
         <Cropper

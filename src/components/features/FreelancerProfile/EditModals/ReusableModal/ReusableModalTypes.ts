@@ -7,4 +7,6 @@ export interface IReusableModalProps {
     children: ReactNode;
     width?: string;
     button?:string;
+    positionClass?: string;
+    disableOverlayBackground? : boolean;
   }
