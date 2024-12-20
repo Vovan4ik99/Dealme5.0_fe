@@ -31,6 +31,13 @@ export const API_ROUTES = {
 			PATCH_SALES_TOOLS: '/freelancer/tools',
 		}
 	},
+	PROFILE: {
+		FREELANCER: {
+			BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
+			AVATAR: '/user/avatar',
+			INFO: '/freelancer/bar'
+		}
+	},
 	FREELANCER: {
 		GET_AVATAR: '/user/avatar'
 	}

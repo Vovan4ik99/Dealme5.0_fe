@@ -1,0 +1,46 @@
+@use "@styles/variables" as vars;
+
+.backgroundImg {
+    &__items {
+        position: relative;
+    }
+
+    &__image {
+        width: 1320px;
+        height: 250px;
+        border-radius: 16px;
+    }
+
+    &__icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: vars.$color-white;
+        color: vars.$color-gray;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+            color: vars.$color-black;
+            background-color: vars.$color-gray-border;
+        }
+    }
+
+    &__previewImage {
+        display: block;
+        width: 472px;
+        height: 151px;
+        border-radius: 8px;
+        overflow: hidden; 
+        position: relative;
+        object-fit: cover; 
+        object-position: center;
+    }
+}

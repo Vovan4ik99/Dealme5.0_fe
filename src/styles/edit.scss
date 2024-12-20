@@ -1,0 +1,24 @@
+@use './variables' as vars;
+
+.edit {
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:transparent;
+    color: vars.$color-gray;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+  
+    &:hover {
+      color: vars.$color-black;
+
+    }
+
+    &--editButton{
+        background: transparent;
+        border: none;
+    }
+
+  }

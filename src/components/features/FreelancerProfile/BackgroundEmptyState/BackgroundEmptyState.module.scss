@@ -1,0 +1,77 @@
+@use "@styles/variables" as vars;
+
+.empty-state {
+    &__wrapper {
+        background-color: vars.$color-white;
+        border-radius: 16px;
+        border: 1px dashed vars.$color-gray-border;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 16px;
+        width: 1320px;
+        height: 250px;
+    }
+
+    &__text {
+        font-size: 15px;
+        line-height: 130%;
+        font-weight: 500;
+        color: vars.$color-gray;
+        width: 308px;
+    }
+
+    &__icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: vars.$color-white;
+        color: vars.$color-gray;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+            color: vars.$color-black;
+            background-color: vars.$color-gray-border;
+        }
+    }
+
+    &__images {
+        position: relative;
+        width: 160px;
+        height: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    &__image {
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+
+        &--image1 {
+            z-index: 1;
+            left: 0;
+        }
+
+        &--image2 {
+            z-index: 2;
+            margin-top: 12px;
+        }
+
+        &--image3 {
+            z-index: 3;
+            left: 96px;
+            margin-bottom: 16px;
+        }
+    }
+}

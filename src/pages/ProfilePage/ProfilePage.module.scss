@@ -2,7 +2,17 @@
     max-width: 1320px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     min-height: 100vh;
+}
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.avatar {
+    position: absolute;
+    left: 24px;
+    bottom: -37px;
 }
