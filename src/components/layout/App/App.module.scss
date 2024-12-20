@@ -3,6 +3,20 @@
 .app {
   position: relative;
   min-height: 100vh;
+  max-width: 1320px;
+  margin: 0 auto;
+
+  &__bg {
+    top: -85px;
+    left: -185px;
+    position: absolute;
+    width: 264px;
+    height: 264px;
+    background: vars.$primary-color;
+    filter: blur(300px);
+    border-radius: 1000px;
+    z-index: -1;
+  }
 
   &__icon {
     position: fixed;

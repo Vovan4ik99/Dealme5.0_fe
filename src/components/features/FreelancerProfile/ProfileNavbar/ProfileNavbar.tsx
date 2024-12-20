@@ -1,44 +1,125 @@
-import {Link} from "react-router-dom";
-import logo from "@icons/logo.svg";
-import desktop from "@icons/profile_navbar/desktop.svg";
-import orders from "@icons/profile_navbar/orders.svg";
-import products from "@icons/profile_navbar/products.svg";
-import guardian from "@icons/profile_navbar/guardian.svg";
-import payments from "@icons/profile_navbar/payments.svg";
-import avatar from "@icons/profile_navbar/avatar.svg";
+import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
+import Logo from "@ui/Logo/Logo.tsx";
+import {useEffect, useState} from "react";
+import {useFreelancerService} from "@services/freelancerService.ts";
+import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import avatar from '@icons/profile_navbar/default_avatar.svg'
 
 const ProfileNavbar = () => {
+
+	const {loadingStatus, getAvatar} = useFreelancerService();
+	const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (avatarUrl === null) {
+			getAvatar()
+				.then(
+					(response) =>
+						setAvatarUrl(response.picture !== undefined ? response.picture : null)
+				).catch((error) => console.log(error));
+		}
+	}, [avatarUrl, getAvatar]);
+
+	if (loadingStatus === 'loading') {
+		return <LoadingSpinner/>
+	}
+
 	return (
 		<nav className={styles.navbar}>
-			<div className={styles.navbar__bg}></div>
-			<Link to={"/"} className={styles.navbar__logo}>
-				<img src={logo} alt={"logo"}/>
-			</Link>
-			<div className={styles.navbar_items}>
-				<a href="/" className={styles.navbar__item}>
-					<img src={desktop} alt={"desktop"}/>
-					<span className={styles.navbar__label}>Pulpit</span>
-				</a>
-				<a href="/" className={styles.navbar__item}>
-					<img src={orders} alt={"orders"}/>
-					<span className={styles.navbar__label}>Zlecenia</span>
-				</a>
-				<a href="/" className={styles.navbar__item}>
-					<img src={products} alt={"products"}/>
-					<span className={styles.navbar__label}>Produkty</span>
-				</a>
-				<a href="/" className={`${styles.navbar__item} ${styles.guardianImg}`}>
-					<img src={guardian} alt={"guardian"}/>
-					<span className={styles.navbar__label}>Opiekun</span>
-				</a>
-				<a href="/" className={`${styles.navbar__item} ${styles.paymentsImg}`}>
-					<img src={payments} alt={"payments"}/>
-					<span className={styles.navbar__label}>Płatności</span>
-				</a>
-			</div>
+			<Logo/>
 			<div className={styles.navbar__wrapper}>
-				<a href="/" className={styles.navbar__button}>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 16 16"
+						xmlns="http://www.w3.org/2000/svg"
+						className={styles.navbar__image}
+					>
+						<path
+							d="M12.3449 15.5017H4.21978C2.32475 15.5017 0.782227 13.9592 0.782227 12.0642V6.68033C0.782227 5.53656 1.34849 4.47154 2.29725 3.83091L6.35981 1.08962C7.5267 0.300856 9.03735 0.300856 10.2055 1.08962L14.2674 3.83091C15.2162 4.47092 15.7825 5.53656 15.7825 6.68033V12.0642C15.7825 13.9592 14.2399 15.5017 12.3449 15.5017ZM8.28234 2.37464C7.97859 2.37464 7.67358 2.46464 7.4092 2.64402L3.34602 5.38468C2.91538 5.67594 2.65726 6.1597 2.65726 6.6797V12.0635C2.65726 12.9254 3.35789 13.6261 4.21978 13.6261H12.3449C13.2068 13.6261 13.9074 12.9254 13.9074 12.0635V6.68033C13.9074 6.16032 13.6499 5.67656 13.2187 5.38531L9.1561 2.64402C8.89048 2.46464 8.5861 2.37464 8.28234 2.37464Z"
+							fill="currentColor"
+						/>
+					</svg>
+					Pulpit
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 16 16"
+						xmlns="http://www.w3.org/2000/svg"
+						className={styles.navbar__image}
+					>
+						<path
+							d="M12.3447 2.375H11.9435C11.8053 1.83991 11.4938 1.36568 11.0575 1.02644C10.6212 0.687197 10.0849 0.502071 9.53223 0.5L7.03223 0.5C6.47959 0.502071 5.94322 0.687197 5.50696 1.02644C5.07069 1.36568 4.75913 1.83991 4.62098 2.375H4.21973C3.30835 2.37599 2.43458 2.73848 1.79014 3.38292C1.1457 4.02736 0.783219 4.90112 0.782227 5.8125L0.782227 12.0625C0.783219 12.9739 1.1457 13.8476 1.79014 14.4921C2.43458 15.1365 3.30835 15.499 4.21973 15.5H12.3447C13.2561 15.4988 14.1297 15.1363 14.7741 14.4919C15.4185 13.8475 15.7811 12.9738 15.7822 12.0625V5.8125C15.7811 4.90117 15.4185 4.0275 14.7741 3.3831C14.1297 2.73869 13.2561 2.37616 12.3447 2.375ZM4.21973 4.25H12.3447C12.7591 4.25 13.1566 4.41462 13.4496 4.70765C13.7426 5.00067 13.9072 5.3981 13.9072 5.8125V7.375H2.65723V5.8125C2.65723 5.3981 2.82185 5.00067 3.11487 4.70765C3.4079 4.41462 3.80533 4.25 4.21973 4.25ZM12.3447 13.625H4.21973C3.80533 13.625 3.4079 13.4604 3.11487 13.1674C2.82185 12.8743 2.65723 12.4769 2.65723 12.0625V9.25H7.03223C7.03223 9.58152 7.16392 9.89946 7.39834 10.1339C7.63276 10.3683 7.95071 10.5 8.28223 10.5C8.61375 10.5 8.93169 10.3683 9.16611 10.1339C9.40053 9.89946 9.53223 9.58152 9.53223 9.25H13.9072V12.0625C13.9072 12.4769 13.7426 12.8743 13.4496 13.1674C13.1566 13.4604 12.7591 13.625 12.3447 13.625Z"
+							fill="currentColor"
+						/>
+					</svg>
+					Zlecenia
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 16 16"
+						xmlns="http://www.w3.org/2000/svg"
+						className={styles.navbar__image}
+					>
+						<path
+							d="M15.7822 3.93749C15.7801 2.03987 14.2424 0.50208 12.3447 0.5H4.21972C2.3221 0.50208 0.784307 2.03987 0.782227 3.93749V4.56248C0.782461 5.13348 1.0069 5.68156 1.40722 6.08873V12.0625C1.4093 13.9601 2.94712 15.4979 4.84474 15.5H11.7197C13.6174 15.4979 15.1552 13.9601 15.1572 12.0625V6.08876C15.5576 5.68159 15.782 5.13351 15.7822 4.56251V3.93749ZM2.65723 3.93749C2.65723 3.07455 3.35678 2.375 4.21972 2.375H12.3447C13.2077 2.375 13.9072 3.07455 13.9072 3.93749V4.56248C13.9072 4.73507 13.7673 4.87499 13.5947 4.87499H2.96974C2.79715 4.87499 2.65723 4.73507 2.65723 4.56248V3.93749ZM13.2822 12.0625C13.2822 12.9254 12.5827 13.625 11.7197 13.625H4.84474C3.9818 13.625 3.28225 12.9254 3.28225 12.0625V6.74999H13.2822V12.0625Z"
+							fill="currentColor"
+						/>
+						<path
+							d="M6.71973 8H9.84474C10.3625 8 10.7822 8.41974 10.7822 8.9375C10.7822 9.45526 10.3625 9.875 9.84474 9.875H6.71973C6.20196 9.875 5.78223 9.45526 5.78223 8.9375C5.78223 8.41974 6.20196 8 6.71973 8Z"
+							fill="currentColor"
+						/>
+					</svg>
+					Produkty
+				</NavLink>
+				<NavLink to="/" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
+					<svg
+						width="13"
+						height="16"
+						viewBox="0 0 13 16"
+						xmlns="http://www.w3.org/2000/svg"
+						className={styles.navbar__image}
+					>
+						<path
+							d="M5.28223 7.10005C5.28223 6.27265 5.95483 5.60005 6.78223 5.60005C7.60963 5.60005 8.28223 6.27265 8.28223 7.10005C8.28223 7.92745 7.60963 8.60005 6.78223 8.60005C5.95483 8.60005 5.28223 7.92745 5.28223 7.10005ZM6.78223 9.20005C5.39083 9.20005 4.13743 10.1462 3.80083 11.45C3.75463 11.6294 3.79423 11.8208 3.90823 11.9672C4.02163 12.1136 4.19623 12.1994 4.38223 12.1994H9.18223C9.36823 12.1994 9.54283 12.1136 9.65623 11.9672C9.76963 11.8202 9.80983 11.6294 9.76363 11.45C9.42703 10.1462 8.17423 9.20005 6.78223 9.20005ZM12.7822 5.30005V11.9C12.7822 13.7198 11.302 15.2 9.48223 15.2H4.08223C2.26243 15.2 0.782227 13.7198 0.782227 11.9V5.30005C0.782227 3.51325 2.20963 2.05345 3.98443 2.00125C4.32163 1.29145 5.04583 0.800049 5.88223 0.800049H7.68223C8.51923 0.800049 9.24283 1.29145 9.58003 2.00125C11.3548 2.05285 12.7822 3.51325 12.7822 5.30005ZM10.9822 5.30005C10.9822 4.47325 10.309 3.80005 9.48223 3.80005H8.88223C8.38483 3.80005 7.98223 3.39745 7.98223 2.90005C7.98223 2.73445 7.84783 2.60005 7.68223 2.60005H5.88223C5.71663 2.60005 5.58223 2.73445 5.58223 2.90005C5.58223 3.39745 5.17963 3.80005 4.68223 3.80005H4.08223C3.25543 3.80005 2.58223 4.47325 2.58223 5.30005V11.9C2.58223 12.7268 3.25543 13.4 4.08223 13.4H9.48223C10.309 13.4 10.9822 12.7268 10.9822 11.9V5.30005Z"
+							fill="currentColor"
+						/>
+					</svg>
+					Opiekun
+				</NavLink>
+				<NavLink to="/profile" className={({isActive}) =>
+					`${styles.navbar__item} ${isActive ? styles['navbar__item-active'] : ''}`}>
+					<svg
+						width="17"
+						height="12"
+						viewBox="0 0 17 12"
+						xmlns="http://www.w3.org/2000/svg"
+						className={styles.navbar__image}
+					>
+						<path
+							d="M5.11556 8.66667C5.66784 8.66667 6.11556 8.21895 6.11556 7.66667C6.11556 7.11438 5.66784 6.66667 5.11556 6.66667C4.56328 6.66667 4.11556 7.11438 4.11556 7.66667C4.11556 8.21895 4.56328 8.66667 5.11556 8.66667Z"
+							fill="currentColor"
+						/>
+						<path
+							d="M13.1156 0H4.44889C3.47676 0.00105878 2.54474 0.387707 1.85734 1.07511C1.16993 1.76252 0.783285 2.69453 0.782227 3.66667L0.782227 8.33333C0.783285 9.30547 1.16993 10.2375 1.85734 10.9249C2.54474 11.6123 3.47676 11.9989 4.44889 12H13.1156C14.0877 11.9989 15.0197 11.6123 15.7071 10.9249C16.3945 10.2375 16.7812 9.30547 16.7822 8.33333V3.66667C16.7812 2.69453 16.3945 1.76252 15.7071 1.07511C15.0197 0.387707 14.0877 0.00105878 13.1156 0ZM4.44889 2H13.1156C13.4997 2.00008 13.872 2.13282 14.1695 2.37578C14.467 2.61873 14.6714 2.95699 14.7482 3.33333H2.81623C2.89305 2.95699 3.0975 2.61873 3.395 2.37578C3.6925 2.13282 4.06479 2.00008 4.44889 2ZM13.1156 10H4.44889C4.00687 10 3.58294 9.82441 3.27038 9.51184C2.95782 9.19928 2.78223 8.77536 2.78223 8.33333V5.33333H14.7822V8.33333C14.7822 8.77536 14.6066 9.19928 14.2941 9.51184C13.9815 9.82441 13.5576 10 13.1156 10Z"
+							fill="currentColor"
+						/>
+					</svg>
+					Płatności
+				</NavLink>
+			</div>
+			<div className={styles['navbar__add-wrapper']}>
+				<button className={`btn btn--more btn--flex`}>
 					<svg
 						width="12"
 						height="12"
@@ -52,9 +133,11 @@ const ProfileNavbar = () => {
 						/>
 					</svg>
 					Przyjmij zlecenie
-				</a>
-				<button className={styles.navbar__profile}>
-					<img src={avatar} alt="avatar" className={styles.navbar__avatar}/>{" "}
+				</button>
+				<button className={`btn btn--more btn--flex btn--user`}>
+					<div className={styles['navbar__avatar']}>
+						<img src={avatarUrl === null ? avatar : avatarUrl} alt="avatar"/>
+					</div>
 					Adam Gontier
 					<svg
 						width="10"

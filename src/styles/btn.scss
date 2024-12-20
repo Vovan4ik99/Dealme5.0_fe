@@ -11,7 +11,7 @@
   font-size: 16px;
   line-height: 120%;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   outline: none;
   border: none;
 
@@ -56,5 +56,29 @@
     &:hover {
       background-color: vars.$color-gray-hover;
     }
+  }
+
+  &--flex {
+    background-color: transparent;
+    width: fit-content;
+    margin-top: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+    &:hover {
+      border: 1px solid vars.$color-black;
+      color: vars.$color-black;
+    }
+  }
+
+  &--user {
+    position: relative;
+    padding: 14px 16px 14px 38px;
+    color: vars.$color-gray;
+    background-color: vars.$color-gray-light;
+    border: 1px solid vars.$color-gray-light;
   }
 }

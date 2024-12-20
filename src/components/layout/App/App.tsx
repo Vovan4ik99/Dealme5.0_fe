@@ -8,6 +8,7 @@ function App() {
 	return (
 		<AuthProvider>
 			<div className={styles.app}>
+				<div className={styles.app__bg}></div>
 				<div className={styles.app__icon}>
 					<img src={bg_icon} alt={'bg icon'}/>
 				</div>

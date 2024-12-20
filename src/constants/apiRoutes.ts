@@ -37,5 +37,8 @@ export const API_ROUTES = {
 			AVATAR: '/user/avatar',
 			INFO: '/freelancer/bar'
 		}
+	},
+	FREELANCER: {
+		GET_AVATAR: '/user/avatar'
 	}
 } as const;
