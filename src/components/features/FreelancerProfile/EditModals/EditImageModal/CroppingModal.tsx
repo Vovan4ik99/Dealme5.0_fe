@@ -27,17 +27,15 @@ const CroppingModal: React.FC<ICroppingModalProps> = ({
         const croppedBlob = await getCroppedImg(imageUrl, croppedAreaPixels);
         console.log("Cropped Blob:", croppedBlob);
         onSave({
-            position: { x: crop.x, y: crop.y },
-            blob: croppedBlob, // Przekazujesz Blob
-          });
+          position: { x: crop.x, y: crop.y },
+          blob: croppedBlob,
+        });
         onClose();
       } catch (error) {
         console.error("Error cropping image:", error);
       }
     }
   };
-  
-  
 
   return (
     <ReusableModal

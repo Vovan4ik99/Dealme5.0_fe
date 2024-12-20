@@ -45,6 +45,4 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area): Promise<Blob> =
   });
 };
 
-  
-
 export default getCroppedImg;

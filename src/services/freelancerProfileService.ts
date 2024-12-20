@@ -1,7 +1,7 @@
 import { useHttp } from "../hooks/http.hook";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { IFreelancerBackgroundResponse } from "@shared/freelancerTypes";
+import { IFreelancerAvatarResponse, IFreelancerBackgroundResponse } from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
   const { sendRequest, loadingStatus, errorMessage } = useHttp();
@@ -21,7 +21,6 @@ export const useFreelancerProfileService = () => {
     });
   }, [sendRequest]);
   
-
   const deleteBackgroundPicture = useCallback(async (): Promise<void> => {
     return await sendRequest({
       url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
@@ -29,8 +28,7 @@ export const useFreelancerProfileService = () => {
     });
   }, [sendRequest]);
 
-
-  const getAvatar = useCallback(async (): Promise<void> => {
+  const getAvatar = useCallback(async (): Promise<IFreelancerAvatarResponse> => {
     return await sendRequest({
       url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
     });
