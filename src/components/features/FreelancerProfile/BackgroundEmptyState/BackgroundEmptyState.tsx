@@ -9,7 +9,7 @@ const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({
   return (
     <div className={styles["empty-state__wrapper"]}>
       <div className={styles["empty-state__images"]}>
-        <img
+        {/* <img
           className={styles["empty-state__image"]}
           src={office_desk}
           alt="Office desk"
@@ -23,7 +23,7 @@ const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({
           className={styles["empty-state__image"]}
           src={forest_mountain}
           alt="Home desk"
-        />
+        /> */}
       </div>
       <div className={styles["empty-state__text"]}>
         Stwórz niepowtarzalny styl swojego profilu - dodaj tło stwarzające

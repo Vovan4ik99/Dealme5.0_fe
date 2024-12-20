@@ -13,7 +13,7 @@ const EditBackground: React.FC<{
     <EditImageModal
       title="Edytuj zdjęcie w tle"
       recommendedSize="1320px na 250px"
-      aspect={1320 / 250}
+      aspect={1320 / 151}
       onClose={onClose}
       onSave={onSave}
       deleteImage={deleteBackgroundPicture}

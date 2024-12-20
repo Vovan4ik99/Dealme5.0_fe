@@ -16,8 +16,6 @@ const BackgroundImage = () => {
     useFreelancerProfileService();
   const { user } = useContext(AuthContext);
 
-  console.log(user);
-
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {

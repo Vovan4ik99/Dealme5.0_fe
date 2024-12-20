@@ -26,6 +26,21 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   const [croppingVisible, setCroppingVisible] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (initialImage) {
+      setPreviewUrl(initialImage);
+
+      fetch(initialImage)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], "previous_image.jpg", {
+            type: blob.type,
+          });
+          setImageFile(file);
+        });
+    }
+  }, [initialImage]);
+
   const validateFile = (file: File): boolean => {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
@@ -148,7 +163,13 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
                   <div className={styles.editModal__icons}>
                     <button
                       className={styles.editModal__icon}
-                      onClick={() => setCroppingVisible(true)}
+                      onClick={() => {
+                        if (imageFile) {
+                          setCroppingVisible(true);
+                        } else {
+                          alert("Brak obrazu do edycji!");
+                        }
+                      }}
                     >
                       <svg
                         width="14"

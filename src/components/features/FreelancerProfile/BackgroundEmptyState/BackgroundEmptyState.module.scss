@@ -18,6 +18,7 @@
         line-height: 130%;
         font-weight: 500;
         color: vars.$color-gray;
+        width: 308px;
     }
 
     &__icon {
@@ -50,7 +51,7 @@
         height: 64px;
         background-size: cover;
         background-position: center;
-        border-radius: 20px;
+        border-radius: 16px;
         overflow: hidden;
     }
 }

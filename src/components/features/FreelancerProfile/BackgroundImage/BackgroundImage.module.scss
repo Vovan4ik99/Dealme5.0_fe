@@ -38,5 +38,9 @@
         width: 472px;
         height: 151px;
         border-radius: 8px;
+        overflow: hidden; 
+        position: relative;
+        object-fit: cover; 
+        object-position: center;
     }
 }
