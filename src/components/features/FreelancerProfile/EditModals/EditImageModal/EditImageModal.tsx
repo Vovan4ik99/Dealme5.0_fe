@@ -109,7 +109,6 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
         setCroppedImageBlob(null);
         setPreviewUrl(null);
         setImageFile(null);
-        alert("Zdjęcie zostało usunięte.");
       } catch (error) {
         console.error("Błąd podczas usuwania obrazu:", error);
       }

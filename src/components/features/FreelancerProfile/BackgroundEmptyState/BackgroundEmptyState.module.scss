@@ -9,6 +9,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        gap: 16px;
         width: 1320px;
         height: 250px;
     }
@@ -43,15 +44,34 @@
     }
 
     &__images {
+        position: relative;
+        width: 160px;
+        height: 64px;
         display: flex;
-        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
     }
     &__image {
+        position: absolute;
         width: 64px;
         height: 64px;
-        background-size: cover;
-        background-position: center;
         border-radius: 16px;
-        overflow: hidden;
+
+        &--image1 {
+            z-index: 1;
+            left: 0;
+        }
+
+        &--image2 {
+            z-index: 2;
+            margin-top: 12px;
+        }
+
+        &--image3 {
+            z-index: 3;
+            left: 96px;
+            margin-bottom: 16px;
+        }
     }
 }

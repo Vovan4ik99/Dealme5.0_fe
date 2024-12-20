@@ -1,6 +1,6 @@
-import forest_mountain from "./forest_mountain.jpg";
-import office_feel from "./office_feel.jpg";
-import office_desk from "./office_desk.jpg";
+import forest_mountain from "./forest_mountain.svg";
+import office_feel from "./office_feel.svg";
+import office_desk from "./ofifce_d.svg";
 
 export {
 forest_mountain,

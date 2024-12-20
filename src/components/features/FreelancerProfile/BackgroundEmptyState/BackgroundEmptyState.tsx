@@ -10,17 +10,17 @@ const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({
     <div className={styles["empty-state__wrapper"]}>
       <div className={styles["empty-state__images"]}>
         <img
-          className={styles["empty-state__image"]}
+          className={`${styles["empty-state__image"]} ${styles["empty-state__image--image1"]}`}
           src={office_desk}
           alt="Office desk"
         />
         <img
-          className={styles["empty-state__image"]}
+          className={`${styles["empty-state__image"]} ${styles["empty-state__image--image2"]}`}
           src={office_feel}
           alt="Office feel"
         />
         <img
-          className={styles["empty-state__image"]}
+          className={`${styles["empty-state__image"]} ${styles["empty-state__image--image3"]}`}
           src={forest_mountain}
           alt="Home desk"
         />

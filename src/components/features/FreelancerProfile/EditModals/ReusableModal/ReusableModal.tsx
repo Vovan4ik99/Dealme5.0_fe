@@ -4,7 +4,8 @@ import styles from "./ReusableModal.module.scss";
 import "@styles/btn.scss";
 import "@styles/title.scss";
 import { createPortal } from "react-dom";
-import { modalsContiner } from "../../../../../main";
+
+const modalsContainer = document.getElementById("modals")!;
 
 const ReusableModal: React.FC<IReusableModalProps> = ({
   title,
@@ -26,7 +27,7 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
   return createPortal(
     <div
       className={`${styles.reusableModal__modalOverlay} ${
-        disableOverlayBackground ? styles.noBackground : ""
+        disableOverlayBackground ? styles["reusableModal__modalOverlay reusableModal__modalOverlay--noBackground"] : ""
       } ${isClosing ? "" : styles["is-visible"]}`}
     >
 <div
@@ -64,7 +65,7 @@ const ReusableModal: React.FC<IReusableModalProps> = ({
         </div>
       </div>
     </div>,
-    modalsContiner
+    modalsContainer
   );
 };
 
