@@ -1,7 +1,8 @@
 import EditButton from "@ui/EditButtonIcon/EditButton/EditButton";
-import styles from "./BackgroundEmptyState.module.scss";
-import { forest_mountain, office_desk, office_feel } from "@icons/freelancerProfile/backgroundImage/backgroundImg";
+import styles from "./AvatarEmptyState.module.scss";
+import { man, woman } from "@icons/freelancerProfile/avatarImage/avatarImg";
 import "@styles/title.scss"
+import "@styles/btn.scss"
 
 const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({
   onEditClick,
@@ -11,23 +12,17 @@ const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({
       <div className={styles["empty-state__images"]}>
         <img
           className={`${styles["empty-state__image"]} ${styles["empty-state__image--image1"]}`}
-          src={office_desk}
-          alt="Office desk"
+          src={man}
+          alt="Man"
         />
         <img
           className={`${styles["empty-state__image"]} ${styles["empty-state__image--image2"]}`}
-          src={office_feel}
-          alt="Office feel"
-        />
-        <img
-          className={`${styles["empty-state__image"]} ${styles["empty-state__image--image3"]}`}
-          src={forest_mountain}
-          alt="Home desk"
+          src={woman}
+          alt="Woman"
         />
       </div>
-      <div className={`title title--fs15 ${styles["empty-state__text"]}`}>
-        Stwórz niepowtarzalny styl swojego profilu - dodaj tło stwarzające
-        wyjątkowy klimat
+      <div className="title title--fs15">
+        Dodaj awatar
         <div className={`btn btn--editBtn ${styles["empty-state__icon"]}`}>
           <EditButton
             onClick={onEditClick}

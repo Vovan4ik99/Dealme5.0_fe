@@ -81,4 +81,27 @@
     background-color: vars.$color-gray-light;
     border: 1px solid vars.$color-gray-light;
   }
+
+  &--has-avatar{
+    padding: 14px 16px 14px 46px;
+  }
+
+  &--editBtn{
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: vars.$color-white;
+    color: vars.$color-gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+    border: 1px solid vars.$color-gray-border;
+
+    &:hover {
+        color: vars.$color-black;
+        background-color: vars.$color-gray-border;
+    }
+  }
 }

@@ -34,11 +34,11 @@ export const useFreelancerProfileService = () => {
     });
   }, [sendRequest]);
 
-  const patchAvatar = useCallback(async (request: { pictureId: number; picture: string[] }): Promise<void> => {
+  const patchAvatar = useCallback(async (formData: FormData): Promise<void> => {
     return await sendRequest({
       url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
       method: "PATCH",
-      body: JSON.stringify(request),
+      body: formData,
     });
   }, [sendRequest]);
 

@@ -17,6 +17,8 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   deleteImage,
   classname,
   initialImage,
+  header,
+  hasBackground = false,
 }) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [croppedImageBlob, setCroppedImageBlob] = useState<Blob | null>(null);
@@ -148,12 +150,16 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
             {previewUrl ? (
               <div className={styles.editModal__preview}>
                 <div className={styles.editModal__previewText}>
-                  <div className={styles.editModal__imageHeader}>
-                    Zdjęcie w tle (opcjonalnie)
-                  </div>
+                  <div className={styles.editModal__imageHeader}>{header}</div>
                   <div className={styles.editModal__fileName}>{fileName}</div>
                 </div>
-                <div className={styles.editModal__imageWrapper}>
+                <div
+                  className={`${styles.editModal__imageWrapper} ${
+                    hasBackground
+                      ? styles["editModal__imageWrapper--withBackground"]
+                      : ""
+                  }`}
+                >
                   <img
                     src={previewUrl}
                     alt="Cropped background"
