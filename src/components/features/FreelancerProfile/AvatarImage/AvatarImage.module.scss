@@ -1,0 +1,61 @@
+@use "@styles/variables" as vars;
+
+.avatarImg {
+    &__items {
+        position: relative;
+    }
+
+    &__image {
+        width: 160px;
+        height: 160px;
+        border-radius: 24px;
+        border: 6px solid vars.$color-white;
+    }
+
+    &__icon {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: vars.$color-white;
+        color: vars.$color-gray;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+            color: vars.$color-black;
+            background-color: vars.$color-gray-border;
+        }
+    }
+
+    &__dealmeLogo {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: vars.$color-white;
+        border-top-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
+
+    &__previewImage {
+        display: block;
+        width: 300px;
+        height: 300px;
+        border-radius: 24px;
+        overflow: hidden; 
+        position: relative;
+        object-fit: cover; 
+        object-position: center;
+    }
+}

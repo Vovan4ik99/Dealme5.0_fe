@@ -8,11 +8,11 @@ const EditBackground: React.FC<{
   initialImage: string | undefined;
   onDelete: () => void;
 }> = ({ onClose, onSave, classname, initialImage, onDelete }) => {
-  const { deleteBackgroundPicture } = useFreelancerProfileService();
+  const { deleteAvatar } = useFreelancerProfileService();
 
   const handleDelete = async () => {
     try {
-      await deleteBackgroundPicture();
+      await deleteAvatar();
       onDelete();
     } catch (error) {
       console.error("Błąd podczas usuwania obrazu:", error);
@@ -21,15 +21,16 @@ const EditBackground: React.FC<{
 
   return (
     <EditImageModal
-      title="Edytuj zdjęcie w tle"
-      recommendedSize="1320x250px."
-      aspect={1320 / 250}
+      title="Edytuj awatar"
+      recommendedSize="512x512px."
+      aspect={1}
       onClose={onClose}
       onSave={onSave}
       deleteImage={handleDelete}
       classname={classname}
       initialImage={initialImage}
-      header="Zdjęcie w tle (opcjonalnie)"
+      header="Awatar (opcjonalnie)"
+      hasBackground={true}
     />
   );
 };

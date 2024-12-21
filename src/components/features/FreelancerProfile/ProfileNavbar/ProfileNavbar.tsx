@@ -11,12 +11,16 @@ const ProfileNavbar = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchAvatarImage = async () => {
+      try {
+        const response = await getAvatar();
+        setAvatarUrl(response.picture ?? undefined);
+      } catch (error) {
+        console.error("Error fetching avatar image:", error);
+      }
+    };
     if (avatarUrl === null) {
-      getAvatar()
-        .then((response) =>
-          setAvatarUrl(response.picture ?? null)
-        )
-        .catch((error) => console.log(error));
+      fetchAvatarImage();
     }
   }, [avatarUrl, getAvatar]);
 
@@ -163,7 +167,11 @@ const ProfileNavbar = () => {
           </svg>
           Przyjmij zlecenie
         </button>
-        <button className={`btn btn--more btn--flex btn--user`}>
+        <button
+          className={`btn btn--more btn--flex btn--user ${
+            avatarUrl ? "btn--has-avatar" : ""
+          }`}
+        >
           <div className={styles["navbar__avatar"]}>
             <img src={avatarUrl ?? avatar} alt="avatar" />
           </div>

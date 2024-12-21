@@ -10,36 +10,31 @@
         align-items: center;
         flex-direction: column;
         gap: 16px;
-        width: 1320px;
-        height: 250px;
+        width: 160px;
+        height: 160px;
         cursor: pointer;
-    }
-
-    &__text {
-        text-align: center;
-        width: 308px;
     }
 
     &__icon {
         position: absolute;
-        top: 2px;
-        right: 8px;
+        top: -16px;
+        right: -12px;
     }
 
     &__images {
         position: relative;
-        width: 160px;
-        height: 64px;
+        width: 80px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0;
+
     }
     &__image {
         position: absolute;
-        width: 64px;
-        height: 64px;
-        border-radius: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
 
         &--image1 {
             z-index: 1;
@@ -49,12 +44,8 @@
         &--image2 {
             z-index: 2;
             margin-top: 12px;
+            left: 30px;
         }
 
-        &--image3 {
-            z-index: 3;
-            left: 96px;
-            margin-bottom: 16px;
-        }
     }
 }

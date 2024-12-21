@@ -29,4 +29,10 @@
     line-height: 100%;
     color: vars.$color-black;
   }
+  &--fs15{
+    font-size: 15px;
+    line-height: 130%;
+    font-weight: 500;
+    color: vars.$color-gray;
+  }
 }
