@@ -1,0 +1,61 @@
+@use "@styles/variables" as vars;
+
+.basicData-form {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+
+    &__header{
+        border-radius: 12px;
+        background-color: vars.$color-gray-light;
+        padding: 16px;
+        width: 100%;
+        font-size: 18px;
+        line-height: 120%;
+    }
+
+    &__wrapper{
+        display: flex;
+        gap: 24px;
+        align-items: center;
+    }
+
+    &__container{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__role {
+        font-size: 18px;
+        line-height: 120%;
+        color: vars.$color-gray;
+        font-weight: 500;
+    }
+
+    &--variety {
+        @extend .basicData-form__role; 
+        font-size: 14px; 
+    }
+
+    &__item {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__input {
+        max-width: 244px;
+    }
+
+    &-label {
+        cursor: pointer;
+        color: vars.$color-gray;
+        font-size: 14px;
+        line-height: 100%;
+        font-weight: 400;
+
+        span {
+            text-decoration: underline;
+        }
+    }
+}

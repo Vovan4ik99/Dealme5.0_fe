@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import styles from "./FreelancerProfileInfo.module.scss";
+import styles from "./AsidePrimaryInfo.module.scss";
 import { useFreelancerProfileService } from "@services/freelancerProfileService";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import {
@@ -8,13 +8,16 @@ import {
   star,
 } from "@icons/freelancerProfile/asidePrimaryInfoImage/asidePrimaryInfoImage";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner";
+import EditButton from "@ui/EditButtonIcon/EditButton/EditButton";
+import "@styles/btn.scss";
+import EditAsidePrimaryInfo from "./EditAsidePrimaryInfo";
 
 const FreelancerProfileInfo = () => {
-  const { getFreelancerBar, loadingStatus } =
-    useFreelancerProfileService();
+  const { getFreelancerBar, loadingStatus } = useFreelancerProfileService();
 
   const { user } = useContext(AuthContext);
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [accountStatus, setAccountStatus] = useState<string>("");
   const [visibilityStatus, setVisibilityStatus] = useState<string>("");
   const [rate, setRate] = useState<number>(0);
@@ -46,7 +49,18 @@ const FreelancerProfileInfo = () => {
         className={styles.asideProfile__name}
       >{`${user?.firstName} ${user?.lastName}`}</h2>
       <div className={styles.asideProfile__primaryInfoWrapper}>
-        <p className={styles.asideProfile__role}>{user?.specialization.name}</p>
+        <div className={styles.asideProfile__container}>
+          <p className={styles.asideProfile__role}>
+            {user?.specialization.name}
+          </p>
+          <div className="btn btn--editBtn">
+            <EditButton
+              className="edit edit--editButton"
+              onClick={() => setIsModalOpen(true)}
+            />
+          </div>
+        </div>
+
         <div className={styles.asideProfile__ratingsWrapper}>
           <span className={styles.asideProfile__ratingText}>
             <img
@@ -82,19 +96,20 @@ const FreelancerProfileInfo = () => {
         </div>
         <div className={styles.asideProfile__items}>
           {accountStatus === "NORMAL" && (
-            <span className={styles.asideProfile__item}>{""}
+            <span className={styles.asideProfile__item}>
               <img src={dealmeLogo} alt="Dealme logo" />
-              Polecany przez dealme
+              <span>Polecany przez dealme</span>
             </span>
           )}
           {visibilityStatus === "LIMITED" && (
-            <span className={styles["item item--limited"]}>
+            <span className={`${styles.item} ${styles["item--limited"]}`}>
               <img src={hourglass} alt="Hourglass" />
-              Ograniczona dostępność
+              <span>Ograniczona dostępność</span>
             </span>
           )}
         </div>
       </div>
+      {isModalOpen && <EditAsidePrimaryInfo onClose={() => setIsModalOpen(false)}/>}
     </section>
   );
 };
