@@ -9,6 +9,7 @@ import AsideSecondaryInfo from "../../components/features/FreelancerProfile/Asid
 import VisibilityBarForClients from "../../components/features/FreelancerProfile/VisibilityBarForClients/VisibilityBarForClients.tsx";
 import SectionTabs from "../../components/features/FreelancerProfile/SectionTabs/SectionTabs.tsx";
 
+
 const ProfilePage = () => {
   return (
     <section className={styles["profile"]}>
