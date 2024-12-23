@@ -2,7 +2,7 @@ import React from "react";
 import EditIcon from "../EditIcon/EditIcon";
 
 interface EditButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
 }
 

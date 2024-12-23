@@ -1,0 +1,36 @@
+@use "@styles/variables" as vars;
+
+.base-card{
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    gap: 24px;
+    background-color: #fff;
+    border: 1px solid vars.$color-gray-border;
+    border-radius: 12px;
+
+    &__text{
+        font-size: 22px;
+        line-height: 120%;
+        font-weight: bold;
+        color: vars.$color-black;
+
+
+        &__text--subText {
+            @extend .base-card__text; 
+            font-weight: 500; 
+    }}
+
+    &__items{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__item{
+        font-size: 130%;
+        font-size: 16px;
+        font-weight: 400;
+        color: vars.$color-gray;
+    }
+}

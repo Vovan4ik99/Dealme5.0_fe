@@ -22,6 +22,9 @@ const FreelancerProfileInfo = () => {
   const [visibilityStatus, setVisibilityStatus] = useState<string>("");
   const [rate, setRate] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
+  const [points, setPoints] = useState<number>(0);
+  const [ordersCount, setOrdersCount] = useState<number>(0);
+
 
   useEffect(() => {
     const fetchFreelancerData = async () => {
@@ -31,6 +34,8 @@ const FreelancerProfileInfo = () => {
         setVisibilityStatus(data.visibilityStatus);
         setRate(data.rate || 0);
         setCount(data.count || 0);
+        setPoints(data.points || 0)
+        setOrdersCount(data.ordersCount || 0)
       } catch (error) {
         console.error("Failed to fetch freelancer data:", error);
       }
@@ -53,12 +58,11 @@ const FreelancerProfileInfo = () => {
           <p className={styles.asideProfile__role}>
             {user?.specialization.name}
           </p>
-          <div className="btn btn--editBtn">
+          <button className="btn btn--editBtn" onClick={() => setIsModalOpen(true)}>
             <EditButton
               className="edit edit--editButton"
-              onClick={() => setIsModalOpen(true)}
             />
-          </div>
+          </button>
         </div>
 
         <div className={styles.asideProfile__ratingsWrapper}>
@@ -68,7 +72,8 @@ const FreelancerProfileInfo = () => {
               alt="Star"
               className={styles.asideProfile__starIcon}
             />
-            {rate.toFixed(2)}
+            {rate.toFixed(2)} 
+            <span className={styles.asideProfile__text}>({count} ocen)</span>
           </span>
           <span className={styles.asideProfile__ratingText}>
             <svg
@@ -91,7 +96,8 @@ const FreelancerProfileInfo = () => {
                 fill="currentColor"
               />
             </svg>
-            {count} pkt
+            {points} pkt
+            <span className={styles.asideProfile__text}>({ordersCount} zleceń)</span>
           </span>
         </div>
         <div className={styles.asideProfile__items}>
@@ -102,7 +108,7 @@ const FreelancerProfileInfo = () => {
             </span>
           )}
           {visibilityStatus === "LIMITED" && (
-            <span className={`${styles.item} ${styles["item--limited"]}`}>
+            <span className={`${styles.asideProfile__item} ${styles["asideProfile__item--limited"]}`}>
               <img src={hourglass} alt="Hourglass" />
               <span>Ograniczona dostępność</span>
             </span>

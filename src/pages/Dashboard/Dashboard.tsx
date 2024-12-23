@@ -9,6 +9,7 @@ const Dashboard = () => {
 		<section className={styles['dashboard']}>
 			<Navbar/>
 			<Link to={"/profile"}>Profil</Link>
+			<Link to={"/investor"}>Inwestor</Link>
 			<h1 className={'title'}>Strona główna</h1>
 			<Footer isHyphenated={false} isCentered={true}/>
 		</section>

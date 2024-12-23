@@ -8,7 +8,7 @@ import Statistics from "../../components/features/FreelancerProfile/Statistics/S
 import AsideSecondaryInfo from "../../components/features/FreelancerProfile/AsideSecondaryInfo/AsideSecondaryInfo.tsx";
 import VisibilityBarForClients from "../../components/features/FreelancerProfile/VisibilityBarForClients/VisibilityBarForClients.tsx";
 import SectionTabs from "../../components/features/FreelancerProfile/SectionTabs/SectionTabs.tsx";
-
+import AboutMe from "../../components/features/FreelancerProfile/AboutMe/AboutMe.tsx";
 
 const ProfilePage = () => {
   return (
@@ -28,10 +28,10 @@ const ProfilePage = () => {
 
         <div className={styles["rightColumn"]}>
           <SectionTabs />
-          <VisibilityBarForClients progress={58} /> 
+          <VisibilityBarForClients progress={58} />
           <Statistics />
-          {/* <AboutMe />
-          <Opinions /> */}
+          <AboutMe />
+          {/*<Opinions /> */}
         </div>
       </div>
       <Footer isHyphenated={false} isCentered={true} />
