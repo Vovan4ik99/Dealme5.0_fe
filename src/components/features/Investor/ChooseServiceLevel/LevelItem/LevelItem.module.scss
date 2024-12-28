@@ -1,0 +1,15 @@
+@use "@styles/variables" as vars;
+
+.level-item{
+
+    &__items{
+        display: flex;
+        flex-direction: column;
+    }
+    &__subText{
+        font-size: 14px;
+        line-height: 120%;
+        font-weight: 500;
+        color: vars.$color-gray;
+    }
+}

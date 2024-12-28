@@ -27,13 +27,18 @@
     font-size: 20px;
     font-weight: 600;
     line-height: 100%;
-    color: vars.$color-black;
+  }
+
+  &--fs20lh120{
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 120%;
   }
   &--fs15{
     font-size: 15px;
     line-height: 130%;
     font-weight: 500;
-    color: vars.$color-gray;
+
   }
 
   &--m32{

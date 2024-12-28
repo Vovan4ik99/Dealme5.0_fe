@@ -1,0 +1,26 @@
+@use "@styles/variables" as vars;
+
+.back {
+    display: flex;
+    flex-direction: column;
+
+    &__wrapper {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        align-items: center;
+    }
+    
+    &__items {
+        display: flex;
+        align-items: center;
+    }
+    
+
+    &__text {
+        color: vars.$color-gray;
+        border-radius: 8px;
+        background-color: vars.$color-gray-light;
+        padding: 8px 12px;
+    }
+}

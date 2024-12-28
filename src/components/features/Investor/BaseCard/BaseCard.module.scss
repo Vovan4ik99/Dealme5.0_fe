@@ -1,6 +1,6 @@
 @use "@styles/variables" as vars;
 
-.base-card{
+.base-card {
     display: flex;
     flex-direction: column;
     padding: 32px;
@@ -8,26 +8,25 @@
     background-color: #fff;
     border: 1px solid vars.$color-gray-border;
     border-radius: 12px;
+    width: 100%;
 
-    &__text{
+    &__text {
         font-size: 22px;
         line-height: 120%;
         font-weight: bold;
         color: vars.$color-black;
-
-
-        &__text--subText {
-            @extend .base-card__text; 
-            font-weight: 500; 
-    }}
-
-    &__items{
+    }
+    &__text--subText {
+        font-weight: 500;
+        font-size: 22px;
+    }
+    &__items {
         display: flex;
         flex-direction: column;
         gap: 8px;
     }
 
-    &__item{
+    &__item {
         font-size: 130%;
         font-size: 16px;
         font-weight: 400;
