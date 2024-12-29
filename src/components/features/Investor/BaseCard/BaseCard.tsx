@@ -1,3 +1,4 @@
+import ChooseAndGoNextBtn from "@ui/ChooseAndGoNextBtn/ChooseAndGoNextBtn";
 import styles from "./BaseCard.module.scss";
 import { IBaseCardProps } from "./BaseCardTypes";
 
@@ -26,9 +27,7 @@ const BaseCard: React.FC<IBaseCardProps> = ({
         </div>
         <p className={styles["base-card__item"]}>{description}</p>
       </div>
-      <button className="btn btn--tab btn--goNext">
-        Wybierz i przejdź dalej
-      </button>
+      <ChooseAndGoNextBtn />
     </article>
   );
 };

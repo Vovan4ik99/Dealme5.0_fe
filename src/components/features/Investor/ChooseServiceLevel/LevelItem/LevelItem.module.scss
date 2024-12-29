@@ -1,12 +1,18 @@
 @use "@styles/variables" as vars;
 
-.level-item{
-
-    &__items{
+.level-item {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 12px;
+    border: 1px solid vars.$color-gray-border;
+    background-color: #fff;
+    padding: 24px;
+    
+    &__items {
         display: flex;
         flex-direction: column;
     }
-    &__subText{
+    &__subText {
         font-size: 14px;
         line-height: 120%;
         font-weight: 500;

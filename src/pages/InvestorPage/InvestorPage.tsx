@@ -3,12 +3,14 @@ import InvestorNavbar from "../../components/features/Investor/InvestorNavbar/In
 import styles from "./InvestorPage.module.scss";
 import Footer from "../../components/layout/Footer/Footer.tsx";
 import Service from "../../components/features/Investor/Service/Service.tsx";
+import ServicesEmptyState from "../../components/features/Investor/ServicesEmptyState/ServicesEmptyState.tsx";
 
 const InvestorPage = () => {
   return (
     <section className={styles["investor"]}>
       <InvestorNavbar />
-      <Service />
+      {/* <Service /> */}
+      <ServicesEmptyState />
       <Footer isHyphenated={false} isCentered={false}/>
     </section>
   );

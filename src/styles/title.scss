@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use "./variables" as vars;
 
 .title {
   font-size: 50px;
@@ -29,19 +29,24 @@
     line-height: 100%;
   }
 
-  &--fs20lh120{
-    font-size: 20px;
-    font-weight: 600;
+  &--fs20lh120 {
     line-height: 120%;
   }
-  &--fs15{
+  &--fs15 {
     font-size: 15px;
     line-height: 130%;
     font-weight: 500;
-
   }
 
-  &--m32{
+  &--m32 {
     margin-bottom: 32px;
+  }
+  &--fs26{
+    font-size: 26px;
+    line-height: 150%;
+    font-weight: 400;
+  }
+  &--semiBold{
+    font-weight: 600;
   }
 }
