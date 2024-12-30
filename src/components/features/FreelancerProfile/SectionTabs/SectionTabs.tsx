@@ -1,4 +1,3 @@
-import "@styles/btn.scss";
 import styles from "./SectionTabs.module.scss";
 
 const BUTTONS = [

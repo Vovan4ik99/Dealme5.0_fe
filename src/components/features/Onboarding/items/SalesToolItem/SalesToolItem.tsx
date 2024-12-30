@@ -1,7 +1,7 @@
 import React from "react";
 import {ISalesToolItemProps} from "./salesToolItemTypes.ts";
 import styles from "../OnboardingItems.module.scss";
-import checkbox_icon from "@icons/checkbox_checked.svg";
+import checkbox_checked from '@icons/auth/checkbox_checked.svg';
 
 const SalesToolItem: React.FC<ISalesToolItemProps> = ({text, isSelected, onChange, picture}) => {
 
@@ -11,7 +11,7 @@ const SalesToolItem: React.FC<ISalesToolItemProps> = ({text, isSelected, onChang
 				<input id={text} type={'checkbox'} name={'workday'} onClick={(e) => e.stopPropagation()}/>
 				<div className={styles['item__add-wrapper']}>
 					<div className={styles['item__checkbox']}>
-						{isSelected && <img src={checkbox_icon} alt={'checked icon'}/>}
+						{isSelected && <img src={checkbox_checked} alt={'checkbox'}/>}
 					</div>
 					<p className={styles['item__text']}>{text}</p>
 				</div>

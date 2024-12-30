@@ -1,10 +1,7 @@
-import {
-  earnings,
-  orders,
-  watch,
-} from "@icons/freelancerProfile/statistics/statisticsImages";
+import earnings from "@icons/freelancerProfile/statistics/earnings.svg";
+import watch from "@icons/freelancerProfile/statistics/watch.svg";
+import orders from "@icons/freelancerProfile/statistics/orders.svg";
 import StatisticsCard from "./StatisticsCard/StatisticsCard";
-import "@styles/btn.scss"
 import styles from "./Statistics.module.scss";
 
 const Statistics = () => {

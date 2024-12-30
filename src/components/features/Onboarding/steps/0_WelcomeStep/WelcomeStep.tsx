@@ -1,13 +1,15 @@
-import welcome_icon from '@icons/freelancer_registration_active.svg';
 import React from "react";
 import styles from "./WelcomeStep.module.scss";
 import {IWelcomeStepProps} from "./welcomeStepTypes.ts";
+import {ReactComponent as FreelancerIcon} from '@icons/named_exported/freelancer_registration.svg';
 
 const WelcomeStep: React.FC<IWelcomeStepProps> = ({username, onNext}) => {
 
 	return (
 		<div className={styles['welcome']}>
-			<img className={styles['welcome__icon']} src={welcome_icon} alt={'welcome icon'}/>
+			<div className={styles['welcome__icon']}>
+				<FreelancerIcon/>
+			</div>
 			<h1 className={'title title--lh120'}>Cześć, {username}</h1>
 			<p className={styles['welcome__text']}>
 				Miło widzieć Cię na pokładzie Dealme. Na początek uzupełnij swój profil niezbędnymi danymi,

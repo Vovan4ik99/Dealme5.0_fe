@@ -1,19 +1,22 @@
 import styles from './App.module.scss'
-import bg_icon from '@icons/bg_icon.svg'
 import AppRouter from "../../features/Routing/AppRouter.tsx";
 import {AuthProvider} from "@context/AuthContext/AuthProvider.tsx";
+import bg_icon from '@icons/app/bg_icon.svg';
+import {ModalProvider} from "@context/ModalContext/ModalProvider.tsx";
 
 function App() {
 
 	return (
 		<AuthProvider>
-			<div className={styles.app}>
-				<div className={styles.app__bg}></div>
-				<div className={styles.app__icon}>
-					<img src={bg_icon} alt={'bg icon'}/>
+			<ModalProvider>
+				<div className={styles.app}>
+					<div className={styles.app__bg}></div>
+					<div className={styles.app__icon}>
+						<img src={bg_icon} alt="background"/>
+					</div>
+					<AppRouter/>
 				</div>
-				<AppRouter/>
-			</div>
+			</ModalProvider>
 		</AuthProvider>
 	)
 }

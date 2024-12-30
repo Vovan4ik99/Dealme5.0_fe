@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
-import Cropper, { Area } from "react-easy-crop";
+import Cropper, { Area } from 'react-easy-crop';
 import styles from "./CroppingModal.module.scss";
 import getCroppedImg from "./getCroppedImg";
 import { ICroppingModalProps } from "./CroppingModalTypes";
-import ReusableModal from "../ReusableModal/ReusableModal";
+import BaseEditModal from "../../../EditModal/BaseEditModal/BaseEditModal.tsx";
 
 const CroppingModal: React.FC<ICroppingModalProps> = ({
   imageUrl,
@@ -38,7 +38,7 @@ const CroppingModal: React.FC<ICroppingModalProps> = ({
   };
 
   return (
-    <ReusableModal
+    <BaseEditModal
       title="Przytnij obrazek"
       onClose={onClose}
       onSave={handleSave}
@@ -62,7 +62,7 @@ const CroppingModal: React.FC<ICroppingModalProps> = ({
           }}
         />
       </div>
-    </ReusableModal>
+    </BaseEditModal>
   );
 };
 

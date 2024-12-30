@@ -4,7 +4,7 @@ import InputError from "@ui/InputError/InputError.tsx";
 import { useOnboardingService } from "@services/onboardingService.ts";
 import { WORKING_DAYS, WorkingDayKey } from "@constants/workingDays.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import ReusableModal from "../../../EditModals/ReusableModal/ReusableModal.tsx";
+import BaseEditModal from "../../../../EditModal/BaseEditModal/BaseEditModal.tsx";
 import { IWorkingDaysProps } from "./WorkingDaysTypes.ts";
 import WorkingDayItem from "../../../../Onboarding/items/WorkingDayItem/WorkingDayItem.tsx";
 
@@ -53,7 +53,7 @@ const WorkingDaysStep: React.FC<IWorkingDaysProps> = ({
   };
 
   return (
-    <ReusableModal
+    <BaseEditModal
       title="Edytuj dostępność"
       onClose={onClose}
       onSave={handleSave}
@@ -68,7 +68,7 @@ const WorkingDaysStep: React.FC<IWorkingDaysProps> = ({
           {errorMessage && <InputError text={errorMessage} />}
         </div>
       )}
-    </ReusableModal>
+    </BaseEditModal>
   );
 };
 

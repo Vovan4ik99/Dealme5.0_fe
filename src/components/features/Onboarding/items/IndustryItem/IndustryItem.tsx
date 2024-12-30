@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {IIndustryItemProps} from "./industryItemTypes.ts";
-import arrow_right from '@icons/arrow_right.svg';
 import styles from '../../Onboarding.module.scss';
 import SubIndustryItem from "../SubIndustryItem/SubIndustryItem.tsx";
 import AnimatedStep from "../../steps/AnimatedStep/AnimatedStep.tsx";
+import arrow_right from '@icons/onboarding/arrow_right.svg'
 
 const IndustryItem: React.FC<IIndustryItemProps> = ({text, subIndustries, selectedSubIndustries, onChange, isSearchActive, isInSearchRange}) => {
 
@@ -31,7 +31,7 @@ const IndustryItem: React.FC<IIndustryItemProps> = ({text, subIndustries, select
 				onClick={() => setIsActive((prevState) => !prevState)}>
 				<div className={styles['onboarding-step__category-wrapper']}>
 					<div className={styles['onboarding-step__category-img']}>
-						<img className={styles['onboarding-step__category-img']} src={arrow_right} alt={'arrow right'}/>
+						<img src={arrow_right} alt={'arrow'}/>
 					</div>
 					<p className={styles['onboarding-step__category-text']}>{text}</p>
 				</div>

@@ -3,20 +3,18 @@ import React, {useCallback, useRef, useState} from "react";
 import {useForm, useWatch} from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
 import {RegistrationFormData} from "./registrationFormTypes.ts";
-import freelancer_active from '@icons/freelancer_registration_active.svg';
-import freelancer_icon from '@icons/freelancer_registration.svg';
-import investor_active from '@icons/investor_registration_active.svg';
-import investor_icon from '@icons/investor_registration.svg';
 import {Link, useNavigate} from "react-router-dom";
-import checkbox_checked from '@icons/checkbox_checked.svg';
 import {useAuthService} from "@services/authService.ts";
-import SuccessInfo from "@ui/SuccessInfo/SuccessInfo.tsx";
 import {ICreateUserRequest, UserRole} from "@shared/userTypes.ts";
+import checkbox_checked from '@icons/auth/checkbox_checked.svg';
+import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer_registration.svg";
+import {ReactComponent as InvestorIcon} from "@icons/named_exported/investor_registration.svg";
+import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 
 const RegistrationForm = () => {
-	
+
 	const navigate = useNavigate();
-	
+
 	const [isFreelancer, setIsFreelancer] = useState<boolean>(true);
 	const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
 
@@ -35,7 +33,7 @@ const RegistrationForm = () => {
 		mode: 'onTouched',
 	});
 
-	const password = useWatch({ name: 'password', control, defaultValue: '' });
+	const password = useWatch({name: 'password', control, defaultValue: ''});
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
@@ -55,31 +53,31 @@ const RegistrationForm = () => {
 					navigate('/login');
 				}, 3000);
 			}).catch((error) => {
-				console.log(error);
-			});
+			console.log(error);
+		});
 		return () => {
 			if (timeoutRef.current) {
 				clearTimeout(timeoutRef.current);
 			}
 		};
 	}, [createUser, isFreelancer, navigate, reset]);
-	
+
 	return (
 		<form name={'registration-form'} className={styles['registration-form']}
 		      onSubmit={handleSubmit(onSubmit)} autoComplete={'on'} noValidate={true}>
 			<div>
 				<p className={styles['registration-form__text']}>Wybierz rodzaj konta</p>
-				<button className={styles['registration-form__switcher']} onClick={(e) => handleToggle(e)}>
-					<div
-						className={`${styles['registration-form__slider']} ${!isFreelancer ? styles['registration-form__slider--right'] : ''}`}></div>
+				<button className={styles['registration-form__switcher']}
+				        onClick={(e) => handleToggle(e)}>
+					<div className={`${styles['registration-form__slider']} ${!isFreelancer ? styles['registration-form__slider--right'] : ''}`}></div>
 					<span
 						className={`${styles['registration-form__option']} ${isFreelancer ? styles['registration-form__option--active'] : ''}`}>
-						<img src={isFreelancer ? freelancer_active : freelancer_icon} alt={'freelancer'}/>
+						<FreelancerIcon/>
 						<p>Freelancer</p>
 					</span>
 					<span
 						className={`${styles['registration-form__option']} ${!isFreelancer ? styles['registration-form__option--active'] : ''}`}>
-						<img src={!isFreelancer ? investor_active : investor_icon} alt={'investor'}/>
+						<InvestorIcon/>
 						<p>Inwestor</p>
 					</span>
 				</button>
@@ -221,7 +219,7 @@ const RegistrationForm = () => {
 					/>
 					<span
 						className={`${styles['registration-form__terms-checkbox--custom']} ${errors.terms ? 'form-item__input--error' : ''}`}>
-						<img src={checkbox_checked} alt={'checkbox checked'}/>
+						<img src={checkbox_checked} alt={'checkbox'}/>
 					</span>
 					<label htmlFor={'terms'} className={styles['registration-form__terms-label']}>
 						Akceptuję <Link to={'/terms'}><span>regulamin serwisu</span></Link>
@@ -229,12 +227,12 @@ const RegistrationForm = () => {
 				</div>
 				{errors.terms?.message && <InputError text={errors.terms.message}/>}
 			</div>
-			<SuccessInfo isOpen={isUserCreated}
-			             text={'Użytkownik został zarejestrowany. Za chwilę przekierujemy Ci na stronę logowania.'}/>
+			{isUserCreated && <AlertItem kind={'success'} text={'Użytkownik został zarejestrowany. ' +
+				'Za chwilę przekierujemy Ci na stronę logowania.'}/>}
 			<button className={'btn'} type="submit" disabled={loadingStatus === 'loading'}>
 				{loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto'}
 			</button>
-			{errorMessage && <InputError text={errorMessage}/>}
+			{errorMessage && <AlertItem kind={'error'} text={errorMessage}/>}
 		</form>
 	)
 }

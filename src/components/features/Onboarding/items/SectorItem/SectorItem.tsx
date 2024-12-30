@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../OnboardingItems.module.scss";
 import InfoIconBtn from "@ui/InfoIconBtn/InfoIconBtn.tsx";
 import {ISectorItemProps} from "./sectorItemTypes.ts";
-import checkbox_icon from "@icons/checkbox_checked.svg";
+import checkbox_checked from '@icons/auth/checkbox_checked.svg';
 
 const SectorItem: React.FC<ISectorItemProps> = ({isSelected, text, description, onSelect}) => {
 
@@ -13,7 +13,7 @@ const SectorItem: React.FC<ISectorItemProps> = ({isSelected, text, description, 
 				<input id={text} type={'checkbox'} name={'workday'} onClick={(e) => e.stopPropagation()}/>
 				<div className={styles['item__add-wrapper']}>
 					<div className={styles['item__checkbox']}>
-						{isSelected && <img src={checkbox_icon} alt={'checked icon'}/>}
+						{isSelected && <img src={checkbox_checked} alt={'checkbox'} />}
 					</div>
 					<p className={styles['item__text']}>{text}</p>
 				</div>

@@ -1,0 +1,23 @@
+@use "@styles/variables" as vars;
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: vars.$color-gray-light;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+  &.show {
+	opacity: 0.9;
+	visibility: visible;
+  }
+
+  &.hide {
+	opacity: 0;
+	visibility: hidden;
+  }
+}

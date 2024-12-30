@@ -45,47 +45,34 @@ export const useHttp = (): IHTTPResponse => {
 
 		const token = localStorage.getItem('token');
 		const authHeaders: IHTTPHeaders = {
-			...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }), 
-			...(token && !isAuthPage ? { 'Authorization': `Bearer ${token}` } : {}),
+			...(body instanceof FormData ? {} : {'Content-Type': 'application/json'}),
+			...(token && !isAuthPage ? {'Authorization': `Bearer ${token}`} : {}),
 			...headers,
 		};
 
 		try {
 			const response = await fetch(`${baseUrl}${url}`, {method, body, headers: authHeaders});
 			if (!response.ok) {
-				// Obsługa błędu serwera
-				let errorData: IErrorResponse | null = null;
-				try {
-				  errorData = await response.json(); // Próbujemy sparsować błąd
-				} catch (parseError) {
-					console.error("Error parsing JSON from server error response:", parseError);
-				  }
-				const errorMessage = getErrorMessage(response.status, errorData?.message ?? '');
+				const errorData: IErrorResponse = await response.json().catch(() => null);
+				const errorMessage = getErrorMessage(response.status, errorData.message);
 				setErrorMessage(errorMessage);
 				setLoadingStatus('error');
-				return Promise.reject(new Error(errorMessage));
-			  }
-		  
-			  // Sprawdzenie, czy odpowiedź ma treść
-			  const contentType = response.headers.get('content-type');
-			  if (contentType?.includes("application/json")) {
-				const data = await response.json(); // Parsujemy JSON tylko jeśli dostępny
-				setLoadingStatus('idle');
-				return data;
-			  }
-		  
-			  // Jeśli brak treści, zwracamy `null`
-			  setLoadingStatus('idle');
-			  return null;
-		  
-			} catch (e) {
-			  // Obsługa błędu sieciowego
-			  console.error(e);
-			  setLoadingStatus('error');
-			  setErrorMessage(ErrorMessages.SERVER_ERROR);
-			  return Promise.reject(new Error(ErrorMessages.SERVER_ERROR));
+				return Promise.reject(errorMessage);
 			}
-		  }, []);
+			const contentType = response.headers.get('Content-Type');
+			const hasBody = contentType?.includes('application/json');
+
+			const data = hasBody ? await response.json().catch(() => null) : null;
+			setLoadingStatus('idle');
+			return data;
+
+		} catch (e) {
+			console.error(e);
+			setLoadingStatus('error');
+			setErrorMessage(ErrorMessages.SERVER_ERROR);
+			return Promise.reject(new Error(ErrorMessages.SERVER_ERROR));
+		}
+	}, []);
 
 	return {loadingStatus, errorMessage, sendRequest};
 }

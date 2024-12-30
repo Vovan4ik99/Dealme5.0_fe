@@ -1,11 +1,12 @@
 import styles from "./AuthPage.module.scss";
 import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
-import google_icon from "@icons/google_login.svg";
-import facebook_icon from "@icons/facebook_login.svg";
+import google_icon from "@icons/auth/google_login.svg";
+import facebook_login from "@icons/auth/facebook_login.svg";
 import React from "react";
 import LoginForm from "../../components/features/Auth/LoginForm/LoginForm.tsx";
 import RegistrationForm from "../../components/features/Auth/RegistrationForm/RegistrationForm.tsx";
 import Footer from "../../components/layout/Footer/Footer.tsx";
+import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 
 interface LoginPageProps {
 	isLogin: boolean;
@@ -19,15 +20,15 @@ const AuthPage: React.FC<LoginPageProps> = ({isLogin}) => {
 				<h1 className={'title'}>{isLogin ? 'Zaloguj się' : 'Załóż konto'}</h1>
 				<div className={styles['login-page__social']}>
 					<button className={styles['login-page__social-link']}>
-						<img src={google_icon} alt={'google icon'}/>Kontynuuj z Google
+						<img src={google_icon} alt={'google'}/>{''}
+						Kontynuuj z Google
 					</button>
 					<button className={styles['login-page__social-link']}>
-						<img src={facebook_icon} alt={'facebook icon'}/>Kontynuuj z Facebook
+						<img src={facebook_login} alt={'facebook'}/>{''}
+						Kontynuuj z Facebook
 					</button>
 				</div>
-				<div className={styles['login-page__divider']}>
-					<span className={styles['login-page__divider-text']}>lub</span>
-				</div>
+				<CustomDivider/>
 				{isLogin ? <LoginForm/> : <RegistrationForm/>}
 			</div>
 			<Footer isHyphenated={true} isCentered={true}/>

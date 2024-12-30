@@ -1,0 +1,51 @@
+@use "@styles/variables" as vars;
+
+.item {
+  margin-top: 20px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  &--enter {
+    opacity: 1;
+  }
+
+  &--exit {
+    opacity: 0;
+  }
+
+  &__wrapper {
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &--success {
+      background-color: vars.$color-success-pastel;
+      color: vars.$color-success;
+    }
+
+    &--neutral {
+      color: vars.$color-gray;
+      background-color: vars.$color-gray-light;
+    }
+
+    &--danger {
+      color: vars.$color-danger;
+      background-color: vars.$color-danger-pastel;
+    }
+
+    &--info {
+      color: vars.$primary-color;
+      background-color: vars.$color-primary-pastel;
+    }
+
+    &--warning {
+      color: vars.$color-warning;
+      background-color: vars.$color-warning-pastel;
+    }
+  }
+}

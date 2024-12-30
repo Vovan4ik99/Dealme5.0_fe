@@ -1,12 +1,12 @@
-import styles from "../../features/FreelancerProfile/ProfileNavbar/ProfileNavbar.module.scss";
-import logo from "@icons/logo.svg";
+import styles from "../../layout/ProfileNavbar/ProfileNavbar.module.scss";
 import {Link} from "react-router-dom";
+import logo from '@icons/app/logo.svg';
 
 const Logo = () => {
 
 	return (
 		<Link to={"/"} className={styles.logo}>
-			<img src={logo} alt={"logo"}/>
+			<img src={logo} alt="logo"/>
 		</Link>
 	);
 }
