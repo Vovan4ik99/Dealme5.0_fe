@@ -1,7 +1,7 @@
 import React from "react";
 import {IOnboardingModalCategoryProps} from "./onboardingModalCategoryTypes.ts";
 import styles from './OnboardingModalCategory.module.scss';
-import success_icon from '@icons/success_icon.svg';
+import success_icon from '@icons/alert/success_icon.svg';
 
 const OnboardingModalCategory: React.FC<IOnboardingModalCategoryProps> = ({kind, text, children}) => {
 
@@ -28,7 +28,7 @@ const OnboardingModalCategory: React.FC<IOnboardingModalCategoryProps> = ({kind,
 		case 'finished':
 			return <div className={styles['category__wrapper']}>
 				<div className={`${styles['category__icon']} ${styles['category__icon--finished']}`}>
-					<img src={success_icon} alt={'success icon'}/>
+					<img src={success_icon} alt={'success'}/>
 				</div>
 				<p className={`${styles['category__text']} ${styles['category__text--finished']}`}>{text}</p>
 			</div>

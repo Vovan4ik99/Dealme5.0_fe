@@ -9,7 +9,7 @@ import {
 } from "@icons/freelancerProfile/asideSecondaryInfo/asideSecondaryInfoImages";
 import { useState } from "react";
 import { ISubIndustriesProps } from "./SubIndustriesTypes";
-import EditButton from "@ui/EditButtonIcon/EditButton/EditButton";
+import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import WorkingHours from "./WorkingHours/WorkingHours";
 
 const SubIndustries = ({
@@ -59,10 +59,10 @@ const SubIndustries = ({
               ))
             : "Brak sektorów"}
         </div>
-        <EditButton
+        <ActionBtn
           onClick={handleEditSubIndustries}
           className="edit edit--editButton"
-        ></EditButton>
+        ></ActionBtn>
       </div>
 
       <div className={styles.subIndustries__detail}>
@@ -70,10 +70,10 @@ const SubIndustries = ({
           <img src={calendar} alt="Calendar" />
           {workingDays}
         </div>
-        <EditButton
+        <ActionBtn
           onClick={handleEditWorkingDays}
           className="edit edit--editButton"
-        ></EditButton>
+        ></ActionBtn>
       </div>
 
       <div className={styles.subIndustries__detail}>
@@ -81,10 +81,10 @@ const SubIndustries = ({
           <img src={clock} alt="Clock" />
           {workingHours}
         </div>
-        <EditButton
+        <ActionBtn
           onClick={handleOpenModal}
           className="edit edit--editButton"
-        ></EditButton>
+        ></ActionBtn>
       </div>
 
       {isModalOpen && (
@@ -100,10 +100,10 @@ const SubIndustries = ({
           <img src={localizationImg} alt="Localization" />
           {location}
         </div>
-        <EditButton
+        <ActionBtn
           onClick={handleEditLocation}
           className="edit edit--editButton"
-        ></EditButton>
+        ></ActionBtn>
       </div>
 
       <div className={styles.subIndustries__detail}>
@@ -111,10 +111,10 @@ const SubIndustries = ({
           <img src={languageImg} alt="Languages" />
           {languages}
         </div>
-        <EditButton
+        <ActionBtn
           onClick={handleEditLanguages}
           className="edit edit--editButton"
-        ></EditButton>
+        ></ActionBtn>
       </div>
     </section>
   );

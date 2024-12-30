@@ -1,6 +1,6 @@
 import styles from './InputError.module.scss';
-import error_icon from '@icons/error_icon.svg';
 import React from "react";
+import error_icon from "@icons/auth/error_icon.svg";
 
 interface IInputErrorProps {
 	text: string;
@@ -9,7 +9,7 @@ interface IInputErrorProps {
 const InputError: React.FC<IInputErrorProps> = ({text}) => {
 	return (
 		<div className={styles.error}>
-			<img src={error_icon} alt={'error icon'}/>
+			<img src={error_icon} alt="error"/>
 			<span>{text}</span>
 		</div>
 	)

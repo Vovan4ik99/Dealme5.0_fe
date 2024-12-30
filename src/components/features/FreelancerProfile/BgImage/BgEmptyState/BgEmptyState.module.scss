@@ -1,0 +1,24 @@
+@use "@styles/variables" as vars;
+
+.bg-empty {
+    position: relative;
+    background-color: vars.$color-white;
+    border-radius: 16px;
+    border: 1px dashed vars.$color-gray-border;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+
+    &__text {
+        text-align: center;
+        max-width: 308px;
+        line-height: 130%;
+        font-size: 15px;
+        color: vars.$color-gray;
+    }
+}

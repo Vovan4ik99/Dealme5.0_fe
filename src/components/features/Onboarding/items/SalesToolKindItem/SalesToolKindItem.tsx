@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {ISalesToolKindItemProps} from "./salesToolKindItemTypes.ts";
 import styles from "../../Onboarding.module.scss";
-import arrow_right from "@icons/arrow_right.svg";
 import AnimatedStep from "../../steps/AnimatedStep/AnimatedStep.tsx";
 import SalesToolItem from "../SalesToolItem/SalesToolItem.tsx";
 import {getPictureForSalesTools} from "../../../../../utils/salesToolsPictureUtils.ts";
+import arrow_right from '@icons/onboarding/arrow_right.svg'
 
 const SalesToolKindItem: React.FC<ISalesToolKindItemProps> = ({text, salesTools, selectedSalesTools, onChange,
 	                                                              isSearchActive, isInSearchRange}) => {
@@ -33,7 +33,7 @@ const SalesToolKindItem: React.FC<ISalesToolKindItemProps> = ({text, salesTools,
                 onClick={() => setIsActive((prevState) => !prevState)}>
                 <div className={styles['onboarding-step__category-wrapper']}>
                     <div className={styles['onboarding-step__category-img']}>
-                        <img className={styles['onboarding-step__category-img']} src={arrow_right} alt={'arrow right'}/>
+                        <img src={arrow_right} alt={'arrow'} />
                     </div>
                     <p className={styles['onboarding-step__category-text']}>{text}</p>
                 </div>

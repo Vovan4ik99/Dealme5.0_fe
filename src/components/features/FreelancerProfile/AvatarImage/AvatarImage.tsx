@@ -4,7 +4,7 @@ import EditAvatarImage from "./EditAvatarImage";
 import { AuthContext } from "@context/AuthContext/AuthContext";
 import { useFreelancerProfileService } from "@services/freelancerProfileService";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner";
-import EditButton from "@ui/EditButtonIcon/EditButton/EditButton";
+import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import AvatarEmptyState from "../AvatarEmptyState/AvatarEmptyState";
 
 const AvatarImage = () => {
@@ -71,7 +71,7 @@ const AvatarImage = () => {
           alt="Avatar"
           className={styles.avatarImg__image}
         />
-        <EditButton
+        <ActionBtn
           className={styles.avatarImg__icon}
           onClick={() => setIsModalOpen(true)}
         />

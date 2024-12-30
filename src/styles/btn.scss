@@ -16,119 +16,111 @@
   border: none;
 
   &:hover {
-    background-color: vars.$color-black-hover;
+	background-color: vars.$color-black-hover;
   }
 
   &--mw134 {
-    max-width: 134px;
+	max-width: 134px;
   }
 
   &--mt0 {
-    margin-top: 0;
+	margin-top: 0;
   }
 
   &--back {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    background-color: #ffffff;
-    margin-top: 0;
-    border: 1px solid vars.$color-gray-border;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	background-color: #ffffff;
+	margin-top: 0;
+	border: 1px solid vars.$color-gray-border;
 
-    &:hover {
-      background-color: vars.$color-gray-hover;
-    }
+	&:hover {
+	  background-color: vars.$color-gray-hover;
+	}
   }
 
   &--more {
-    border: 1px solid vars.$color-gray-border;
-    background-color: #ffffff;
-    margin-top: 8px;
-    padding: 14px 16px;
-    color: vars.$color-gray;
-    font-size: 14px;
-    line-height: 100%;
+	border: 1px solid vars.$color-gray-border;
+	background-color: #ffffff;
+	margin-top: 8px;
+	padding: 14px 16px;
+	color: vars.$color-gray;
+	font-size: 14px;
+	line-height: 100%;
 
-    &:hover {
-      background-color: vars.$color-gray-hover;
-    }
+	&:hover {
+	  background-color: vars.$color-gray-hover;
+	}
   }
 
-  &--flex {
-    background-color: transparent;
-    width: fit-content;
-    margin-top: 0;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
+  &--withIcon {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	align-items: center;
 
-    &:hover {
-      border: 1px solid vars.$color-black;
-      color: vars.$color-black;
-    }
+	svg {
+	  width: 12px;
+	  height: 12px;
+	}
   }
 
-  &--user {
-    position: relative;
-    padding: 14px 16px 14px 38px;
-    color: vars.$color-gray;
-    background-color: vars.$color-gray-light;
-    border: 1px solid vars.$color-gray-light;
+  &--uploader {
+	margin-top: 0;
+	border-radius: 8px;
+	border-color: vars.$color-black;
+	color: vars.$color-black;
+	width: fit-content;
   }
 
-  &--has-avatar{
-    padding: 14px 16px 14px 46px;
+  &--editBtn {
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: vars.$color-white;
+	color: vars.$color-gray;
+	border-radius: 50%;
+	transition: all 300ms ease-in-out;
+	border: 1px solid vars.$color-gray-border;
+
+	&:hover {
+	  color: vars.$color-black;
+	  background-color: vars.$color-gray-border;
+	}
   }
 
-  &--editBtn{
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: vars.$color-white;
-    color: vars.$color-gray;
-    border-radius: 50%;
-    transition: all 300ms ease-in-out;
-    border: 1px solid vars.$color-gray-border;
+  &--tab {
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	font-size: 13px;
+	font-weight: 500;
+	white-space: nowrap;
+	line-height: 100%;
+	border-radius: 8px;
+	border: 1px solid vars.$color-gray-border;
+	background: none;
+	color: vars.$color-gray;
+	transition: all 300ms ease-in-out;
+	width: fit-content;
 
-    &:hover {
-        color: vars.$color-black;
-        background-color: vars.$color-gray-border;
-    }
+	&:hover {
+	  color: vars.$color-black;
+	  border-color: vars.$color-black;
+	  background-color: transparent;
+	}
   }
 
-  &--tab{
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    white-space: nowrap;
-    line-height: 100%;
-    border-radius: 8px;
-    border: 1px solid vars.$color-gray-border;
-    background: none;
-    color: vars.$color-gray;
-    transition: all 300ms ease-in-out;
-    width: fit-content;
-
-    &:hover {
-      color: vars.$color-black;
-      border-color: vars.$color-black;
-      background-color: transparent;
-    }
-  }
-
-  &--separate{
-    padding: 16px 14px;
-    font-size: 14px;
-    gap: 8px;
+  &--separate {
+	padding: 16px 14px;
+	font-size: 14px;
+	gap: 8px;
   }
 }

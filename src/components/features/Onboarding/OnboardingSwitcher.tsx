@@ -7,7 +7,6 @@ import Footer from "../../layout/Footer/Footer.tsx";
 import styles from "./Onboarding.module.scss";
 import OnboardingModalItem from "./items/OnboardingModalItem/OnboardingModalItem.tsx";
 import SpecializationStep from "./steps/2_SpecializationStep/SpecializationStep.tsx";
-import icon_back from "@icons/btn_back_icon.svg";
 import {stepCategories} from "./stepCategories.ts";
 import WorkingDaysStep from "./steps/3_WorkingDaysStep/WorkingDaysStep.tsx";
 import WorkingHoursStep from "./steps/4_WorkingHoursStep/WorkingHoursStep.tsx";
@@ -19,6 +18,7 @@ import SectorStep from "./steps/8_SectorStep/SectorStep.tsx";
 import ActivitiesStep from "./steps/9_ActivitiesStep/ActivitiesStep.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesToolsStep from "./steps/10_SalesToolsStep/SalesToolsStep.tsx";
+import btn_back from '@icons/onboarding/btn_back_icon.svg';
 
 const OnboardingSwitcher = () => {
 	const {user, getLoggedUserData, loadingStatus} = useContext(AuthContext);
@@ -186,7 +186,7 @@ const OnboardingSwitcher = () => {
 									onClick={() => decrementStep()}
 									className={"btn btn--back"}
 								>
-									<img src={icon_back} alt={"button back icon"}/>
+									<img src={btn_back} alt={'btn back'} />
 								</button>
 							)}
 							<p className={styles["onboarding-step__info"]}>

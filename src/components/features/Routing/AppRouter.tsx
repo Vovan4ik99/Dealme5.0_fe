@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute.tsx";
 import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
 import PublicRoute from "./PublicRoute.tsx";
 import Dashboard from "@pages/Dashboard/Dashboard.tsx";
-import ProfilePage from "@pages/ProfilePage/ProfilePage.tsx"
+import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
 
 const AppRouter = () => {
 	return (
@@ -14,11 +14,11 @@ const AppRouter = () => {
 					<Route path={'/login'} element={<AuthPage isLogin={true}/>} />
 					<Route path={'/registration'} element={<AuthPage isLogin={false}/>} />
 				</Route>
-
+				<Route element={<ProtectedRoute/>}>
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>
-					<Route path={'/profile'} element={<ProfilePage/>}/>
+					<Route path={'/profile'} element={<FreelancerProfilePage/>}/>
 					<Route path={'/'} element={<Dashboard/>}/>
-
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	)

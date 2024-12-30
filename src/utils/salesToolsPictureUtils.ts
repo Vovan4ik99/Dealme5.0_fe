@@ -1,13 +1,13 @@
-import pipedrive from '@icons/sales-tools/pipedrive.svg';
-import salesforce from '@icons/sales-tools/salesforce.svg';
-import hubspot from '@icons/sales-tools/hubspot.svg';
-import zoho from '@icons/sales-tools/zoho.svg';
-import msc from '@icons/sales-tools/msc_dynamics_365.svg';
-import copper from '@icons/sales-tools/copper.svg';
-import livespace from '@icons/sales-tools/livespace.svg';
-import monday from '@icons/sales-tools/monday.svg';
-
 //It is workaround, because backend does not have logic for servicing tools images
+import copper from "@icons/sales_tools/copper.svg";
+import hubspot from "@icons/sales_tools/hubspot.svg";
+import livespace from "@icons/sales_tools/livespace.svg";
+import monday from "@icons/sales_tools/monday.svg";
+import msc_dynamics_365 from "@icons/sales_tools/msc_dynamics_365.svg";
+import pipedrive from "@icons/sales_tools/pipedrive.svg";
+import salesforce from "@icons/sales_tools/salesforce.svg";
+import zoho from "@icons/sales_tools/zoho.svg";
+
 export const getPictureForSalesTools = (toolName: string) => {
 	switch (toolName) {
 		case 'Pipedrive':
@@ -19,7 +19,7 @@ export const getPictureForSalesTools = (toolName: string) => {
 		case 'Zoho':
 			return zoho;
 		case 'MSC Dynamics 365':
-			return msc;
+			return msc_dynamics_365;
 		case 'Copper':
 			return copper;
 		case 'Livespace':

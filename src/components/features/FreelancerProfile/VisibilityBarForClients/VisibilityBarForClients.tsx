@@ -1,5 +1,4 @@
 import styles from "./VisibilityBarForClients.module.scss";
-import info from "@icons/freelancerProfile/uploadImgModal/info.svg"
 
 const ProgressBar = ({ progress }: { progress: number }) => {
   return (
@@ -8,7 +7,6 @@ const ProgressBar = ({ progress }: { progress: number }) => {
         <div className={styles.bar__items}>
           <div className={styles.bar__textContainer}>
             <h1 className={styles.bar__text}>Osiągnij wyższy poziom widoczności dla klientów</h1>
-            <img src={info} alt="Info" />
           </div>
           <span className={styles.bar__item}>{progress} / 100%</span>
         </div>

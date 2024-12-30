@@ -1,6 +1,6 @@
-import search_icon from '@icons/search_icon.svg';
 import styles from './OnboardingSearchNavbar.module.scss';
 import React from "react";
+import search_icon from '@icons/onboarding/search_icon.svg';
 
 const OnboardingSearchBar:React.FC<{onSearch: (text: string) => void}> = ({onSearch}) => {
 
@@ -10,7 +10,7 @@ const OnboardingSearchBar:React.FC<{onSearch: (text: string) => void}> = ({onSea
 
 	return (
 		<div className={styles['searchbar']}>
-			<img src={search_icon} alt={'search icon'}/>
+			<img src={search_icon} alt={'search'}/>
 			<input id={'searchbar'} name={'searchbar'} type={'text'} placeholder={'Szukaj'} onChange={handleSearch}/>
 		</div>
 	)

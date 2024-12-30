@@ -5,7 +5,7 @@ import { useOnboardingService } from "@services/onboardingService.ts";
 import { IWorkingHour } from "@shared/onboardingTypes.ts";
 import { IWorkingHoursProps } from "./WorkingHoursTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import ReusableModal from "../../../EditModals/ReusableModal/ReusableModal.tsx";
+import BaseEditModal from "../../../../EditModal/BaseEditModal/BaseEditModal.tsx";
 import WorkingHourItem from "../../../../Onboarding/items/WorkingHourItem/WorkingHourItem.tsx";
 
 const WorkingHours: React.FC<IWorkingHoursProps> = ({
@@ -38,7 +38,7 @@ const WorkingHours: React.FC<IWorkingHoursProps> = ({
   };
 
   return (
-    <ReusableModal
+    <BaseEditModal
       title="Edytuj dyspozycyjność czasową"
       onClose={onClose}
       onSave={handleSave}
@@ -65,7 +65,7 @@ const WorkingHours: React.FC<IWorkingHoursProps> = ({
           {errorMessage && <InputError text={errorMessage} />}
         </div>
       )}
-    </ReusableModal>
+    </BaseEditModal>
   );
 };
 

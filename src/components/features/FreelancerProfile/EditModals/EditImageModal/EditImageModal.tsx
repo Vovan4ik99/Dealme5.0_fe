@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./EditImageModal.module.scss";
-import ReusableModal from "../ReusableModal/ReusableModal";
+import BaseEditModal from "../../../EditModal/BaseEditModal/BaseEditModal.tsx";
 import CroppingModal from "./CroppingModal";
-import {
-  edit_click,
-  info,
-} from "@icons/freelancerProfile/uploadImgModal/uploadImg";
 import { IImageEditModalProps } from "./EditImageModalTypes";
 
 const EditImageModal: React.FC<IImageEditModalProps> = ({
@@ -135,7 +131,7 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
   return (
     <div className={styles.editModal__wrapper}>
       <div className={styles.editModal__container}>
-        <ReusableModal
+        <BaseEditModal
           title={title}
           onClose={onClose}
           onSave={() => {
@@ -226,7 +222,6 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
                 aria-label="Drop zone for uploading files"
               >
                 <div className={styles.editModal__importLayout}>
-                  <img src={edit_click} alt="Click to edit" />
                   <div className={styles.editModal__grabText}>
                     Przeciągnij i upuść plik tutaj, aby dodać
                   </div>
@@ -253,7 +248,6 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
             )}
             <footer className={styles.editModal__items}>
               <p className={styles.editModal__itemAndIcon}>
-                <img src={info} alt="Info" />
                 Zalecany rozmiar: {recommendedSize}
               </p>
               <div className={styles.editModal__item}>
@@ -261,7 +255,7 @@ const EditImageModal: React.FC<IImageEditModalProps> = ({
               </div>
             </footer>
           </div>
-        </ReusableModal>
+        </BaseEditModal>
         {croppingVisible && imageFile && (
           <CroppingModal
             imageUrl={URL.createObjectURL(imageFile)}
