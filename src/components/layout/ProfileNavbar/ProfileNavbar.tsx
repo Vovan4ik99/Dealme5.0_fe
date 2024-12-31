@@ -1,8 +1,7 @@
 import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
-import {useContext, useEffect, useState} from "react";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
+import {useContext} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {ReactComponent as PulpitIcon} from "@icons/named_exported/profile-navbar/desktop.svg";
 import {ReactComponent as OrdersIcon} from "@icons/named_exported/profile-navbar/orders.svg";
@@ -15,16 +14,8 @@ import avatar from "@icons/profile_navbar/default_avatar.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const ProfileNavbar = () => {
-	const {loadingStatus, getAvatar} = useFreelancerProfileService();
-	const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-	const {user} = useContext(AuthContext);
-
-	useEffect(() => {
-		getAvatar()
-			.then(response => response !== null && setAvatarUrl(response.picture))
-			.catch(error => console.error("Failed to fetch avatar:", error));
-	}, [avatarUrl, getAvatar]);
+	const {user, userAvatar, loadingStatus} = useContext(AuthContext);
 
 	if (loadingStatus === "loading") {
 		return <LoadingSpinner/>;
@@ -66,9 +57,9 @@ const ProfileNavbar = () => {
 					Przyjmij zlecenie
 				</button>
 				<button className={`btn btn--more ${styles["navbar__btn"]} ${styles["navbar__btn--avatar"]}
-				 ${avatarUrl !== null && styles["navbar__btn--pl53"]}`}>
+				 ${userAvatar !== null && styles["navbar__btn--pl53"]}`}>
 					<div className={`${styles["navbar__avatar"]}`}>
-						<img src={avatarUrl ?? avatar} alt="avatar"/>
+						<img src={userAvatar ?? avatar} alt="avatar"/>
 					</div>
 					{user?.firstName} {user?.lastName}
 					<ArrowDown/>

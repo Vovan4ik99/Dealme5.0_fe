@@ -2,7 +2,7 @@ export interface IActionBtnProps {
 	onClick: () => void;
 	kind: BtnKind;
 	withBorder: boolean;
-	backgroundColor?: 'transparent' | 'lightgray';
+	backgroundColor?: 'transparent' | 'lightgray' | 'white';
 }
 
 type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left';

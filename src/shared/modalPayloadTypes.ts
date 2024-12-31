@@ -1,4 +1,4 @@
-export interface BgImageEditPayload {
+export interface ImageEditPayload {
 	filename: string | null;
 	blob: Blob | null;
 }
@@ -10,7 +10,7 @@ export interface BgImageUploadPayload {
 }
 
 export type ModalPayloads = {
-	bgImageEdit: BgImageEditPayload;
-	bgImageUpload: BgImageUploadPayload;
+	imageEdit: ImageEditPayload;
+	imageUpload: BgImageUploadPayload;
 	bgImageCrop: unknown;
 };

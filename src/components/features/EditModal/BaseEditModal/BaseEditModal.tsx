@@ -3,9 +3,10 @@ import styles from "./BaseEditModal.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
 import {IBaseEditModalProps} from "./baseEditModalTypes.ts";
-import {OnSaveCallback, SaveableChildProps} from "@context/ModalContext/ModalContext.ts";
+import {OnSaveCallback, ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
 
-const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, btnText, btnWithIcon, offset, zIndex}) => {
+const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, btnText, btnWithIcon, offset,
+	                                                      zIndex, shouldCloseOnSaving}) => {
 	const onSaveRef = useRef<OnSaveCallback | null>(null);
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,15 +27,18 @@ const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, bt
 	};
 
 	const handleSave = () => {
-		if (onSaveRef.current) {
-			onSaveRef.current();
-		} else {
+		if (!onSaveRef.current) {
 			console.error('onSave callback is not registered');
+			return;
 		}
-	}
+		onSaveRef.current();
+		if (shouldCloseOnSaving) {
+			handleClose();
+		}
+	};
 
 	//Rendering child with possibility to call it's onSave function here
-	const renderChild = (child: ReactElement<SaveableChildProps>) => {
+	const renderChild = (child: ReactElement<ISaveableChildProps>) => {
 		return React.cloneElement(child, { registerOnSave });
 	};
 

@@ -3,7 +3,7 @@ import styles from "./AsidePrimaryInfo.module.scss";
 import {useFreelancerProfileService} from "@services/freelancerProfileService";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import hourglass from "@icons/freelancerProfile/asidePrimaryInfoImage/hourglass.svg";
-import dealmeLogo from "@icons/freelancerProfile/asidePrimaryInfoImage/dealmeLogo.svg";
+import dealmeLogo from "@icons/freelancer_profile/logo_icon.svg";
 import star from "@icons/freelancerProfile/asidePrimaryInfoImage/star.svg";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner";
 import EditAsidePrimaryInfo from "./EditAsidePrimaryInfo";

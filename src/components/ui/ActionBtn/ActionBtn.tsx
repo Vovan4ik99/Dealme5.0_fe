@@ -30,6 +30,9 @@ const ActionBtn: React.FC<IActionBtnProps> = ({onClick, kind, withBorder, backgr
 		if (backgroundColor === 'lightgray') {
 			return '#F0F1F7';
 		}
+		if (backgroundColor === 'white') {
+			return '#FFFFFF';
+		}
 	}
 
 	return (

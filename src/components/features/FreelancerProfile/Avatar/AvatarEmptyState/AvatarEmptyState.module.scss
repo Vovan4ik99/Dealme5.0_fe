@@ -1,0 +1,39 @@
+@use "@styles/variables" as vars;
+
+.avatar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  &__wrapper {
+	position: relative;
+	width: 80px;
+	height: 60px;
+  }
+
+  &__img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	border: none;
+
+	&--left {
+	  left: 0;
+	  bottom: 6px;
+	}
+
+	&--right {
+	  right: 0;
+	  top: 12px;
+	}
+  }
+
+  &__text {
+	color: vars.$color-gray;
+	font-size: 15px;
+	line-height: 130%;
+  }
+}

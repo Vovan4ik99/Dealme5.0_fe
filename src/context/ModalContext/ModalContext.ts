@@ -5,17 +5,18 @@ export type ModalId = keyof ModalPayloads;
 
 export type OnSaveCallback = () => void;
 
-export interface SaveableChildProps {
+export interface ISaveableChildProps {
 	registerOnSave?: (onSave: OnSaveCallback) => void;
 }
 
 export interface IBaseModal<T extends ModalId> {
 	id: T;
 	title: string;
-	child: ReactElement<SaveableChildProps>;
+	child: ReactElement<ISaveableChildProps>;
 	btnText: string;
 	btnWithIcon: boolean;
 	payload?: ModalPayloads[T];
+	shouldCloseOnSaving: boolean;
 }
 
 export interface IModalInitialState {

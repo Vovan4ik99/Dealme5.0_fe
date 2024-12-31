@@ -10,33 +10,23 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 	                                                    onClose,
 	                                                    aspect,
 	                                                    registerOnSave,
-	                                                    filename
+	                                                    filename,
+	                                                    isAvatar
                                                     }) => {
 	const BASE_CROP_AREA_WIDTH = 504
-	const INITIAL_CROP = { x: 0, y: 0 };
+	const INITIAL_CROP = {x: 0, y: 0};
 
 	const [crop, setCrop] = useState(INITIAL_CROP);
 	const [zoom, setZoom] = useState(1);
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
-	const { closeModals, updateModalData } = useModal();
+	const {closeModals, updateModalData} = useModal();
 
-	const calculateCropDimensions = (
-		pixelCrop: Area,
-		image: HTMLImageElement,
-		zoom: number
-	) => {
-		const { naturalWidth, naturalHeight } = image;
-		const effectiveZoom = zoom || 1;
-		return {
-			cropX: (pixelCrop.x / 100) * (naturalWidth / effectiveZoom),
-			cropY: (pixelCrop.y / 100) * (naturalHeight / effectiveZoom),
-			cropWidth: (pixelCrop.width / 100) * (naturalWidth / effectiveZoom),
-			cropHeight: (pixelCrop.height / 100) * (naturalHeight / effectiveZoom),
-		};
+	const handleZoomChange = (newZoom: number) => {
+		setZoom(newZoom);
 	};
 
-	const onCropComplete = (croppedAreaPixels: Area) => {
+	const onCropComplete = (_: Area, croppedAreaPixels: Area) => {
 		setCroppedAreaPixels(croppedAreaPixels);
 	};
 
@@ -53,16 +43,10 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 			return;
 		}
 
-		const { cropX, cropY, cropWidth, cropHeight } = calculateCropDimensions(
-			pixelCrop,
-			image,
-			zoom
-		);
+		canvas.width = pixelCrop.width;
+		canvas.height = pixelCrop.height;
 
-		canvas.width = cropWidth;
-		canvas.height = cropHeight;
-
-		ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+		ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
 
 		canvas.toBlob(
 			(blob) => (blob ? resolve(blob) : reject(new Error('Failed to create blob from canvas'))),
@@ -81,17 +65,11 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 
 	const handleSave = async () => {
 		if (!croppedAreaPixels || !mediaSrc) return;
-
-		try {
-			const croppedBlob = await getCroppedImg(mediaSrc, croppedAreaPixels);
-			closeModals(2);
-			updateModalData('bgImageEdit', {
-				filename,
-				blob: croppedBlob,
-			});
-		} catch (error) {
-			console.error('Error cropping image:', error);
-		}
+		getCroppedImg(mediaSrc, croppedAreaPixels)
+			.then((blob) => {
+				closeModals(2);
+				updateModalData('imageEdit', {filename, blob,});
+			}).catch((error) => console.error('Error cropping image:', error));
 	};
 
 	useEffect(() => {
@@ -104,17 +82,15 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 	});
 
 	const renderCropper = () => (
-		<div className={styles['modal']}>
+		<div className={`${styles['modal']} ${isAvatar && styles['modal--avatar']}`}>
 			<Cropper
 				image={mediaSrc}
 				crop={crop}
 				zoom={zoom}
 				aspect={aspect}
 				onCropChange={setCrop}
-				onZoomChange={setZoom}
+				onZoomChange={handleZoomChange}
 				onCropComplete={onCropComplete}
-				minZoom={1}
-				maxZoom={3}
 				showGrid={false}
 				cropSize={{
 					width: BASE_CROP_AREA_WIDTH,
