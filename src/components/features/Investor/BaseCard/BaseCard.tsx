@@ -23,7 +23,8 @@ const BaseCard: React.FC<IBaseCardProps> = ({
       <div className={styles["base-card__items"]}>
         <div className={styles["base-card__wrapper"]}>
           <p className={styles["base-card__text"]}>{title}</p>
-          <p className={styles["base-card__text--subText"]}>{subTitle}</p>
+          <p className={`${styles["base-card__text"]} ${styles["base-card__text--subText"]}`}>
+{subTitle}</p>
         </div>
         <p className={styles["base-card__item"]}>{description}</p>
       </div>

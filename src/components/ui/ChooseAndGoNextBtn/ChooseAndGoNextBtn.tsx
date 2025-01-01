@@ -1,7 +1,7 @@
 import React from "react";
 
 interface EditButtonProps {
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const ChooseAndGoNextBtn: React.FC<EditButtonProps> = ({ onClick }) => {

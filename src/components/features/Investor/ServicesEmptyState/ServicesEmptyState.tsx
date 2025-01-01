@@ -1,5 +1,5 @@
 import AnimatedStep from "../../Onboarding/steps/AnimatedStep/AnimatedStep";
-import BackToPreviousPage from "../BackToPreviousPage/BackToPreviousPage";
+import BackToPreviousPage from "../InvestorHeader/InvestorHeader";
 import styles from "./ServicesEmptyState.module.scss";
 import emptyState from "@icons/investor/empty-state.svg";
 const ServicesEmptyState = () => {

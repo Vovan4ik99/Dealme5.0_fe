@@ -1,21 +1,80 @@
 @use "@styles/variables" as vars;
 
 .level-item {
-    display: flex;
-    justify-content: space-between;
     border-radius: 12px;
     border: 1px solid vars.$color-gray-border;
     background-color: #fff;
     padding: 24px;
-    
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__item {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
     &__items {
         display: flex;
         flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        width: 100%;
+        background: none;
+        border: none;
+    }
+    &__icon img {
+        transition: transform 300ms ease-in-out;
+    }
+    &--active {
+        .level-item__icon img {
+            transform: rotate(90deg);
+        }
     }
     &__subText {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
         font-size: 14px;
         line-height: 120%;
         font-weight: 500;
         color: vars.$color-gray;
+        margin-left: 18px;
+    }
+
+    &__divider {
+        border: 1px solid vars.$color-gray-border;
+        margin: 24px 0 32px 0;
+    }
+
+    &__activeContent {
+        display: flex;
+        gap: 64px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &--firstContent {
+        width: 586px;
+    }
+    &__activeHeader {
+        font-size: 10px;
+        line-height: 120%;
+        letter-spacing: 1px;
+        color: vars.$color-gray;
+        font-weight: 500;
+    }
+    &__paragraph {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 130%;
+        color: vars.$color-black;
     }
 }

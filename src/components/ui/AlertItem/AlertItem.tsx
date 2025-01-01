@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import styles from './AlertItem.module.scss';
 import {IAlertItemProps} from "@ui/AlertItem/alertItemTypes.ts";
-import success_icon from "@icons/alert/success_icon.svg";
-import danger_icon from "@icons/alert/danger_icon.svg";
-import warning_icon from "@icons/alert/warning_icon.svg";
+// import success_icon from "@icons/alert/success_icon.svg";
+// import danger_icon from "@icons/alert/danger_icon.svg";
+// import warning_icon from "@icons/alert/warning_icon.svg";
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 
 const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
@@ -19,7 +19,7 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
 		switch (kind) {
 			case 'success':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--success']}`}>
-					<img src={success_icon} alt="success"/>
+					<img src={""} alt="success"/>
 					<span>{text}</span>
 				</div>
 			case 'neutral':
@@ -29,7 +29,7 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
 				</div>
 			case 'error':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--danger']}`}>
-					<img src={danger_icon} alt="danger"/>
+					<img src={""} alt="danger"/>
 					<span>{text}</span>
 				</div>
 			case 'info':
@@ -39,7 +39,7 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
 				</div>
 			case 'warning':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--warning']}`}>
-					<img src={warning_icon} alt="warning"/>
+					<img src={""} alt="warning"/>
 					<span>{text}</span>
 				</div>
 			default:

@@ -1,20 +1,20 @@
-import SuitcaseIcon from "@icons/name_exported/suitcase_icon.svg?react";
-import BackToPreviousPage from "../BackToPreviousPage/BackToPreviousPage";
+import { ReactComponent as SuitcaseIcon } from "@icons/named_exported/investor/suitcase_icon.svg";
 import BaseCard from "../BaseCard/BaseCard";
 import styles from "../Order/Order.module.scss";
 import AnimatedStep from "../../Onboarding/steps/AnimatedStep/AnimatedStep";
+import InvestorHeader from "../InvestorHeader/InvestorHeader";
 
 const Service = () => {
   return (
     <AnimatedStep>
       <section>
         <header>
-          <BackToPreviousPage
+          <InvestorHeader
             onClick={() => console.log("hello")}
             text={"Mam zlecenie, potrzebuję wsparcia"}
             title={"Czy potrzebujesz pomocy w definiowaniu usługi?"}
+            icon={SuitcaseIcon}
           />
-          {/* <SuitcaseIcon /> */}
         </header>
         <div className={styles["order"]}>
           <BaseCard

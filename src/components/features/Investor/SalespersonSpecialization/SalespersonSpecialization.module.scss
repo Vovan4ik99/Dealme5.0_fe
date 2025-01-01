@@ -1,0 +1,15 @@
+.sales {
+    &__icon {
+        width: 40px;
+    }
+    &__header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+    &__bar{
+        width: 300px;
+        
+        
+    }
+}

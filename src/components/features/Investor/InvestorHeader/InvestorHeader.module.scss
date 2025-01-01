@@ -1,26 +1,33 @@
 @use "@styles/variables" as vars;
 
-.back {
+.tab {
     display: flex;
     flex-direction: column;
+    gap: 24px;
 
     &__wrapper {
         display: flex;
         gap: 8px;
-        margin-bottom: 16px;
         align-items: center;
     }
-    
+
     &__items {
         display: flex;
         align-items: center;
-    }
-    
-
-    &__text {
         color: vars.$color-gray;
         border-radius: 8px;
         background-color: vars.$color-gray-light;
         padding: 8px 12px;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    &--serviceItems {
+        padding: 8px;
+    }
+
+    &__icon {
+        width: 14px;
+        height: 14px;
     }
 }
