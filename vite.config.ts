@@ -18,11 +18,11 @@ export default defineConfig({
 		})
 	],
 	css: {
-		preprocessorOptions: {
-			scss: {
-				api: 'modern-compiler'
-			}
-		}
+	  preprocessorOptions: {
+		scss: {
+		  api: 'modern-compiler',
+		},
+	  },
 	},
 	resolve: {
 		alias: {
@@ -38,4 +38,5 @@ export default defineConfig({
             '@utils': path.resolve(__dirname, './src/utils'),
 		},
 	},
-})
+  });
+  

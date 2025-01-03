@@ -1,0 +1,17 @@
+@use "@styles/variables" as vars;
+
+.empty-state{
+    display: flex;
+    align-items: center;
+    padding: 8px 32px;
+    gap: 32px;
+    border-radius: 16px;
+    background-color: #fff;
+    border: 2px dashed vars.$color-gray-border;
+
+    &__items{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}

@@ -72,6 +72,13 @@
         height: 10px;
     }
 
+    &__text{
+        font-size: 12px;
+        line-height: 100%;
+        color: vars.$color-gray;
+        font-weight: 400;
+    }
+
     &__item {
         background-color: vars.$color-primary-pastel;
         display: flex;
@@ -83,6 +90,7 @@
         border-radius: 8px;
 
         &--limited{
+            background-color: vars.$color-danger-pastel;
             color: vars.$color-danger;
         }
     }
