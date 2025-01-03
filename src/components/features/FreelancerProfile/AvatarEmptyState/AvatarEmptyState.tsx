@@ -1,6 +1,6 @@
 import styles from "./AvatarEmptyState.module.scss";
-import man from "@icons/freelancerProfile/avatarImage/man.svg";
-import woman from "@icons/freelancerProfile/avatarImage/woman.svg";
+import man from "@icons/freelancer_profile/avatar/man.svg";
+import woman from "@icons/freelancer_profile/avatar/woman.svg";
 import React from "react";
 
 const BackgroundEmptyState: React.FC<{ onEditClick: () => void }> = ({

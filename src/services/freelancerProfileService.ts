@@ -1,7 +1,7 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IFreelancerAvatarResponse, IFreelancerBackgroundResponse} from "@shared/freelancerTypes";
+import {IFreelancerBackgroundResponse} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
@@ -27,27 +27,6 @@ export const useFreelancerProfileService = () => {
 		});
 	}, [sendRequest]);
 
-	const getAvatar = useCallback(async (): Promise<IFreelancerAvatarResponse> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-		});
-	}, [sendRequest]);
-
-	const patchAvatar = useCallback(async (formData: FormData): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-			method: "PATCH",
-			body: formData,
-		});
-	}, [sendRequest]);
-
-	const deleteAvatar = useCallback(async (): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-			method: "DELETE",
-		});
-	}, [sendRequest]);
-
 	const getFreelancerBar = useCallback(async (): Promise<any> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.INFO,
@@ -60,9 +39,6 @@ export const useFreelancerProfileService = () => {
 		getBackgroundPicture,
 		patchBackgroundPicture,
 		deleteBackgroundPicture,
-		getAvatar,
-		patchAvatar,
-		deleteAvatar,
 		getFreelancerBar,
 	};
 };

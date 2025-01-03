@@ -1,42 +1,55 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import styles from "./BgImage.module.scss";
 import {useFreelancerProfileService} from "@services/freelancerProfileService";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner";
 import BgEmptyState from "./BgEmptyState/BgEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import BgImageModalItem from "../../EditModal/BgImageModalItem/BgImageModalItem.tsx";
+import {parseBase64Image} from "@utils/imageUtils.ts";
+import BgEmptyStateImgWrapper from "./BgEmptyStateImgWrapper/BgEmptyStateImgWrapper.tsx";
+import ImageModalItem from "../../EditModal/ImageModalItem/ImageModalItem.tsx";
 
 const BgImage = () => {
 	const { openModal } = useModal();
 	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
-	const { patchBackgroundPicture, getBackgroundPicture, loadingStatus } = useFreelancerProfileService();
+	const { patchBackgroundPicture, getBackgroundPicture, deleteBackgroundPicture, loadingStatus } = useFreelancerProfileService();
 
-
-	const fetchBackgroundImage = () => {
+	const fetchBackgroundImage = useCallback(() => {
 		getBackgroundPicture()
 			.then((response) => setBackgroundImage(response.pictureData))
 			.catch((error) => console.error(error));
-	};
+	}, [getBackgroundPicture]);
 
 	useEffect(() => {
-		if (!backgroundImage) {
-			fetchBackgroundImage();
-		}
-	});
+		fetchBackgroundImage();
+	}, [backgroundImage, fetchBackgroundImage]);
+
+	const handleDeleteBackground = () => {
+		deleteBackgroundPicture()
+			.then(() => setBackgroundImage(null))
+			.catch((error) => console.error(error));
+	}
 
 	const openEditModal = () => {
 		openModal({
-			id: 'bgImageEdit',
+			id: 'imageEdit',
 			title: 'Edytuj zdjęcie w tle',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
-			payload: { blob: null, filename: null },
-			child: <BgImageModalItem onSave={handleSaveBackground} />
+			payload: parseBase64Image(backgroundImage, 'background_image'),
+			shouldCloseOnSaving: true,
+			child: (
+				<ImageModalItem title={'Zdjęcie w tle'}
+				                imageSize="1320x250px"
+				                emptyState={<BgEmptyStateImgWrapper />}
+				                isAvatar={false}
+				                onSave={handleSaveBackground}
+				                onDelete={handleDeleteBackground}/>
+			),
 		});
 	};
 
-	const handleSaveBackground = async (imageBlob: Blob, filename: string) => {
+	const handleSaveBackground = (imageBlob: Blob, filename: string) => {
 		const formData = new FormData();
 		formData.append("file", imageBlob, filename);
 		patchBackgroundPicture(formData)

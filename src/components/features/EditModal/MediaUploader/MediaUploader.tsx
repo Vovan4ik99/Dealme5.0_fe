@@ -3,14 +3,14 @@ import React, {useEffect, useState} from "react";
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 import {useDropzone} from "react-dropzone";
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
-import upload_icon from "@icons/freelancerProfile/upload_icon.svg";
+import upload_icon from "@icons/freelancer_profile/upload_icon.svg";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import MediaCropper from "../MediaCropper/MediaCropper.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import success_icon from "@icons/alert/success_icon.svg";
 import {IMediaUploaderProps} from "./mediaUploaderTypes.ts";
 
-const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave }) => {
+const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, aspectRatio, isAvatar }) => {
 	const { openModal } = useModal();
 	const [mediaSrc, setMediaSrc] = useState<string | null>(null);
 	const [mediaType, setMediaType] = useState<'image' | 'video' | null>(null);
@@ -47,12 +47,14 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave }) 
 			title: 'Podgląd zdjęcia',
 			btnText: 'Dodaj zdjęcie',
 			btnWithIcon: true,
+			shouldCloseOnSaving: false,
 			child: (
 				<MediaCropper
+					isAvatar={isAvatar}
 					mediaSrc={mediaSrc}
 					filename={fileName}
 					mediaType={mediaType}
-					aspect={1320 / 250}
+					aspect={aspectRatio}
 					onClose={handleCropperClose}
 				/>
 			)

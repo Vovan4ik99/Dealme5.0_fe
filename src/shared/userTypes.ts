@@ -33,6 +33,11 @@ export interface ILoggedUserResponse {
 	salesTools: ISalesTool[];
 }
 
+export interface IUserAvatarResponse {
+	pictureId: number;
+	picture: string;
+}
+
 export interface ILoggedUserData extends ILoggedUserResponse {
 	role: UserRole;
 }

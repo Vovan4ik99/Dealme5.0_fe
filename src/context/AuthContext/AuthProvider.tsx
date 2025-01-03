@@ -7,7 +7,7 @@ import {ILoggedUserResponse, UserRole} from "@shared/userTypes.ts";
 import {jwtDecode} from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
-	const {loadingStatus, errorMessage, fetchLoggedUserData} = useAuthService();
+	const {loadingStatus, errorMessage, fetchLoggedUserData, getAvatar, patchAvatar, deleteAvatar} = useAuthService();
 	const [state, dispatch] = useReducer(authReducer, InitialAuthState);
 
 	const logout = useCallback(() => {
@@ -15,9 +15,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 		dispatch({type: AuthActionType.LOGOUT});
 	}, []);
 
-	const getLoggedUserData = useCallback(async (currentToken: string) => {
+	const getLoggedUserData = useCallback((currentToken: string) => {
 		const role = getUserRole(currentToken);
-		await fetchLoggedUserData(role)
+		fetchLoggedUserData(role)
 			.then((response: ILoggedUserResponse) => {
 				dispatch({type: AuthActionType.GET_LOGGED_USER, payload: {role, ...response}})
 			}).catch(e => {
@@ -27,29 +27,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 			})
 	}, [fetchLoggedUserData, errorMessage]);
 
+	const getUserAvatar = useCallback(() => {
+		getAvatar()
+			.then(response => response &&
+				dispatch({type: AuthActionType.GET_AVATAR, payload: response.picture}))
+			.catch(e => dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e}));
+	}, [errorMessage, getAvatar]);
+
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			getLoggedUserData(token)
-				.catch(e => {
-					console.log(e);
-				});
+			getLoggedUserData(token);
+			getUserAvatar();
 		}
-	}, [errorMessage, getLoggedUserData]);
+	}, [errorMessage, getLoggedUserData, getUserAvatar]);
 
 	const getUserRole = (currentToken: string): UserRole => {
 		const decodedToken = jwtDecode<{ roles: UserRole[] }>(currentToken);
 		return decodedToken.roles[0];
-	}
+	};
+
+	const deleteUserAvatar = useCallback(() => {
+		deleteAvatar()
+			.then(() => dispatch({type: AuthActionType.DELETE_AVATAR}))
+			.catch(e => dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e}));
+	}, [deleteAvatar, errorMessage]);
+
+	const patchUserAvatar = useCallback((avatar: FormData) => {
+		patchAvatar(avatar)
+			.then(() => getUserAvatar())
+			.catch(e => dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e}));
+	}, [errorMessage, getUserAvatar, patchAvatar]);
 
 	const value: IAuthContextValue = useMemo(() => (
 		{
 			...state,
 			loadingStatus,
 			logout,
-			getLoggedUserData
+			getLoggedUserData,
+			deleteUserAvatar,
+			patchUserAvatar
 		}
-	), [getLoggedUserData, loadingStatus, logout, state]);
+	), [deleteUserAvatar, getLoggedUserData, getUserAvatar, loadingStatus, logout, patchUserAvatar, state]);
 
 	return <AuthContext.Provider value={value}>
 		{children}
