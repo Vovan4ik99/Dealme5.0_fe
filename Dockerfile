@@ -2,9 +2,9 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
-RUN npm install
-
 COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
