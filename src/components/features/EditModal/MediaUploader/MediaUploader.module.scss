@@ -1,0 +1,57 @@
+@use "@styles/variables" as vars;
+
+.uploader {
+  padding: 16px;
+  background: rgba(240, 241, 247, 0.40);
+  border: 1px dashed vars.$color-gray-border;
+  border-radius: 12px;
+
+  &__content {
+    background-color: white;
+    padding: 24px 42.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  &__text {
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    color: vars.$color-black;
+    font-weight: 400;
+  }
+
+  &__info {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    color: vars.$color-gray;
+    font-size: 14px;
+    line-height: 130%;
+    font-weight: 400;
+  }
+
+  &__icon {
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__error {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  &__choice {
+    align-items: center;
+    margin-top: 15px;
+    display: flex;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,30 @@
+@use "@styles/variables" as vars;
+
+.divider {
+  width: 100%;
+  margin: 24px 0;
+
+  &__text {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 120%;
+    color: vars.$color-gray;
+
+    &:before, &:after {
+      display: block;
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: vars.$color-gray-border;
+    }
+
+    &:after {
+      margin-left: 12px;
+    }
+
+    &:before {
+      margin-right: 12px;
+    }
+  }
+}

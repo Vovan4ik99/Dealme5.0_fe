@@ -1,0 +1,31 @@
+@use "@styles/variables" as vars;
+
+.sectors {
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 24px;
+    }
+    &__header {
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 120%;
+        color: vars.$color-gray;
+        letter-spacing: 1px;
+    }
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        color: vars.$color-gray;
+    }
+
+    &__wrapper span {
+        background-color: vars.$color-gray-light;
+        border-radius: 8px;
+        padding: 8px;
+    }
+}

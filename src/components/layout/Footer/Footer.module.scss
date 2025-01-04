@@ -1,0 +1,19 @@
+@use '@styles/variables' as vars;
+
+.footer {
+  width: 100%;
+  margin-bottom: 40px;
+  margin-top: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 130%;
+  color: vars.$color-gray;
+
+  &--centered {
+    text-align: center;
+  }
+
+  span {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,28 @@
+@use "@styles/variables" as vars;
+
+.emptyStateBar {
+    &__wrapper {
+        background-color: vars.$color-gray-light;
+        border-radius: 12px;
+        padding: 16px;
+        width: 100%;
+    }
+
+    &__items {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    &__text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 120%;
+        color: vars.$color-gray;
+    }
+}

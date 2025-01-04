@@ -1,0 +1,78 @@
+@use "@styles/variables" as vars;
+
+.bar {
+    &__progressBarContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        background-color: vars.$color-primary-pastel;
+        padding: 16px;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    &__items {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+    &__textContainer {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__text {
+        font-weight: 500;
+        color: vars.$color-gray;
+        font-size: 15px;
+        line-height: 100%;
+    }
+
+    &__item {
+        font-weight: 600;
+        color: vars.$color-gray;
+        font-size: 14px;
+        line-height: 120%;
+    }
+
+    &__progressBar {
+        background-color: vars.$color-white;
+        padding: 2px;
+        border-radius: 4px;
+        height: 7px;
+    }
+
+    &__progress {
+        height: 3px;
+        background-color: vars.$primary-color;
+        border-radius: 4px;
+    }
+
+    &__updateButton {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 16px;
+        background-color: vars.$primary-color;
+        color: vars.$color-white;
+        white-space: nowrap;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: #008c9e;
+        }
+    }
+}

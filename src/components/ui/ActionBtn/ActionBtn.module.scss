@@ -1,0 +1,53 @@
+@use "@styles/variables" as vars;
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out, border 300ms ease-in-out;
+
+  &__icon {
+	width: 24px;
+	height: 24px;
+	color: vars.$color-gray;
+	transition: color 300ms ease-in-out;
+  }
+
+  &:hover {
+	border: 1px solid vars.$color-black;
+
+	.action-btn__icon {
+	  color: vars.$color-black;
+	}
+  }
+
+  &--wb {
+	border: 1px solid vars.$color-gray-border;
+  }
+}
+
+.icon {
+  &--edit {
+	width: 12px;
+	height: 12px;
+  }
+
+  &--close {
+	width: 8.925px;
+	height: 8.925px;
+  }
+
+  &--delete {
+	width: 11px;
+	height: 12px;
+
+	svg path {
+	  fill: vars.$color-gray;
+	}
+  }
+}

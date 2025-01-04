@@ -1,0 +1,51 @@
+@use "@styles/variables" as vars;
+
+.empty-state {
+    &__wrapper {
+        background-color: vars.$color-white;
+        border-radius: 16px;
+        border: 1px dashed vars.$color-gray-border;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 16px;
+        width: 160px;
+        height: 160px;
+        cursor: pointer;
+    }
+
+    &__icon {
+        position: absolute;
+        top: -16px;
+        right: -12px;
+    }
+
+    &__images {
+        position: relative;
+        width: 80px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    &__image {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+
+        &--image1 {
+            z-index: 1;
+            left: 0;
+        }
+
+        &--image2 {
+            z-index: 2;
+            margin-top: 12px;
+            left: 30px;
+        }
+
+    }
+}

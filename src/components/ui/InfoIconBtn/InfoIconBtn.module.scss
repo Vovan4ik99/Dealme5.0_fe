@@ -1,0 +1,90 @@
+@use "@styles/variables" as vars;
+
+.info {
+
+  &__icon {
+    display: flex;
+    align-self: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+
+    path {
+      fill: vars.$color-gray;
+      transition: fill 0.3s ease;
+    }
+
+    &:hover {
+      path {
+        fill: vars.$color-black;
+      }
+    }
+
+    &--mt2 {
+      margin-top: 2px;
+    }
+  }
+
+  &__modal {
+    top: 80%;
+    right: 0;
+    z-index: 1;
+    position: absolute;
+    max-width: 300px;
+    background-color: transparent;
+
+    &--left {
+      left: 0;
+    }
+
+    &-arrow {
+      top: -5px;
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg);
+      background-color: white;
+      position: absolute;
+      right: 18px;
+
+      &--left {
+        left: 18px;
+      }
+    }
+
+    &-content {
+      border-radius: 12px;
+      background-color: white;
+      padding: 16px;
+      box-shadow: 0 18px 100px -16px #0D103333;
+    }
+
+    &-text {
+      color: vars.$color-black;
+      font-size: 14px;
+      line-height: 120%;
+      font-weight: 400;
+    }
+
+    &-enter {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    &-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    &-exit {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &-exit-active {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  }
+}

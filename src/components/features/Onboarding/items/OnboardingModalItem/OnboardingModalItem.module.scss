@@ -1,0 +1,65 @@
+@use "@styles/variables" as vars;
+
+.modal {
+  position: sticky;
+  top: 0;
+  width: 350px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 40px 116px -8px rgba(13, 16, 51, 0.2);
+  height: fit-content;
+
+  &-appear {
+    opacity: 0;
+    &-active {
+      opacity: 1;
+      transition: opacity 500ms ease-in-out;
+    }
+  }
+
+  &__progress {
+    width: 334px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border-radius: 8px;
+    background-color: vars.$color-primary-pastel;
+
+    &-bar {
+      height: 7px;
+      border-radius: 100px;
+      padding: 2px;
+      display: flex;
+      width: 209px;
+      background-color: white;
+      align-items: center;
+
+      span {
+        display: block;
+        height: 3px;
+        border-radius: 100px;
+        background-color: vars.$primary-color;
+      }
+    }
+
+    &-text {
+      font-size: 14px;
+      line-height: 120%;
+      color: vars.$color-gray;
+      width: 77px;
+      text-align: center;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 8px 16px 24px 16px;
+  }
+}

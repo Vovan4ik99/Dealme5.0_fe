@@ -1,0 +1,42 @@
+@use "@styles/variables" as vars;
+
+.statistics {
+    &__wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 100%;
+        color: vars.$color-black;
+    }
+    &__subTitle {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 100%;
+        color: vars.$color-gray;
+        gap: 4px;
+    }
+    &__headerIcon {
+        width: 12px;
+        height: 9.18px;
+        color: vars.$color-gray;
+    }
+
+    &__cardContainer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+    }
+}
