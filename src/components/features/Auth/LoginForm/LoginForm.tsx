@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import React, {useCallback, useContext, useState} from "react";
 import styles from './LoginForm.module.scss';
@@ -23,19 +23,13 @@ const LoginForm = () => {
 		defaultValues: formData,
 	});
 
-	const navigate = useNavigate();
-
 	const loginUser = useCallback((token: string) => {
-		getLoggedUserData(token)
-			.then(() => navigate('/'))
-			.catch((error) => {
-					console.log(error);
-					setFormData({
-						email: '',
-						password: '',
-					});
-				});
-	}, [getLoggedUserData, navigate]);
+		getLoggedUserData(token);
+		setFormData({
+			email: '',
+			password: '',
+		});
+	}, [getLoggedUserData]);
 
 	const onSubmit = useCallback((request: ILoginRequest) => {
 		login(request)

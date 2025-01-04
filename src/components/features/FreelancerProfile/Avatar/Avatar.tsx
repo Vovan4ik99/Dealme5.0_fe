@@ -1,5 +1,5 @@
 import styles from './Avatar.module.scss';
-import logo_icon from '@icons/freelancer_profile/logo_icon.svg';
+import {ReactComponent as LogoIcon} from '@icons/named_exported/logo_icon.svg';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, {useContext} from "react";
 import AvatarEmptyState from "./AvatarEmptyState/AvatarEmptyState.tsx";
@@ -61,7 +61,7 @@ const Avatar = () => {
 				<>
 					<img className={styles['avatar__img']} src={userAvatar} alt={'avatar'}/>
 					<div className={styles['avatar__logo']}>
-						<img src={logo_icon} alt={'logo'}/>
+						<LogoIcon/>
 					</div>
 				</> :
 				<button className={styles['avatar__btn']} onClick={handleAvatarEdit}>

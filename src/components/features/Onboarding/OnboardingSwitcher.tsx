@@ -78,9 +78,8 @@ const OnboardingSwitcher = () => {
 			setStep((step) => step + 1);
 			return;
 		}
-		getLoggedUserData(token)
-			.then(() => setStep((step) => step + 1))
-			.catch((e) => console.log(e));
+		getLoggedUserData(token);
+		setStep((step) => step + 1);
 	}, [getLoggedUserData, step]);
 
 	const decrementStep = () => {

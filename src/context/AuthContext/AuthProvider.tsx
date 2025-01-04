@@ -15,18 +15,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 		dispatch({type: AuthActionType.LOGOUT});
 	}, []);
 
-	const getLoggedUserData = useCallback((currentToken: string) => {
-		const role = getUserRole(currentToken);
-		fetchLoggedUserData(role)
-			.then((response: ILoggedUserResponse) => {
-				dispatch({type: AuthActionType.GET_LOGGED_USER, payload: {role, ...response}})
-			}).catch(e => {
-				dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e});
-				localStorage.removeItem('token');
-				console.log(e);
-			})
-	}, [fetchLoggedUserData, errorMessage]);
-
 	const getUserAvatar = useCallback(() => {
 		getAvatar()
 			.then(response => response &&
@@ -34,11 +22,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 			.catch(e => dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e}));
 	}, [errorMessage, getAvatar]);
 
+	const getLoggedUserData = useCallback((currentToken: string) => {
+		const role = getUserRole(currentToken);
+		fetchLoggedUserData(role)
+			.then((response: ILoggedUserResponse) => {
+				dispatch({type: AuthActionType.GET_LOGGED_USER, payload: {role, ...response}});
+				getUserAvatar();
+			}).catch(e => {
+				dispatch({type: AuthActionType.SET_ERROR, payload: errorMessage ?? e});
+				localStorage.removeItem('token');
+				console.log(e);
+			})
+	}, [fetchLoggedUserData, getUserAvatar, errorMessage]);
+
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			getLoggedUserData(token);
-			getUserAvatar();
 		}
 	}, [errorMessage, getLoggedUserData, getUserAvatar]);
 
@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 			deleteUserAvatar,
 			patchUserAvatar
 		}
-	), [deleteUserAvatar, getLoggedUserData, getUserAvatar, loadingStatus, logout, patchUserAvatar, state]);
+	), [deleteUserAvatar, getLoggedUserData, loadingStatus, logout, patchUserAvatar, state]);
 
 	return <AuthContext.Provider value={value}>
 		{children}

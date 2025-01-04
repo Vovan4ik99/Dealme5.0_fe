@@ -1,7 +1,7 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IFreelancerBackgroundResponse} from "@shared/freelancerTypes";
+import {IFreelancerBackgroundResponse, IFreelancerBarResponse} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
@@ -27,7 +27,7 @@ export const useFreelancerProfileService = () => {
 		});
 	}, [sendRequest]);
 
-	const getFreelancerBar = useCallback(async (): Promise<any> => {
+	const getFreelancerBar = useCallback(async (): Promise<IFreelancerBarResponse> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.INFO,
 		});

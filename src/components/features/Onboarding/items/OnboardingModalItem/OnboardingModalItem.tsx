@@ -13,6 +13,18 @@ const OnboardingModalItem: React.FC<{ currentStep: number }> = ({currentStep}) =
 		return Math.min(((currentStep - 1) / totalSteps) * 100, 100);
 	}
 
+	const getModalMainCategoryKind = (isActive: boolean, isFinished: boolean) => {
+		if (isActive) return 'active';
+		if (isFinished) return 'finished';
+		return 'default';
+	}
+
+	const getModalInnerCategoryKind = (isActiveStep: boolean, stepNumber: number) => {
+		if (isActiveStep) return 'withIconActive';
+		if (stepNumber < currentStep) return 'finished';
+		return 'withIcon';
+	}
+
 	const renderStepsCategories = () => {
 
 		return <div className={styles['modal__wrapper']}>
@@ -24,7 +36,7 @@ const OnboardingModalItem: React.FC<{ currentStep: number }> = ({currentStep}) =
 					<OnboardingModalCategory
 						key={id}
 						text={title}
-						kind={isActive ? 'active' : isFinished ? 'finished' : 'default'}
+						kind={getModalMainCategoryKind(isActive, isFinished)}
 					>
 						{isActive &&
 							steps.map(({id: stepId, text, stepNumber}) => {
@@ -33,7 +45,7 @@ const OnboardingModalItem: React.FC<{ currentStep: number }> = ({currentStep}) =
 									<OnboardingModalCategory
 										key={stepId}
 										text={text}
-										kind={isActiveStep ? 'withIconActive' : stepNumber < currentStep ? 'finished' : 'withIcon'}
+										kind={getModalInnerCategoryKind(isActiveStep, stepNumber)}
 									/>
 								);
 							})}
