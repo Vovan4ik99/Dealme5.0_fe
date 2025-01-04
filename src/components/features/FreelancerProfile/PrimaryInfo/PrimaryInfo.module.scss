@@ -1,0 +1,74 @@
+@use "@styles/variables" as vars;
+
+.info {
+  margin-top: 16px;
+  position: relative;
+  width: 330px;
+
+  &__title {
+	color: #000000;
+	font-size: 26px;
+	font-weight: 600;
+	line-height: 100%;
+  }
+
+  &__subtitle {
+	color: vars.$color-gray;
+	font-size: 15px;
+	line-height: 100%;
+	margin-top: 8px;
+  }
+
+  &__wrapper {
+	margin: 16px 0;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+  }
+
+  &__item {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-wrap: wrap;
+
+	img {
+	  width: 12px;
+	  height: 12px;
+	}
+
+	&--logo svg {
+	  width: 12px;
+	  height: 12px;
+
+	  path {
+		fill: vars.$color-black;
+	  }
+	}
+  }
+
+  &__rate {
+	font-size: 14px;
+	color: vars.$color-black;
+	line-height: 100%;
+  }
+
+  &__text {
+	color: vars.$color-gray;
+	font-weight: 400;
+	font-size: 12px;
+	text-decoration-line: underline;
+	line-height: 100%;
+	text-decoration-style: solid;
+	text-decoration-skip-ink: none;
+	text-decoration-thickness: auto;
+	text-underline-offset: auto;
+	text-underline-position: from-font;
+  }
+
+  &__btn {
+	position: absolute;
+	right: 12px;
+	top: 0;
+  }
+}

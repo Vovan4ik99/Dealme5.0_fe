@@ -13,4 +13,5 @@ export type ModalPayloads = {
 	imageEdit: ImageEditPayload;
 	imageUpload: BgImageUploadPayload;
 	bgImageCrop: unknown;
+	primaryInfoEdit: unknown;
 };
