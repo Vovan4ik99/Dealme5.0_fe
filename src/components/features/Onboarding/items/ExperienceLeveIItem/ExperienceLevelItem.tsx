@@ -8,8 +8,10 @@ const ExperienceLevelItem: React.FC<IExperienceLevelItemProps> = ({title, info, 
 		<button className={`${styles['item']} ${isSelected && styles['item--selected']}`}>
 			<label htmlFor={id}>
 				<input id={id} type={'radio'} name={'experience_level'}/>
-				<div style={{alignItems: 'flex-start'}} className={`${styles['item__wrapper']} ${styles['item__wrapper--centered']}`}
-				        onClick={() => onChange()}>
+				<div style={{alignItems: 'flex-start'}}
+				     role="button"
+				     className={`${styles['item__wrapper']} ${styles['item__wrapper--centered']}`}
+				     onClick={() => onChange()}>
 					<div className={`${styles['item__radio']} ${isSelected && styles['item__radio--selected']}`}></div>
 					<div className={styles['item__text']}>
 						<p className={`${styles['item__text']} ${styles['item__text--title']}`}>{title}</p>

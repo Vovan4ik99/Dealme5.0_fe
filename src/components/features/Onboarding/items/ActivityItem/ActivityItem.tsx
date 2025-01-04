@@ -12,7 +12,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({id, name, info, level, onSe
 		for (let i = 0; i < 5; i++) {
 			const isActive = (i < level) || (hoveredIndex && i <= hoveredIndex);
 			levelItems.push(
-				<div key={i}
+				<div role="button" key={i}
 				     className={`${styles['item__level']} ${isActive && styles['item__level--active']}`}
 				     onMouseEnter={() => setHoveredIndex(i)}
 				     onMouseLeave={() => setHoveredIndex(null)}
