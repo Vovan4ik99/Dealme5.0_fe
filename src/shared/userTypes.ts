@@ -1,4 +1,5 @@
 import {IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry} from "./onboardingTypes.ts";
+import {EXPERIENCE_LEVELS} from "@constants/experienceLevel.ts";
 
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 
@@ -21,7 +22,8 @@ export interface ILoggedUserResponse {
 	id: number;
 	firstName: string;
 	lastName: string;
-	experienceLevel: string;
+	experienceLevel: keyof typeof EXPERIENCE_LEVELS;
+	company: string;
 	specialization: ISpecialization,
 	workingDays: string[];
 	workingHours: string;

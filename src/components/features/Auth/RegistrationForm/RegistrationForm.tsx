@@ -1,6 +1,6 @@
 import InputError from "@ui/InputError/InputError.tsx";
 import React, {useCallback, useRef, useState} from "react";
-import {useForm, useWatch} from "react-hook-form";
+import {RegisterOptions, useForm, useWatch} from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
 import {RegistrationFormData} from "./registrationFormTypes.ts";
 import {Link, useNavigate} from "react-router-dom";
@@ -10,6 +10,7 @@ import checkbox_checked from '@icons/auth/checkbox_checked.svg';
 import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer_registration.svg";
 import {ReactComponent as InvestorIcon} from "@icons/named_exported/investor_registration.svg";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
+import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 
 const RegistrationForm = () => {
 
@@ -35,15 +36,12 @@ const RegistrationForm = () => {
 
 	const password = useWatch({name: 'password', control, defaultValue: ''});
 
+	const validatePassword: RegisterOptions['validate'] = (value) =>
+		value === password || 'Podane hasła nie są zgodne';
+
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
-		const createUserData: ICreateUserRequest = {
-			firstName: formData.firstName,
-			lastName: formData.lastName,
-			company: formData.company,
-			email: formData.email,
-			password: formData.password,
-		};
+		const createUserData: ICreateUserRequest = {...formData};
 		createUser(createUserData, role)
 			.then(() => {
 				setIsUserCreated(true);
@@ -53,8 +51,9 @@ const RegistrationForm = () => {
 					navigate('/login');
 				}, 3000);
 			}).catch((error) => {
-			console.log(error);
-		});
+				console.log(error);
+			}
+		);
 		return () => {
 			if (timeoutRef.current) {
 				clearTimeout(timeoutRef.current);
@@ -69,7 +68,8 @@ const RegistrationForm = () => {
 				<p className={styles['registration-form__text']}>Wybierz rodzaj konta</p>
 				<button className={styles['registration-form__switcher']}
 				        onClick={(e) => handleToggle(e)}>
-					<div className={`${styles['registration-form__slider']} ${!isFreelancer ? styles['registration-form__slider--right'] : ''}`}></div>
+					<div
+						className={`${styles['registration-form__slider']} ${!isFreelancer ? styles['registration-form__slider--right'] : ''}`}></div>
 					<span
 						className={`${styles['registration-form__option']} ${isFreelancer ? styles['registration-form__option--active'] : ''}`}>
 						<FreelancerIcon/>
@@ -83,131 +83,43 @@ const RegistrationForm = () => {
 				</button>
 			</div>
 			<div className={styles['registration-form__item']}>
-				<div className={`${styles['registration-form__input']} form-item`}>
-					<input
-						className={`form-item__input ${errors.firstName ? 'form-item__input--error' : ''}`}
-						id="firstName"
-						type="text"
-						placeholder={'np. Jan'}
-						autoComplete={'given-name'}
-						{...register('firstName', {
-							required: 'Podaj imię',
-							pattern: {
-								value: /^[A-ZА-ЯЁĆŁŃÓŚŹŻ][a-zа-яёćłńóśźż]*$/,
-								message: "Imię powinno zaczynać się wielką literą i zawierać tylko litery"
-							},
-							min: {
-								value: 2,
-								message: 'Długość od 2 do 30 znaków',
-							},
-							max: {
-								value: 30,
-								message: 'Długość od 2 do 30 znaków',
-							}
-						})}
-					/>
-					{errors.firstName?.message && <InputError text={errors.firstName.message}/>}
-					<label className={'form-item__label'} htmlFor="firstName">Imię</label>
-				</div>
-				<div className={`${styles['registration-form__input']} form-item`}>
-					<input
-						className={`form-item__input ${errors.lastName ? 'form-item__input--error' : ''}`}
-						id="lastName"
-						type="text"
-						placeholder={'np. Kowalski'}
-						autoComplete={'family-name'}
-						{...register('lastName', {
-							required: 'Podaj nazwisko',
-							pattern: {
-								value: /^[A-ZА-ЯЁĆŁŃÓŚŹŻ][a-zа-яёćłńóśźż]*(?:-[A-ZА-ЯЁĆŁŃÓŚŹŻ][a-zа-яёćłńóśźż]*)?$/,
-								message: 'Nazwisko powinno zaczynać się wielką literą i może zawierać tylko litery' +
-									' oraz jeden łącznik',
-							},
-							min: {
-								value: 2,
-								message: 'Długość od 2 do 50 znaków'
-							},
-							max: {
-								value: 50,
-								message: 'Długość od 2 do 50 znaków'
-							}
-						})}
-					/>
-					{errors.lastName?.message && <InputError text={errors.lastName.message}/>}
-					<label className={'form-item__label'} htmlFor="lastName">Nazwisko</label>
-				</div>
+				<CustomInput key={'firstName'}
+				             preset={'firstName'}
+				             errorMessage={errors.firstName?.message}
+				             register={register}/>
+				<CustomInput key={'lastName'}
+				             preset={'lastName'}
+				             errorMessage={errors.lastName?.message}
+				             register={register}/>
 			</div>
-			<div className={'form-item'}>
-				<input
-					className={`form-item__input ${errors.email ? 'form-item__input--error' : ''}`}
-					id="email"
-					type="email"
-					placeholder={'example@email.com'}
-					autoComplete={'email'}
-					{...register('email', {
-						required: 'Podaj email',
-						pattern: {
-							value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-							message: 'Podaj poprawny adres email',
-						},
-					})}
-				/>
-				{errors.email?.message && <InputError text={errors.email.message}/>}
-				<label className={'form-item__label'} htmlFor="email">E-mail</label>
-			</div>
-			<div className={'form-item'}>
-				<input
-					className={`form-item__input ${errors.company ? 'form-item__input--error' : ''}`}
-					id="company"
-					type="text"
-					placeholder={'np. Dealme'}
-					autoComplete={'organization'}
-					{...register('company', {
-						required: !isFreelancer ? 'Podaj firmę' : false,
-					})}
-				/>
-				{errors.company?.message && <InputError text={errors.company.message}/>}
-				<label className={'form-item__label'} htmlFor="company">Nazwa firmy</label>
-			</div>
+			<CustomInput key={'email'}
+			             preset={'email'}
+			             errorMessage={errors.email?.message}
+			             register={register}/>
+			<CustomInput key={'company'}
+			             preset={'company'}
+			             errorMessage={errors.company?.message}
+			             validation={{
+				             required: !isFreelancer ? 'Podaj firmę' : false,
+			             }}
+			             register={register}/>
 			<div className={styles['registration-form__item']}>
-				<div className={`${styles['registration-form__input']} form-item`}>
-					<input
-						className={`form-item__input ${errors.password ? 'form-item__input--error' : ''}`}
-						id="password"
-						type="password"
-						placeholder={'Wpisz hasło'}
-						autoComplete={'new-password'}
-						{...register('password', {
-							required: 'Podaj hasło',
-							pattern: {
-								value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-								message: "Hasło musi zawierać minimum jedną wielką literę, jedną małą literę, jedną" +
-									" cyfrę oraz jeden znak specjalny (@$!%*?&)"
-							},
-							min: {
-								value: 8,
-								message: 'Hasło musi zawierać minimum 8 znaków',
-							},
-						})}
-					/>
-					{errors.password?.message && <InputError text={errors.password.message}/>}
-					<label className={'form-item__label'} htmlFor="password">Hasło</label>
-				</div>
-				<div className={`${styles['registration-form__input']} form-item`}>
-					<input
-						className={`form-item__input ${errors.passwordConfirmation ? 'form-item__input--error' : ''}`}
-						id="passwordConfirmation"
-						type="password"
-						placeholder={'Wpisz hasło'}
-						autoComplete={'new-password'}
-						{...register('passwordConfirmation', {
-							required: 'Potwierdź hasło',
-							validate: (value) => value === password || 'Podane hasła nie są zgodne'
-						})}
-					/>
-					{errors.passwordConfirmation?.message && <InputError text={errors.passwordConfirmation.message}/>}
-					<label className={'form-item__label'} htmlFor="passwordConfirmation">Powtórz hasło</label>
-				</div>
+				<CustomInput key={'password'}
+				             preset={'password'}
+				             register={register}
+				             errorMessage={errors.password?.message}/>
+				<CustomInput key={'passwordConfirmation'}
+				             type={'password'}
+				             id={'passwordConfirmation'}
+				             placeholder={'Powtórz hasło'}
+				             autoComplete={'new-password'}
+				             register={register}
+				             validation={{
+								 required: 'Potwierdź hasło',
+					             validate: validatePassword
+				             }}
+				             labelText={'Powtórz hasło'}
+				             errorMessage={errors.passwordConfirmation?.message}/>
 			</div>
 			<div className={styles['registration-form__terms']}>
 				<div className={styles['registration-form__terms-wrapper']}>

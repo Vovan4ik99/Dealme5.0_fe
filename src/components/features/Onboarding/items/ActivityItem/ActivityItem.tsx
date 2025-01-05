@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import {IActivityItemProps} from "./activityItemTypes.ts";
 import styles from './ActivityItem.module.scss';
-import InfoIconBtn from "@ui/InfoIconBtn/InfoIconBtn.tsx";
+import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
 
 const ActivityItem: React.FC<IActivityItemProps> = ({id, name, info, level, onSelect}) => {
 
+	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
 	const renderLevelItems = () => {
@@ -25,9 +26,12 @@ const ActivityItem: React.FC<IActivityItemProps> = ({id, name, info, level, onSe
 	}
 
 	return (
-		<div className={styles['item']}>
+		<div className={styles['item']}
+		     role="button"
+		     onMouseEnter={() => setIsHovered(true)}
+		     onMouseLeave={() => setIsHovered(false)}>
 			<div className={styles['item__wrapper']}>
-				<InfoIconBtn text={info} isLeft={true}/>
+				<TooltipIcon key={info} text={info} isLeft={true} isActive={isHovered} isIconTop={true}/>
 				<p className={styles['item__text']}>{name}</p>
 			</div>
 			<div className={styles['item__level-wrapper']}>

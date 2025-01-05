@@ -17,7 +17,7 @@ const Avatar = () => {
 	const handleAvatarEdit = () => {
 		openModal({
 			id: 'imageEdit',
-			title: 'Edytuj zdjęcie w tle',
+			title: 'Edytuj awatar',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			payload: parseBase64Image(userAvatar, 'avatar'),

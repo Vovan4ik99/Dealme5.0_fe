@@ -1,0 +1,38 @@
+@use "@styles/variables" as vars;
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__role {
+	padding: 16px 24px;
+	border-radius: 12px;
+	background-color: vars.$color-gray-light;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+
+	svg path{
+	  fill: vars.$color-gray;
+	}
+
+	&-wrapper {
+	  display: flex;
+	  flex-direction: column;
+	  color: vars.$color-gray;
+	  font-size: 18px;
+	  line-height: 120%;
+
+	  span {
+		font-size: 14px;
+	  }
+	}
+  }
+
+  &__wrapper {
+	width: 100%;
+	display: flex;
+	gap: 16px;
+  }
+}
