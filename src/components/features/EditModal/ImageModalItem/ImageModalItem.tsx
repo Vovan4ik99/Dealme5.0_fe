@@ -47,7 +47,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 			btnText: "Wybierz zdjęcie",
 			btnWithIcon: false,
 			child: React.createElement(MediaUploader, {
-				text: `Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB`,
+        text: `Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB`,
 				aspectRatio: isAvatar ? 1 : 1320 / 250,
 				isAvatar
 			}),

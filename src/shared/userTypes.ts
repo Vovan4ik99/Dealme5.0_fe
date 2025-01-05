@@ -2,6 +2,7 @@ import {IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry}
 import {EXPERIENCE_LEVELS} from "@constants/experienceLevel.ts";
 import {WorkingDayKey} from "@constants/workingDays.ts";
 
+
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 
 export interface ICreateUserRequest {

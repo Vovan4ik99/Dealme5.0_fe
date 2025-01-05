@@ -1,0 +1,70 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: eu-central-1
+      AWS_ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+      AWS_ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REMOTE_SERVER_IP: ${{ secrets.REMOTE_SERVER_IP }}
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        run: aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY
+
+      - name: Generate TIMESTAMP for tagging
+        id: generate-timestamp
+        run: echo "TIMESTAMP=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          echo "Using TIMESTAMP: ${{ env.TIMESTAMP }}"
+          docker build -t $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-latest .
+          docker tag $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-latest $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-${{ env.TIMESTAMP }}
+
+      - name: List Docker images (debugging)
+        run: docker images
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-latest
+          docker push $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-${{ env.TIMESTAMP }}
+
+      - name: Clean up local Docker images
+        run: |
+          docker rmi $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-latest
+          docker rmi $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-${{ env.TIMESTAMP }}
+
+      - name: Deploy to Remote Server
+        run: |
+          echo "${{ secrets.dealmekeys }}" > dealme.pem
+          chmod 600 dealme.pem
+          ssh -o StrictHostKeyChecking=no -i dealme.pem ec2-user@$REMOTE_SERVER_IP './redeploy-frontend.sh'
+        shell: bash
