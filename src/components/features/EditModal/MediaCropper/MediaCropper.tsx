@@ -68,7 +68,7 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 		getCroppedImg(mediaSrc, croppedAreaPixels)
 			.then((blob) => {
 				closeModals(2);
-				updateModalData('imageEdit', {filename, blob,});
+				updateModalData('imageEdit', {filename, blob});
 			}).catch((error) => console.error('Error cropping image:', error));
 	};
 

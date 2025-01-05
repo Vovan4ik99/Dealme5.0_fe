@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {IIndustryItemProps} from "./industryItemTypes.ts";
-import styles from '../../Onboarding.module.scss';
-import SubIndustryItem from "../SubIndustryItem/SubIndustryItem.tsx";
-import AnimatedStep from "../../steps/AnimatedStep/AnimatedStep.tsx";
+import styles from '@components/features/Onboarding/Onboarding.module.scss';
+import SubIndustryItem from "@components/features/Onboarding/items/SubIndustryItem/SubIndustryItem.tsx";
+import AnimatedStep from "@components/features/Onboarding/steps/AnimatedStep/AnimatedStep.tsx";
 import arrow_right from '@icons/onboarding/arrow_right.svg'
 
 const IndustryItem: React.FC<IIndustryItemProps> = ({text, subIndustries, selectedSubIndustries, onChange, isSearchActive, isInSearchRange}) => {

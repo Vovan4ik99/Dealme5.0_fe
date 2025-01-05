@@ -4,7 +4,7 @@ import {IImageModalItemProps} from "./imageModalItemTypes.ts";
 import styles from "./ImageModalItem.module.scss";
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import {ImageEditPayload} from "@shared/modalPayloadTypes.ts";
+import {IImageEditPayload} from "@shared/modalPayloadTypes.ts";
 import MediaUploader from "../MediaUploader/MediaUploader.tsx";
 
 const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, emptyState, isAvatar, onDelete, onSave, 
@@ -14,7 +14,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 
 	const modal = modals.find(
 		(modal) => modal.id === "imageEdit"
-	) as { payload: ImageEditPayload | undefined };
+	) as { payload: IImageEditPayload | undefined };
 
 	useEffect(() => {
 		if (!registerOnSave) {
@@ -47,7 +47,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 			btnText: "Wybierz zdjęcie",
 			btnWithIcon: false,
 			child: React.createElement(MediaUploader, {
-				text: `Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: до 3MB`,
+				text: `Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB`,
 				aspectRatio: isAvatar ? 1 : 1320 / 250,
 				isAvatar
 			}),
@@ -73,7 +73,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 			</div>
 			<div className={styles["item__info"]}>
 				<InfoIcon/>
-				<p>Zalecany rozmiar: {imageSize} <br/>Akceptowalne форматy: JPG, PNG, WEBP, rozmiar: до 3MB</p>
+				<p>Zalecany rozmiar: {imageSize} <br/>Akceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB</p>
 			</div>
 		</div>
 	);

@@ -23,6 +23,10 @@ const ActionBtn: React.FC<IActionBtnProps> = ({onClick, kind, withBorder, backgr
 		}
 	}
 
+	const handlePointerDown = (e: React.PointerEvent) => {
+		e.stopPropagation();
+	};
+
 	const getBackgroundColor = () => {
 		if (backgroundColor === 'transparent') {
 			return backgroundColor;
@@ -33,11 +37,17 @@ const ActionBtn: React.FC<IActionBtnProps> = ({onClick, kind, withBorder, backgr
 		if (backgroundColor === 'white') {
 			return '#FFFFFF';
 		}
-	}
+	};
+
+	const handleClick = (e: React.MouseEvent | React.PointerEvent) => {
+		e.stopPropagation();
+		onClick();
+	};
 
 	return (
 		<button style={{backgroundColor: getBackgroundColor()}}
-		        onClick={onClick}
+		        onClick={handleClick}
+		        onPointerDown={handlePointerDown}
 		        className={`${styles['action-btn']} ${withBorder && styles['action-btn--wb']}`}>
 			{getBtnSvg()}
 		</button>

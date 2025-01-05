@@ -4,7 +4,7 @@ import ProfileNavbar from "../../components/layout/ProfileNavbar/ProfileNavbar.t
 import BgImage from "../../components/features/FreelancerProfile/BgImage/BgImage.tsx";
 import Avatar from "../../components/features/FreelancerProfile/Avatar/Avatar.tsx";
 import PrimaryInfo from "../../components/features/FreelancerProfile/PrimaryInfo/PrimaryInfo.tsx";
-
+import SecondaryInfo from "../../components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.tsx";
 
 const FreelancerProfilePage = () => {
 	return (
@@ -14,6 +14,7 @@ const FreelancerProfilePage = () => {
 			<aside className={styles["profile__aside"]}>
 				<Avatar/>
 				<PrimaryInfo/>
+				<SecondaryInfo/>
 			</aside>
 			<Footer isHyphenated={false} isCentered={true}/>
 		</div>

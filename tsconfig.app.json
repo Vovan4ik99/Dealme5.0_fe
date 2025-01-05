@@ -38,6 +38,12 @@
       "@context/*": [
         "src/context/*"
       ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@entities/*": [
+        "src/entities/*"
+      ],
       "@shared/*": [
         "src/shared/*"
       ],
