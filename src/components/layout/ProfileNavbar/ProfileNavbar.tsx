@@ -9,7 +9,7 @@ import {ReactComponent as ProductsIcon} from "@icons/named_exported/profile-navb
 import {ReactComponent as GuardianIcon} from "@icons/named_exported/profile-navbar/guardian.svg";
 import {ReactComponent as PaymentsIcon} from "@icons/named_exported/profile-navbar/payments.svg";
 import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
-import {ReactComponent as ArrowDown} from "@icons/named_exported/profile-navbar/arrow-down.svg";
+import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow-down.svg";
 import avatar from "@icons/profile_navbar/default_avatar.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 

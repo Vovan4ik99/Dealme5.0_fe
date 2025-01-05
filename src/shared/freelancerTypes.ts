@@ -12,3 +12,8 @@ export interface IFreelancerBarResponse {
 	points: number;
 	ordersCount: number;
 }
+
+export interface IFreelancerNameRequest {
+	firstName: string;
+	lastName: string;
+}

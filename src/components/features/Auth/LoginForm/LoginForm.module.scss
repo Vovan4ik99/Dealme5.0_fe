@@ -5,15 +5,15 @@
   gap: 16px;
   flex-direction: column;
 
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__link {
     font-size: 14px;
     line-height: 100%;
     color: vars.$color-gray;
     text-decoration: underline;
-
-    &-wrapper {
-      display: flex;
-      justify-content: flex-end;
-    }
   }
 }
