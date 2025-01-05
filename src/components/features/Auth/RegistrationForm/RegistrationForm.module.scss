@@ -60,8 +60,10 @@
   }
 
   &__item {
-    display: flex;
+    display: grid;
     gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
   }
 
   &__input {

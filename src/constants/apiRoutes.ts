@@ -35,7 +35,8 @@ export const API_ROUTES = {
 		FREELANCER: {
 			BACKGROUND_PICTURE: '/freelancer/backgroundPicture',
 			AVATAR: '/user/avatar',
-			INFO: '/freelancer/bar'
+			INFO: '/freelancer/bar',
+			PATCH_NAME: '/freelancer/me/name',
 		}
 	},
 	FREELANCER: {

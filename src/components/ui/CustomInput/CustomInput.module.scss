@@ -1,6 +1,6 @@
-@use 'variables' as vars;
+@use "@styles/variables" as vars;
 
-.form-item {
+.item {
   position: relative;
 
   &__label {
@@ -28,8 +28,8 @@
       opacity: 0.4;
     }
 
-    &:focus + .form-item__label,
-    &:not(:placeholder-shown) + .form-item__label {
+    &:focus + .item__label,
+    &:not(:placeholder-shown) + .item__label {
       color: vars.$color-gray;
     }
 
@@ -39,9 +39,10 @@
 
     &--error {
       border: 1px solid vars.$color-danger;
+
+      + .item__label {
+        color: vars.$color-gray;
+      }
     }
   }
 }
-
-
-

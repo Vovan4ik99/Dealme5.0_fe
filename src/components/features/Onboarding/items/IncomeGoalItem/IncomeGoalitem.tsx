@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {IncomeGoalItemProps} from "./incomeGoalItemTypes.ts";
 import styles from "../OnboardingItems.module.scss";
-import InfoIconBtn from "@ui/InfoIconBtn/InfoIconBtn.tsx";
+import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
 
 const IncomeGoalItem: React.FC<IncomeGoalItemProps> = ({isSelected, onChange, text, description}) => {
 
+	const [isHovered, setIsHovered] = useState(false);
+
 	return (
-		<button className={`${styles['item']} ${isSelected && styles['item--selected']}`} onClick={() => onChange()}>
+		<button className={`${styles['item']} ${isSelected && styles['item--selected']}`}
+		        onMouseEnter={() => setIsHovered(true)}
+		        onMouseLeave={() => setIsHovered(false)}
+		        onClick={() => onChange()}>
 			<label htmlFor={text} className={`${styles['item__wrapper']}`}>
 				<input type={"radio"} id={text} name={text} onClick={(e) => e.stopPropagation()}/>
 				<div className={`${styles['item__add-wrapper']}`}>
@@ -15,7 +20,7 @@ const IncomeGoalItem: React.FC<IncomeGoalItemProps> = ({isSelected, onChange, te
 						<span className={`${styles['item__text']} ${styles['item__text--gray']}`}> / tydzień</span>
 					</p>
 				</div>
-				<InfoIconBtn text={description}/>
+				<TooltipIcon key={description} text={description} isActive={isHovered}/>
 			</label>
 		</button>
 	)

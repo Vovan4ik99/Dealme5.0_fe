@@ -6,6 +6,7 @@ import InputError from "../../../ui/InputError/InputError.tsx";
 import {ILoginRequest, ILoginResponse} from "@shared/loginTypes.ts";
 import {useAuthService} from '@services/authService.ts';
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 
 const LoginForm = () => {
 
@@ -39,45 +40,23 @@ const LoginForm = () => {
 			}).catch((error) => {
 				console.log(error);
 				setFormData(request);
-			});
+			}
+		);
 		setFormData(request);
 	}, [login, loginUser]);
 
 	return (
 		<form className={styles['login-form']} onSubmit={handleSubmit(onSubmit)} noValidate={true}>
-			<div className={'form-item'}>
-				<input
-					className={`form-item__input ${errors.email ? 'form-item__input--error' : ''}`}
-					id="email"
-					type="email"
-					placeholder={'example@email.com'}
-					autoComplete={'email'}
-					{...register('email', {
-						required: 'Podaj email',
-						pattern: {
-							value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-							message: 'Podaj poprawny adres email',
-						},
-					})}
-				/>
-				{errors.email?.message && <InputError text={errors.email.message}/>}
-				<label className={'form-item__label'} htmlFor="email">E-mail</label>
-			</div>
-			<div className={'form-item'}>
-				<input
-					className={`form-item__input ${errors.password ? 'form-item__input--error' : ''}`}
-					id="password"
-					type="password"
-					placeholder={'Wpisz hasło'}
-					autoComplete={'current-password'}
-					{...register('password', {
-						required: 'Podaj hasło',
-					})}
-				/>
-				{errors.password?.message && <InputError text={errors.password.message}/>}
-				<label className={'form-item__label'} htmlFor="password">Hasło</label>
-			</div>
-			<div className={styles['login-form__link-wrapper']}>
+			<CustomInput preset={'email'}
+			             errorMessage={errors?.email?.message}
+			             register={register}/>
+			<CustomInput preset={'password'}
+			             register={register}
+			             validation={{
+				             required: 'Podaj hasło',
+			             }}
+			             errorMessage={errors?.password?.message}/>
+			<div className={styles['login-form__wrapper']}>
 				<Link className={styles['login-form__link']} to={'/'}>Zapomniałeś hasło?</Link>
 			</div>
 

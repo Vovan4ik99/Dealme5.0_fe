@@ -1,0 +1,65 @@
+@use "@styles/variables" as vars;
+
+.item {
+  background-color: transparent;
+  position: relative;
+  width: fit-content;
+  display: flex;
+
+  svg path {
+    transition: fill 0.3s ease-in-out;
+    fill: vars.$color-gray;
+  }
+
+  &--active {
+    svg path {
+      fill: vars.$color-black;
+    }
+  }
+
+  &__wrapper {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  &__modal {
+    width: 300px;
+    border-radius: 12px;
+    background-color: white;
+    font-size: 14px;
+    padding: 16px;
+    box-shadow: 0 18px 100px -16px rgba(13, 16, 51, 0.20);
+    color: vars.$color-black;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  &__arrow {
+    background-color: white;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+  }
+}
+
+.tooltip-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.tooltip-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.tooltip-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}

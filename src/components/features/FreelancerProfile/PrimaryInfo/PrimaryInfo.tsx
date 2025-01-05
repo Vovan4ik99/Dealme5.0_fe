@@ -1,5 +1,5 @@
 import styles from './PrimaryInfo.module.scss';
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
@@ -9,20 +9,33 @@ import star from "@icons/freelancer_profile/primary_info/star.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import StatusItem from "@ui/StatusItem/StatusItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
+import PrimaryInfoModalItem from "../../EditModal/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
 
 const PrimaryInfo: React.FC = () => {
 	
 	const [primaryInfo, setPrimaryInfo] = useState<FreelancerPrimaryInfo | null>(null);
-	const {user} = useContext(AuthContext);
+	const {user, getLoggedUserData, loadingStatus: contextLoadingStatus} = useContext(AuthContext);
 	const {openModal} = useModal();
 	const {getFreelancerBar, loadingStatus} = useFreelancerProfileService();
+
+	const fetchPrimaryInfo = useCallback(() => {
+		getFreelancerBar()
+			.then(response => {setPrimaryInfo({...response})})
+			.catch(error => console.error(error));
+	}, [getFreelancerBar]);
 	
 	useEffect(() => {
 		if (primaryInfo) return;
-		getFreelancerBar()
-			.then(response => setPrimaryInfo({...response}))
-			.catch(error => console.error(error));
-	}, [getFreelancerBar, primaryInfo]);
+		fetchPrimaryInfo();
+	}, [fetchPrimaryInfo, primaryInfo]);
+
+	if (!user) {
+		return null;
+	}
+
+	const handleSave = () => {
+		getLoggedUserData(localStorage.getItem('token') as string);
+	}
 
 	const onEdit = () => {
 		openModal({
@@ -31,7 +44,14 @@ const PrimaryInfo: React.FC = () => {
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
-			child: <></>
+			child: <PrimaryInfoModalItem onSave={handleSave}
+			                             freelancerId={user.id}
+			                             firstName={user.firstName}
+			                             lastName={user.lastName}
+			                             company={user.company}
+			                             specialization={user.specialization.name}
+			                             experience={user.experienceLevel}
+			                             incomeGoal={user.incomeGoal}/>
 		});
 	}
 
@@ -54,14 +74,8 @@ const PrimaryInfo: React.FC = () => {
 		}
 	}
 
-	if (loadingStatus === 'loading') {
+	if (loadingStatus === 'loading' || contextLoadingStatus === 'loading') {
 		return <LoadingSpinner/>;
-	}
-
-	console.log(primaryInfo);
-
-	if (!user) {
-		return null;
 	}
 
 	return (

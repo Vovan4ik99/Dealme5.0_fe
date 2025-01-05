@@ -1,7 +1,7 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IFreelancerBackgroundResponse, IFreelancerBarResponse} from "@shared/freelancerTypes";
+import {IFreelancerBackgroundResponse, IFreelancerBarResponse, IFreelancerNameRequest} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
@@ -33,6 +33,14 @@ export const useFreelancerProfileService = () => {
 		});
 	}, [sendRequest]);
 
+	const patchFreelancerName = useCallback(async (request: IFreelancerNameRequest): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.PATCH_NAME,
+			method: "PATCH",
+			body: JSON.stringify(request),
+		});
+	}, [sendRequest]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -40,5 +48,6 @@ export const useFreelancerProfileService = () => {
 		patchBackgroundPicture,
 		deleteBackgroundPicture,
 		getFreelancerBar,
+		patchFreelancerName
 	};
 };
