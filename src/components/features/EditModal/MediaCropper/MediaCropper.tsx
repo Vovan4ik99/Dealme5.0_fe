@@ -73,11 +73,7 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 	};
 
 	useEffect(() => {
-		if (!registerOnSave) {
-			console.error('registerOnSave is not defined');
-			return;
-		}
-		registerOnSave(handleSave);
+		registerOnSave!(handleSave);
 		return () => onClose();
 	});
 

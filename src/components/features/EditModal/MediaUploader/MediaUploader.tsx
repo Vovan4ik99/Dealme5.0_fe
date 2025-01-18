@@ -62,11 +62,7 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, as
 	};
 
 	useEffect(() => {
-		if (registerOnSave) {
-			registerOnSave(handleSave);
-		} else {
-			console.error('registerOnSave is not defined');
-		}
+		registerOnSave!(handleSave);
 	});
 
 	const handleDrop = (acceptedFiles: File[]) => {

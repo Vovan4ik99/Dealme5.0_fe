@@ -13,8 +13,6 @@ import DraggableItem from "../DraggableItem/DraggableItem.tsx";
 import {IDragAndDropContainerProps} from "./dragAndDropContainerTypes.ts";
 import {Transform} from "@dnd-kit/utilities";
 
-
-
 const DragAndDropContainer = <T extends { id: number | string }>({
 	                                                                 items,
 	                                                                 renderItem,
@@ -22,7 +20,11 @@ const DragAndDropContainer = <T extends { id: number | string }>({
                                                                  }: IDragAndDropContainerProps<T>) => {
 
 	const sensors = useSensors(
-		useSensor(PointerSensor),
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				distance: 5,
+			},
+		}),
 		useSensor(KeyboardSensor, {
 			coordinateGetter: sortableKeyboardCoordinates,
 		})

@@ -1,5 +1,5 @@
 import OnboardingSearchBar
-	from "../../components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
+	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import IndustryItem from "@components/features/Onboarding/items/IndustryItem/IndustryItem.tsx";
 import React, {useState} from "react";
 import {IIndustry, ISubIndustry} from "@shared/onboardingTypes.ts";

@@ -19,9 +19,15 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 		labelText,
 		register,
 		validation,
+		onChange,
+		existedValue
 	} = combinedProps;
 
-	const registerProps = register(id ?? '', validation ?? {}) || {};
+	const isControlled = existedValue !== undefined && onChange !== undefined;
+
+	const registerProps = register
+		? register(id ?? '', validation ?? {}) || {}
+		: {};
 
 	return (
 		<div className={styles['item']}>
@@ -31,7 +37,12 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 				type={type}
 				placeholder={placeholder}
 				autoComplete={autoComplete}
-				{...registerProps}
+				{...(isControlled
+					? {
+						value: existedValue,
+						onChange: (e) => onChange(e.target.value),
+					}
+					: registerProps)}
 			/>
 			{errorMessage && <InputError text={errorMessage}/>}
 			<label className={styles['item__label']} htmlFor={id}>{labelText}</label>

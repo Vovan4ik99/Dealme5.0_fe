@@ -1,12 +1,17 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IFreelancerBackgroundResponse, IFreelancerBarResponse, IFreelancerNameRequest} from "@shared/freelancerTypes";
+import {
+	IFreelancerBackgroundResponse,
+	IFreelancerBarResponse, IFreelancerCountry, IFreelancerLanguage,
+	IFreelancerLocalization,
+	IFreelancerNameRequest, IFreelancerState, IFreelancerWorkingArea, ILanguage
+} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
 
-	const getBackgroundPicture = useCallback(async (): Promise<IFreelancerBackgroundResponse> => {
+	const getBackgroundPicture = useCallback(async (): Promise<IFreelancerBackgroundResponse | null> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
 		});
@@ -41,6 +46,56 @@ export const useFreelancerProfileService = () => {
 		});
 	}, [sendRequest]);
 
+	const patchFreelancerCompany = useCallback(async (request: string): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.PATCH_COMPANY,
+			method: "PATCH",
+			body: request,
+		});
+	}, [sendRequest]);
+
+	const patchFreelancerLocalization = useCallback(async (request: IFreelancerLocalization): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.PATCH_LOCALIZATION,
+			method: "PATCH",
+			body: JSON.stringify(request),
+		})
+	}, [sendRequest]);
+
+	const getCountries = useCallback(async (): Promise<IFreelancerCountry[]> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_COUNTRIES
+		})
+	}, [sendRequest]);
+
+	const getStates = useCallback(async (): Promise<IFreelancerState[]> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_STATES
+		})
+	}, [sendRequest]);
+
+	const patchFreelancerWorkingArea = useCallback(async (request: IFreelancerWorkingArea) => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.PATCH_WORKING_AREA,
+			method: "PATCH",
+			body: JSON.stringify(request)
+		});
+	}, [sendRequest]);
+
+	const getLanguages = useCallback(async (): Promise<ILanguage[]> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_LANGUAGES
+		});
+	}, [sendRequest]);
+
+	const patchFreelancerLanguages = useCallback(async (request: IFreelancerLanguage[]): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_LANGUAGES,
+			method: "PATCH",
+			body: JSON.stringify(request)
+		});
+	}, [sendRequest]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -48,6 +103,13 @@ export const useFreelancerProfileService = () => {
 		patchBackgroundPicture,
 		deleteBackgroundPicture,
 		getFreelancerBar,
-		patchFreelancerName
+		patchFreelancerName,
+		patchFreelancerCompany,
+		patchFreelancerLocalization,
+		getCountries,
+		getStates,
+		patchFreelancerWorkingArea,
+		getLanguages,
+		patchFreelancerLanguages
 	};
 };

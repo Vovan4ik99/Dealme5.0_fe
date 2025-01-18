@@ -14,11 +14,7 @@ const WorkingDaysModalItem: React.FC<IWorkingDaysModalItemProps> = ({userWorking
 	}, [onSave, selectedDays]);
 
 	useEffect(() => {
-		if (!registerOnSave) {
-			console.log('registerOnSave is not defined');
-			return;
-		}
-		registerOnSave(handleSave);
+		registerOnSave!(handleSave);
 	}, [handleSave, registerOnSave]);
 
 	const onChange = (newDay: WorkingDayKey) => {

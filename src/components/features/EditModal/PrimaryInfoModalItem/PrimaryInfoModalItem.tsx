@@ -25,7 +25,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	const [specializations, setSpecializations] = useState<ISpecialization[]>([]);
 	const [incomeGoals, setIncomeGoals] = useState<IIncomeGoal[]>([]);
 	const {getSpecializations, getIncomeGoals, patchSpecialization, patchIncomeGoal, patchExperienceLevel} = useOnboardingService();
-	const {patchFreelancerName} = useFreelancerProfileService();
+	const {patchFreelancerName, patchFreelancerCompany} = useFreelancerProfileService();
 
 	const {register, handleSubmit, formState: {errors}, control, setValue} = useForm<IPrimaryInfoEditFormData>({
 		shouldFocusError: false,
@@ -38,11 +38,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	const currentIncomeGoal = useWatch({name: 'incomeGoal', control, defaultValue: incomeGoal});
 
 	useEffect(() => {
-		if (!registerOnSave) {
-			console.error("registerOnSave is not defined");
-			return;
-		}
-		registerOnSave(handleSave);
+		registerOnSave!(handleSave);
 	});
 
 	useEffect(() => {
@@ -128,7 +124,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 		try {
 			await patchSpecialization(freelancerId, getSpecializationId(formData.specialization));
 			await patchFreelancerName({ ...formData });
-			// TODO: company patch
+			await patchFreelancerCompany(formData.company);
 			await patchExperienceLevel(formData.experience);
 			await patchIncomeGoal(formData.incomeGoal);
 		} catch (error) {

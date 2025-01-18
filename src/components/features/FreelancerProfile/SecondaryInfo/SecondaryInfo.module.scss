@@ -21,11 +21,6 @@
 
 	p {
 	  max-width: 240px;
-	  overflow: hidden;
-	  display: -webkit-box;
-	  -webkit-line-clamp: 2;
-	  -webkit-box-orient: vertical;
-	  text-overflow: ellipsis;
 	}
 
 	&--empty {
@@ -46,5 +41,13 @@
 	height: 12px;
 	justify-content: center;
 	align-items: center;
+
+	&--h14 {
+	  height: 14px;
+
+	  img {
+		height: 14px;
+	  }
+	}
   }
 }

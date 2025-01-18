@@ -17,11 +17,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 	) as { payload: IImageEditPayload | undefined };
 
 	useEffect(() => {
-		if (!registerOnSave) {
-			console.error("registerOnSave is not defined");
-			return;
-		}
-		registerOnSave(handleSave);
+		registerOnSave!(handleSave);
 	});
 
 	const handleSave = () => {

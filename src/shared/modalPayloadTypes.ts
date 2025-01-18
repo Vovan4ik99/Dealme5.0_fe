@@ -23,4 +23,8 @@ export type ModalPayloads = {
 	subIndustriesEdit: ISubIndustriesEditPayload;
 	subIndustriesAdd: unknown;
 	workingDaysEdit: unknown;
+	workingHoursEdit: unknown;
+	localizationEdit: unknown;
+	languagesEdit: unknown;
+	languageAdd: unknown;
 };

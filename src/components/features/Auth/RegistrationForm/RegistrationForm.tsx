@@ -11,6 +11,7 @@ import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer
 import {ReactComponent as InvestorIcon} from "@icons/named_exported/investor_registration.svg";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
+import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
 
 const RegistrationForm = () => {
 
@@ -21,10 +22,8 @@ const RegistrationForm = () => {
 
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	const handleToggle = (e: React.MouseEvent) => {
-		e.preventDefault();
+	const handleRoleSelect = () => {
 		setIsFreelancer((prev) => !prev);
-		reset();
 	};
 
 	const {createUser, loadingStatus, errorMessage} = useAuthService();
@@ -42,6 +41,7 @@ const RegistrationForm = () => {
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
 		const createUserData: ICreateUserRequest = {...formData};
+
 		createUser(createUserData, role)
 			.then(() => {
 				setIsUserCreated(true);
@@ -50,10 +50,8 @@ const RegistrationForm = () => {
 					setIsUserCreated(false);
 					navigate('/login');
 				}, 3000);
-			}).catch((error) => {
-				console.log(error);
-			}
-		);
+			}).catch(console.error);
+
 		return () => {
 			if (timeoutRef.current) {
 				clearTimeout(timeoutRef.current);
@@ -66,21 +64,20 @@ const RegistrationForm = () => {
 		      onSubmit={handleSubmit(onSubmit)} autoComplete={'on'} noValidate={true}>
 			<div>
 				<p className={styles['registration-form__text']}>Wybierz rodzaj konta</p>
-				<button className={styles['registration-form__switcher']}
-				        onClick={(e) => handleToggle(e)}>
-					<div
-						className={`${styles['registration-form__slider']} ${!isFreelancer ? styles['registration-form__slider--right'] : ''}`}></div>
-					<span
-						className={`${styles['registration-form__option']} ${isFreelancer ? styles['registration-form__option--active'] : ''}`}>
-						<FreelancerIcon/>
-						<p>Freelancer</p>
-					</span>
-					<span
-						className={`${styles['registration-form__option']} ${!isFreelancer ? styles['registration-form__option--active'] : ''}`}>
-						<InvestorIcon/>
-						<p>Inwestor</p>
-					</span>
-				</button>
+				<SwitchBtn onClick={handleRoleSelect}
+				           isActive={isFreelancer}
+				           leftContent={
+					           <>
+						           <FreelancerIcon/>
+						           <p>Freelancer</p>
+					           </>
+				           }
+				           rightContent={
+					           <>
+						           <InvestorIcon/>
+						           <p>Inwestor</p>
+					           </>
+				           }/>
 			</div>
 			<div className={styles['registration-form__item']}>
 				<CustomInput key={'firstName'}
@@ -115,7 +112,7 @@ const RegistrationForm = () => {
 				             autoComplete={'new-password'}
 				             register={register}
 				             validation={{
-								 required: 'Potwierdź hasło',
+					             required: 'Potwierdź hasło',
 					             validate: validatePassword
 				             }}
 				             labelText={'Powtórz hasło'}
@@ -125,12 +122,14 @@ const RegistrationForm = () => {
 				<div className={styles['registration-form__terms-wrapper']}>
 					<input
 						id={'terms'}
-						className={`${styles['registration-form__terms-checkbox']} ${errors.terms ? 'form-item__input--error' : ''}`}
+						className={`${styles['registration-form__terms-checkbox']} ${errors.terms && 'form-item__input--error'}`}
 						type="checkbox"
 						{...register('terms', {required: 'Aby kontynuować, musisz zaakceptować warunki korzystania z serwisu'})}
 					/>
-					<span
-						className={`${styles['registration-form__terms-checkbox--custom']} ${errors.terms ? 'form-item__input--error' : ''}`}>
+					<span className={
+						`${styles['registration-form__terms-checkbox--custom']} 
+						${errors.terms && 'form-item__input--error'}`
+					}>
 						<img src={checkbox_checked} alt={'checkbox'}/>
 					</span>
 					<label htmlFor={'terms'} className={styles['registration-form__terms-label']}>

@@ -24,11 +24,7 @@ const AddSubIndustriesModalItem: React.FC<IAddSubIndustriesModalItemProps> = ({r
 	};
 
 	useEffect(() => {
-		if (!registerOnSave) {
-			console.log('registerOnSave is not defined');
-			return;
-		}
-		registerOnSave(handleSave);
+		registerOnSave!(handleSave);
 	}, [handleSave, registerOnSave]);
 	
 	return (

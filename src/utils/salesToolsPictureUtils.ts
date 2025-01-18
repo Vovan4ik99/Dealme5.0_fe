@@ -8,25 +8,17 @@ import pipedrive from "@icons/sales_tools/pipedrive.svg";
 import salesforce from "@icons/sales_tools/salesforce.svg";
 import zoho from "@icons/sales_tools/zoho.svg";
 
-export const getPictureForSalesTools = (toolName: string) => {
-	switch (toolName) {
-		case 'Pipedrive':
-			return pipedrive;
-		case 'Salesforce':
-			return salesforce;
-		case 'HubSpot':
-			return hubspot;
-		case 'Zoho':
-			return zoho;
-		case 'MSC Dynamics 365':
-			return msc_dynamics_365;
-		case 'Copper':
-			return copper;
-		case 'Livespace':
-			return livespace;
-		case 'Monday':
-			return monday;
-		default:
-			return '';
-	}
-}
+const salesToolsPictures: Record<string, string> = {
+	Pipedrive: pipedrive,
+	Salesforce: salesforce,
+	HubSpot: hubspot,
+	Zoho: zoho,
+	"MSC Dynamics 365": msc_dynamics_365,
+	Copper: copper,
+	Livespace: livespace,
+	Monday: monday,
+};
+
+export const getPictureForSalesTools = (toolName: string): string => {
+	return salesToolsPictures[toolName] || '';
+};

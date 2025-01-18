@@ -1,0 +1,16 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+  }
+
+  &__btn {
+	margin-top: 0;
+	gap: 8px;
+  }
+}

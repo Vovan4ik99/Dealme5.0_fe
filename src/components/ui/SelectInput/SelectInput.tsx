@@ -22,8 +22,11 @@ const SelectInput: React.FC<ISelectInputProps> = ({text, labelText, onClick, sel
 	}
 
 	const renderSelectItems = () => {
-		return selectItems.map((item, index) => {
+		if (!selectItems || selectItems.length === 0) {
+			return <SelectOption value={'Brak opcji'} info={null} onClick={() => setIsOpen(false)}/>;
+		}
 
+		return selectItems.map((item, index) => {
 			return (
 				<SelectOption key={item.text + index}
 				              value={item.text}

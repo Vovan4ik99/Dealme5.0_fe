@@ -16,7 +16,7 @@ const BgImage = () => {
 
 	const fetchBackgroundImage = useCallback(() => {
 		getBackgroundPicture()
-			.then((response) => setBackgroundImage(response.pictureData))
+			.then((response) => response && setBackgroundImage(response.pictureData))
 			.catch((error) => console.error(error));
 	}, [getBackgroundPicture]);
 
