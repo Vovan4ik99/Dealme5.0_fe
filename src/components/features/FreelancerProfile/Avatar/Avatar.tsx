@@ -6,7 +6,7 @@ import AvatarEmptyState from "./AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {parseBase64Image} from "@utils/imageUtils.ts";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import ImageModalItem from "../../EditModal/ImageModalItem/ImageModalItem.tsx";
+import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const Avatar = () => {

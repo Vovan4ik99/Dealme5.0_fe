@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
-import styles from "../../Onboarding.module.scss";
 import InputError from "@ui/InputError/InputError.tsx";
 import {useOnboardingService} from "@services/onboardingService.ts";
-import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
-import WorkingDayItem from "../../items/WorkingDayItem/WorkingDayItem.tsx";
+import {WorkingDayKey} from "@constants/workingDays.ts";
 import {IWorkingDayProps} from "./workingDayStepTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import WorkingDaysList from "@entities/WorkingDaysList/WorkingDaysList.tsx";
 
 const WorkingDaysStep: React.FC<IWorkingDayProps> = ({onNext, userWorkingDays}) => {
 
@@ -21,28 +20,13 @@ const WorkingDaysStep: React.FC<IWorkingDayProps> = ({onNext, userWorkingDays}) 
 		})
 	};
 
-	const renderDays = () => {
-		return Object.entries(WORKING_DAYS).map(([key, entry]) => {
-			const isSelected = selectedDays.includes(key as WorkingDayKey);
-			return (
-				<WorkingDayItem
-					key={key}
-					text={entry}
-					isSelected={isSelected}
-					onChange={onChange}
-					workDayKey={key as WorkingDayKey}
-				/>
-			);
-		});
-	};
-
 	const onSubmit = () => {
 		if (selectedDays.length > 0) {
 			patchWorkingDays(selectedDays).then(() => {
 				onNext();
 			}).catch(e => console.log(e));
 		}
-	}
+	};
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;
@@ -51,9 +35,7 @@ const WorkingDaysStep: React.FC<IWorkingDayProps> = ({onNext, userWorkingDays}) 
 	return (
 		<AnimatedStep>
 			<h1 className={'title title--fs40'}>W jakie dni jesteś dostępny?</h1>
-			<div className={styles['onboarding-step__items']}>
-				{renderDays()}
-			</div>
+			<WorkingDaysList selectedWorkingDays={selectedDays} onChange={onChange}/>
 			<button disabled={selectedDays.length === 0}
 			        onClick={() => onSubmit()}
 			        className={'btn'}>Przejdż dalej

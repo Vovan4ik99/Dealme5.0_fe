@@ -8,8 +8,8 @@ import {
 } from "@context/ModalContext/ModalContext.ts";
 import {ModalActions} from "@context/ModalContext/modalActions.ts";
 import {createPortal} from "react-dom";
-import ModalOverlay from "../../components/features/EditModal/ModalOverlay/ModalOverlay.tsx";
-import BaseEditModal from "../../components/features/EditModal/BaseEditModal/BaseEditModal.tsx";
+import ModalOverlay from "@components/features/EditModal/base/ModalOverlay/ModalOverlay.tsx";
+import BaseEditModal from "@components/features/EditModal/base/BaseEditModal/BaseEditModal.tsx";
 import {ModalPayloads} from "@shared/modalPayloadTypes.ts";
 
 const baseZIndex = 1000;
