@@ -5,8 +5,10 @@ import BgImage from "../../components/features/FreelancerProfile/BgImage/BgImage
 import Avatar from "../../components/features/FreelancerProfile/Avatar/Avatar.tsx";
 import PrimaryInfo from "../../components/features/FreelancerProfile/PrimaryInfo/PrimaryInfo.tsx";
 import SecondaryInfo from "../../components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.tsx";
+import SectorsInfo from "@components/features/FreelancerProfile/SectorsInfo/SectorsInfo.tsx";
 
 const FreelancerProfilePage = () => {
+
 	return (
 		<div className={styles['profile']}>
 			<ProfileNavbar/>
@@ -15,6 +17,7 @@ const FreelancerProfilePage = () => {
 				<Avatar/>
 				<PrimaryInfo/>
 				<SecondaryInfo/>
+				<SectorsInfo/>
 			</aside>
 			<Footer isHyphenated={false} isCentered={true}/>
 		</div>

@@ -8,7 +8,7 @@ import styles from "@components/features/FreelancerProfile/SecondaryInfo/Seconda
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import WorkingHoursModalItem from "@components/features/EditModal/WorkingHoursModalItem/WorkingHoursModalItem.tsx";
+import WorkingHoursModalItem from "@components/features/EditModal/working_hours/WorkingHoursModalItem/WorkingHoursModalItem.tsx";
 
 const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({userWorkingHour, onSave}) => {
 	

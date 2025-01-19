@@ -6,7 +6,7 @@ import styles from "@components/features/FreelancerProfile/SecondaryInfo/Seconda
 import languages_img from "@icons/freelancer_profile/secondary_info/language.svg";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import LanguagesModalItem from "@components/features/EditModal/LanguagesModalItem/LanguagesModalItem.tsx";
+import LanguagesModalItem from "@components/features/EditModal/language/LanguagesModalItem/LanguagesModalItem.tsx";
 import {getPolishLanguageName} from "@utils/languageUtils.ts";
 
 const LanguagesItem: React.FC<ILanguagesItemProps> = ({isUndefined, freelancerLanguages, onSave}) => {

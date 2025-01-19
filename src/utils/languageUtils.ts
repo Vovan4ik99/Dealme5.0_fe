@@ -2,7 +2,7 @@ import {LANGUAGE_LEVEL_DESCRIPTIONS, LANGUAGE_LEVEL_NAMES, LANGUAGE_NAMES} from 
 import {ILanguage} from "@shared/freelancerTypes.ts";
 import {
 	IFreelancerDraggableLanguage
-} from "@components/features/EditModal/LanguagesModalItem/LanguageModalItem/languageModalItemTypes.ts";
+} from "@components/features/EditModal/language/LanguageModalItem/languageModalItemTypes.ts";
 
 export const getLanguageLevelName = (level: number | null) => {
 	if (!level) return 'Wybierz poziom';

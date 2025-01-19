@@ -9,7 +9,7 @@ import star from "@icons/freelancer_profile/primary_info/star.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import StatusItem from "@ui/StatusItem/StatusItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import PrimaryInfoModalItem from "../../EditModal/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
+import PrimaryInfoModalItem from "@components/features/EditModal/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
 
 const PrimaryInfo: React.FC = () => {
 	

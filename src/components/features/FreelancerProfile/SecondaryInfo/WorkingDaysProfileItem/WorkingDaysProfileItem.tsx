@@ -8,7 +8,7 @@ import {
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
 import {useOnboardingService} from "@services/onboardingService.ts";
-import WorkingDaysModalItem from "@components/features/EditModal/WorkingDaysModalItem/WorkingDaysModalItem.tsx";
+import WorkingDaysModalItem from "@components/features/EditModal/working_days/WorkingDaysModalItem/WorkingDaysModalItem.tsx";
 
 const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWorkingDays, onSave}) => {
 

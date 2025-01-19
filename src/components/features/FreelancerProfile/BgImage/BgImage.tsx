@@ -7,7 +7,7 @@ import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import {parseBase64Image} from "@utils/imageUtils.ts";
 import BgEmptyStateImgWrapper from "./BgEmptyStateImgWrapper/BgEmptyStateImgWrapper.tsx";
-import ImageModalItem from "../../EditModal/ImageModalItem/ImageModalItem.tsx";
+import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
 
 const BgImage = () => {
 	const { openModal } = useModal();

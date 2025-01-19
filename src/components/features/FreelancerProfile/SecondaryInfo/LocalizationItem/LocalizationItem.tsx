@@ -6,7 +6,7 @@ import styles from "@components/features/FreelancerProfile/SecondaryInfo/Seconda
 import localization_img from "@icons/freelancer_profile/secondary_info/localization.svg";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import LocalizationModalItem from "@components/features/EditModal/LocalizationModalItem/LocalizationModalItem.tsx";
+import LocalizationModalItem from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.tsx";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import {IFreelancerState} from "@shared/freelancerTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";

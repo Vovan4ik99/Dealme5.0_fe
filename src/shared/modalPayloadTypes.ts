@@ -27,4 +27,6 @@ export type ModalPayloads = {
 	localizationEdit: unknown;
 	languagesEdit: unknown;
 	languageAdd: unknown;
+	sectorsEdit: unknown;
+	sectorsAdd: unknown;
 };

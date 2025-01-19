@@ -5,7 +5,7 @@ import cloud from '@icons/freelancer_profile/secondary_info/cloud.svg';
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {fitTextIntoBlock} from "@utils/textFitUtils.ts";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import SubIndustriesModalItem from "@components/features/EditModal/SubIndustriesModalItem/SubIndustriesModalItem.tsx";
+import SubIndustriesModalItem from "@components/features/EditModal/sub_industries/SubIndustriesModalItem/SubIndustriesModalItem.tsx";
 
 const SubIndustriesItem: React.FC<ISubIndustriesItemProps> = ({userSubIndustries, onSave}) => {
 

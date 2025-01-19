@@ -19,6 +19,14 @@
 	align-items: flex-start;
 	gap: 8px;
 
+	&:first-child {
+	  border-top: none;
+	}
+
+	&:last-child {
+	  border-bottom: none;
+	}
+
 	p {
 	  max-width: 240px;
 	}
