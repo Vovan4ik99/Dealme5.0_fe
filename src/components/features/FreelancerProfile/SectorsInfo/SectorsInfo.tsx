@@ -32,7 +32,7 @@ const SectorsInfo = () => {
 	        btnWithIcon: false,
 	        child: <SectorsModalItem onSave={handleSave}/>
         });
-	}
+	};
 
 	const renderSectors = () => {
 		const {visibleBlocks, remainingBlocks} = calculateBlocks(freelancerSectors.map(sector => sector.name));

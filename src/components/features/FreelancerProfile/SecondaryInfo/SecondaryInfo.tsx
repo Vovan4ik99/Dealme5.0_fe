@@ -36,7 +36,6 @@ const SecondaryInfo = () => {
 	};
 
 	const handleAddDataSave = () => {
-		console.log('handleAddDataSave');
 		fetchFreelancerBarInfo();
 	};
 
