@@ -45,10 +45,14 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 	};
 
 	const getUserLocalization = () => {
-		if (isUndefined) {
+		if (isUndefined || !userLocalization) {
 			return 'Nie podano lokalizacji';
 		}
-		return `${userLocalization?.city}, ${getStateDescriptionByStateName(states, userLocalization?.state ?? null)}`;
+		const userState = `${getStateDescriptionByStateName(states, userLocalization?.state ?? null)}`;
+		if (!userLocalization.city) {
+			return `${userLocalization.country}, ${userState}`;
+		}
+		return `${userLocalization?.city}, ${userState}`;
 	};
 
 	if (loadingStatus === 'loading') {

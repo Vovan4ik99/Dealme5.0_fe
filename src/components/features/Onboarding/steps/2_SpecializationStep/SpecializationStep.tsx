@@ -87,7 +87,8 @@ const SpecializationStep: React.FC<ISpecializationStepProps> = ({onNext, userSpe
 			</div>
 			<button disabled={selectedSpecialization === null}
 			        onClick={() => onSubmit()}
-			        className={'btn'}>Przejdż dalej'
+			        className={'btn'}>
+				Przejdż dalej
 			</button>
 			{errorMessage && <InputError text={errorMessage}/>}
 		</AnimatedStep>

@@ -40,7 +40,7 @@ const SecondaryInfo = () => {
 	};
 
 	const isLocalizationUndefined = () => {
-		return !freelancerInfo.localization?.city || !freelancerInfo.localization?.state;
+		return !freelancerInfo.localization?.country || !freelancerInfo.localization?.state;
 	};
 
 	const isLanguagesUndefined = () => {
