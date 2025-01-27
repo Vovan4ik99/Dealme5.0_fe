@@ -1,0 +1,52 @@
+@use "@styles/variables" as vars;
+
+.textarea {
+  position: relative;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid vars.$color-gray-border;
+  border-radius: 12px;
+  background-color: white;
+
+  &__label {
+	display: flex;
+	justify-content: space-between;
+
+	span {
+	  font-size: 14px;
+	  color: vars.$color-gray;
+	  line-height: 120%;
+	}
+
+  }
+
+  &__input {
+	resize: none;
+	border: none;
+	color: vars.$color-black;
+	line-height: 120%;
+	overflow-y: hidden;
+
+	&:focus {
+	  outline: none;
+	}
+
+	&::placeholder {
+	  font-weight: 400;
+	  font-size: 15px;
+	}
+  }
+
+  &__btn {
+	border: none;
+	position: absolute;
+	bottom: 6px;
+	right: 6px;
+	cursor: ns-resize;
+	background-color: transparent;
+	outline: none;
+	z-index: 1;
+  }
+}

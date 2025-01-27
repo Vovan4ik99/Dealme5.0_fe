@@ -8,7 +8,7 @@ import SelectInput from "@ui/SelectInput/SelectInput.tsx";
 import {useOnboardingService} from "@services/onboardingService.ts";
 import {IIncomeGoal, ISpecialization} from "@shared/onboardingTypes.ts";
 import {EXPERIENCE_LEVELS, ExperienceLevelKey} from "@constants/experienceLevel.ts";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	                                                                    onSave,
@@ -25,7 +25,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	const [specializations, setSpecializations] = useState<ISpecialization[]>([]);
 	const [incomeGoals, setIncomeGoals] = useState<IIncomeGoal[]>([]);
 	const {getSpecializations, getIncomeGoals, patchSpecialization, patchIncomeGoal, patchExperienceLevel} = useOnboardingService();
-	const {patchFreelancerName, patchFreelancerCompany} = useFreelancerProfileService();
+	const {patchFreelancerName, patchFreelancerCompany} = useFreelancerProfileAsideInfoService();
 
 	const {register, handleSubmit, formState: {errors}, control, setValue} = useForm<IPrimaryInfoEditFormData>({
 		shouldFocusError: false,

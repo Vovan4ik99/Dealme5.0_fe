@@ -6,18 +6,18 @@ import WorkingDaysProfileItem from "@components/features/FreelancerProfile/Secon
 import WorkingHoursProfileItem
 	from "@components/features/FreelancerProfile/SecondaryInfo/WorkingHoursProfileItem/WorkingHoursProfileItem.tsx";
 import {IFreelancerBarResponse} from "@shared/freelancerTypes.ts";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import LocalizationItem
 	from "@components/features/FreelancerProfile/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/FreelancerProfile/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const SecondaryInfo = () => {
 
 	const [freelancerInfo, setFreelancerInfo] = useState<IFreelancerBarResponse | null>(null);
 
 	const {user, getLoggedUserData} = useContext(AuthContext);
-	const {getFreelancerBar, loadingStatus} = useFreelancerProfileService();
+	const {getFreelancerBar, loadingStatus} = useFreelancerProfileAsideInfoService();
 
 	const fetchFreelancerBarInfo = useCallback(() => {
 		getFreelancerBar()

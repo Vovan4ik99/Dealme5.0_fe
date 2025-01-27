@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {IMediaCropperProps} from "./mediaCropperTypes.ts";
-import styles from './MediaCropper.module.scss';
+import {IImageCropperProps} from "./imageCropperTypes.ts";
+import styles from './ImageCropper.module.scss';
 import Cropper, {Area} from "react-easy-crop";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 
-const MediaCropper: React.FC<IMediaCropperProps> = ({
-	                                                    mediaType,
+const ImageCropper: React.FC<IImageCropperProps> = ({
 	                                                    mediaSrc,
 	                                                    onClose,
 	                                                    aspect,
@@ -77,7 +76,7 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 		return () => onClose();
 	});
 
-	const renderCropper = () => (
+	return (
 		<div className={`${styles['modal']} ${isAvatar && styles['modal--avatar']}`}>
 			<Cropper
 				image={mediaSrc}
@@ -101,20 +100,6 @@ const MediaCropper: React.FC<IMediaCropperProps> = ({
 			/>
 		</div>
 	);
-
-	const renderVideo = () => (
-		<video
-			controls
-			src={mediaSrc}
-			style={{
-				maxWidth: '100%',
-				maxHeight: '400px',
-				borderRadius: '8px',
-			}}
-		/>
-	);
-
-	return <>{mediaType === 'image' ? renderCropper() : renderVideo()}</>;
 };
 
-export default MediaCropper;
+export default ImageCropper;

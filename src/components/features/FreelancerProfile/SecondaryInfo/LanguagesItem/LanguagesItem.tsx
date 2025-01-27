@@ -24,7 +24,7 @@ const LanguagesItem: React.FC<ILanguagesItemProps> = ({isUndefined, freelancerLa
 
 	const onEdit = () => {
 		openModal({
-			id: "languagesEdit",
+			id: "unknown",
 			title: "Edytuj znajomość języków",
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,

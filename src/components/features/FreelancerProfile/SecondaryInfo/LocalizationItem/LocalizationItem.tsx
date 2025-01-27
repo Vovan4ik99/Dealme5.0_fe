@@ -6,11 +6,12 @@ import styles from "@components/features/FreelancerProfile/SecondaryInfo/Seconda
 import localization_img from "@icons/freelancer_profile/secondary_info/localization.svg";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import LocalizationModalItem from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.tsx";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
-import {IFreelancerState} from "@shared/freelancerTypes.ts";
+import LocalizationModalItem
+	from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.tsx";
+import {IFreelancerCountry, IFreelancerState} from "@shared/freelancerTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import {getStateDescriptionByStateName} from "@utils/localizationUtils.ts";
+import {getDescriptionByCountryName, getStateDescriptionByStateName} from "@utils/localizationUtils.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 	                                                            userLocalization,
@@ -20,9 +21,11 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 	                                                            isUndefined
                                                             }) => {
 
-	const {getStates, loadingStatus} = useFreelancerProfileService();
-	const [states, setStates] = useState<IFreelancerState[]>([]);
+	const {getStates, getCountries, loadingStatus} = useFreelancerProfileAsideInfoService();
 	const {openModal} = useModal();
+
+	const [states, setStates] = useState<IFreelancerState[]>([]);
+	const [countries, setCountries] = useState<IFreelancerCountry[]>([]);
 
 	useEffect(() => {
 		getStates()
@@ -30,9 +33,15 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 			.catch(console.error);
 	}, [getStates]);
 
+	useEffect(() => {
+		getCountries()
+			.then(setCountries)
+			.catch(console.error);
+	}, [getCountries]);
+
 	const onEdit = () => {
 		openModal({
-			id: 'localizationEdit',
+			id: 'unknown',
 			title: 'Edytuj lokalizację i obszar świadczenia usług',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
@@ -50,7 +59,7 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 		}
 		const userState = `${getStateDescriptionByStateName(states, userLocalization?.state ?? null)}`;
 		if (!userLocalization.city) {
-			return `${userLocalization.country}, ${userState}`;
+			return `${getDescriptionByCountryName(countries, userLocalization.country)}, ${userState}`;
 		}
 		return `${userLocalization?.city}, ${userState}`;
 	};

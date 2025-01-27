@@ -68,7 +68,7 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWor
 
 	const editWorkingDays = () => {
 		openModal({
-			id: 'workingDaysEdit',
+			id: 'unknown',
 			title: 'Edytuj dostępność',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,

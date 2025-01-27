@@ -54,3 +54,10 @@ export interface IFreelancerLanguage {
 export interface ILanguage {
 	name: string;
 }
+
+export interface IAboutMeInfo {
+	id: number;
+	about: string | null;
+	video: string | null;
+	mainPassion: string | null;
+}

@@ -33,7 +33,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 		dispatch({ type: ModalActions.UPDATE_MODAL_DATA, payload: { id, data } });
 	}, []);
 
-
 	const getOffset = (index: number) => {
 		if (index === state.modals.length - 1) return 0;
 		return -(state.modals.length - index - 1) * 50;
@@ -62,7 +61,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 						<>
 							<ModalOverlay zIndex={getZIndex(state.modals.length - 1)}/>
 							{state.modals.map((modal, index) => (
-								<BaseEditModal key={modal.id}
+								<BaseEditModal key={modal.id + modal.title}
 								               id={modal.id}
 								               child={modal.child}
 								               title={modal.title}

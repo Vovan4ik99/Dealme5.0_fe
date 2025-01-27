@@ -85,7 +85,7 @@ const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({userSub
 			.filter(industry => industry.subIndustries.length > 0);
 
 		openModal({
-			id: 'subIndustriesAdd',
+			id: 'unknown',
 			title: 'Dodaj branże',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,

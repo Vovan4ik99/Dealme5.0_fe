@@ -6,7 +6,12 @@ import {ReactComponent as EditIcon} from "@icons/named_exported/edit_icon.svg";
 import {ReactComponent as CloseIcon} from "@icons/named_exported/close_icon.svg";
 import {ReactComponent as DeleteIcon} from "@icons/named_exported/delete_icon.svg";
 
-const ActionBtn: React.FC<IActionBtnProps> = ({onClick, kind, withBorder, backgroundColor = 'transparent'}) => {
+const ActionBtn: React.FC<IActionBtnProps> = ({
+	                                              onClick,
+	                                              kind,
+	                                              withBorder,
+	                                              backgroundColor = 'transparent'
+                                              }) => {
 
 	const getBtnSvg = () => {
 		switch (kind) {

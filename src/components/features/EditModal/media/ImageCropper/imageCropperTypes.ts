@@ -1,7 +1,6 @@
 import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
 
-export interface IMediaCropperProps extends ISaveableChildProps {
-	mediaType: 'image' | 'video';
+export interface IImageCropperProps extends ISaveableChildProps {
 	filename: string;
 	mediaSrc: string;
 	onClose: () => void;

@@ -2,7 +2,6 @@ import styles from './PrimaryInfo.module.scss';
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import {FreelancerPrimaryInfo} from "./primaryInfoTypes.ts";
 import {ReactComponent as LogoIcon} from "@icons/named_exported/logo_icon.svg";
 import star from "@icons/freelancer_profile/primary_info/star.svg";
@@ -10,13 +9,14 @@ import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import StatusItem from "@ui/StatusItem/StatusItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import PrimaryInfoModalItem from "@components/features/EditModal/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const PrimaryInfo: React.FC = () => {
 	
 	const [primaryInfo, setPrimaryInfo] = useState<FreelancerPrimaryInfo | null>(null);
 	const {user, getLoggedUserData, loadingStatus: contextLoadingStatus} = useContext(AuthContext);
 	const {openModal} = useModal();
-	const {getFreelancerBar, loadingStatus} = useFreelancerProfileService();
+	const {getFreelancerBar, loadingStatus} = useFreelancerProfileAsideInfoService();
 
 	const fetchPrimaryInfo = useCallback(() => {
 		getFreelancerBar()
@@ -39,7 +39,7 @@ const PrimaryInfo: React.FC = () => {
 
 	const onEdit = () => {
 		openModal({
-			id: 'primaryInfoEdit',
+			id: 'unknown',
 			title: 'Edytuj dane podstawowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',

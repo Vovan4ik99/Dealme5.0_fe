@@ -1,4 +1,3 @@
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {IFreelancerCountry, IFreelancerLocalization, IFreelancerState} from "@shared/freelancerTypes.ts";
@@ -12,6 +11,7 @@ import {PRIORITY_COUNTRY_KEY} from "@constants/constans.ts";
 import LocalizationPrimaryInfo
 	from "@components/features/EditModal/localization/LocalizationPrimaryInfo/LocalizationPrimaryInfo.tsx";
 import {getCountryNameByDescription, getStateNameByDescription} from "@utils/localizationUtils.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	                                                                      userLocalization,
@@ -35,7 +35,7 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 		getCountries,
 		getStates,
 		loadingStatus
-	} = useFreelancerProfileService();
+	} = useFreelancerProfileAsideInfoService();
 
 	useEffect(() => {
 		if (!selectedCountry) {

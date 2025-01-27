@@ -29,6 +29,11 @@
   &--wb {
 	border: 1px solid vars.$color-gray-border;
   }
+
+  &--active {
+	background-color: vars.$primary-color;
+	border: none;
+  }
 }
 
 .icon {
@@ -44,6 +49,16 @@
 
   &--delete {
 	width: 11px;
+	height: 12px;
+
+	svg path {
+	  fill: vars.$color-gray;
+	}
+  }
+
+  &--play {
+	margin-left: 1px;
+	width: 12px;
 	height: 12px;
 
 	svg path {

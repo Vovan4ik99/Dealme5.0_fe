@@ -49,7 +49,7 @@ const RegistrationForm = () => {
 				timeoutRef.current = setTimeout(() => {
 					setIsUserCreated(false);
 					navigate('/login');
-				}, 3000);
+				}, 1000);
 			}).catch(console.error);
 
 		return () => {
@@ -143,7 +143,7 @@ const RegistrationForm = () => {
 			<button className={'btn'} type="submit" disabled={loadingStatus === 'loading'}>
 				{loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto'}
 			</button>
-			{errorMessage && <AlertItem kind={'error'} text={errorMessage}/>}
+			{errorMessage && <AlertItem kind={'error'} text={errorMessage} hasMarginTop={true}/>}
 		</form>
 	)
 }

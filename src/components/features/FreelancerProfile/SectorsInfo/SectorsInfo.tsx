@@ -25,7 +25,7 @@ const SectorsInfo = () => {
 
 	const onEdit = () => {
         openModal({
-	        id: 'sectorsEdit',
+	        id: 'unknown',
 	        title: 'Edytuj sektory',
 	        shouldCloseOnSaving: true,
 	        btnText: 'Zapisz zmiany',

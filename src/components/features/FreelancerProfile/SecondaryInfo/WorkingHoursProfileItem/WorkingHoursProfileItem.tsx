@@ -34,7 +34,7 @@ const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({userW
 
 	const onEdit = () => {
 		openModal({
-			id: 'workingHoursEdit',
+			id: 'unknown',
 			title: "Edytuj dyspozycyjność czasową",
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,

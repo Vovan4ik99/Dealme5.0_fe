@@ -43,6 +43,9 @@ export const API_ROUTES = {
 			GET_STATES: '/states',
 			PATCH_WORKING_AREA: '/freelancer/me/localization/workingArea',
 			GET_LANGUAGES: '/languages',
+			GET_PROFILE_PROGRESS: '/complete/freelancer/me',
+			GET_ABOUT_ME_INFO: '/about/me',
+			PATCH_ABOUT_ME_INFO: '/about',
 		}
 	}
 } as const;

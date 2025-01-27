@@ -18,15 +18,6 @@ export interface ISubIndustriesEditPayload {
 export type ModalPayloads = {
 	imageEdit: IImageEditPayload;
 	imageUpload: IBgImageUploadPayload;
-	bgImageCrop: unknown;
-	primaryInfoEdit: unknown;
+	unknown: unknown;
 	subIndustriesEdit: ISubIndustriesEditPayload;
-	subIndustriesAdd: unknown;
-	workingDaysEdit: unknown;
-	workingHoursEdit: unknown;
-	localizationEdit: unknown;
-	languagesEdit: unknown;
-	languageAdd: unknown;
-	sectorsEdit: unknown;
-	sectorsAdd: unknown;
 };
