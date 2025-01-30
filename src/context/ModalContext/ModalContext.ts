@@ -6,17 +6,22 @@ export type ModalId = keyof ModalPayloads;
 export type OnSaveCallback = () => void;
 
 export interface ISaveableChildProps {
+	//Allows to register action when clicking parent submit button
 	registerOnSave?: (onSave: OnSaveCallback) => void;
+	//Using to close modals not after first click on submit btn, but to handle closing
+	handleClose?: () => void;
 }
 
 export interface IBaseModal<T extends ModalId> {
 	id: T;
 	title: string;
 	child: ReactElement<ISaveableChildProps>;
-	btnText: string;
-	btnWithIcon: boolean;
+	btnText?: string;
+	btnWithIcon?: boolean;
 	payload?: ModalPayloads[T];
-	shouldCloseOnSaving: boolean;
+	shouldCloseOnSaving?: boolean;
+	withSaveBtn?: boolean;
+	onClose?: () => void;
 }
 
 export interface IModalInitialState {

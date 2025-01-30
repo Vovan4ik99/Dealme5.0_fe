@@ -70,7 +70,13 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 								               btnWithIcon={modal.btnWithIcon}
 								               offset={getOffset(index)}
 								               shouldCloseOnSaving={modal.shouldCloseOnSaving}
-								               onClose={() => closeModals(1)}>
+								               withSaveBtn={modal.withSaveBtn}
+								               onClose={() => {
+												   if (modal.onClose) {
+													   modal.onClose();
+												   }
+												   closeModals(1);
+								               }}>
 								</BaseEditModal>
 							))}
 						</>

@@ -2,14 +2,14 @@ import styles from './SecondaryInfo.module.scss';
 import {useCallback, useContext, useEffect, useState} from "react";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import SubIndustriesItem from "./SubIndustriesItem/SubIndustriesItem.tsx";
-import WorkingDaysProfileItem from "@components/features/FreelancerProfile/SecondaryInfo/WorkingDaysProfileItem/WorkingDaysProfileItem.tsx";
+import WorkingDaysProfileItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/WorkingDaysProfileItem.tsx";
 import WorkingHoursProfileItem
-	from "@components/features/FreelancerProfile/SecondaryInfo/WorkingHoursProfileItem/WorkingHoursProfileItem.tsx";
+	from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/WorkingHoursProfileItem.tsx";
 import {IFreelancerBarResponse} from "@shared/freelancerTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import LocalizationItem
-	from "@components/features/FreelancerProfile/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
-import LanguagesItem from "@components/features/FreelancerProfile/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
+	from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
+import LanguagesItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
 import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
 
 const SecondaryInfo = () => {

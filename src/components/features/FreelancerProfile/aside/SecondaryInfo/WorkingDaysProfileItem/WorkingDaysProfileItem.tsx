@@ -1,10 +1,10 @@
 import calendar from '@icons/freelancer_profile/secondary_info/calendar.svg';
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import React from "react";
-import styles from "@components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.module.scss";
+import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import {
 	IWorkingDaysProfileItemProps
-} from "@components/features/FreelancerProfile/SecondaryInfo/WorkingDaysProfileItem/workingDaysProfileItemTypes.ts";
+} from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/workingDaysProfileItemTypes.ts";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
 import {useOnboardingService} from "@services/onboardingService.ts";

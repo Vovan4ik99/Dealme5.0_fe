@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
 import styles from "./BgImage.module.scss";
-import {useFreelancerProfileService} from "@services/freelancerProfileService";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner";
-import BgEmptyState from "./BgEmptyState/BgEmptyState.tsx";
+import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
+import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import BgEmptyState from "@components/features/FreelancerProfile/main/BgImage/BgEmptyState/BgEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import {parseBase64Image} from "@utils/imageUtils.ts";
-import BgEmptyStateImgWrapper from "./BgEmptyStateImgWrapper/BgEmptyStateImgWrapper.tsx";
+import BgEmptyStateImgWrapper from "@components/features/FreelancerProfile/main/BgImage/BgEmptyStateImgWrapper/BgEmptyStateImgWrapper.tsx";
 import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
 
 const BgImage = () => {

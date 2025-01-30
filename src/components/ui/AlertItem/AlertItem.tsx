@@ -24,7 +24,9 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text, hasMarginTop = false}
 				</div>
 			case 'neutral':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--neutral']}`}>
-					<InfoIcon fill={'#75778A'}/>
+					<div className={styles['item__icon']}>
+						<InfoIcon width={14} height={14}/>
+					</div>
 					<p className={styles['item__text']}>{text}</p>
 				</div>
 			case 'error':

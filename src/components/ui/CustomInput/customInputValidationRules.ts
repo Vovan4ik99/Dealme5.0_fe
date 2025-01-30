@@ -52,5 +52,19 @@ export const CUSTOM_INPUT_VALIDATION_RULES: Record<PresetType, RegisterOptions> 
 			message: 'Długość od 2 do 50 znaków'
 		}
 	},
-	company: {}
+	company: {},
+	certificateName: {
+		required: 'Podaj nazwę certyfikatu / licencji',
+		max: {
+			value: 50,
+			message: 'Długość od 2 do 50 znaków'
+		}
+	},
+	certificateOrganization: {
+		required: 'Podaj informacje o wydawcy',
+		max: {
+			value: 50,
+			message: 'Długość od 2 do 50 znaków'
+		}
+	},
 } as const;

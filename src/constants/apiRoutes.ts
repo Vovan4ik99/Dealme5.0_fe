@@ -46,6 +46,8 @@ export const API_ROUTES = {
 			GET_PROFILE_PROGRESS: '/complete/freelancer/me',
 			GET_ABOUT_ME_INFO: '/about/me',
 			PATCH_ABOUT_ME_INFO: '/about',
+			GET_FREELANCER_CERTIFICATES: '/certificate/freelancer/me',
+			ADD_FREELANCER_CERTIFICATE: '/certificate/freelancer',
 		}
 	}
 } as const;

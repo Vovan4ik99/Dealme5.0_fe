@@ -3,7 +3,7 @@ import {IAboutMeVideoModalItemProps} from "./aboutMeVideoModalItemTypes.ts";
 import styles from './AboutMeVideoModalItem.module.scss';
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
-import VideoEmptyState from "@components/features/FreelancerProfile/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
+import VideoEmptyState from "@components/features/FreelancerProfile/main/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
 
 const AboutMeVideoModalItem: React.FC<IAboutMeVideoModalItemProps> = ({videoUrl, fileName, onClick, onDelete}) => {
 

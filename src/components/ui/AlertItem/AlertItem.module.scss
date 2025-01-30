@@ -34,6 +34,11 @@
     &--neutral {
       color: vars.$color-gray;
       background-color: vars.$color-gray-light;
+      gap: 4px;
+
+      svg path {
+        fill: vars.$color-gray;
+      }
     }
 
     &--danger {
@@ -50,5 +55,13 @@
       color: vars.$color-warning;
       background-color: vars.$color-warning-pastel;
     }
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
   }
 }

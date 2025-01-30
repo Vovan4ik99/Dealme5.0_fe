@@ -61,3 +61,14 @@ export interface IAboutMeInfo {
 	video: string | null;
 	mainPassion: string | null;
 }
+
+export type CertificateType = 'CERTIFICATE' | 'LICENSE';
+
+export interface IFreelancerCertificate {
+	id: number;
+	name: string;
+	dateOfObtaining: string;
+	endDate: string | null;
+	certificateType: CertificateType;
+	info: string;
+}

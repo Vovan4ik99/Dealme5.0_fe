@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {
 	ILocalizationItemProps
-} from "@components/features/FreelancerProfile/SecondaryInfo/LocalizationItem/localizationItemTypes.ts";
-import styles from "@components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.module.scss";
+} from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/localizationItemTypes.ts";
+import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import localization_img from "@icons/freelancer_profile/secondary_info/localization.svg";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";

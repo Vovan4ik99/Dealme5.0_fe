@@ -1,7 +1,11 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IAboutMeInfo, IFreelancerBackgroundResponse} from "@shared/freelancerTypes";
+import {
+	IAboutMeInfo,
+	IFreelancerBackgroundResponse,
+	IFreelancerCertificate
+} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
@@ -47,6 +51,35 @@ export const useFreelancerProfileService = () => {
 		})
 	}, [sendRequest]);
 
+	const getFreelancerCertificates = useCallback(async (): Promise<IFreelancerCertificate[]> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_FREELANCER_CERTIFICATES
+		})
+	}, [sendRequest]);
+
+	const addCertificate = useCallback(async (request: Omit<IFreelancerCertificate, 'id'>): Promise<IFreelancerCertificate> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.ADD_FREELANCER_CERTIFICATE,
+			method: "POST",
+			body: JSON.stringify(request)
+		})
+	}, [sendRequest]);
+
+	const deleteCertificate = useCallback(async (id: number): Promise<void> => {
+		return await sendRequest({
+			url: `${API_ROUTES.PROFILE.FREELANCER.ADD_FREELANCER_CERTIFICATE}/${id}`,
+			method: "DELETE"
+		});
+	}, [sendRequest]);
+
+	const patchCertificate = useCallback(async (id: number, request: Omit<IFreelancerCertificate, 'id'>): Promise<void> => {
+		return await sendRequest({
+			url: `${API_ROUTES.PROFILE.FREELANCER.ADD_FREELANCER_CERTIFICATE}/${id}`,
+			method: "PATCH",
+			body: JSON.stringify(request)
+		});
+	}, [sendRequest]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -55,6 +88,10 @@ export const useFreelancerProfileService = () => {
 		deleteBackgroundPicture,
 		getFreelancerProfileProgress,
 		getAboutMeProfileInfo,
-		patchAboutMeProfileInfo
+		patchAboutMeProfileInfo,
+		getFreelancerCertificates,
+		addCertificate,
+		deleteCertificate,
+		patchCertificate
 	};
 };

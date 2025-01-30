@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {
 	IWorkingHoursProfileItemProps
-} from "@components/features/FreelancerProfile/SecondaryInfo/WorkingHoursProfileItem/workingHoursProfileItemTypes.ts";
+} from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/workingHoursProfileItemTypes.ts";
 import {useOnboardingService} from "@services/onboardingService.ts";
 import clock from "@icons/freelancer_profile/secondary_info/clock.svg";
-import styles from "@components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.module.scss";
+import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";

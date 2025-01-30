@@ -6,7 +6,7 @@ import {IAboutMeInfo} from "@shared/freelancerTypes.ts";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
-import VideoEmptyState from "@components/features/FreelancerProfile/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
+import VideoEmptyState from "@components/features/FreelancerProfile/main/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import AboutMeModalItem from "@components/features/EditModal/about_me/AboutMeModalItem/AboutMeModalItem.tsx";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
@@ -29,21 +29,8 @@ const AboutMe = () => {
 
 	useEffect(() => {
 		fetchAboutMeInfo();
-	}, [fetchAboutMeInfo]);
-
-	const fetchVideo = useCallback(() => {
-		if (aboutMeInfo === null) {
-			return;
-		}
-		if (aboutMeInfo.video === null) {
-			return;
-		}
-		setVideoUrl(aboutMeInfo.video);
-	}, [aboutMeInfo]);
-
-	useEffect(() => {
-		fetchVideo();
-	}, [fetchVideo]);
+		setVideoUrl(aboutMeInfo?.video ?? null);
+	}, [aboutMeInfo?.video, fetchAboutMeInfo]);
 
 	const renderAboutMeInfo = () => {
 		if (aboutMeInfo === null) {

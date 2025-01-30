@@ -1,8 +1,8 @@
 import React from "react";
 import {
 	ILanguagesItemProps
-} from "@components/features/FreelancerProfile/SecondaryInfo/LanguagesItem/languagesItemTypes.ts";
-import styles from "@components/features/FreelancerProfile/SecondaryInfo/SecondaryInfo.module.scss";
+} from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/languagesItemTypes.ts";
+import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import languages_img from "@icons/freelancer_profile/secondary_info/language.svg";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";

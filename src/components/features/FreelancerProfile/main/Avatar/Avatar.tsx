@@ -2,7 +2,7 @@ import styles from './Avatar.module.scss';
 import {ReactComponent as LogoIcon} from '@icons/named_exported/logo_icon.svg';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, {useContext} from "react";
-import AvatarEmptyState from "./AvatarEmptyState/AvatarEmptyState.tsx";
+import AvatarEmptyState from "@components/features/FreelancerProfile/main/Avatar/AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {parseBase64Image} from "@utils/imageUtils.ts";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
