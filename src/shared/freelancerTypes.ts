@@ -72,3 +72,23 @@ export interface IFreelancerCertificate {
 	certificateType: CertificateType;
 	info: string;
 }
+
+export interface IFreelancerVideo {
+	id: number,
+	fileName: string,
+	fileUrl: string,
+	title: string,
+	description: string,
+	date: string
+}
+
+export interface IVideoRequest {
+	title: string;
+	description: string;
+	file: string;
+}
+
+export interface IPatchVideoRequest {
+	title: string;
+	description: string;
+}

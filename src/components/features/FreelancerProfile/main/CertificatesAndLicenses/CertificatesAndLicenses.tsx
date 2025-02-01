@@ -3,7 +3,6 @@ import {NAVBAR_SECTIONS, NavbarSectionKey} from "@constants/freelancerInnerNavba
 import React, {useCallback, useEffect, useState} from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {IFreelancerCertificate} from "@shared/freelancerTypes.ts";
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
@@ -12,12 +11,15 @@ import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import CertificateLicenseEditModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseEditModalItem/CertificateLicenseEditModalItem.tsx";
+import {
+	useFreelancerCertificateService
+} from "@services/freelancerCertificateService.ts";
 
 const CertificatesAndLicenses = () => {
 
 	const SECTION_ID: NavbarSectionKey = 'certifications';
 
-	const {getFreelancerCertificates, addCertificate} = useFreelancerProfileService();
+	const {getFreelancerCertificates, addCertificate} = useFreelancerCertificateService();
 	const {openModal} = useModal();
 
 	const [certificates, setCertificates] = useState<IFreelancerCertificate[]>([]);

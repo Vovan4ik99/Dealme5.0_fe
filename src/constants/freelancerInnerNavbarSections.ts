@@ -2,9 +2,9 @@ export const NAVBAR_SECTIONS = {
 	about: 'O mnie',
 	certifications: 'Certyfikaty i licencje',
 	tools: 'Narzędzia sprzedażowe',
+	videos: 'Wideo',
 	experience: 'Doświadczenie',
 	education: 'Wykształcenie',
-	videos: 'Wideo',
 	services: 'Usługi',
 	skills: 'Umiejętności',
 } as const;

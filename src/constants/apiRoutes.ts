@@ -48,6 +48,8 @@ export const API_ROUTES = {
 			PATCH_ABOUT_ME_INFO: '/about',
 			GET_FREELANCER_CERTIFICATES: '/certificate/freelancer/me',
 			ADD_FREELANCER_CERTIFICATE: '/certificate/freelancer',
+			GET_VIDEO: '/video/freelancer',
+			ADD_VIDEO: '/video',
 		}
 	}
 } as const;

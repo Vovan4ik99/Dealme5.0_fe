@@ -23,7 +23,7 @@ const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({registerOnSave}
 
 	const {user, getLoggedUserData} = useContext(AuthContext);
 	const {openModal} = useModal();
-	const {getSalesTools} = useOnboardingService();
+	const {getSalesTools, patchSalesTools} = useOnboardingService();
 
 	const [allSalesTools, setAllSalesTools] = useState<ISalesTool[]>([]);
 	const [salesTools, setSalesTools] = useState<ISalesTool[]>(user?.salesTools || []);
@@ -35,8 +35,10 @@ const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({registerOnSave}
 	}, [getSalesTools]);
 
 	const handleSave = useCallback(() => {
-		//TODO waiting for fixing PATCH on backend
-	}, []);
+		patchSalesTools(salesTools.map(tool => tool.id))
+			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+			.catch(console.error);
+	}, [getLoggedUserData, patchSalesTools, salesTools]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

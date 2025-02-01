@@ -23,7 +23,7 @@ const SalesTools = () => {
 
 	const { user, getLoggedUserData } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools } = useOnboardingService();
+	const { getSalesTools, patchSalesTools } = useOnboardingService();
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 	const [allSalesTools, setAllSalesTools] = useState<ISalesTool[]>([]);
@@ -71,8 +71,10 @@ const SalesTools = () => {
 	};
 
 	const onSalesToolsAdd = (newTools: ISalesTool[]) => {
-		//TODO waiting patch from backend
-	}
+		patchSalesTools(newTools.map(tool => tool.id))
+			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+			.catch(console.error);
+	};
 
 	const handleAddTools = () => {
 		openModal({

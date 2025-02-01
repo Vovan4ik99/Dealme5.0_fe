@@ -18,7 +18,7 @@ import AboutMe
 	from "@components/features/FreelancerProfile/main/AboutMe/AboutMe.tsx";
 import CertificatesAndLicenses
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificatesAndLicenses.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import {
 	useFreelancerProfileService
@@ -30,22 +30,22 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesTools
 	from "@components/features/FreelancerProfile/main/SalesTools/SalesTools.tsx";
 import { useOnboardingService } from "@services/onboardingService.ts";
+import { useLoadingStatus } from "../../hooks/loadingStatus.hook.ts";
+import { useVideoService } from "@services/videoService.ts";
+import {
+	useFreelancerCertificateService
+} from "@services/freelancerCertificateService.ts";
 
 const FreelancerProfilePage = () => {
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	const { loadingStatus: contextLoading } = useContext(AuthContext);
-	const { loadingStatus: profileLoading } = useFreelancerProfileService();
-	const { loadingStatus: asideLoading } = useFreelancerProfileAsideInfoService();
-	const { loadingStatus: onboardingLoading } = useOnboardingService();
-
-	useEffect(() => {
-		if(contextLoading === 'loading' || profileLoading === 'loading'
-			|| asideLoading === 'loading' || onboardingLoading === 'loading') {
-			setIsLoading(true);
-		}
-	}, [asideLoading, contextLoading, onboardingLoading, profileLoading]);
+	const isLoading = useLoadingStatus(
+		useContext(AuthContext),
+		useFreelancerProfileService(),
+		useFreelancerProfileAsideInfoService(),
+		useOnboardingService(),
+		useVideoService(),
+		useFreelancerCertificateService()
+	);
 
 	return (
 		<div className={styles['profile']}>

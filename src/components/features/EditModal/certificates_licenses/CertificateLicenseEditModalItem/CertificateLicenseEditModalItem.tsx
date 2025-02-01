@@ -1,5 +1,4 @@
 import styles from './CertificateLicenseEditModalItem.module.scss';
-import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
@@ -9,6 +8,9 @@ import CertificateItem
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseAddModalItem/CertificateLicenseAddModalItem.tsx";
+import {
+	useFreelancerCertificateService
+} from "@services/freelancerCertificateService.ts";
 
 const CertificateLicenseEditModalItem = () => {
 
@@ -21,7 +23,7 @@ const CertificateLicenseEditModalItem = () => {
 		deleteCertificate,
 		addCertificate,
 		loadingStatus
-	} = useFreelancerProfileService();
+	} = useFreelancerCertificateService();
 
 	const fetchFreelancerCertificates = useCallback(() => {
 		getFreelancerCertificates()
