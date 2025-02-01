@@ -1,6 +1,5 @@
 import styles from './PrimaryInfo.module.scss';
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {FreelancerPrimaryInfo} from "./primaryInfoTypes.ts";
 import {ReactComponent as LogoIcon} from "@icons/named_exported/logo_icon.svg";
@@ -14,9 +13,9 @@ import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileA
 const PrimaryInfo: React.FC = () => {
 	
 	const [primaryInfo, setPrimaryInfo] = useState<FreelancerPrimaryInfo | null>(null);
-	const {user, getLoggedUserData, loadingStatus: contextLoadingStatus} = useContext(AuthContext);
+	const {user, getLoggedUserData} = useContext(AuthContext);
 	const {openModal} = useModal();
-	const {getFreelancerBar, loadingStatus} = useFreelancerProfileAsideInfoService();
+	const {getFreelancerBar} = useFreelancerProfileAsideInfoService();
 
 	const fetchPrimaryInfo = useCallback(() => {
 		getFreelancerBar()
@@ -72,10 +71,6 @@ const PrimaryInfo: React.FC = () => {
 		if (primaryInfo?.visibilityStatus === 'NORMAL') {
 			return <StatusItem kind={'normal availability'}/>
 		}
-	}
-
-	if (loadingStatus === 'loading' || contextLoadingStatus === 'loading') {
-		return <LoadingSpinner/>;
 	}
 
 	return (

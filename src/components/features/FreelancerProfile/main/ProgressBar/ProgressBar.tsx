@@ -1,12 +1,11 @@
 import styles from './ProgressBar.module.scss';
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {useEffect, useState} from "react";
 
 const ProgressBar = () => {
 
-	const {getFreelancerProfileProgress, loadingStatus} = useFreelancerProfileService();
+	const {getFreelancerProfileProgress} = useFreelancerProfileService();
 
 	const [progress, setProgress] = useState(0);
 
@@ -15,10 +14,6 @@ const ProgressBar = () => {
 			.then(response => setProgress(response))
 			.catch(console.error);
 	}, [getFreelancerProfileProgress]);
-
-	if (loadingStatus === 'loading') {
-		return <LoadingSpinner/>;
-	}
 
 	return (
 		<div className={styles['bar']}>

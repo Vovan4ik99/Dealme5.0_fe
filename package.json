@@ -1,7 +1,7 @@
 {
   "name": "dealme_fe",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -31,7 +31,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/react-scroll": "^1.8.10",
     "@types/react-transition-group": "^4.4.11",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",

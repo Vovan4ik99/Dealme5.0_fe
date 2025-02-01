@@ -22,3 +22,26 @@ const salesToolsPictures: Record<string, string> = {
 export const getPictureForSalesTools = (toolName: string): string => {
 	return salesToolsPictures[toolName] || '';
 };
+
+export const getToolKindNameByKind = (kind: string) => {
+	switch (kind) {
+		case 'COLD_MAILING':
+			return 'Cold mailing';
+		case 'PROSPECTING':
+			return 'Prospecting';
+		case 'AUTOMATYZACJA_MARKETINGU':
+			return 'Automatyzacja marketingu';
+		case 'COLD_CALLING':
+			return 'Cold calling';
+		case 'ANALITYKA':
+			return 'Analityka';
+		case 'ZARZADZANIE_PROJEKTAMI':
+			return 'Zarządzanie projektami / zadaniami';
+		case 'NEWSLETTER':
+			return 'Newsletter';
+		case 'INNE':
+			return 'Inne narzędzia wspierające sprzedaż';
+		default:
+			return kind;
+	}
+};

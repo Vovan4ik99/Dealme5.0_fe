@@ -1,0 +1,54 @@
+@use '@styles/variables' as vars;
+
+.tool {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 328px;
+  }
+
+  &__name {
+    color: vars.$color-black;
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  &__category {
+    color: vars.$color-gray;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__img {
+    display: flex;
+    align-items: center;
+  }
+}

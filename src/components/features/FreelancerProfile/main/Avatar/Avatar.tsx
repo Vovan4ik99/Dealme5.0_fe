@@ -1,6 +1,5 @@
 import styles from './Avatar.module.scss';
 import {ReactComponent as LogoIcon} from '@icons/named_exported/logo_icon.svg';
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, {useContext} from "react";
 import AvatarEmptyState from "@components/features/FreelancerProfile/main/Avatar/AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
@@ -11,7 +10,7 @@ import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const Avatar = () => {
 
-	const {userAvatar, patchUserAvatar, deleteUserAvatar, loadingStatus} = useContext(AuthContext);
+	const {userAvatar, patchUserAvatar, deleteUserAvatar} = useContext(AuthContext);
 	const {openModal} = useModal();
 
 	const handleAvatarEdit = () => {
@@ -41,12 +40,6 @@ const Avatar = () => {
 		const formData = new FormData();
 		formData.append("file", imageBlob, filename);
 		patchUserAvatar(formData);
-	}
-
-	if (loadingStatus === "loading") {
-		return <div className={styles['avatar']}>
-			<LoadingSpinner/>
-		</div>
 	}
 
 	return (

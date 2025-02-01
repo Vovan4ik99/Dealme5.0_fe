@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import styles from "./BgImage.module.scss";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import BgEmptyState from "@components/features/FreelancerProfile/main/BgImage/BgEmptyState/BgEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
@@ -12,7 +11,7 @@ import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/
 const BgImage = () => {
 	const { openModal } = useModal();
 	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
-	const { patchBackgroundPicture, getBackgroundPicture, deleteBackgroundPicture, loadingStatus } = useFreelancerProfileService();
+	const { patchBackgroundPicture, getBackgroundPicture, deleteBackgroundPicture} = useFreelancerProfileService();
 
 	const fetchBackgroundImage = useCallback(() => {
 		getBackgroundPicture()
@@ -28,7 +27,7 @@ const BgImage = () => {
 		deleteBackgroundPicture()
 			.then(() => setBackgroundImage(null))
 			.catch((error) => console.error(error));
-	}
+	};
 
 	const openEditModal = () => {
 		openModal({
@@ -56,11 +55,6 @@ const BgImage = () => {
 			.then(() => fetchBackgroundImage())
 			.catch((error) => console.error(error));
 	};
-
-	// Conditional rendering simplification for loading and content
-	if (loadingStatus === "loading") {
-		return <LoadingSpinner />;
-	}
 
 	return (
 		<section className={styles["bg-image"]}>

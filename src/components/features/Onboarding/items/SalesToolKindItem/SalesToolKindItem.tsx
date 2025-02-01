@@ -3,7 +3,7 @@ import {ISalesToolKindItemProps} from "./salesToolKindItemTypes.ts";
 import styles from "../../Onboarding.module.scss";
 import AnimatedStep from "../../steps/AnimatedStep/AnimatedStep.tsx";
 import SalesToolItem from "../SalesToolItem/SalesToolItem.tsx";
-import {getPictureForSalesTools} from "@utils/salesToolsPictureUtils.ts";
+import {getPictureForSalesTools} from "@utils/salesToolsUtils.ts";
 import arrow_right from '@icons/onboarding/arrow_right.svg'
 
 const SalesToolKindItem: React.FC<ISalesToolKindItemProps> = ({text, salesTools, selectedSalesTools, onChange,

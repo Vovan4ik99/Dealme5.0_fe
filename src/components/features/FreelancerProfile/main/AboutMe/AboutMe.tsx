@@ -4,7 +4,6 @@ import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {IAboutMeInfo} from "@shared/freelancerTypes.ts";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import VideoEmptyState from "@components/features/FreelancerProfile/main/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
@@ -15,7 +14,7 @@ const AboutMe = () => {
 
 	const SECTION_ID: NavbarSectionKey = 'about';
 
-	const {getAboutMeProfileInfo, loadingStatus} = useFreelancerProfileService();
+	const {getAboutMeProfileInfo} = useFreelancerProfileService();
 	const {openModal} = useModal();
 
 	const [aboutMeInfo, setAboutMeInfo] = useState<IAboutMeInfo | null>(null);
@@ -73,10 +72,6 @@ const AboutMe = () => {
 	
 	const onSave = () => {
 		fetchAboutMeInfo();
-	}
-
-	if (loadingStatus === 'loading') {
-		return <LoadingSpinner/>;
 	}
 
 	return (

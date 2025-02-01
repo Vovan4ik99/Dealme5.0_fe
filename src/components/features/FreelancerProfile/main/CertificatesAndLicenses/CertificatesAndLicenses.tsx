@@ -4,7 +4,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import {IFreelancerCertificate} from "@shared/freelancerTypes.ts";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
@@ -18,7 +17,7 @@ const CertificatesAndLicenses = () => {
 
 	const SECTION_ID: NavbarSectionKey = 'certifications';
 
-	const {getFreelancerCertificates, addCertificate, loadingStatus} = useFreelancerProfileService();
+	const {getFreelancerCertificates, addCertificate} = useFreelancerProfileService();
 	const {openModal} = useModal();
 
 	const [certificates, setCertificates] = useState<IFreelancerCertificate[]>([]);
@@ -69,10 +68,6 @@ const CertificatesAndLicenses = () => {
 			.then(fetchCertificates)
 			.catch(console.error);
 	};
-
-	if (loadingStatus === 'loading') {
-		return <LoadingSpinner/>;
-	}
 
 	return (
 		<section id={SECTION_ID} className={styles['certificates']}>

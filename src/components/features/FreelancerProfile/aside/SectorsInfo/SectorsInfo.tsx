@@ -4,7 +4,6 @@ import {useModal} from "@context/ModalContext/ModalContext.ts";
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import {ISector} from "@shared/onboardingTypes.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {calculateBlocks} from "@utils/sectorsUtils.ts";
 import SectorsModalItem from "@components/features/EditModal/sectors/SectorsModalItem/SectorsModalItem.tsx";
 
@@ -13,7 +12,7 @@ const SectorsInfo = () => {
 	const [freelancerSectors, setFreelancerSectors] = useState<ISector[]>([])
 
 	const {openModal} = useModal();
-	const {user, getLoggedUserData, loadingStatus} = useContext(AuthContext);
+	const {user, getLoggedUserData} = useContext(AuthContext);
 
 	useEffect(() => {
 		setFreelancerSectors(user?.sectors ?? [])
@@ -56,10 +55,6 @@ const SectorsInfo = () => {
 
 	const handleSave = () => {
 		getLoggedUserData(localStorage.getItem('token') as string);
-	}
-
-	if (loadingStatus === 'loading') {
-		return <LoadingSpinner/>;
 	}
 
 	return (

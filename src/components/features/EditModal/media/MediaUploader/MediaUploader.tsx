@@ -142,7 +142,7 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({
 				</div>
 			)}
 
-			{error && <AlertItem text={error} kind="error" hasMarginTop/>}
+			{error && <AlertItem text={error} kind="error" hasMarginTop={true}/>}
 		</>
 	);
 };

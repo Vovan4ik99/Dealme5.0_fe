@@ -6,7 +6,6 @@ import WorkingDaysProfileItem from "@components/features/FreelancerProfile/aside
 import WorkingHoursProfileItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/WorkingHoursProfileItem.tsx";
 import {IFreelancerBarResponse} from "@shared/freelancerTypes.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import LocalizationItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
@@ -17,7 +16,7 @@ const SecondaryInfo = () => {
 	const [freelancerInfo, setFreelancerInfo] = useState<IFreelancerBarResponse | null>(null);
 
 	const {user, getLoggedUserData} = useContext(AuthContext);
-	const {getFreelancerBar, loadingStatus} = useFreelancerProfileAsideInfoService();
+	const {getFreelancerBar} = useFreelancerProfileAsideInfoService();
 
 	const fetchFreelancerBarInfo = useCallback(() => {
 		getFreelancerBar()
@@ -49,10 +48,6 @@ const SecondaryInfo = () => {
 
 	const getFreelancerLanguages = () => {
 		return freelancerInfo.languagesLevel.map(l => l.language);
-	}
-
-	if (loadingStatus === 'loading') {
-		return <LoadingSpinner/>;
 	}
 
 	return (
