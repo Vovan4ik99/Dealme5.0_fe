@@ -1,69 +1,87 @@
 import styles from './MediaUploader.module.scss';
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 import {useDropzone} from "react-dropzone";
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 import upload_icon from "@icons/freelancer_profile/upload_icon.svg";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
-import MediaCropper from "../MediaCropper/MediaCropper.tsx";
+import ImageCropper from "@components/features/EditModal/media/ImageCropper/ImageCropper.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import success_icon from "@icons/alert/success_icon.svg";
 import {IMediaUploaderProps} from "./mediaUploaderTypes.ts";
+import VideoPreviewer from "@components/features/EditModal/media/VideoPreviewer/VideoPreviewer.tsx";
 
-const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, aspectRatio, isAvatar }) => {
-	const { openModal } = useModal();
+const MediaUploader: React.FC<IMediaUploaderProps> = ({
+	                                                      text,
+	                                                      registerOnSave,
+	                                                      onVideoAdd = () => {},
+	                                                      aspectRatio = 0,
+	                                                      isAvatar = false,
+	                                                      mediaType = 'image',
+                                                      }) => {
+	const {openModal} = useModal();
 	const [mediaSrc, setMediaSrc] = useState<string | null>(null);
-	const [mediaType, setMediaType] = useState<'image' | 'video' | null>(null);
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	const MAX_IMAGE_SIZE = 3 * 1024 * 1024;
 	const MAX_VIDEO_SIZE = 10 * 1024 * 1024;
 	const ACCEPTED_FORMATS = {
-		'image/jpeg': ['.jpg', '.jpeg'],
-		'image/png': ['.png'],
-		'image/webp': ['.webp'],
+		image: {
+			'image/jpeg': ['.jpg', '.jpeg'],
+			'image/png': ['.png'],
+			'image/webp': ['.webp'],
+		},
+		video: {
+			'video/mp4': ['.mp4'],
+			'video/mov': ['.mov'],
+			'video/avi': ['.avi']
+		}
 	};
 
-	const resetState = () => {
+	const handleClose = useCallback(() => {
 		setMediaSrc(null);
-		setMediaType(null);
 		setFileName(null);
 		setError(null);
-	};
+	}, []);
 
-	const handleCropperClose = () => {
-		resetState();
-	};
+	const handleVideoAdd = useCallback(() => {
+		if (!mediaSrc || !fileName) {
+			return;
+		}
+		onVideoAdd(mediaSrc, fileName);
+		handleClose();
+	}, [fileName, handleClose, mediaSrc, onVideoAdd]);
 
-	const handleSave = () => {
+	const handleSave = useCallback(() => {
 		if (!mediaSrc || !mediaType || !fileName) {
 			setError('Wybierz plik');
 			return;
 		}
 
+		const imageChild = <ImageCropper
+			isAvatar={isAvatar}
+			mediaSrc={mediaSrc}
+			filename={fileName}
+			aspect={aspectRatio}
+			onClose={handleClose}
+		/>;
+
+		const videoChild = <VideoPreviewer videoUrl={mediaSrc} onClose={handleVideoAdd}/>;
+
 		openModal({
-			id: 'bgImageCrop',
-			title: 'Podgląd zdjęcia',
-			btnText: 'Dodaj zdjęcie',
+			id: 'unknown',
+			title: `Podgląd ${mediaType === 'image' ? 'zdjęcia' : 'wideo'}`,
+			btnText: `Dodaj ${mediaType === 'image' ? 'zdjęcie' : 'wideo'}`,
 			btnWithIcon: true,
 			shouldCloseOnSaving: false,
-			child: (
-				<MediaCropper
-					isAvatar={isAvatar}
-					mediaSrc={mediaSrc}
-					filename={fileName}
-					mediaType={mediaType}
-					aspect={aspectRatio}
-					onClose={handleCropperClose}
-				/>
-			)
+			child: mediaType === 'image' ? imageChild : videoChild
 		});
-	};
+	}, [aspectRatio, fileName, handleClose, handleVideoAdd, isAvatar, mediaSrc, mediaType, openModal]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	});
+	}, [handleSave, registerOnSave]);
 
 	const handleDrop = (acceptedFiles: File[]) => {
 		setError(null);
@@ -87,14 +105,13 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, as
 		const reader = new FileReader();
 		reader.onload = () => {
 			setMediaSrc(reader.result as string);
-			setMediaType(isImage ? 'image' : 'video');
 			setFileName(file.name);
 		};
 		reader.readAsDataURL(file);
 	};
 
-	const { getRootProps, getInputProps } = useDropzone({
-		accept: ACCEPTED_FORMATS,
+	const {getRootProps, getInputProps} = useDropzone({
+		accept: ACCEPTED_FORMATS[mediaType],
 		onDrop: handleDrop,
 		onDropRejected: () => setError('Niepoprawny format pliku'),
 	});
@@ -104,15 +121,15 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, as
 			<div className={styles['uploader']}>
 				<div className={styles['uploader__content']} {...getRootProps()}>
 					<input {...getInputProps()} />
-					<img src={upload_icon} alt="media-uploader" />
+					<img src={upload_icon} alt="media-uploader"/>
 					<p className={styles['uploader__text']}>Przeciągnij i upuść plik tutaj aby dodać</p>
-					<CustomDivider />
+					<CustomDivider/>
 					<button className="btn btn--more btn--uploader">Wybierz z dysku</button>
 				</div>
 
 				<div className={styles['uploader__info']}>
 					<div className={styles['uploader__icon']}>
-						<InfoIcon />
+						<InfoIcon/>
 					</div>
 					{text}
 				</div>
@@ -120,12 +137,12 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({ text, registerOnSave, as
 
 			{fileName && (
 				<div className={styles['uploader__choice']}>
-					<img src={success_icon} alt="success file loading" />
+					<img src={success_icon} alt="success file loading"/>
 					<span>{fileName}</span>
 				</div>
 			)}
 
-			{error && <AlertItem text={error} kind="error" />}
+			{error && <AlertItem text={error} kind="error" hasMarginTop={true}/>}
 		</>
 	);
 };

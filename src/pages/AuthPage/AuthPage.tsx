@@ -19,11 +19,11 @@ const AuthPage: React.FC<LoginPageProps> = ({isLogin}) => {
 			<div className={styles['login-page__content']}>
 				<h1 className={'title'}>{isLogin ? 'Zaloguj się' : 'Załóż konto'}</h1>
 				<div className={styles['login-page__social']}>
-					<button className={styles['login-page__social-link']}>
+					<button className={`${styles['login-page__social-link']} ${styles['login-page__social-link--disabled']}`}>
 						<img src={google_icon} alt={'google'}/>{''}
 						Kontynuuj z Google
 					</button>
-					<button className={styles['login-page__social-link']}>
+					<button className={`${styles['login-page__social-link']} ${styles['login-page__social-link--disabled']}`}>
 						<img src={facebook_login} alt={'facebook'}/>{''}
 						Kontynuuj z Facebook
 					</button>

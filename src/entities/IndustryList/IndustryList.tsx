@@ -4,7 +4,7 @@ import IndustryItem from "@components/features/Onboarding/items/IndustryItem/Ind
 import React, {useState} from "react";
 import {IIndustry, ISubIndustry} from "@shared/onboardingTypes.ts";
 import {IIndustryListProps} from "./industryListTypes.ts";
-import styles from './IndustryList.module.scss';
+import styles from '../Entity.module.scss';
 
 const IndustryList: React.FC<IIndustryListProps> = ({selectedSubIndustries, industries, onChange}) => {
 	const [filteredSubIndustries, setFilteredSubIndustries] = useState<ISubIndustry[] | null>(null);

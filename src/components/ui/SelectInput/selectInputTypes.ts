@@ -9,4 +9,5 @@ export interface ISelectInputProps {
 	additionalText?: string;
 	onClick: (newValue: string) => void;
 	selectItems: ISelectItem[];
+	isError?: boolean;
 }

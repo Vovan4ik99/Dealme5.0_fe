@@ -6,7 +6,7 @@ import danger_icon from "@icons/alert/danger_icon.svg";
 import warning_icon from "@icons/alert/warning_icon.svg";
 import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
 
-const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
+const AlertItem: React.FC<IAlertItemProps> = ({kind, text, hasMarginTop = false}) => {
 
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -20,27 +20,29 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
 			case 'success':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--success']}`}>
 					<img src={success_icon} alt="success"/>
-					<span>{text}</span>
+					<p className={styles['item__text']}>{text}</p>
 				</div>
 			case 'neutral':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--neutral']}`}>
-					<InfoIcon fill={'#75778A'}/>
-					<span>{text}</span>
+					<div className={styles['item__icon']}>
+						<InfoIcon width={14} height={14}/>
+					</div>
+					<p className={styles['item__text']}>{text}</p>
 				</div>
 			case 'error':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--danger']}`}>
 					<img src={danger_icon} alt="danger"/>
-					<span>{text}</span>
+					<p className={styles['item__text']}>{text}</p>
 				</div>
 			case 'info':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--info']}`}>
 					<InfoIcon fill={'#00C3DF'}/>
-					<span>{text}</span>
+					<p className={styles['item__text']}>{text}</p>
 				</div>
 			case 'warning':
 				return <div className={`${styles['item__wrapper']} ${styles['item__wrapper--warning']}`}>
 					<img src={warning_icon} alt="warning"/>
-					<span>{text}</span>
+					<p className={styles['item__text']}>{text}</p>
 				</div>
 			default:
 				return <></>;
@@ -48,7 +50,8 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text}) => {
 	}
 
 	return (
-		<div className={`${styles['item']} ${isVisible ? styles['item--enter'] : styles['item--exit']}`}>
+		<div style={{marginTop: `${hasMarginTop} ? 20px : 0`}}
+		     className={`${styles['item']} ${isVisible ? styles['item--enter'] : styles['item--exit']}`}>
 			{getAlertItemByKind()}
 		</div>
 	)

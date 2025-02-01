@@ -1,0 +1,26 @@
+@use '@styles/variables' as vars;
+
+.dates {
+  &__content {
+	display: flex;
+	gap: 16px;
+	flex-direction: column;
+  }
+
+  &__date {
+	margin-top: 16px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 17px;
+	grid-auto-rows: auto;
+	row-gap: 8px;
+	column-gap: 16px;
+  }
+
+  &__text {
+	color: vars.$color-gray;
+	font-size: 14px;
+	line-height: 120%;
+	grid-column: 1 / 3;
+  }
+}

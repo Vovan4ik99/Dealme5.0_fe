@@ -1,12 +1,9 @@
 @use "@styles/variables" as vars;
 
 .item {
-  margin-top: 20px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 120%;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  width: 100%;
 
   &--enter {
     opacity: 1;
@@ -14,6 +11,12 @@
 
   &--exit {
     opacity: 0;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
   }
 
   &__wrapper {
@@ -31,6 +34,11 @@
     &--neutral {
       color: vars.$color-gray;
       background-color: vars.$color-gray-light;
+      gap: 4px;
+
+      svg path {
+        fill: vars.$color-gray;
+      }
     }
 
     &--danger {
@@ -47,5 +55,13 @@
       color: vars.$color-warning;
       background-color: vars.$color-warning-pastel;
     }
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
   }
 }

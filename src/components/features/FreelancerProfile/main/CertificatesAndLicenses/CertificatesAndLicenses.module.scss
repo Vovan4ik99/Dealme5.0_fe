@@ -1,0 +1,22 @@
+.certificates {
+  margin-top: 64px;
+
+  &__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+
+  &__wrapper {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+  }
+
+  &__content {
+	margin-top: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+  }
+}

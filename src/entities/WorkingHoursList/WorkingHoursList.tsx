@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {IWorkingHour} from "@shared/onboardingTypes.ts";
 import {useOnboardingService} from "@services/onboardingService.ts";
 import {IWorkingHoursListProps} from "@entities/WorkingHoursList/workingHoursListTypes.ts";
-import styles from "../Item.module.scss";
+import styles from "../Entity.module.scss";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 
 const WorkingHoursList: React.FC<IWorkingHoursListProps> = ({selectedHour, onChange}) => {

@@ -7,20 +7,25 @@ import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 import TypeOfSalesList from "@entities/TypeOfSalesList/TypeOfSalesList.tsx";
 import SectorsListModalItem
 	from "@components/features/EditModal/sectors/SectorsListModalItem/SectorsListModalItem.tsx";
+import {ISector} from "@shared/onboardingTypes.ts";
 
 const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({onSave, registerOnSave}) => {
 
 	const [selectedTypeOfSale, setSelectedTypeOfSale] = useState<string | null>(null);
-	const [selectedSectors, setSelectedSectors] = useState<number[]>([]);
+	const [selectedSectors, setSelectedSectors] = useState<ISector[]>([]);
 
 	const {patchTypeOfSales, patchSectors, loadingStatus} = useOnboardingService();
 	const {user} = useContext(AuthContext);
 
 	useEffect(() => {
 		if (!user) return;
-		setSelectedTypeOfSale(user.typeOfSales);
-		setSelectedSectors(user.sectors.map(s => s.id));
-	}, [user]);
+		if (selectedTypeOfSale == null) {
+			setSelectedTypeOfSale(user.typeOfSales);
+		}
+		if (selectedSectors.length === 0) {
+			setSelectedSectors(user.sectors);
+		}
+	}, [selectedSectors.length, selectedTypeOfSale, user]);
 
 	const handleTypeOfSaleSave = useCallback(async () => {
 		if (!selectedTypeOfSale) return;
@@ -29,7 +34,7 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({onSave, registerOnS
 
 	const handleSectorsSave = useCallback(async () => {
 		if (selectedSectors.length === 0) return;
-		await patchSectors(selectedSectors);
+		await patchSectors(selectedSectors.map(s => s.id));
 	}, [patchSectors, selectedSectors]);
 
 	const handleSave = useCallback(() => {
@@ -47,12 +52,16 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({onSave, registerOnS
 		setSelectedTypeOfSale(typeOfSale);
 	};
 
-	const onSectorSelect = (sectorId: number) => {
+	const onSectorsDrag = (newItems: typeof selectedSectors) => {
+		setSelectedSectors(newItems);
+	};
+
+	const onSectorSelect = (sector: ISector) => {
 		setSelectedSectors(prevState => {
-			if (prevState.includes(sectorId)) {
-				return prevState.filter(s => s !== sectorId);
+			if (prevState.includes(sector)) {
+				return prevState.filter(s => s !== sector);
 			} else {
-				return [...prevState, sectorId];
+				return [...prevState, sector];
 			}
 		});
 	};
@@ -69,7 +78,9 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({onSave, registerOnS
 					<TypeOfSalesList selectedTypeOfSale={selectedTypeOfSale} onSelect={onTypeOfSaleSelect}/>
 				</div>
 			</div>
-			<SectorsListModalItem freelancerSectors={selectedSectors} onSelect={onSectorSelect}/>
+			<SectorsListModalItem freelancerSectors={selectedSectors}
+			                      onSelect={onSectorSelect}
+			                      onSectorsDrag={onSectorsDrag}/>
 		</div>
 	);
 };

@@ -33,7 +33,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 		dispatch({ type: ModalActions.UPDATE_MODAL_DATA, payload: { id, data } });
 	}, []);
 
-
 	const getOffset = (index: number) => {
 		if (index === state.modals.length - 1) return 0;
 		return -(state.modals.length - index - 1) * 50;
@@ -62,7 +61,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 						<>
 							<ModalOverlay zIndex={getZIndex(state.modals.length - 1)}/>
 							{state.modals.map((modal, index) => (
-								<BaseEditModal key={modal.id}
+								<BaseEditModal key={modal.id + modal.title}
 								               id={modal.id}
 								               child={modal.child}
 								               title={modal.title}
@@ -71,7 +70,13 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 								               btnWithIcon={modal.btnWithIcon}
 								               offset={getOffset(index)}
 								               shouldCloseOnSaving={modal.shouldCloseOnSaving}
-								               onClose={() => closeModals(1)}>
+								               withSaveBtn={modal.withSaveBtn}
+								               onClose={() => {
+												   if (modal.onClose) {
+													   modal.onClose();
+												   }
+												   closeModals(1);
+								               }}>
 								</BaseEditModal>
 							))}
 						</>

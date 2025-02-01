@@ -1,4 +1,3 @@
-import InputError from "@ui/InputError/InputError.tsx";
 import React, {useCallback, useRef, useState} from "react";
 import {RegisterOptions, useForm, useWatch} from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
@@ -6,12 +5,12 @@ import {RegistrationFormData} from "./registrationFormTypes.ts";
 import {Link, useNavigate} from "react-router-dom";
 import {useAuthService} from "@services/authService.ts";
 import {ICreateUserRequest, UserRole} from "@shared/userTypes.ts";
-import checkbox_checked from '@icons/auth/checkbox_checked.svg';
 import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer_registration.svg";
 import {ReactComponent as InvestorIcon} from "@icons/named_exported/investor_registration.svg";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
+import CustomCheckbox from "@ui/CustomCheckbox/CustomCheckbox.tsx";
 
 const RegistrationForm = () => {
 
@@ -35,6 +34,10 @@ const RegistrationForm = () => {
 
 	const password = useWatch({name: 'password', control, defaultValue: ''});
 
+	const termsRegister = register('terms', {
+		required: 'Aby kontynuować, musisz zaakceptować warunki korzystania z serwisu'
+	});
+
 	const validatePassword: RegisterOptions['validate'] = (value) =>
 		value === password || 'Podane hasła nie są zgodne';
 
@@ -49,7 +52,7 @@ const RegistrationForm = () => {
 				timeoutRef.current = setTimeout(() => {
 					setIsUserCreated(false);
 					navigate('/login');
-				}, 3000);
+				}, 1000);
 			}).catch(console.error);
 
 		return () => {
@@ -119,31 +122,24 @@ const RegistrationForm = () => {
 				             errorMessage={errors.passwordConfirmation?.message}/>
 			</div>
 			<div className={styles['registration-form__terms']}>
-				<div className={styles['registration-form__terms-wrapper']}>
-					<input
-						id={'terms'}
-						className={`${styles['registration-form__terms-checkbox']} ${errors.terms && 'form-item__input--error'}`}
-						type="checkbox"
-						{...register('terms', {required: 'Aby kontynuować, musisz zaakceptować warunki korzystania z serwisu'})}
-					/>
-					<span className={
-						`${styles['registration-form__terms-checkbox--custom']} 
-						${errors.terms && 'form-item__input--error'}`
-					}>
-						<img src={checkbox_checked} alt={'checkbox'}/>
-					</span>
-					<label htmlFor={'terms'} className={styles['registration-form__terms-label']}>
-						Akceptuję <Link to={'/terms'}><span>regulamin serwisu</span></Link>
-					</label>
-				</div>
-				{errors.terms?.message && <InputError text={errors.terms.message}/>}
+				<CustomCheckbox register={termsRegister}
+				                errorMessage={errors.terms?.message}
+				                isError={errors.terms !== undefined} id={'terms'}
+				                label={
+					                <>
+						                Akceptuję{' '}
+						                <Link to={'/terms'}>
+							                <span className={styles['registration-form__terms-underline']}>regulamin serwisu</span>
+						                </Link>
+					                </>
+				                }/>
 			</div>
 			{isUserCreated && <AlertItem kind={'success'} text={'Użytkownik został zarejestrowany. ' +
 				'Za chwilę przekierujemy Ci na stronę logowania.'}/>}
-			<button className={'btn'} type="submit" disabled={loadingStatus === 'loading'}>
+			<button className={'btn btn--mt0'} type="submit" disabled={loadingStatus === 'loading'}>
 				{loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto'}
 			</button>
-			{errorMessage && <AlertItem kind={'error'} text={errorMessage}/>}
+			{errorMessage && <AlertItem kind={'error'} text={errorMessage} hasMarginTop={true}/>}
 		</form>
 	)
 }

@@ -54,3 +54,41 @@ export interface IFreelancerLanguage {
 export interface ILanguage {
 	name: string;
 }
+
+export interface IAboutMeInfo {
+	id: number;
+	about: string | null;
+	video: string | null;
+	mainPassion: string | null;
+}
+
+export type CertificateType = 'CERTIFICATE' | 'LICENSE';
+
+export interface IFreelancerCertificate {
+	id: number;
+	name: string;
+	dateOfObtaining: string;
+	endDate: string | null;
+	certificateType: CertificateType;
+	info: string;
+}
+
+export interface IFreelancerVideo {
+	id: number,
+	fileName: string,
+	fileUrl: string,
+	title: string,
+	description: string,
+	date: string
+}
+
+export interface IVideoRequest {
+	title: string;
+	description: string;
+	file: string;
+}
+
+export interface IPatchVideoRequest {
+	title: string;
+	description: string;
+}

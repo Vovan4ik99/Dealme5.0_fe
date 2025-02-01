@@ -2,7 +2,6 @@ import {IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry}
 import {EXPERIENCE_LEVELS} from "@constants/experienceLevel.ts";
 import {WorkingDayKey} from "@constants/workingDays.ts";
 
-
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 
 export interface ICreateUserRequest {
@@ -22,6 +21,7 @@ export interface ICreateUserResponse {
 
 export interface ILoggedUserResponse {
 	id: number;
+	email: string;
 	firstName: string;
 	lastName: string;
 	experienceLevel: keyof typeof EXPERIENCE_LEVELS;

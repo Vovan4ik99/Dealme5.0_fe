@@ -14,10 +14,9 @@ import DraggableSectorItem
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import AddSectorsModalItem from "@components/features/EditModal/sectors/AddSectorsModalItem/AddSectorsModalItem.tsx";
 
-const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerSectors, onSelect}) => {
+const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerSectors, onSelect, onSectorsDrag}) => {
 
 	const [allSectors, setAllSectors] = useState<ISector[]>([]);
-	const [draggableSectors, setDraggableSectors] = useState<ISector[]>([]);
 
 	const {getSectors, loadingStatus} = useOnboardingService();
 	const {openModal} = useModal();
@@ -28,14 +27,8 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 			.catch(console.error);
 	}, [getSectors]);
 
-	useEffect(() => {
-		setDraggableSectors(allSectors
-			.filter(sector => freelancerSectors.includes(sector.id))
-		);
-	}, [allSectors, freelancerSectors]);
-
 	const onSectorDelete = (draggableSector: ISector) => {
-		onSelect(draggableSector.id);
+		onSelect(draggableSector);
 	};
 
 	const renderSectorItems = (draggableSector: ISector) => {
@@ -44,21 +37,17 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 		                            onDelete={() => onSectorDelete(draggableSector)}/>;
 	};
 
-	const onSectorsChange = (newItems: typeof draggableSectors) => {
-		setDraggableSectors(newItems);
-	};
-
 	const onAddNewSectors = (sectors: ISector[]) => {
-		sectors.forEach(sector => onSelect(sector.id));
+		sectors.forEach(sector => onSelect(sector));
 	};
 
 	const getSectorsToChoose = () => {
-		return allSectors.filter(sector => !freelancerSectors.includes(sector.id));
+		return allSectors.filter(sector => !freelancerSectors.includes(sector));
 	};
 
 	const handleAddSectors = () => {
 		openModal({
-			id: 'sectorsAdd',
+			id: 'unknown',
 			title: 'Dodaj sektory',
 			btnWithIcon: true,
 			btnText: 'Dodaj sektory',
@@ -75,9 +64,9 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 		<div>
 			<h3 className={styles['item__title']}>Do jakiego sektora kierowałeś swoje produkty/usługi?</h3>
 			<div className={`${styles['item__wrapper']} ${styles['item__wrapper--mb16']}`}>
-				<DragAndDropContainer items={draggableSectors}
+				<DragAndDropContainer items={freelancerSectors}
 				                      renderItem={renderSectorItems}
-				                      onItemsChange={onSectorsChange}/>
+				                      onItemsChange={onSectorsDrag}/>
 			</div>
 			<button onClick={handleAddSectors} className={'btn btn--modal'}>
 				<AddIcon/>

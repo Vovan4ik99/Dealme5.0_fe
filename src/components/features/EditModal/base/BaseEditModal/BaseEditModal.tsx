@@ -5,8 +5,18 @@ import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
 import {IBaseEditModalProps} from "./baseEditModalTypes.ts";
 import {OnSaveCallback, ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
 
-const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, btnText, btnWithIcon, offset,
-	                                                      zIndex, shouldCloseOnSaving}) => {
+const BaseEditModal: React.FC<IBaseEditModalProps> = ({
+	                                                      title,
+	                                                      child,
+	                                                      onClose,
+	                                                      btnText = '',
+	                                                      btnWithIcon = false,
+	                                                      offset,
+	                                                      zIndex,
+	                                                      shouldCloseOnSaving = false,
+	                                                      withSaveBtn = true,
+                                                      }) => {
+
 	const onSaveRef = useRef<OnSaveCallback | null>(null);
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -37,13 +47,14 @@ const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, bt
 		}
 	};
 
-	//Rendering child with possibility to call it's onSave function here
+	//Rendering child with possibility to call it's onSave function while clicking the submit button
 	const renderChild = (child: ReactElement<ISaveableChildProps>) => {
-		return React.cloneElement(child, { registerOnSave });
+		return React.cloneElement(child, {registerOnSave, handleClose});
 	};
 
 	return (
-		<div className={`${styles['modal']} ${isModalVisible && !isClosing ? styles['modal--enter'] : styles['modal--exit']}`}
+		<div
+			className={`${styles['modal']} ${isModalVisible && !isClosing ? styles['modal--enter'] : styles['modal--exit']}`}
 			style={{
 				'--offset': `${offset}%`,
 				'--exitOffset': `calc(${offset}% + 100%)`,
@@ -56,15 +67,18 @@ const BaseEditModal: React.FC<IBaseEditModalProps> = ({title, child, onClose, bt
 				<h2 className={'title title--modal'}>{title}</h2>
 				<div className={styles['modal__body']}>{renderChild(child)}</div>
 			</div>
-			<footer>
-				<div className={styles['modal__divider']}></div>
-				<div className={styles['modal__btn-wrapper']}>
-					<button className={'btn btn--withIcon'} onClick={handleSave}>
-						{btnWithIcon && <AddIcon fill={'#fffff'}/>}
-						<span>{btnText}</span>
-					</button>
-				</div>
-			</footer>
+			{withSaveBtn &&
+                <footer>
+                    <div className={styles['modal__divider']}></div>
+                    <div className={styles['modal__btn-wrapper']}>
+
+                        <button className={'btn btn--withIcon'} onClick={handleSave}>
+							{btnWithIcon && <AddIcon fill={'#fffff'}/>}
+                            <span>{btnText}</span>
+                        </button>
+                    </div>
+                </footer>
+			}
 		</div>
 	);
 };

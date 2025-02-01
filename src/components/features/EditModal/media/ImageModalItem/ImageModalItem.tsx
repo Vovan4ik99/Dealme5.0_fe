@@ -7,8 +7,10 @@ import {useModal} from "@context/ModalContext/ModalContext.ts";
 import {IImageEditPayload} from "@shared/modalPayloadTypes.ts";
 import MediaUploader from "../MediaUploader/MediaUploader.tsx";
 
-const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, emptyState, isAvatar, onDelete, onSave, 
-	                                                        registerOnSave}) => {
+const ImageModalItem: React.FC<IImageModalItemProps> = ({
+	                                                        title, imageSize, emptyState, isAvatar, onDelete, onSave,
+	                                                        registerOnSave
+                                                        }) => {
 	const {modals, openModal} = useModal();
 	const [isDeleted, setIsDeleted] = useState(false);
 
@@ -42,11 +44,9 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 			title,
 			btnText: "Wybierz zdjęcie",
 			btnWithIcon: false,
-			child: React.createElement(MediaUploader, {
-        text: `Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB`,
-				aspectRatio: isAvatar ? 1 : 1320 / 250,
-				isAvatar
-			}),
+			child: <MediaUploader text={`Zalecany rozmiar: ${imageSize}\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB`}
+			                      aspectRatio={isAvatar ? 1 : 1320 / 250}
+			                      isAvatar/>,
 			shouldCloseOnSaving: false
 		});
 	};
@@ -57,7 +57,8 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({title, imageSize, empty
 			<p className={styles["item__text"]}>{modal.payload?.filename}</p>
 			<div className={`${styles["item__img"]} ${isAvatar && styles["item__img--avatar"]}`}>
 				<div className={styles["item__img-wrapper"]}>
-					<ActionBtn kind={"Edit"} onClick={handleEditModalOpen} backgroundColor={"lightgray"} withBorder={false}/>
+					<ActionBtn kind={"Edit"} onClick={handleEditModalOpen} backgroundColor={"lightgray"}
+					           withBorder={false}/>
 					<ActionBtn kind={"Delete"} onClick={handleDelete} backgroundColor={"lightgray"} withBorder={false}/>
 				</div>
 				{modal.payload?.blob ? (

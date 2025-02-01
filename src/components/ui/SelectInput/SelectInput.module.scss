@@ -28,6 +28,10 @@
 		transform: rotate(180deg);
 	  }
 	}
+
+	&--error {
+	  border: 1px solid vars.$color-danger;
+	}
   }
 
   &__text {

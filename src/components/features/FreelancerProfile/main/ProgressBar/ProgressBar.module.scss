@@ -1,0 +1,54 @@
+@use "@styles/variables" as vars;
+
+.bar {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: vars.$color-primary-pastel;
+
+  &__content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+
+  &__wrapper {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+
+	svg path {
+	  fill: vars.$color-gray;
+	}
+  }
+
+  &__text {
+	color: vars.$color-gray;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 100%;
+  }
+
+  &__procent {
+	color: vars.$color-gray;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 120%;
+  }
+
+  &__progress {
+	margin-top: 9px;
+	height: 7px;
+	border-radius: 100px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	padding: 0 2px;
+  }
+
+  &__line {
+	height: 3px;
+	border-radius: 100px;
+	background-color: vars.$primary-color;
+  }
+}

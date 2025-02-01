@@ -2,11 +2,23 @@
     position: relative;
     min-height: 100vh;
 
+    &__loading {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     &__aside {
         position: absolute;
         left: 24px;
         top: 204px;
         z-index: 1;
+    }
+
+    &__content {
+        margin-left: 422px;
+        max-width: 878px;
     }
 }
 
