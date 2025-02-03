@@ -1,0 +1,43 @@
+@use "@styles/variables" as vars;
+
+.item {
+  position: relative;
+
+  video {
+	border-radius: 12px;
+	cursor: pointer;
+	max-height: 350px;
+	object-fit: cover;
+  }
+
+  &__wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	padding: 7px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+
+  &__icon {
+	cursor: pointer;
+	display: flex;
+	width: 32px;
+	height: 32px;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+	border-radius: 100%;
+	transition: background-color 300ms ease-in-out;
+
+	svg path {
+		fill: vars.$color-gray;
+	}
+
+	&--active {
+	  background-color: vars.$primary-color;
+	}
+  }
+}

@@ -1,0 +1,23 @@
+.item {
+  width: 100%;
+  margin-bottom: 32px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list {
+  margin-top: 40px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+
+  & > button:last-child {
+    margin-bottom: 0;
+  }
+
+  & > div:first-child {
+    margin-bottom: 32px;
+  }
+}

@@ -1,0 +1,32 @@
+@use "@styles/variables" as vars;
+
+.item {
+  display: flex;
+  padding: 12px;
+  border-radius: 12px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid vars.$color-gray-border;
+
+  &__wrapper {
+	width: 100%;
+	max-width: 414px;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 4px;
+
+	span {
+	  line-height: 120%;
+	  font-size: 14px;
+	  font-weight: 400;
+	  color: vars.$color-gray;
+	}
+  }
+
+  &__text {
+	line-height: 120%;
+	font-size: 16px;
+	color: vars.$color-black;
+  }
+}

@@ -1,0 +1,22 @@
+@use "@styles/variables" as vars;
+
+.sector {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+
+  &__text {
+	color: vars.$color-black;
+	font-size: 16px;
+	line-height: 120%;
+	width: 416px;
+  }
+
+  &__img {
+	width: 7.719px;
+	height: 12px;
+  }
+}

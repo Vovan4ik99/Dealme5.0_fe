@@ -1,12 +1,15 @@
 import {useHttp} from "../hooks/http.hook";
 import {useCallback} from "react";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {IFreelancerBackgroundResponse, IFreelancerBarResponse, IFreelancerNameRequest} from "@shared/freelancerTypes";
+import {
+	IAboutMeInfo,
+	IFreelancerBackgroundResponse,
+} from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
 
-	const getBackgroundPicture = useCallback(async (): Promise<IFreelancerBackgroundResponse> => {
+	const getBackgroundPicture = useCallback(async (): Promise<IFreelancerBackgroundResponse | null> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.BACKGROUND_PICTURE,
 		});
@@ -27,18 +30,24 @@ export const useFreelancerProfileService = () => {
 		});
 	}, [sendRequest]);
 
-	const getFreelancerBar = useCallback(async (): Promise<IFreelancerBarResponse> => {
+	const getFreelancerProfileProgress = useCallback(async (): Promise<number> => {
 		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.INFO,
+			url: API_ROUTES.PROFILE.FREELANCER.GET_PROFILE_PROGRESS,
 		});
 	}, [sendRequest]);
 
-	const patchFreelancerName = useCallback(async (request: IFreelancerNameRequest): Promise<void> => {
+	const getAboutMeProfileInfo = useCallback(async (): Promise<IAboutMeInfo> => {
 		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.PATCH_NAME,
+			url: API_ROUTES.PROFILE.FREELANCER.GET_ABOUT_ME_INFO,
+		})
+	}, [sendRequest]);
+
+	const patchAboutMeProfileInfo = useCallback(async (formData: FormData): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.PATCH_ABOUT_ME_INFO,
 			method: "PATCH",
-			body: JSON.stringify(request),
-		});
+			body: formData,
+		})
 	}, [sendRequest]);
 
 	return {
@@ -47,7 +56,8 @@ export const useFreelancerProfileService = () => {
 		getBackgroundPicture,
 		patchBackgroundPicture,
 		deleteBackgroundPicture,
-		getFreelancerBar,
-		patchFreelancerName
+		getFreelancerProfileProgress,
+		getAboutMeProfileInfo,
+		patchAboutMeProfileInfo,
 	};
 };

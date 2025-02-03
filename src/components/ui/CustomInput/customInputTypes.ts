@@ -1,11 +1,12 @@
 import React from "react";
 import {RegisterOptions, UseFormRegister} from "react-hook-form";
 
-export type PresetType = 'email' | 'password' | 'firstName' | 'lastName' | 'company';
+export type PresetType = 'email' | 'password' | 'firstName' | 'lastName' | 'company' | 'certificateName'
+	| 'certificateOrganization' | 'videoTitle';
 
 interface IBaseInputProps {
 	errorMessage?: string;
-	register: UseFormRegister<any>;
+	register: UseFormRegister<any> | null;
 	validation?: RegisterOptions;
 }
 
@@ -20,6 +21,8 @@ interface ICustomProps extends IBaseInputProps {
 	autoComplete?: string;
 	labelText: string;
 	preset?: never;
+	onChange?: (value: string) => void;
+	existedValue?: string;
 }
 
 export type CustomInputProps = IPresetProps | ICustomProps;

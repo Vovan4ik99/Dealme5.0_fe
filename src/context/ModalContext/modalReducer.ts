@@ -1,5 +1,5 @@
-import {IModalInitialState} from "@context/ModalContext/ModalContext.ts";
-import {ModalAction, ModalActions} from "@context/ModalContext/modalActions.ts";
+import { IModalInitialState } from "@context/ModalContext/ModalContext.ts";
+import { ModalAction, ModalActions } from "@context/ModalContext/modalActions.ts";
 
 export const modalReducer = (state: IModalInitialState, action: ModalAction): IModalInitialState => {
 	switch (action.type) {
@@ -17,15 +17,6 @@ export const modalReducer = (state: IModalInitialState, action: ModalAction): IM
 			return {
 				...state,
 				modals: []
-			};
-		case ModalActions.UPDATE_MODAL_DATA:
-			return {
-				...state,
-				modals: state.modals.map((modal) =>
-					modal.id === action.payload.id
-						? {...modal, payload: action.payload.data}
-						: modal
-				),
 			};
 		default:
 			return state;

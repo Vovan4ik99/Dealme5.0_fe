@@ -41,5 +41,29 @@ export const CUSTOM_INPUT_PRESETS: Record<PresetType, Partial<CustomInputProps>>
 		autoComplete: 'organization',
 		labelText: 'Firma w której pracujesz (opcjonalne)',
 		validation: CUSTOM_INPUT_VALIDATION_RULES.company
-	}
+	},
+	certificateName: {
+		id: 'name',
+		type: 'text',
+		placeholder: 'np. Certyfikat ukończenia szkolenia z Marketingu',
+		autoComplete: '',
+		labelText: 'Nazwa certyfikatu',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.certificateName
+	},
+	certificateOrganization: {
+		id: 'info',
+		type: 'text',
+		placeholder: 'np. np. Uniwersytet Adama Mickiewicza',
+		autoComplete: '',
+		labelText: 'Wydany przez',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.certificateOrganization
+	},
+	videoTitle: {
+		id: 'title',
+		type: 'text',
+		placeholder: 'Np moje wideo',
+		autoComplete: '',
+		labelText: 'Nazwa / Komentarz',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.videoTitle
+	},
 } as const;

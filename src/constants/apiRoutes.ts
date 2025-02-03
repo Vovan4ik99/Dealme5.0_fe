@@ -37,9 +37,19 @@ export const API_ROUTES = {
 			AVATAR: '/user/avatar',
 			INFO: '/freelancer/bar',
 			PATCH_NAME: '/freelancer/me/name',
+			PATCH_COMPANY: '/freelancer/me/company',
+			PATCH_LOCALIZATION: '/freelancer/me/localization',
+			GET_COUNTRIES: '/countries',
+			GET_STATES: '/states',
+			PATCH_WORKING_AREA: '/freelancer/me/localization/workingArea',
+			GET_LANGUAGES: '/languages',
+			GET_PROFILE_PROGRESS: '/complete/freelancer/me',
+			GET_ABOUT_ME_INFO: '/about/me',
+			PATCH_ABOUT_ME_INFO: '/about',
+			GET_FREELANCER_CERTIFICATES: '/certificate/freelancer/me',
+			ADD_FREELANCER_CERTIFICATE: '/certificate/freelancer',
+			GET_VIDEO: '/video/freelancer',
+			ADD_VIDEO: '/video',
 		}
-	},
-	FREELANCER: {
-		GET_AVATAR: '/user/avatar'
 	}
 } as const;

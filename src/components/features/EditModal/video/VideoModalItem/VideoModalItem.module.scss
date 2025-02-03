@@ -1,0 +1,55 @@
+@use "@styles/variables" as vars;
+
+.video {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px dashed vars.$color-gray-border;
+  background: rgba(240, 241, 247, 0.40);
+
+  &__label {
+	font-size: 14px;
+	line-height: 120%;
+	color: vars.$color-gray;
+  }
+
+  &__title {
+	margin-top: 4px;
+	color: vars.$color-black;
+	font-weight: 400;
+	line-height: 120%;
+	font-size: 18px;
+  }
+
+  &__wrapper {
+	margin: 16px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
+  &__info {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+
+	span {
+	  color: vars.$color-gray;
+	  font-size: 14px;
+	  font-weight: 400;
+	  line-height: 100%;
+	}
+
+	svg path {
+	  fill: vars.$color-gray;
+	}
+  }
+
+  &__empty {
+	background-color: white;
+	width: 100%;
+	border-radius: 12px;
+	border: none;
+	padding: 30px 0;
+	cursor: pointer;
+  }
+}

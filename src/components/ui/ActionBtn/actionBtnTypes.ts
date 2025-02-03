@@ -3,6 +3,7 @@ export interface IActionBtnProps {
 	kind: BtnKind;
 	withBorder: boolean;
 	backgroundColor?: 'transparent' | 'lightgray' | 'white';
+	disabled?: boolean;
 }
 
 type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left';

@@ -28,6 +28,10 @@
 		transform: rotate(180deg);
 	  }
 	}
+
+	&--error {
+	  border: 1px solid vars.$color-danger;
+	}
   }
 
   &__text {
@@ -65,6 +69,7 @@
 	background-color: white;
 	max-height: 300px;
 	overflow-y: auto;
+	box-shadow: 0 18px 20px -16px rgba(13, 16, 51, 0.20);
 
 	div:first-child {
 	  border-top: 0;

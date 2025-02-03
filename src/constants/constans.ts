@@ -1,0 +1,1 @@
+export const PRIORITY_COUNTRY_KEY = "POLAND";

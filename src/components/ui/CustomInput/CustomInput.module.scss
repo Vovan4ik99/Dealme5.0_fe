@@ -4,45 +4,51 @@
   position: relative;
 
   &__label {
-    position: absolute;
-    left: 16px;
-    top: 16px;
-    font-size: 14px;
-    line-height: 120%;
-    color: vars.$color-black;
+	position: absolute;
+	left: 16px;
+	top: 16px;
+	font-size: 14px;
+	line-height: 120%;
+	color: vars.$color-black;
   }
 
   &__input {
-    border-radius: 12px;
-    border: 1px solid vars.$color-gray-border;
-    padding: 40px 16px 16px;
-    width: 100%;
-    font-size: 18px;
-    line-height: 120%;
-    color: vars.$color-black;
+	border-radius: 12px;
+	border: 1px solid vars.$color-gray-border;
+	padding: 40px 16px 16px;
+	width: 100%;
+	font-size: 18px;
+	line-height: 120%;
+	color: vars.$color-black;
 
-    &::placeholder {
-      font-size: 18px;
-      color: vars.$color-black;
-      line-height: 120%;
-      opacity: 0.4;
-    }
+	&::placeholder {
+	  font-size: 18px;
+	  color: vars.$color-black;
+	  line-height: 120%;
+	  opacity: 0.4;
+	}
 
-    &:focus + .item__label,
-    &:not(:placeholder-shown) + .item__label {
-      color: vars.$color-gray;
-    }
+	&:focus {
+      outline: none;
+	  border-color: vars.$color-black;
+	  box-shadow: none;
+	}
 
-    &:-webkit-autofill {
-      -webkit-text-fill-color: vars.$color-black;
-    }
+	&:focus + .item__label,
+	&:not(:placeholder-shown) + .item__label {
+	  color: vars.$color-gray;
+	}
 
-    &--error {
-      border: 1px solid vars.$color-danger;
+	&:-webkit-autofill {
+	  -webkit-text-fill-color: vars.$color-black;
+	}
 
-      + .item__label {
-        color: vars.$color-gray;
-      }
-    }
+	&--error {
+	  border: 1px solid vars.$color-danger;
+
+	  + .item__label {
+		color: vars.$color-gray;
+	  }
+	}
   }
 }

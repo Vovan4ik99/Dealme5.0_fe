@@ -1,26 +1,27 @@
-import {createContext, ReactElement, useContext} from "react";
-import {ModalPayloads} from "@shared/modalPayloadTypes.ts";
-
-export type ModalId = keyof ModalPayloads;
+import { createContext, ReactElement, useContext } from "react";
 
 export type OnSaveCallback = () => void;
 
 export interface ISaveableChildProps {
+	//Allows to register action when clicking parent submit button
 	registerOnSave?: (onSave: OnSaveCallback) => void;
+	//Using to close modals not after first click on submit btn, but to handle closing
+	handleClose?: () => void;
 }
 
-export interface IBaseModal<T extends ModalId> {
-	id: T;
+export interface IBaseModal {
+	id: string;
 	title: string;
 	child: ReactElement<ISaveableChildProps>;
-	btnText: string;
-	btnWithIcon: boolean;
-	payload?: ModalPayloads[T];
-	shouldCloseOnSaving: boolean;
+	btnText?: string;
+	btnWithIcon?: boolean;
+	shouldCloseOnSaving?: boolean;
+	withSaveBtn?: boolean;
+	onClose?: () => void;
 }
 
 export interface IModalInitialState {
-	modals: IBaseModal<ModalId>[];
+	modals: IBaseModal[];
 }
 
 export const InitialModalState: IModalInitialState = {
@@ -28,10 +29,9 @@ export const InitialModalState: IModalInitialState = {
 }
 
 export interface IModalContextValue extends IModalInitialState {
-	openModal: <T extends ModalId>(modal: IBaseModal<T>) => void;
+	openModal: (modal: IBaseModal) => void;
 	closeAllModals: () => void;
 	closeModals: (count: number) => void;
-	updateModalData: <T extends ModalId>(id: T, data: ModalPayloads[T]) => void;
 }
 
 export const ModalContext = createContext<IModalContextValue>({
@@ -39,7 +39,6 @@ export const ModalContext = createContext<IModalContextValue>({
 	openModal: () => {},
 	closeAllModals: () => {},
 	closeModals: () => {},
-	updateModalData: () => {},
 });
 
 export const useModal = () => {

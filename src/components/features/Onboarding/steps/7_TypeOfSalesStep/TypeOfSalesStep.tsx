@@ -1,29 +1,20 @@
 import {useOnboardingService} from "@services/onboardingService.ts";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {ITypeOfSalesStepProps} from "./typeOfSalesStepTypes.ts";
-import {ITypeOfSale} from "@shared/onboardingTypes.ts";
 import styles from "../../Onboarding.module.scss";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
-import TypeOfSalesItem from "../../items/TypeOfSalesItem/TypeOfSalesItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import TypeOfSalesList from "@entities/TypeOfSalesList/TypeOfSalesList.tsx";
 
 const TypeOfSalesStep: React.FC<ITypeOfSalesStepProps> = ({userTypeOfSales, onNext}) => {
 
-	const {getTypesOfSales, patchTypeOfSales, loadingStatus, errorMessage} = useOnboardingService();
-
-	const [typesOfSales, setTypesOfSales] = useState<ITypeOfSale[]>([]);
+	const {patchTypeOfSales, loadingStatus, errorMessage} = useOnboardingService();
 	const [selectedTypeOfSales, setSelectedTypeOfSales] = useState<string | null>(userTypeOfSales);
-
-	useEffect(() => {
-		getTypesOfSales()
-			.then((typeOfSales) => setTypesOfSales(typeOfSales))
-			.catch(e => console.error(e));
-	}, [getTypesOfSales]);
 
 	const onSelect = (typeOfSales: string) => {
 		setSelectedTypeOfSales(typeOfSales);
-	}
+	};
 
 	const onSubmit = () => {
 		if (selectedTypeOfSales !== null) {
@@ -31,7 +22,7 @@ const TypeOfSalesStep: React.FC<ITypeOfSalesStepProps> = ({userTypeOfSales, onNe
 				.then(() => onNext())
 				.catch(e => console.error(e));
 		}
-	}
+	};
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;
@@ -41,13 +32,7 @@ const TypeOfSalesStep: React.FC<ITypeOfSalesStepProps> = ({userTypeOfSales, onNe
 		<AnimatedStep>
 			<h1 className={'title title--fs40'}>Czy oferowałeś swoje produkty firmom czy osobom prywatnym?</h1>
 			<div className={styles['onboarding-step__items']}>
-				{loadingStatus === 'idle' && typesOfSales.map(typeOfSales => {
-					const isSelected = selectedTypeOfSales === typeOfSales.typeOfSales;
-					return <TypeOfSalesItem key={typeOfSales.typeOfSales}
-					                       text={typeOfSales.description}
-					                       isSelected={isSelected}
-					                       onSelect={() => onSelect(typeOfSales.typeOfSales)}/>
-				})}
+				<TypeOfSalesList selectedTypeOfSale={selectedTypeOfSales} onSelect={onSelect}/>
 			</div>
 			<button disabled={selectedTypeOfSales === null}
 			        onClick={() => onSubmit()}

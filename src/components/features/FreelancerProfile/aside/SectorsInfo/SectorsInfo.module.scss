@@ -1,0 +1,40 @@
+@use "@styles/variables" as vars;
+
+.sectors {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__wrapper {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+  }
+
+  &__title {
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 120%;
+	letter-spacing: 1px;
+	color: vars.$color-gray;
+  }
+
+  &__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	max-width: 330px;
+  }
+
+  &__item {
+	padding: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	background-color: vars.$color-gray-light;
+	font-size: 12px;
+	color: vars.$color-gray;
+	line-height: 100%;
+  }
+}

@@ -5,7 +5,14 @@ import {ReactComponent as ArrowIcon} from "@icons/named_exported/arrow-down.svg"
 import SelectOption from "@ui/SelectInput/SelectOption/SelectOption.tsx";
 import {CSSTransition} from "react-transition-group";
 
-const SelectInput: React.FC<ISelectInputProps> = ({text, labelText, onClick, selectItems, additionalText}) => {
+const SelectInput: React.FC<ISelectInputProps> = ({
+	                                                  text,
+	                                                  labelText,
+	                                                  onClick,
+	                                                  selectItems,
+	                                                  additionalText,
+	                                                  isError = false
+                                                  }) => {
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const selectRef = useRef<HTMLDivElement | null>(null);
@@ -22,8 +29,11 @@ const SelectInput: React.FC<ISelectInputProps> = ({text, labelText, onClick, sel
 	}
 
 	const renderSelectItems = () => {
-		return selectItems.map((item, index) => {
+		if (!selectItems || selectItems.length === 0) {
+			return <SelectOption value={'Brak opcji'} info={null} onClick={() => setIsOpen(false)}/>;
+		}
 
+		return selectItems.map((item, index) => {
 			return (
 				<SelectOption key={item.text + index}
 				              value={item.text}
@@ -35,7 +45,11 @@ const SelectInput: React.FC<ISelectInputProps> = ({text, labelText, onClick, sel
 
 	return (
 		<div className={styles['input']}>
-			<button className={`${styles['input__btn']} ${isOpen && styles['input__btn--open']}`} onClick={toggleSelect}>
+			<button
+				className={
+					`${styles['input__btn']} ${isOpen && styles['input__btn--open']} ${isError && styles['input__btn--error']}`
+				}
+				onClick={toggleSelect}>
 				<div className={styles['input__text']}>
 					<span>{labelText}</span>
 					<p>
@@ -55,7 +69,8 @@ const SelectInput: React.FC<ISelectInputProps> = ({text, labelText, onClick, sel
 				               exitActive: styles['input__select-exit-active'],
 			               }}
 			               nodeRef={selectRef}>
-				<div ref={selectRef} className={`${styles['input__select']} ${isOpen && styles['input__select--open']}`}>
+				<div ref={selectRef}
+				     className={`${styles['input__select']} ${isOpen && styles['input__select--open']}`}>
 					{renderSelectItems()}
 				</div>
 			</CSSTransition>
