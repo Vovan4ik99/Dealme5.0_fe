@@ -1,23 +1,22 @@
-import React, {useCallback, useMemo, useReducer} from "react";
-import {modalReducer} from "@context/ModalContext/modalReducer.ts";
+import React, { useCallback, useMemo, useReducer } from "react";
+import { modalReducer } from "@context/ModalContext/modalReducer.ts";
 import {
 	IBaseModal,
 	IModalContextValue,
 	InitialModalState,
-	ModalContext, ModalId
+	ModalContext,
 } from "@context/ModalContext/ModalContext.ts";
-import {ModalActions} from "@context/ModalContext/modalActions.ts";
-import {createPortal} from "react-dom";
+import { ModalActions } from "@context/ModalContext/modalActions.ts";
+import { createPortal } from "react-dom";
 import ModalOverlay from "@components/features/EditModal/base/ModalOverlay/ModalOverlay.tsx";
 import BaseEditModal from "@components/features/EditModal/base/BaseEditModal/BaseEditModal.tsx";
-import {ModalPayloads} from "@shared/modalPayloadTypes.ts";
 
 const baseZIndex = 1000;
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
 	const [state, dispatch] = useReducer(modalReducer, InitialModalState);
 
-	const openModal = useCallback(<T extends ModalId>(modal: IBaseModal<T>) => {
+	const openModal = useCallback((modal: IBaseModal) => {
 		dispatch({type: ModalActions.OPEN_MODAL, payload: modal});
 	}, []);
 
@@ -27,10 +26,6 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 
 	const closeAllModals = useCallback(() => {
 		dispatch({type: ModalActions.CLOSE_ALL_MODALS});
-	}, []);
-
-	const updateModalData = useCallback(<T extends ModalId>(id: T, data: ModalPayloads[T]) => {
-		dispatch({ type: ModalActions.UPDATE_MODAL_DATA, payload: { id, data } });
 	}, []);
 
 	const getOffset = (index: number) => {
@@ -47,10 +42,9 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 			...state,
 			openModal,
 			closeModals,
-			closeAllModals,
-			updateModalData
+			closeAllModals
 		}
-	), [closeAllModals, closeModals, openModal, state, updateModalData]);
+	), [closeAllModals, closeModals, openModal, state]);
 
 	return (
 		<ModalContext.Provider value={value}>
@@ -61,7 +55,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 						<>
 							<ModalOverlay zIndex={getZIndex(state.modals.length - 1)}/>
 							{state.modals.map((modal, index) => (
-								<BaseEditModal key={modal.title + state.modals.length}
+								<BaseEditModal key={modal.id}
 								               id={modal.id}
 								               child={modal.child}
 								               title={modal.title}

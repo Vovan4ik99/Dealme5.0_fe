@@ -1,21 +1,22 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
 	IWorkingHoursProfileItemProps
 } from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/workingHoursProfileItemTypes.ts";
-import {useOnboardingService} from "@services/onboardingService.ts";
+import { useOnboardingService } from "@services/onboardingService.ts";
 import clock from "@icons/freelancer_profile/secondary_info/clock.svg";
 import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
-import WorkingHoursModalItem from "@components/features/EditModal/working_hours/WorkingHoursModalItem/WorkingHoursModalItem.tsx";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
+import WorkingHoursModalItem
+	from "@components/features/EditModal/working_hours/WorkingHoursModalItem/WorkingHoursModalItem.tsx";
 
-const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({userWorkingHour, onSave}) => {
-	
-	const {getWorkingHours, patchWorkingHours, loadingStatus} = useOnboardingService();
-	const {openModal} = useModal();
-	
-	const [workingHourDescription, setWorkingHourDescription] = useState<string>('');
+const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({ userWorkingHour, onSave }) => {
+
+	const { getWorkingHours, patchWorkingHours, loadingStatus } = useOnboardingService();
+	const { openModal } = useModal();
+
+	const [ workingHourDescription, setWorkingHourDescription ] = useState<string>('');
 
 	useEffect(() => {
 		getWorkingHours()
@@ -24,40 +25,40 @@ const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({userW
 					response.find(hour => hour.workingHour === userWorkingHour)?.description ?? ''
 				);
 			}).catch(console.error);
-	}, [getWorkingHours, userWorkingHour, workingHourDescription]);
+	}, [ getWorkingHours, userWorkingHour, workingHourDescription ]);
 
-	const handleSave= useCallback((selectedWorkingHour: string) => {
+	const handleSave = useCallback((selectedWorkingHour: string) => {
 		patchWorkingHours(selectedWorkingHour)
 			.then(onSave)
 			.catch(console.error);
-	}, [onSave, patchWorkingHours]);
+	}, [ onSave, patchWorkingHours ]);
 
 	const onEdit = () => {
 		openModal({
-			id: 'unknown',
+			id: 'WorkingHoursModalItem',
 			title: "Edytuj dyspozycyjność czasową",
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
-			child: <WorkingHoursModalItem userWorkingHour={userWorkingHour} onSave={handleSave}/>
+			child: <WorkingHoursModalItem userWorkingHour={ userWorkingHour } onSave={ handleSave }/>
 		});
 	}
-	
+
 	if (loadingStatus === 'loading') {
-		return <LoadingSpinner />;
+		return <LoadingSpinner/>;
 	}
-	
+
 	return (
 		<>
-			<div className={styles['info__icon']}>
-				<img src={clock} alt="clock"/>
+			<div className={ styles['info__icon'] }>
+				<img src={ clock } alt="clock"/>
 			</div>
-			<p>{workingHourDescription} / tydzień</p>
-			<div className={styles['info__btn']}>
-				<ActionBtn kind={'Edit'}
-				           withBorder={false}
-				           backgroundColor={'transparent'}
-				           onClick={onEdit}/>
+			<p>{ workingHourDescription } / tydzień</p>
+			<div className={ styles['info__btn'] }>
+				<ActionBtn kind={ 'Edit' }
+				           withBorder={ false }
+				           backgroundColor={ 'transparent' }
+				           onClick={ onEdit }/>
 			</div>
 		</>
 	)

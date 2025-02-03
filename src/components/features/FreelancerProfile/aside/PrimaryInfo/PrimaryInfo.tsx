@@ -1,14 +1,15 @@
 import styles from './PrimaryInfo.module.scss';
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import {FreelancerPrimaryInfo} from "./primaryInfoTypes.ts";
-import {ReactComponent as LogoIcon} from "@icons/named_exported/logo_icon.svg";
+import { FreelancerPrimaryInfo } from "./primaryInfoTypes.ts";
+import { ReactComponent as LogoIcon } from "@icons/named_exported/logo_icon.svg";
 import star from "@icons/freelancer_profile/primary_info/star.svg";
-import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import StatusItem from "@ui/StatusItem/StatusItem.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
-import PrimaryInfoModalItem from "@components/features/EditModal/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
-import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
+import PrimaryInfoModalItem
+	from "@components/features/EditModal/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
 
 const PrimaryInfo: React.FC = () => {
 	
@@ -38,7 +39,7 @@ const PrimaryInfo: React.FC = () => {
 
 	const onEdit = () => {
 		openModal({
-			id: 'unknown',
+			id: 'PrimaryInfoModalItem',
 			title: 'Edytuj dane podstawowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',

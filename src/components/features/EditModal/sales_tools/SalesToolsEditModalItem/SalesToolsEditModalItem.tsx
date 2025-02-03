@@ -1,55 +1,48 @@
 import styles from './SalesToolsEditModalItem.module.scss';
-import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
-import {
-	ISaveableChildProps,
-	useModal
-} from "@context/ModalContext/ModalContext.ts";
-import SalesToolModalItem
-	from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
-import {
-	getPictureForSalesTools,
-	getToolKindNameByKind
-} from "@utils/salesToolsUtils.ts";
+import { ISaveableChildProps, useModal } from "@context/ModalContext/ModalContext.ts";
+import SalesToolModalItem from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
+import { getPictureForSalesTools, getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
 import { useOnboardingService } from "@services/onboardingService.ts";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 
-const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({registerOnSave}) => {
+const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({ registerOnSave }) => {
 
-	const {user, getLoggedUserData} = useContext(AuthContext);
-	const {openModal} = useModal();
-	const {getSalesTools, patchSalesTools} = useOnboardingService();
+	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { openModal } = useModal();
+	const { getSalesTools, patchSalesTools } = useOnboardingService();
 
-	const [allSalesTools, setAllSalesTools] = useState<ISalesTool[]>([]);
-	const [salesTools, setSalesTools] = useState<ISalesTool[]>(user?.salesTools || []);
+	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
+	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>(user?.salesTools || []);
 
 	useEffect(() => {
 		getSalesTools()
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [getSalesTools]);
+	}, [ getSalesTools ]);
 
 	const handleSave = useCallback(() => {
 		patchSalesTools(salesTools.map(tool => tool.id))
 			.then(() => getLoggedUserData(localStorage.getItem('token')!))
 			.catch(console.error);
-	}, [getLoggedUserData, patchSalesTools, salesTools]);
+	}, [ getLoggedUserData, patchSalesTools, salesTools ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	const renderSalesToolItem = (salesTool: ISalesTool) => {
-		return <SalesToolModalItem key={salesTool.id}
-		                           toolName={salesTool.toolName}
-		                           toolImg={getPictureForSalesTools(salesTool.toolName)}
-		                           categoryName={getToolKindNameByKind(salesTool.kind)}
-		                           onDelete={() => onToolDelete(salesTool)}/>;
+		return <SalesToolModalItem key={ salesTool.id }
+		                           toolName={ salesTool.toolName }
+		                           toolImg={ getPictureForSalesTools(salesTool.toolName) }
+		                           categoryName={ getToolKindNameByKind(salesTool.kind) }
+		                           onDelete={ () => onToolDelete(salesTool) }/>;
 	};
 
 	const onToolDelete = (tool: ISalesTool) => {
@@ -66,30 +59,30 @@ const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({registerOnSave}
 	};
 
 	const onAddNewTools = (newTools: ISalesTool[]) => {
-		setSalesTools((prevState) => [...prevState, ...newTools]);
+		setSalesTools((prevState) => [ ...prevState, ...newTools ]);
 	};
 
 	const handleAddTools = () => {
 		openModal({
-			id: 'unknown',
+			id: 'SalesToolsAddModalItem',
 			title: 'Dodaj narzędzia sprzedażowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Dodaj narzędzia sprzedażowe',
 			btnWithIcon: true,
 			child: <SalesToolsAddModalItem
-				salesTools={getSalesToolsToAdd()}
-				onSave={onAddNewTools}/>
+				salesTools={ getSalesToolsToAdd() }
+				onSave={ onAddNewTools }/>
 		})
 	};
 
 	return (
-		<div className={styles['modal']}>
-			<div className={styles['modal__content']}>
-				<DragAndDropContainer items={salesTools}
-				                      onItemsChange={handleToolsChange}
-				                      renderItem={renderSalesToolItem}/>
+		<div className={ styles['modal'] }>
+			<div className={ styles['modal__content'] }>
+				<DragAndDropContainer items={ salesTools }
+				                      onItemsChange={ handleToolsChange }
+				                      renderItem={ renderSalesToolItem }/>
 			</div>
-			<button className={'btn btn--modal'} onClick={handleAddTools}>
+			<button className={ 'btn btn--modal' } onClick={ handleAddTools }>
 				<AddIcon/>
 				<span>Dodaj kolejne narzędzie</span>
 			</button>
