@@ -1,17 +1,17 @@
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import React, {useCallback, useEffect, useState} from "react";
-import {IFreelancerCountry, IFreelancerLocalization, IFreelancerState} from "@shared/freelancerTypes.ts";
+import React, { useCallback, useEffect, useState } from "react";
+import { IFreelancerCountry, IFreelancerLocalization, IFreelancerState } from "@shared/freelancerTypes.ts";
 import {
 	ILocalizationModalItemProps
 } from "@components/features/EditModal/localization/LocalizationModalItem/localizationModalItemTypes.ts";
 import LocalizationWorkingArea
 	from "@components/features/EditModal/localization/LocalizationWorkingArea/LocalizationWorkingArea.tsx";
-import {WORKING_AREAS} from "@constants/workingAreas.ts";
-import {PRIORITY_COUNTRY_KEY} from "@constants/constans.ts";
+import { WORKING_AREAS } from "@constants/workingAreas.ts";
+import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
 import LocalizationPrimaryInfo
 	from "@components/features/EditModal/localization/LocalizationPrimaryInfo/LocalizationPrimaryInfo.tsx";
-import {getCountryNameByDescription, getStateNameByDescription} from "@utils/localizationUtils.ts";
-import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
+import { getCountryNameByDescription, getStateNameByDescription } from "@utils/localizationUtils.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
 
 const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	                                                                      userLocalization,
@@ -21,13 +21,13 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	                                                                      freelancerWorkingAreaValue
                                                                       }) => {
 
-	const [selectedCountry, setSelectedCountry] = useState<string | null>(userLocalization?.country ?? null);
-	const [selectedState, setSelectedState] = useState<string | null>(userLocalization?.state ?? null);
-	const [city, setCity] = useState<string | null>(userLocalization?.city ?? null);
-	const [selectedWorkingArea, setSelectedWorkingArea] = useState<keyof typeof WORKING_AREAS>(freelancerWorkingArea ?? 'COUNTRY');
-	const [selectedWorkingAreaValue, setSelectedWorkingAreaValue] = useState<string | null>(freelancerWorkingAreaValue);
-	const [countries, setCountries] = useState<IFreelancerCountry[]>([]);
-	const [states, setStates] = useState<IFreelancerState[]>([]);
+	const [ selectedCountry, setSelectedCountry ] = useState<string | null>(userLocalization?.country ?? null);
+	const [ selectedState, setSelectedState ] = useState<string | null>(userLocalization?.state ?? null);
+	const [ city, setCity ] = useState<string | null>(userLocalization?.city ?? null);
+	const [ selectedWorkingArea, setSelectedWorkingArea ] = useState<keyof typeof WORKING_AREAS>(freelancerWorkingArea ?? 'COUNTRY');
+	const [ selectedWorkingAreaValue, setSelectedWorkingAreaValue ] = useState<string | null>(freelancerWorkingAreaValue);
+	const [ countries, setCountries ] = useState<IFreelancerCountry[]>([]);
+	const [ states, setStates ] = useState<IFreelancerState[]>([]);
 
 	const {
 		patchFreelancerLocalization,
@@ -41,7 +41,7 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 		if (!selectedCountry) {
 			setSelectedCountry(PRIORITY_COUNTRY_KEY);
 		}
-	}, [selectedCountry]);
+	}, [ selectedCountry ]);
 
 	useEffect(() => {
 		if (selectedCountry === PRIORITY_COUNTRY_KEY && states.length === 0) {
@@ -49,13 +49,13 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 				.then(setStates)
 				.catch(console.error);
 		}
-	}, [getStates, selectedCountry, states]);
+	}, [ getStates, selectedCountry, states ]);
 
 	useEffect(() => {
 		getCountries()
 			.then(setCountries)
 			.catch(console.error);
-	}, [getCountries]);
+	}, [ getCountries ]);
 
 	const sortCountries = (countries: IFreelancerCountry[]) => {
 		return countries.toSorted((a, b) => {
@@ -99,10 +99,10 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 
 	const patchWorkingArea = useCallback(() => {
 		if (!selectedWorkingArea || !selectedWorkingAreaValue) return;
-		patchFreelancerWorkingArea({workingArea: selectedWorkingArea, workingAreaValue: selectedWorkingAreaValue})
+		patchFreelancerWorkingArea({ workingArea: selectedWorkingArea, workingAreaValue: selectedWorkingAreaValue })
 			.then(onSave)
 			.catch(console.error);
-	}, [onSave, patchFreelancerWorkingArea, selectedWorkingArea, selectedWorkingAreaValue]);
+	}, [ onSave, patchFreelancerWorkingArea, selectedWorkingArea, selectedWorkingAreaValue ]);
 
 	const handleSave = useCallback(() => {
 		if (selectedCountry && selectedState) {
@@ -117,11 +117,11 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 				.then(() => patchWorkingArea())
 				.catch(console.error);
 		}
-	}, [city, patchFreelancerLocalization, patchWorkingArea, selectedCountry, selectedState]);
+	}, [ city, patchFreelancerLocalization, patchWorkingArea, selectedCountry, selectedState ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;
@@ -129,20 +129,20 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 
 	return (
 		<>
-			<LocalizationPrimaryInfo countries={sortCountries(countries)}
-			                         selectedCountry={selectedCountry}
-			                         onCountrySelect={chooseCountry}
-			                         states={states}
-			                         selectedState={selectedState}
-			                         onStateSelect={chooseState}
-			                         selectedCity={city}
-			                         onCitySelect={setCity}/>
-			<LocalizationWorkingArea userWorkingArea={selectedWorkingArea}
-			                         userWorkingAreaValue={selectedWorkingAreaValue}
-			                         onWorkingAreaChange={chooseWorkingArea}
-			                         countries={sortCountries(countries)}
-			                         states={states}
-			                         onWorkingAreaValueChange={chooseWorkingAreaValue}/>
+			<LocalizationPrimaryInfo countries={ sortCountries(countries) }
+			                         selectedCountry={ selectedCountry }
+			                         onCountrySelect={ chooseCountry }
+			                         states={ states }
+			                         selectedState={ selectedState }
+			                         onStateSelect={ chooseState }
+			                         selectedCity={ city }
+			                         onCitySelect={ setCity }/>
+			<LocalizationWorkingArea userWorkingArea={ selectedWorkingArea }
+			                         userWorkingAreaValue={ selectedWorkingAreaValue }
+			                         onWorkingAreaChange={ chooseWorkingArea }
+			                         countries={ sortCountries(countries) }
+			                         states={ states }
+			                         onWorkingAreaValueChange={ chooseWorkingAreaValue }/>
 		</>
 	)
 }

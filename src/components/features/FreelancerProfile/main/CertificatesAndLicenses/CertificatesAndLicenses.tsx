@@ -1,70 +1,68 @@
 import styles from './CertificatesAndLicenses.module.scss';
-import {NAVBAR_SECTIONS, NavbarSectionKey} from "@constants/freelancerInnerNavbarSections.ts";
-import React, {useCallback, useEffect, useState} from "react";
+import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
+import React, { useCallback, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import {IFreelancerCertificate} from "@shared/freelancerTypes.ts";
+import { IFreelancerCertificate } from "@shared/freelancerTypes.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseAddModalItem/CertificateLicenseAddModalItem.tsx";
 import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import CertificateLicenseEditModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseEditModalItem/CertificateLicenseEditModalItem.tsx";
-import {
-	useFreelancerCertificateService
-} from "@services/freelancerCertificateService.ts";
+import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
 
 const CertificatesAndLicenses = () => {
 
 	const SECTION_ID: NavbarSectionKey = 'certifications';
 
-	const {getFreelancerCertificates, addCertificate} = useFreelancerCertificateService();
-	const {openModal} = useModal();
+	const { getFreelancerCertificates, addCertificate } = useFreelancerCertificateService();
+	const { openModal } = useModal();
 
-	const [certificates, setCertificates] = useState<IFreelancerCertificate[]>([]);
-	
+	const [ certificates, setCertificates ] = useState<IFreelancerCertificate[]>([]);
+
 	const fetchCertificates = useCallback(() => {
 		getFreelancerCertificates()
 			.then(setCertificates)
 			.catch(console.error);
-	}, [getFreelancerCertificates]);
+	}, [ getFreelancerCertificates ]);
 
 	useEffect(() => {
 		fetchCertificates();
-	}, [fetchCertificates]);
+	}, [ fetchCertificates ]);
 
 	const renderCertificates = () => {
 		if (certificates.length === 0) {
-			return <AlertItem kind={'neutral'}
-			                  text={'Nie dodałeś żadnych certyfikatów i licencji'}/>
+			return <AlertItem kind={ 'neutral' }
+			                  text={ 'Nie dodałeś żadnych certyfikatów i licencji' }/>
 		}
 		return certificates.map(certificate => {
-			return <CertificateItem certificate={certificate} key={certificate.id}/>;
+			return <CertificateItem certificate={ certificate } key={ certificate.id }/>;
 		});
 	};
 
 	const onCertificateAdd = () => {
 		openModal({
-			id: 'unknown',
+			id: 'CertificateLicenseAddModalItem',
 			title: 'Dodaj certyfikaty i licencje',
 			shouldCloseOnSaving: false,
 			btnText: 'Dodaj certyfikat',
 			btnWithIcon: true,
-			child: <CertificateLicenseAddModalItem onSave={handleCertificateAdd}/>
+			child: <CertificateLicenseAddModalItem onSave={ handleCertificateAdd }/>
 		});
 	};
 
 	const onCertificateEdit = () => {
 		openModal({
-			id: 'unknown',
+			id: 'CertificateLicenseEditModalItem',
 			title: 'Edytuj certyfikaty i licencje',
 			withSaveBtn: false,
 			child: <CertificateLicenseEditModalItem/>,
 			onClose: fetchCertificates
 		});
 	}
-	
+
 	const handleCertificateAdd = (certificate: Omit<IFreelancerCertificate, 'id'>) => {
 		addCertificate(certificate)
 			.then(fetchCertificates)
@@ -72,24 +70,24 @@ const CertificatesAndLicenses = () => {
 	};
 
 	return (
-		<section id={SECTION_ID} className={styles['certificates']}>
-			<header className={styles['certificates__header']}>
-				<h2 className={'title title--profile'}>{NAVBAR_SECTIONS[SECTION_ID]}</h2>
-				<div className={styles['certificates__wrapper']}>
-					<ActionBtn kind={'Add'}
-					           onClick={onCertificateAdd}
-					           withBorder={true}
-					           backgroundColor={'white'}/>
-					{certificates.length > 0 &&
-                        <ActionBtn kind={'Edit'}
-                                   onClick={onCertificateEdit}
-                                   withBorder={true}
-                                   backgroundColor={'white'}/>
+		<section id={ SECTION_ID } className={ styles['certificates'] }>
+			<header className={ styles['certificates__header'] }>
+				<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
+				<div className={ styles['certificates__wrapper'] }>
+					<ActionBtn kind={ 'Add' }
+					           onClick={ onCertificateAdd }
+					           withBorder={ true }
+					           backgroundColor={ 'white' }/>
+					{ certificates.length > 0 &&
+                        <ActionBtn kind={ 'Edit' }
+                                   onClick={ onCertificateEdit }
+                                   withBorder={ true }
+                                   backgroundColor={ 'white' }/>
 					}
 				</div>
 			</header>
-			<div className={styles['certificates__content']}>
-				{renderCertificates()}
+			<div className={ styles['certificates__content'] }>
+				{ renderCertificates() }
 			</div>
 		</section>
 	);

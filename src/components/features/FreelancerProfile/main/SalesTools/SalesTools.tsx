@@ -1,7 +1,4 @@
-import {
-	NAVBAR_SECTIONS,
-	NavbarSectionKey
-} from "@constants/freelancerInnerNavbarSections.ts";
+import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./SalesTools.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
@@ -25,21 +22,21 @@ const SalesTools = () => {
 	const { openModal } = useModal();
 	const { getSalesTools, patchSalesTools } = useOnboardingService();
 
-	const [currentIndex, setCurrentIndex] = useState<number>(0);
-	const [allSalesTools, setAllSalesTools] = useState<ISalesTool[]>([]);
+	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
+	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
 
 	useEffect(() => {
 		getSalesTools()
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [getSalesTools]);
+	}, [ getSalesTools ]);
 
-	if(!user) {
+	if (!user) {
 		return <></>;
 	}
 
 	const handleNavigateClick = (direction: 'left' | 'right') => {
-		if(direction === 'left') {
+		if (direction === 'left') {
 			setCurrentIndex((prev) => prev - 1);
 		} else {
 			setCurrentIndex((prev) => prev + 1);
@@ -53,16 +50,16 @@ const SalesTools = () => {
 
 	const renderSalesTools = () => {
 		return user.salesTools.map(tool => {
-			return <SalesToolProfileItem key={tool.id}
-			                             toolName={tool.toolName}
-			                             categoryName={tool.kind}
-			                             toolImg={getPictureForSalesTools(tool.toolName)}/>
+			return <SalesToolProfileItem key={ tool.id }
+			                             toolName={ tool.toolName }
+			                             categoryName={ tool.kind }
+			                             toolImg={ getPictureForSalesTools(tool.toolName) }/>
 		});
 	};
 
 	const onSalesToolsEdit = () => {
 		openModal({
-			id: 'unknown',
+			id: 'SalesToolsEditModalItem',
 			title: 'Edytuj narzędzia sprzedażowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
@@ -78,57 +75,57 @@ const SalesTools = () => {
 
 	const handleAddTools = () => {
 		openModal({
-			id: 'unknown',
+			id: 'SalesToolsAddModalItem',
 			title: 'Dodaj narzędzia sprzedażowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Dodaj narzędzia sprzedażowe',
 			btnWithIcon: true,
 			child: <SalesToolsAddModalItem
-				salesTools={getSalesToolsToAdd()}
-				onSave={onSalesToolsAdd}/>
+				salesTools={ getSalesToolsToAdd() }
+				onSave={ onSalesToolsAdd }/>
 		});
 	};
 
 	return (
-		<section className={styles['tools']} id={SECTION_ID}>
-			<div className={styles['tools__header']}>
-				<div className={styles['tools__heading']}>
-					<h2 className={'title title--profile'}>{NAVBAR_SECTIONS[SECTION_ID]}</h2>
-					<div className={styles['tools__buttons']}>
-						<ActionBtn kind={'Navigate Left'}
-						           key={'Left Btn'}
-						           withBorder={true}
-						           backgroundColor={'white'}
-						           disabled={currentIndex === 0}
-						           onClick={() => handleNavigateClick('left')}/>
-						<ActionBtn kind={'Navigate Right'}
-						           key={'Right Btn'}
-						           withBorder={true}
-						           backgroundColor={'white'}
-						           disabled={currentIndex + 5 >= user.salesTools.length}
-						           onClick={() => handleNavigateClick('right')}/>
+		<section className={ styles['tools'] } id={ SECTION_ID }>
+			<div className={ styles['tools__header'] }>
+				<div className={ styles['tools__heading'] }>
+					<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
+					<div className={ styles['tools__buttons'] }>
+						<ActionBtn kind={ 'Navigate Left' }
+						           key={ 'Left Btn' }
+						           withBorder={ true }
+						           backgroundColor={ 'white' }
+						           disabled={ currentIndex === 0 }
+						           onClick={ () => handleNavigateClick('left') }/>
+						<ActionBtn kind={ 'Navigate Right' }
+						           key={ 'Right Btn' }
+						           withBorder={ true }
+						           backgroundColor={ 'white' }
+						           disabled={ currentIndex + 5 >= user.salesTools.length }
+						           onClick={ () => handleNavigateClick('right') }/>
 					</div>
 				</div>
-				<div className={styles['tools__buttons']}>
-					<ActionBtn kind={'Add'}
-					           key={'Add'}
-					           withBorder={true}
-					           backgroundColor={'white'}
-					           onClick={handleAddTools}/>
-					<ActionBtn kind={'Edit'}
-					           key={'Edit'}
-					           withBorder={true}
-					           backgroundColor={'white'}
-					           onClick={onSalesToolsEdit}/>
+				<div className={ styles['tools__buttons'] }>
+					<ActionBtn kind={ 'Add' }
+					           key={ 'Add' }
+					           withBorder={ true }
+					           backgroundColor={ 'white' }
+					           onClick={ handleAddTools }/>
+					<ActionBtn kind={ 'Edit' }
+					           key={ 'Edit' }
+					           withBorder={ true }
+					           backgroundColor={ 'white' }
+					           onClick={ onSalesToolsEdit }/>
 				</div>
 			</div>
-			<div className={styles['tools__content']}>
+			<div className={ styles['tools__content'] }>
 				<div
-					style={{
-						transform: `translateX(-${currentIndex * (169 + 8)}px)`
-					}}
-					className={styles['tools__inner']}>
-					{renderSalesTools()}
+					style={ {
+						transform: `translateX(-${ currentIndex * (169 + 8) }px)`
+					} }
+					className={ styles['tools__inner'] }>
+					{ renderSalesTools() }
 				</div>
 			</div>
 		</section>

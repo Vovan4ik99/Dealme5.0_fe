@@ -1,34 +1,35 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {IAddSubIndustriesModalItemProps} from "./addSubIndustriesModalItemTypes.ts";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import React, { useCallback, useEffect, useState } from "react";
+import { IAddSubIndustriesModalItemProps } from "./addSubIndustriesModalItemTypes.ts";
 import IndustryList from "@entities/IndustryList/IndustryList.tsx";
 
-const AddSubIndustriesModalItem: React.FC<IAddSubIndustriesModalItemProps> = ({registerOnSave, industries}) => {
+const AddSubIndustriesModalItem: React.FC<IAddSubIndustriesModalItemProps> = ({
+	                                                                              registerOnSave,
+	                                                                              industries,
+	                                                                              addSubIndustries
+                                                                              }) => {
 
-	const {updateModalData} = useModal();
-	
-	const [selectedItems, setSelectedItems] = useState<number[]>([]);
-	
+	const [ selectedItems, setSelectedItems ] = useState<number[]>([]);
+
 	const handleSave = useCallback(() => {
 		const subIndustries = industries.map(industry => industry.subIndustries).flat()
 			.filter(subIndustry => selectedItems.includes(subIndustry.id));
-		updateModalData('subIndustriesEdit', {subIndustries: subIndustries})
-	}, [industries, selectedItems, updateModalData]);
+		addSubIndustries(subIndustries);
+	}, [addSubIndustries, industries, selectedItems]);
 
 	const onChange = (newSubIndustry: number) => {
 		setSelectedItems(prevState => {
 			return prevState?.includes(newSubIndustry)
 				? prevState?.filter(item => item !== newSubIndustry)
-				: [...prevState, newSubIndustry];
+				: [ ...prevState, newSubIndustry ];
 		});
 	};
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
-	
+	}, [ handleSave, registerOnSave ]);
+
 	return (
-		<IndustryList industries={industries} selectedSubIndustries={selectedItems} onChange={onChange}/>
+		<IndustryList industries={ industries } selectedSubIndustries={ selectedItems } onChange={ onChange }/>
 	)
 };
 

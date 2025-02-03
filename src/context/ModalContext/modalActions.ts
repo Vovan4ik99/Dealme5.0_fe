@@ -1,5 +1,4 @@
-import {IBaseModal, ModalId} from "@context/ModalContext/ModalContext.ts";
-import {ModalPayloads} from "@shared/modalPayloadTypes.ts";
+import { IBaseModal } from "@context/ModalContext/ModalContext.ts";
 
 export enum ModalActions {
 	OPEN_MODAL = 'OPEN_MODAL',
@@ -10,7 +9,7 @@ export enum ModalActions {
 
 export interface IOpenModal {
 	type: ModalActions.OPEN_MODAL;
-	payload: IBaseModal<ModalId>;
+	payload: IBaseModal;
 }
 
 export interface ICloseModals {
@@ -22,9 +21,5 @@ export interface ICloseAllModals {
 	type: ModalActions.CLOSE_ALL_MODALS;
 }
 
-export interface IUpdateModalData {
-	type: ModalActions.UPDATE_MODAL_DATA;
-	payload: { id: ModalId; data: ModalPayloads[ModalId] }
-}
 
-export type ModalAction = IOpenModal | ICloseModals | ICloseAllModals | IUpdateModalData;
+export type ModalAction = IOpenModal | ICloseModals | ICloseAllModals;

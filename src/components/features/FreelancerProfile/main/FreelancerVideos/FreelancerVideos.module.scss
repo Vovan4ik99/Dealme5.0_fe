@@ -1,7 +1,42 @@
 .videos {
+  margin-top: 64px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
+  &__heading {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.3s ease-in-out;
+    width: max-content;
+  }
+
+  &__item {
+    flex-shrink: 0;
+  }
 }

@@ -1,60 +1,49 @@
 import styles from './SubIndustriesModalItem.module.scss';
-import React, {useCallback, useEffect, useState} from "react";
-import {ISubIndustriesModalItemProps} from "./subindustriesModalItemTypes.ts";
-import SubIndustryModalItem from "@components/features/EditModal/sub_industries/SubIndustryModalItem/SubIndustryModalItem.tsx";
-import {useOnboardingService} from "@services/onboardingService.ts";
-import {IIndustry, ISubIndustry} from "@shared/onboardingTypes.ts";
-import DragAndDropContainer from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
-import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
-import {ISubIndustriesEditPayload} from "@shared/modalPayloadTypes.ts";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
-import AddSubIndustriesModalItem from "@components/features/EditModal/sub_industries/AddSubIndustriesModalItem/AddSubIndustriesModalItem.tsx";
+import React, { useCallback, useEffect, useState } from "react";
+import { ISubIndustriesModalItemProps } from "./subindustriesModalItemTypes.ts";
+import SubIndustryModalItem
+	from "@components/features/EditModal/sub_industries/SubIndustryModalItem/SubIndustryModalItem.tsx";
+import { useOnboardingService } from "@services/onboardingService.ts";
+import { IIndustry, ISubIndustry } from "@shared/onboardingTypes.ts";
+import DragAndDropContainer
+	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
+import AddSubIndustriesModalItem
+	from "@components/features/EditModal/sub_industries/AddSubIndustriesModalItem/AddSubIndustriesModalItem.tsx";
 
-const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({userSubIndustries, onSave, registerOnSave}) => {
+const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({
+	                                                                        userSubIndustries,
+	                                                                        onSave,
+	                                                                        registerOnSave
+                                                                        }) => {
 
-	const {getIndustries, patchSubIndustries} = useOnboardingService();
-	const {modals, openModal} = useModal();
-	
-	const [industries, setIndustries] = useState<IIndustry[]>([]);
-	const [subIndustries, setSubIndustries] = useState<ISubIndustry[]>(userSubIndustries);
+	const { getIndustries, patchSubIndustries } = useOnboardingService();
+	const { openModal } = useModal();
 
-	const modal = modals.find(
-		(modal) => modal.id === "subIndustriesEdit"
-	) as { payload: ISubIndustriesEditPayload | undefined };
+	const [ industries, setIndustries ] = useState<IIndustry[]>([]);
+	const [ subIndustries, setSubIndustries ] = useState<ISubIndustry[]>(userSubIndustries);
 
 	const handleSave = useCallback(() => {
 		patchSubIndustries(subIndustries.map(subIndustry => subIndustry.id))
 			.then(() => onSave())
 			.catch(console.error);
-	}, [onSave, patchSubIndustries, subIndustries]);
+	}, [ onSave, patchSubIndustries, subIndustries ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	useEffect(() => {
 		if (industries.length > 0) return;
 		getIndustries()
 			.then(setIndustries)
 			.catch(console.error);
-	}, [getIndustries, industries.length, modal]);
+	}, [ getIndustries, industries.length ]);
 
-	const addUniqueSubIndustries = (
-		currentSubIndustries: ISubIndustry[],
-		newSubIndustries: ISubIndustry[]
-	): ISubIndustry[] => {
-		const uniqueSubIndustries = newSubIndustries.filter(
-			sub => !currentSubIndustries.some(existing => existing.id === sub.id)
-		);
-		return [...uniqueSubIndustries, ...currentSubIndustries];
+	const handleSubIndustriesAdd = (newSubIndustries: ISubIndustry[]) => {
+		setSubIndustries(prevState => [ ...prevState, ...newSubIndustries ]);
 	};
-
-	useEffect(() => {
-		if (!modal?.payload?.subIndustries) return;
-		setSubIndustries(prevState =>
-			addUniqueSubIndustries(prevState, modal.payload!.subIndustries)
-		);
-	}, [modal, userSubIndustries]);
 
 	const findIndustryNameBySubIndustryId = (subIndustryId: number): string | null => {
 		for (const industry of industries) {
@@ -85,27 +74,29 @@ const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({userSub
 			.filter(industry => industry.subIndustries.length > 0);
 
 		openModal({
-			id: 'unknown',
+			id: 'AddSubIndustriesModalItem',
 			title: 'Dodaj branże',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
-			child: <AddSubIndustriesModalItem industries={filteredIndustries} />
+			child: <AddSubIndustriesModalItem industries={ filteredIndustries }
+			                                  addSubIndustries={ handleSubIndustriesAdd }/>
 		});
 	};
 
 	return (
-		<div className={styles['item']}>
-			<DragAndDropContainer items={subIndustries} onItemsChange={handleItemsChange} renderItem={(subIndustry) => (
-				<SubIndustryModalItem
-					key={subIndustry.id}
-					text={subIndustry.name}
-					onDelete={() => handleItemDelete(subIndustry.id)}
-					label={findIndustryNameBySubIndustryId(subIndustry.id) ?? 'Brak'}
-				/>
-			)}/>
-			<button onClick={handleAddItem} className={'btn btn--modal'}>
-				<AddIcon width={12} height={12}/>
+		<div className={ styles['item'] }>
+			<DragAndDropContainer items={ subIndustries } onItemsChange={ handleItemsChange }
+			                      renderItem={ (subIndustry) => (
+				                      <SubIndustryModalItem
+					                      key={ subIndustry.id }
+					                      text={ subIndustry.name }
+					                      onDelete={ () => handleItemDelete(subIndustry.id) }
+					                      label={ findIndustryNameBySubIndustryId(subIndustry.id) ?? 'Brak' }
+				                      />
+			                      ) }/>
+			<button onClick={ handleAddItem } className={ 'btn btn--modal' }>
+				<AddIcon width={ 12 } height={ 12 }/>
 				Dodaj kolejne branże
 			</button>
 		</div>

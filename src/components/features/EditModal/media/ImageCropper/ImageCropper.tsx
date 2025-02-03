@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {IImageCropperProps} from "./imageCropperTypes.ts";
+import React, { useEffect, useState } from "react";
+import { IImageCropperProps } from "./imageCropperTypes.ts";
 import styles from './ImageCropper.module.scss';
-import Cropper, {Area} from "react-easy-crop";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import Cropper, { Area } from "react-easy-crop";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 
 const ImageCropper: React.FC<IImageCropperProps> = ({
 	                                                    mediaSrc,
@@ -10,16 +10,17 @@ const ImageCropper: React.FC<IImageCropperProps> = ({
 	                                                    aspect,
 	                                                    registerOnSave,
 	                                                    filename,
-	                                                    isAvatar
+	                                                    isAvatar,
+	                                                    onSave
                                                     }) => {
 	const BASE_CROP_AREA_WIDTH = 504
-	const INITIAL_CROP = {x: 0, y: 0};
+	const INITIAL_CROP = { x: 0, y: 0 };
 
-	const [crop, setCrop] = useState(INITIAL_CROP);
-	const [zoom, setZoom] = useState(1);
-	const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+	const [ crop, setCrop ] = useState(INITIAL_CROP);
+	const [ zoom, setZoom ] = useState(1);
+	const [ croppedAreaPixels, setCroppedAreaPixels ] = useState<Area | null>(null);
 
-	const {closeModals, updateModalData} = useModal();
+	const { closeModals } = useModal();
 
 	const handleZoomChange = (newZoom: number) => {
 		setZoom(newZoom);
@@ -66,8 +67,8 @@ const ImageCropper: React.FC<IImageCropperProps> = ({
 		if (!croppedAreaPixels || !mediaSrc) return;
 		getCroppedImg(mediaSrc, croppedAreaPixels)
 			.then((blob) => {
+				onSave(blob, filename);
 				closeModals(2);
-				updateModalData('imageEdit', {filename, blob});
 			}).catch((error) => console.error('Error cropping image:', error));
 	};
 
@@ -77,26 +78,26 @@ const ImageCropper: React.FC<IImageCropperProps> = ({
 	});
 
 	return (
-		<div className={`${styles['modal']} ${isAvatar && styles['modal--avatar']}`}>
+		<div className={ `${ styles['modal'] } ${ isAvatar && styles['modal--avatar'] }` }>
 			<Cropper
-				image={mediaSrc}
-				crop={crop}
-				zoom={zoom}
-				aspect={aspect}
-				onCropChange={setCrop}
-				onZoomChange={handleZoomChange}
-				onCropComplete={onCropComplete}
-				showGrid={false}
-				cropSize={{
+				image={ mediaSrc }
+				crop={ crop }
+				zoom={ zoom }
+				aspect={ aspect }
+				onCropChange={ setCrop }
+				onZoomChange={ handleZoomChange }
+				onCropComplete={ onCropComplete }
+				showGrid={ false }
+				cropSize={ {
 					width: BASE_CROP_AREA_WIDTH,
 					height: BASE_CROP_AREA_WIDTH / aspect,
-				}}
+				} }
 				objectFit="cover"
-				style={{
+				style={ {
 					cropAreaStyle: {
 						borderRadius: '16px',
 					},
-				}}
+				} }
 			/>
 		</div>
 	);

@@ -1,0 +1,45 @@
+@use '@styles/variables' as vars;
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  align-items: center;
+
+  &:hover {
+	background-color: vars.$color-gray-light;
+  }
+
+  &__info {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-self: flex-start;
+	transition: all 0.3s ease;
+
+	&--hovered {
+	  padding: 0 0 16px 16px;
+	}
+  }
+
+  &__title {
+	color: vars.$color-black;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: left;
+  }
+
+  &__date {
+	display: flex;
+	gap: 8px;
+  }
+
+  &__text {
+	color: vars.$color-gray;
+	font-size: 14px;
+	line-height: 120%;
+  }
+}

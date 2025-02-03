@@ -6,11 +6,11 @@ interface IInputErrorProps {
 	text: string;
 }
 
-const InputError: React.FC<IInputErrorProps> = ({text}) => {
+const InputError: React.FC<IInputErrorProps> = ({ text }) => {
 	return (
-		<div className={styles.error}>
-			<img src={error_icon} alt="error"/>
-			<span>{text}</span>
+		<div className={ styles.error }>
+			<img src={ error_icon } alt="error"/>
+			<span>{ text }</span>
 		</div>
 	)
 }

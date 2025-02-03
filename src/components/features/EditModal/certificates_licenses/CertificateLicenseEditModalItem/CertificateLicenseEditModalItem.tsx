@@ -1,21 +1,19 @@
 import styles from './CertificateLicenseEditModalItem.module.scss';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import React, {useCallback, useEffect, useState} from "react";
-import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
-import {IFreelancerCertificate} from "@shared/freelancerTypes.ts";
+import React, { useCallback, useEffect, useState } from "react";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import { IFreelancerCertificate } from "@shared/freelancerTypes.ts";
 import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseAddModalItem/CertificateLicenseAddModalItem.tsx";
-import {
-	useFreelancerCertificateService
-} from "@services/freelancerCertificateService.ts";
+import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
 
 const CertificateLicenseEditModalItem = () => {
 
-	const [certificates, setCertificates] = useState<IFreelancerCertificate[]>([]);
-	const {openModal} = useModal();
+	const [ certificates, setCertificates ] = useState<IFreelancerCertificate[]>([]);
+	const { openModal } = useModal();
 
 	const {
 		getFreelancerCertificates,
@@ -29,11 +27,11 @@ const CertificateLicenseEditModalItem = () => {
 		getFreelancerCertificates()
 			.then(setCertificates)
 			.catch(console.error);
-	}, [getFreelancerCertificates]);
+	}, [ getFreelancerCertificates ]);
 
 	useEffect(() => {
 		fetchFreelancerCertificates();
-	}, [fetchFreelancerCertificates]);
+	}, [ fetchFreelancerCertificates ]);
 
 	const handleDeleteCertificate = (id: number) => {
 		deleteCertificate(id)
@@ -55,21 +53,21 @@ const CertificateLicenseEditModalItem = () => {
 
 	const onAddCertificate = () => {
 		openModal({
-			id: 'unknown',
+			id: 'CertificateLicenseAddModalItem',
 			title: 'Dodaj licencje lub certyfikat',
 			btnText: 'Dodaj licencje lub certyfikat',
 			btnWithIcon: true,
-			child: <CertificateLicenseAddModalItem onSave={handleAddCertificate}/>
+			child: <CertificateLicenseAddModalItem onSave={ handleAddCertificate }/>
 		});
 	};
 
 	const onEditCertificate = (certificate: IFreelancerCertificate) => {
 		openModal({
-			id: 'unknown',
+			id: 'CertificateLicenseAddModalItem',
 			title: 'Edytuj licencje lub certyfikat',
 			btnText: 'Edytuj licencje lub certyfikat',
 			btnWithIcon: true,
-			child: <CertificateLicenseAddModalItem certificate={certificate}
+			child: <CertificateLicenseAddModalItem certificate={ certificate }
 			                                       onSave={
 				                                       (updatedCertificate: Omit<IFreelancerCertificate, 'id'>) =>
 					                                       handlePatchCertificate(certificate.id, updatedCertificate)
@@ -82,11 +80,11 @@ const CertificateLicenseEditModalItem = () => {
 			return <></>;
 		}
 		return certificates.map(certificate => {
-			return <CertificateItem key={certificate.id}
-			                        certificate={certificate}
+			return <CertificateItem key={ certificate.id }
+			                        certificate={ certificate }
 			                        isModalItem
-			                        onDelete={() => handleDeleteCertificate(certificate.id)}
-			                        onPatch={() => onEditCertificate(certificate)}/>
+			                        onDelete={ () => handleDeleteCertificate(certificate.id) }
+			                        onPatch={ () => onEditCertificate(certificate) }/>
 		});
 	};
 
@@ -95,11 +93,11 @@ const CertificateLicenseEditModalItem = () => {
 	}
 
 	return (
-		<div className={styles['modal']}>
-			<div className={styles['modal__wrapper']}>
-				{renderCertificates()}
+		<div className={ styles['modal'] }>
+			<div className={ styles['modal__wrapper'] }>
+				{ renderCertificates() }
 			</div>
-			<button className={'btn btn--modal'} onClick={onAddCertificate}>
+			<button className={ 'btn btn--modal' } onClick={ onAddCertificate }>
 				<AddIcon/>
 				<span>Dodaj licencje lub certyfikat</span>
 			</button>

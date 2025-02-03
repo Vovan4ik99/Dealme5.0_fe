@@ -1,25 +1,25 @@
-import React, {useCallback, useEffect} from "react";
-import {IVideoPreviewerProps} from "@components/features/EditModal/media/VideoPreviewer/videoPreviewerTypes.ts";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import React, { useCallback, useEffect } from "react";
+import { IVideoPreviewerProps } from "@components/features/EditModal/media/VideoPreviewer/videoPreviewerTypes.ts";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
 import styles from './videoPreviewer.module.scss';
 
-const VideoPreviewer: React.FC<IVideoPreviewerProps> = ({onClose, registerOnSave, videoUrl}) => {
+const VideoPreviewer: React.FC<IVideoPreviewerProps> = ({ onClose, registerOnSave, videoUrl }) => {
 
-	const {closeModals} = useModal();
-	
+	const { closeModals } = useModal();
+
 	const handleSave = useCallback(() => {
 		onClose();
 		closeModals(2);
-	}, [closeModals, onClose]);
+	}, [ closeModals, onClose ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	return (
-		<div className={styles['previewer']}>
-			<VideoItem videoUrl={videoUrl}/>
+		<div className={ styles['previewer'] }>
+			<VideoItem videoUrl={ videoUrl }/>
 		</div>
 	);
 }

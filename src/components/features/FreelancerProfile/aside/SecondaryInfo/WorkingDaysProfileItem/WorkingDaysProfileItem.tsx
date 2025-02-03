@@ -5,19 +5,20 @@ import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/S
 import {
 	IWorkingDaysProfileItemProps
 } from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/workingDaysProfileItemTypes.ts";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
-import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
-import {useOnboardingService} from "@services/onboardingService.ts";
-import WorkingDaysModalItem from "@components/features/EditModal/working_days/WorkingDaysModalItem/WorkingDaysModalItem.tsx";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
+import { WORKING_DAYS, WorkingDayKey } from "@constants/workingDays.ts";
+import { useOnboardingService } from "@services/onboardingService.ts";
+import WorkingDaysModalItem
+	from "@components/features/EditModal/working_days/WorkingDaysModalItem/WorkingDaysModalItem.tsx";
 
-const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWorkingDays, onSave}) => {
+const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({ userWorkingDays, onSave }) => {
 
-	const {openModal} = useModal();
-	const {patchWorkingDays} = useOnboardingService();
+	const { openModal } = useModal();
+	const { patchWorkingDays } = useOnboardingService();
 
 	const formatWorkingDays = (): string => {
 		const allDays = Object.keys(WORKING_DAYS) as WorkingDayKey[];
-		const workDays: WorkingDayKey[] = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+		const workDays: WorkingDayKey[] = [ 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY' ];
 
 		const isAllDays = userWorkingDays.length === allDays.length;
 		if (isAllDays) {
@@ -30,7 +31,7 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWor
 			return "Dni robocze";
 		}
 
-		const sortedDays = [...userWorkingDays].sort(
+		const sortedDays = [ ...userWorkingDays ].sort(
 			(a, b) =>
 				allDays.indexOf(a) - allDays.indexOf(b)
 		);
@@ -50,7 +51,7 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWor
 				if (startDay === sortedDays[i - 1]) {
 					ranges.push(startDayName);
 				} else {
-					ranges.push(`${startDayName} - ${endDayName}`);
+					ranges.push(`${ startDayName } - ${ endDayName }`);
 				}
 				startDay = currentDay;
 			}
@@ -68,26 +69,26 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({userWor
 
 	const editWorkingDays = () => {
 		openModal({
-			id: 'unknown',
+			id: 'WorkingDaysModalItem',
 			title: 'Edytuj dostępność',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
-			child: <WorkingDaysModalItem userWorkingDays={userWorkingDays} onSave={handleSave}/>
+			child: <WorkingDaysModalItem userWorkingDays={ userWorkingDays } onSave={ handleSave }/>
 		});
 	};
 
 	return (
 		<>
-			<div className={styles['info__icon']}>
-				<img src={calendar} alt="calendar"/>
+			<div className={ styles['info__icon'] }>
+				<img src={ calendar } alt="calendar"/>
 			</div>
-			<p>{formatWorkingDays()}</p>
-			<div className={styles['info__btn']}>
-				<ActionBtn kind={'Edit'}
-				           withBorder={false}
-				           backgroundColor={'transparent'}
-				           onClick={editWorkingDays}/>
+			<p>{ formatWorkingDays() }</p>
+			<div className={ styles['info__btn'] }>
+				<ActionBtn kind={ 'Edit' }
+				           withBorder={ false }
+				           backgroundColor={ 'transparent' }
+				           onClick={ editWorkingDays }/>
 			</div>
 		</>
 	);

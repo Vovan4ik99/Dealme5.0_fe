@@ -1,4 +1,4 @@
-import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
+import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
 
 export interface IImageCropperProps extends ISaveableChildProps {
 	filename: string;
@@ -6,4 +6,5 @@ export interface IImageCropperProps extends ISaveableChildProps {
 	onClose: () => void;
 	aspect: number;
 	isAvatar: boolean;
+	onSave: (blob: Blob, filename: string) => void;
 }

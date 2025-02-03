@@ -11,35 +11,35 @@ const SalesToolsAddModalItem: React.FC<ISalesToolsAddModalItemProps> = ({
 	                                                                        onSave,
                                                                         }) => {
 
-	const [selectedTools, setSelectedTools] = useState<ISalesTool[]>([]);
+	const [ selectedTools, setSelectedTools ] = useState<ISalesTool[]>([]);
 
 	const onChange = (newTool: number) => {
 		setSelectedTools(prevState => {
 			const toolToAdd = salesTools.find(tool => tool.id === newTool);
 
-			if(!toolToAdd) return prevState;
+			if (!toolToAdd) return prevState;
 
 			return prevState.includes(toolToAdd)
 				? prevState.filter(tool => tool !== toolToAdd)
-				: [...prevState, toolToAdd];
+				: [ ...prevState, toolToAdd ];
 		});
 	};
 
 	const handleSave = useCallback(() => {
-		if(selectedTools.length <= 0) {
+		if (selectedTools.length <= 0) {
 			return;
 		}
 		onSave(selectedTools);
-	}, [onSave, selectedTools]);
+	}, [ onSave, selectedTools ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	return (
-		<SalesToolsList tools={salesTools}
-		                selectedTools={selectedTools.map(tool => tool.id)}
-		                onChange={onChange}/>
+		<SalesToolsList tools={ salesTools }
+		                selectedTools={ selectedTools.map(tool => tool.id) }
+		                onChange={ onChange }/>
 	);
 };
 
