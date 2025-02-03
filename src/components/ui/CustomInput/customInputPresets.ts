@@ -57,5 +57,13 @@ export const CUSTOM_INPUT_PRESETS: Record<PresetType, Partial<CustomInputProps>>
 		autoComplete: '',
 		labelText: 'Wydany przez',
 		validation: CUSTOM_INPUT_VALIDATION_RULES.certificateOrganization
-	}
+	},
+	videoTitle: {
+		id: 'title',
+		type: 'text',
+		placeholder: 'Np moje wideo',
+		autoComplete: '',
+		labelText: 'Nazwa / Komentarz',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.videoTitle
+	},
 } as const;

@@ -61,7 +61,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 						<>
 							<ModalOverlay zIndex={getZIndex(state.modals.length - 1)}/>
 							{state.modals.map((modal, index) => (
-								<BaseEditModal key={modal.id + modal.title}
+								<BaseEditModal key={modal.title + state.modals.length}
 								               id={modal.id}
 								               child={modal.child}
 								               title={modal.title}

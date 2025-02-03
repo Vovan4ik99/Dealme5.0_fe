@@ -6,10 +6,11 @@ import {
 } from "@components/features/EditModal/about_me/AboutMeModalItem/aboutMeModalItemTypes.ts";
 import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import AboutMeVideoModalItem
-	from "@components/features/EditModal/about_me/AboutMeVideoModalItem/AboutMeVideoModalItem.tsx";
+import VideoModalItem
+	from "@components/features/EditModal/video/VideoModalItem/VideoModalItem.tsx";
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "@components/features/EditModal/media/MediaUploader/MediaUploader.tsx";
+import { createVideoBlob } from "@utils/videoUtils.ts";
 
 const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({aboutMeInfo, onSave, registerOnSave}) => {
 
@@ -53,16 +54,6 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({aboutMeInfo, onSave
 		setVideo(videoUrl);
 		setFilename(fileName);
 	}
-	
-	const createVideoBlob = (base64VideoUrl: string) => {
-		const base64Data = base64VideoUrl.split(",")[1];
-		const binary = atob(base64Data);
-		const array = new Uint8Array(binary.length);
-		for (let i = 0; i < binary.length; i++) {
-			array[i] = binary.charCodeAt(i);
-		}
-		return  new Blob([array], {type: `video/${ base64VideoUrl.split('.').pop() ?? 'mp4' }`});
-	}
 
 	const handleSave = useCallback(() => {
 		if (!aboutText.trim() || video === null) {
@@ -102,10 +93,12 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({aboutMeInfo, onSave
 			                 fontWeight={400}
 			                 value={aboutDescription}
 			                 onTextChange={setAboutDescription}/>
-			<AboutMeVideoModalItem videoUrl={video}
-			                       fileName={filename ?? 'Intro video'}
-			                       onClick={onVideoEdit}
-			                       onDelete={() => setVideo(null)}/>
+			<VideoModalItem videoUrl={video}
+			                label={'Wideo (opcjonalne)'}
+			                emptyStateText={'Nagraj krótkie video o sobie'}
+			                fileName={filename ?? 'Intro video'}
+			                onClick={onVideoEdit}
+			                onDelete={() => setVideo(null)}/>
 		</div>
 	);
 };

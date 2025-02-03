@@ -67,4 +67,11 @@ export const CUSTOM_INPUT_VALIDATION_RULES: Record<PresetType, RegisterOptions> 
 			message: 'Długość od 2 do 50 znaków'
 		}
 	},
+	videoTitle: {
+		required: 'Podaj nazwe video / komentarz',
+		max: {
+			value: 50,
+			message: 'Długość od 2 do 50 znaków'
+		}
+	}
 } as const;
