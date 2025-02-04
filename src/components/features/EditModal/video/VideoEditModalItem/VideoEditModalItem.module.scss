@@ -1,0 +1,55 @@
+@use '@styles/variables' as vars;
+
+.item {
+  padding: 8px 12px;
+  display: flex;
+  gap: 16px;
+  border-radius: 12px;
+  align-items: center;
+  border: 1px solid vars.$color-gray-border;
+
+  &__video {
+	border-radius: 12px;
+	width: 128px;
+	height: 72px;
+	background-color: vars.$color-gray-light;
+
+	video {
+	  border-radius: 12px;
+	  width: 100%;
+	  height: 100%;
+	  object-fit: contain;
+	}
+  }
+
+  &__content {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 232px;
+  }
+
+  &__title {
+	color: vars.$color-black;
+	font-size: 16px;
+	line-height: 120%;
+  }
+
+  &__date {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+
+	span {
+	  color: vars.$color-gray;
+	  font-size: 14px;
+	  line-height: 120%;
+	}
+  }
+
+  &__actions {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+  }
+}

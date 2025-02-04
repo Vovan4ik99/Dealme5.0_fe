@@ -91,6 +91,7 @@ const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave
 			shouldCloseOnSaving: true,
 			btnText: 'Dodaj język',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: <AddLanguageModalItem languages={ getAbsentLanguageNames(languages, draggableLanguages) }
 			                             onSave={ onLanguageChange }/>
 		});

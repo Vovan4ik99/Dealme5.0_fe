@@ -29,8 +29,10 @@
   }
 
   &__inner {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr;
     gap: 16px;
     transition: transform 0.3s ease-in-out;
     width: max-content;

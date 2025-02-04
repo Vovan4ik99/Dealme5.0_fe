@@ -19,6 +19,7 @@ const Avatar = () => {
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: (
 				<ImageModalItem title={ 'Awatar' }
 				                imageSize="512x512px"

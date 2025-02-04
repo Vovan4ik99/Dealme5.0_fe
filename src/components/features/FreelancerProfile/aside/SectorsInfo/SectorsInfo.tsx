@@ -29,6 +29,7 @@ const SectorsInfo = () => {
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
+			withSaveBtn: true,
 			child: <SectorsModalItem onSave={ handleSave }/>
 		});
 	};

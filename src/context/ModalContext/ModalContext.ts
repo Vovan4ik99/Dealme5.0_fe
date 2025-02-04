@@ -9,16 +9,28 @@ export interface ISaveableChildProps {
 	handleClose?: () => void;
 }
 
-export interface IBaseModal {
+interface IBaseModalBase {
 	id: string;
 	title: string;
 	child: ReactElement<ISaveableChildProps>;
-	btnText?: string;
-	btnWithIcon?: boolean;
-	shouldCloseOnSaving?: boolean;
-	withSaveBtn?: boolean;
 	onClose?: () => void;
 }
+
+type IBaseModalWithSave = {
+	withSaveBtn: true;
+	btnText: string;
+	btnWithIcon: boolean;
+	shouldCloseOnSaving: boolean;
+};
+
+type IBaseModalWithoutSave = {
+	withSaveBtn?: false;
+	btnText?: never;
+	btnWithIcon?: never;
+	shouldCloseOnSaving?: never;
+};
+
+export type IBaseModal = IBaseModalBase & (IBaseModalWithSave | IBaseModalWithoutSave);
 
 export interface IModalInitialState {
 	modals: IBaseModal[];

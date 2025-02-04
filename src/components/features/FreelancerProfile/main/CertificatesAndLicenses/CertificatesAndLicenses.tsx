@@ -49,6 +49,7 @@ const CertificatesAndLicenses = () => {
 			shouldCloseOnSaving: false,
 			btnText: 'Dodaj certyfikat',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: <CertificateLicenseAddModalItem onSave={ handleCertificateAdd }/>
 		});
 	};

@@ -40,6 +40,7 @@ const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({ user
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: <WorkingHoursModalItem userWorkingHour={ userWorkingHour } onSave={ handleSave }/>
 		});
 	}

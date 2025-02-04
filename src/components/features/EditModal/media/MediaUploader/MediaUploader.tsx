@@ -83,6 +83,7 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({
 			btnText: `Dodaj ${ mediaType === 'image' ? 'zdjęcie' : 'wideo' }`,
 			btnWithIcon: true,
 			shouldCloseOnSaving: false,
+			withSaveBtn: true,
 			child: child
 		});
 	}, [ aspectRatio, fileName, handleUploaderClose, handleVideoAdd, isAvatar, mediaSrc, mediaType, onImageAdd, openModal ]);

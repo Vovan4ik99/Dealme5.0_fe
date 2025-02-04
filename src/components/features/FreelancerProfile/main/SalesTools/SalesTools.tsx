@@ -63,6 +63,8 @@ const SalesTools = () => {
 			title: 'Edytuj narzędzia sprzedażowe',
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
+			withSaveBtn: true,
+			btnWithIcon: false,
 			child: <SalesToolsEditModalItem/>
 		});
 	};
@@ -80,6 +82,7 @@ const SalesTools = () => {
 			shouldCloseOnSaving: true,
 			btnText: 'Dodaj narzędzia sprzedażowe',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: <SalesToolsAddModalItem
 				salesTools={ getSalesToolsToAdd() }
 				onSave={ onSalesToolsAdd }/>

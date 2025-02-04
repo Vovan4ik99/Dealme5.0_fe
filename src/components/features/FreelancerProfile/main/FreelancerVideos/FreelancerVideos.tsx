@@ -10,6 +10,7 @@ import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import AddVideoModalItem from "@components/features/EditModal/video/AddVideoModalItem/AddVideoModalItem.tsx";
 import VideoProfileItem
 	from "@components/features/FreelancerProfile/main/FreelancerVideos/VideoProfileItem/VideoProfileItem.tsx";
+import EditVideosModalItem from "@components/features/EditModal/video/EditVideosModalItem/EditVideosModalItem.tsx";
 
 const FreelancerVideos = () => {
 
@@ -21,7 +22,6 @@ const FreelancerVideos = () => {
 
 	const [ videos, setVideos ] = useState<IFreelancerVideo[]>([]);
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
-	const [ visibleCount, setVisibleCount ] = useState<number>(0);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const itemRefs = useRef<Map<number, HTMLDivElement>>(new Map());
@@ -38,15 +38,12 @@ const FreelancerVideos = () => {
 
 		const containerWidth = containerRef.current.offsetWidth;
 		let totalWidth = 0;
-		let count = 0;
 
 		itemRefs.current.forEach((item) => {
 			if (item && totalWidth + item.offsetWidth <= containerWidth) {
 				totalWidth += item.offsetWidth;
-				count++;
 			}
 		});
-		setVisibleCount(count);
 	}, []);
 
 	useEffect(() => {
@@ -66,18 +63,21 @@ const FreelancerVideos = () => {
 		openModal({
 			id: 'AddVideoModalItem',
 			title: 'Dodaj wideo',
+			withSaveBtn: true,
 			shouldCloseOnSaving: false,
 			btnText: 'Dodaj wideo',
 			btnWithIcon: true,
 			child: <AddVideoModalItem onSave={ onSave }/>
-		})
+		});
 	};
 
 	const handleEditVideos = () => {
 		openModal({
-			id: 'unknown',
-			title: 'Edytuj wideo',
-			child: <></>
+			id: 'EditVideosModalItem',
+			title: 'Edytuj widea',
+			child: <EditVideosModalItem/>,
+			withSaveBtn: false,
+			onClose: () => fetchVideos(),
 		});
 	};
 
@@ -87,7 +87,9 @@ const FreelancerVideos = () => {
 		openModal({
 			id: 'EditVideoModalItem',
 			title: 'Edytuj wideo',
+			withSaveBtn: true,
 			shouldCloseOnSaving: false,
+			btnWithIcon: false,
 			btnText: 'Zapisz zmiany',
 			child: <AddVideoModalItem onSave={ onSave }
 			                          videoId={ videoId }
@@ -149,11 +151,11 @@ const FreelancerVideos = () => {
                                        key={ 'Right Btn' }
                                        withBorder={ true }
                                        backgroundColor={ 'white' }
-                                       disabled={ currentIndex + visibleCount > videos.length }
+                                       disabled={ currentIndex >= videos.length - 1 }
                                        onClick={ () => handleNavigateClick('right') }/>
                         </div>
 					}
-				</div>
+				</div> 
 				<div className={ styles['videos__buttons'] }>
 					<ActionBtn kind={ 'Add' }
 					           key={ 'Add' }

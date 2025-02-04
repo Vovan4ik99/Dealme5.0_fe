@@ -74,6 +74,7 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({ userWo
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: <WorkingDaysModalItem userWorkingDays={ userWorkingDays } onSave={ handleSave }/>
 		});
 	};

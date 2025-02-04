@@ -44,6 +44,7 @@ const PrimaryInfo: React.FC = () => {
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
+			withSaveBtn: true,
 			child: <PrimaryInfoModalItem onSave={handleSave}
 			                             freelancerId={user.id}
 			                             firstName={user.firstName}

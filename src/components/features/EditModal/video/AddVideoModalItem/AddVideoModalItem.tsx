@@ -1,15 +1,12 @@
 import { useVideoService } from "@services/videoService.ts";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import styles from "./AddVideoModalItem.module.scss";
 import VideoModalItem from "@components/features/EditModal/video/VideoModalItem/VideoModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "@components/features/EditModal/media/MediaUploader/MediaUploader.tsx";
-import {
-	IAddVideoModalItemForm,
-	IAddVideoModalItemProps
-} from "@components/features/EditModal/video/AddVideoModalItem/addVideoModalItemTypes.ts";
+import { IAddVideoModalItemProps } from "./addVideoModalItemTypes.ts";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createVideoBlob } from "@utils/videoUtils.ts";
 import InputError from "@ui/InputError/InputError.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
@@ -26,95 +23,96 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 	                                                              videoId
                                                               }) => {
 
-	const {
-		handleSubmit,
-		register,
-		control,
-		formState: { errors },
-	} = useForm<IAddVideoModalItemForm>({
-		shouldFocusError: false,
-		mode: 'onSubmit',
-		defaultValues: {
-			video: { filename, file: video },
-			title: title
-		},
-	});
+	const [videoUrl, setVideoUrl] = useState<string | null>(video ?? null);
+	const [videoFilename, setVideoFilename] = useState<string | null>(filename ?? null);
+	const [videoError, setVideoError] = useState<string | null>(null);
 
 	const { openModal } = useModal();
 	const { addFreelancerVideo, patchFreelancerVideo, loadingStatus } = useVideoService();
+	const { register, handleSubmit, formState: {errors} } = useForm<{title: string | null}>({
+		shouldFocusError: false,
+		mode: 'onTouched',
+		defaultValues: {
+			title: title,
+		}
+	});
 
-	const handleVideoUpload = (
-		onChange: (value: { filename: string, file: string }) => void
-	) => {
+	const onVideoAdd = (videoUrl: string, filename: string) => {
+		setVideoUrl(videoUrl);
+		setVideoFilename(filename);
+		setVideoError(null);
+	};
+
+	const handleVideoUpload = () => {
 		openModal({
 			id: 'VideoMediaUploader',
 			title: 'Dodaj wideo',
 			shouldCloseOnSaving: false,
 			btnText: 'Dodaj video',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: (
 				<MediaUploader
 					mediaType={ 'video' }
-					onVideoAdd={ (videoUrl: string, filename: string,) => {
-						onChange({ filename, file: videoUrl });
-					} }
+					onVideoAdd={ onVideoAdd}
 					text={ 'Akceptowalne formaty: MP4, MOV, AVI, rozmiar: do 10MB' }
 				/>
 			),
 		});
 	};
 
-	const handlePostSave = handleSubmit(async (data) => {
-		if (!data.video?.file || !data?.title || data.title?.trim().length <= 0) {
+	const onVideoDelete = () => {
+		setVideoUrl(null);
+		setVideoFilename(null);
+	};
+
+	const handlePostSave = useCallback(() => {
+		if (!videoUrl) {
+			setVideoError('Dodaj video');
 			return;
 		}
-		const { video, title } = data;
-		const formData = new FormData();
-		if (video.file?.startsWith('data:video/')) {
-			formData.append("file", createVideoBlob(video.file), video.filename ?? 'My video');
-		}
-		formData.append("title", title);
-		formData.append("description", ""); //TODO waiting fix from backend
+		handleSubmit((data) => {
+			const formData = new FormData();
+			if (videoUrl.startsWith('data:video/')) {
+				formData.append("file", createVideoBlob(videoUrl), filename ?? 'My video');
+			}
+			formData.append("title", data.title!);
+			formData.append("description", ""); //TODO waiting fix from backend
 
-		addFreelancerVideo(formData)
+			addFreelancerVideo(formData)
+				.then(() => {
+					onSave();
+					handleClose!(); //handle closing manually to control form
+				}).catch(console.error);
+		})();
+	}, [addFreelancerVideo, filename, handleClose, handleSubmit, onSave, videoUrl]);
+
+	const handleEditSave = handleSubmit((data) => {
+		if (!isEdit) {
+			return;
+		}
+		const request: IPatchVideoRequest = { title: data.title!, description: '' }; //TODO waiting fix from backend
+		patchFreelancerVideo(videoId, request)
 			.then(() => {
 				onSave();
 				handleClose!(); //handle closing manually to control form
 			}).catch(console.error);
 	});
 
-	const handleEditSave = handleSubmit(async (data) => {
-		if (!isEdit) {
-			return;
-		}
-		if (!data?.title || data.title?.trim().length <= 0) {
-			return;
-		}
-		const request: IPatchVideoRequest = { title: data.title, description: '' }; //TODO waiting fix from backend
-		patchFreelancerVideo(videoId, request)
-			.then(() => {
-				onSave();
-				handleClose!();
-			}).catch(console.error);
-	});
-
-	const renderVideo = (
-		value: IAddVideoModalItemForm['video'],
-		onChange: (value: IAddVideoModalItemForm['video']) => void
-	) => {
+	const renderVideo = () => {
 		if (isEdit) {
 			return <VideoModalItem label={ 'Wideo' }
 			                       emptyStateText={ 'Nagraj krótkie video' }
-			                       videoUrl={ value?.file ?? null }
-			                       fileName={ value?.filename ?? '' }/>
+			                       videoUrl={ videoUrl }
+			                       fileName={ videoFilename ?? '' }/>
 		}
 		return <VideoModalItem withDelete={ true }
 		                       label={ 'Wideo' }
 		                       emptyStateText={ 'Nagraj krótkie video' }
-		                       onClick={ () => handleVideoUpload(onChange) }
-		                       videoUrl={ value?.file ?? null }
-		                       fileName={ value?.filename ?? '' }
-		                       onDelete={ () => onChange({ filename: null, file: null }) }/>
+		                       onClick={ handleVideoUpload }
+		                       videoUrl={ videoUrl }
+		                       fileName={ videoFilename ?? '' }
+		                       onDelete={ onVideoDelete }/>
 	};
 
 	useEffect(() => {
@@ -130,20 +128,10 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 	return (
 		<div className={ styles['modal'] }>
 			<div>
-				<Controller
-					name="video"
-					control={ control }
-					rules={ {
-						required: "Dodaj video",
-					} }
-					render={ ({ field: { value, onChange } }) => (
-						<div id={ 'video' }
-						     className={ `${ styles['modal__video'] } ${ errors.video && styles['modal__video--error'] }` }>
-							{ renderVideo(value, onChange) }
-						</div>
-					) }
-				/>
-				{ errors.video?.message && <InputError key={ errors.video.message } text={ errors.video?.message }/> }
+				<div className={ `${ styles['modal__video'] } ${ videoError && styles['modal__video--error'] }` }>
+					{ renderVideo() }
+				</div>
+				{ videoError && <InputError key={ videoError } text={ videoError }/> }
 			</div>
 			<CustomInput preset={ 'videoTitle' }
 			             register={ register }

@@ -1,20 +1,20 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from "react";
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import styles from "./BaseEditModal.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
-import {IBaseEditModalProps} from "./baseEditModalTypes.ts";
-import {OnSaveCallback, ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import { IBaseEditModalProps } from "./baseEditModalTypes.ts";
+import { ISaveableChildProps, OnSaveCallback } from "@context/ModalContext/ModalContext.ts";
 
 const BaseEditModal: React.FC<IBaseEditModalProps> = ({
 	                                                      title,
 	                                                      child,
 	                                                      onClose,
-	                                                      btnText = '',
-	                                                      btnWithIcon = false,
+	                                                      btnText,
+	                                                      btnWithIcon,
 	                                                      offset,
 	                                                      zIndex,
-	                                                      shouldCloseOnSaving = false,
-	                                                      withSaveBtn = true,
+	                                                      shouldCloseOnSaving,
+	                                                      withSaveBtn,
                                                       }) => {
 
 	const onSaveRef = useRef<OnSaveCallback | null>(null);

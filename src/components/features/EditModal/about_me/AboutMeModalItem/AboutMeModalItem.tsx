@@ -43,10 +43,11 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 			shouldCloseOnSaving: false,
 			btnText: 'Dodaj wideo',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: <MediaUploader onVideoAdd={ onVideoSave }
 			                      mediaType={ 'video' }
 			                      text={ 'Akceptowalne formaty: MP4, MOV, AVI, rozmiar: do 10MB' }/>
-		})
+		});
 	}
 
 	const onVideoSave = (videoUrl: string, fileName: string) => {

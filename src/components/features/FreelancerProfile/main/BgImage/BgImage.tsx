@@ -36,6 +36,7 @@ const BgImage = () => {
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: (
 				<ImageModalItem title={ 'Zdjęcie w tle' }
 				                imageSize="1320x250px"

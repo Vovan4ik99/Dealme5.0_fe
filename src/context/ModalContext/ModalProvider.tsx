@@ -55,23 +55,18 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({children
 						<>
 							<ModalOverlay zIndex={getZIndex(state.modals.length - 1)}/>
 							{state.modals.map((modal, index) => (
-								<BaseEditModal key={modal.id}
-								               id={modal.id}
-								               child={modal.child}
-								               title={modal.title}
-								               zIndex={getZIndex(index)}
-								               btnText={modal.btnText}
-								               btnWithIcon={modal.btnWithIcon}
-								               offset={getOffset(index)}
-								               shouldCloseOnSaving={modal.shouldCloseOnSaving}
-								               withSaveBtn={modal.withSaveBtn}
-								               onClose={() => {
-												   if (modal.onClose) {
-													   modal.onClose();
-												   }
-												   closeModals(1);
-								               }}>
-								</BaseEditModal>
+								<BaseEditModal
+									key={modal.id}
+									{...modal}
+									zIndex={getZIndex(index)}
+									offset={getOffset(index)}
+									onClose={() => {
+										if (modal.onClose) {
+											modal.onClose();
+										}
+										closeModals(1);
+									}}
+								/>
 							))}
 						</>
 					)}

@@ -78,6 +78,7 @@ const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({
 			title: 'Dodaj branże',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
+			withSaveBtn: true,
 			shouldCloseOnSaving: true,
 			child: <AddSubIndustriesModalItem industries={ filteredIndustries }
 			                                  addSubIndustries={ handleSubIndustriesAdd }/>

@@ -57,6 +57,8 @@ const CertificateLicenseEditModalItem = () => {
 			title: 'Dodaj licencje lub certyfikat',
 			btnText: 'Dodaj licencje lub certyfikat',
 			btnWithIcon: true,
+			withSaveBtn: true,
+			shouldCloseOnSaving: false,
 			child: <CertificateLicenseAddModalItem onSave={ handleAddCertificate }/>
 		});
 	};
@@ -67,6 +69,8 @@ const CertificateLicenseEditModalItem = () => {
 			title: 'Edytuj licencje lub certyfikat',
 			btnText: 'Edytuj licencje lub certyfikat',
 			btnWithIcon: true,
+			withSaveBtn: true,
+			shouldCloseOnSaving: false,
 			child: <CertificateLicenseAddModalItem certificate={ certificate }
 			                                       onSave={
 				                                       (updatedCertificate: Omit<IFreelancerCertificate, 'id'>) =>

@@ -24,9 +24,3 @@ export interface IAddVideoModalItemWithoutEditProps extends IAddVideoModalItemBa
 export type IAddVideoModalItemProps =
 	| IAddVideoModalItemWithEditProps
 	| IAddVideoModalItemWithoutEditProps;
-
-
-export interface IAddVideoModalItemForm {
-	video: { file: string | null; filename: string | null};
-	title: string | null;
-}
