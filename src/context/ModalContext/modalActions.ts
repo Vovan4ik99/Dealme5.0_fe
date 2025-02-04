@@ -4,7 +4,6 @@ export enum ModalActions {
 	OPEN_MODAL = 'OPEN_MODAL',
 	CLOSE_MODALS = 'CLOSE_MODALS',
 	CLOSE_ALL_MODALS = 'CLOSE_ALL_MODALS',
-	UPDATE_MODAL_DATA = 'UPDATE_MODAL_DATA',
 }
 
 export interface IOpenModal {

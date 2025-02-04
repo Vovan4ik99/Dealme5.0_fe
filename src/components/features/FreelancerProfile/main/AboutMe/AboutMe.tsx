@@ -65,6 +65,7 @@ const AboutMe = () => {
 			shouldCloseOnSaving: true,
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
+			withSaveBtn: true,
 			child: <AboutMeModalItem aboutMeInfo={ aboutMeInfo } onSave={ onSave }/>
 		});
 	};

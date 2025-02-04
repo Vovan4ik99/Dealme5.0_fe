@@ -29,6 +29,7 @@ const LanguagesItem: React.FC<ILanguagesItemProps> = ({ isUndefined, freelancerL
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: <LanguagesModalItem onSave={ onSave }/>
 		})
 	};

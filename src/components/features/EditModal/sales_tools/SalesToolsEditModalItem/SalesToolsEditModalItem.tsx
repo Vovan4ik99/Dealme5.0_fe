@@ -69,6 +69,7 @@ const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({ registerOnSave
 			shouldCloseOnSaving: true,
 			btnText: 'Dodaj narzędzia sprzedażowe',
 			btnWithIcon: true,
+			withSaveBtn: true,
 			child: <SalesToolsAddModalItem
 				salesTools={ getSalesToolsToAdd() }
 				onSave={ onAddNewTools }/>

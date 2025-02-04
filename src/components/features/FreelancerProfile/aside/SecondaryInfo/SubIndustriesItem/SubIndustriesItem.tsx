@@ -24,6 +24,7 @@ const SubIndustriesItem: React.FC<ISubIndustriesItemProps> = ({ userSubIndustrie
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: <SubIndustriesModalItem userSubIndustries={ userSubIndustries } onSave={ onSave }/>
 		});
 	};

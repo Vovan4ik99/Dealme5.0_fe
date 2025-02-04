@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+import { pl } from "date-fns/locale";
+
 export const generatePolishMonthNames = (): string[] => {
 	const formatter = new Intl.DateTimeFormat('pl-PL', { month: 'long' });
 	const months = [];
@@ -34,4 +37,10 @@ export const getPolishMonthShort = (dateString: string) => {
 	const formatter = new Intl.DateTimeFormat('pl-PL', { month: 'short' });
 	const month = formatter.format(date);
 	return month.charAt(0).toUpperCase() + month.slice(1);
-}
+};
+
+export const transformVideoDate = (dateString: string): string => {
+	const date = new Date(dateString);
+
+	return format(date, 'd MMM yyyy', { locale: pl });
+};

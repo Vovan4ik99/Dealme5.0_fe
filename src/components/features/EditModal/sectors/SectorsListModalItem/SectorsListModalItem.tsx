@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
 	ISectorsListModalItemProps
 } from "@components/features/EditModal/sectors/SectorsListModalItem/sectorsListModalItemTypes.ts";
 import styles from "@components/features/EditModal/sectors/SectorsModalItem/SectorsModalItem.module.scss";
-import {useOnboardingService} from "@services/onboardingService.ts";
+import { useOnboardingService } from "@services/onboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import {ISector} from "@shared/onboardingTypes.ts";
+import { ISector } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
-import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
-import DraggableSectorItem
-	from "@components/features/EditModal/sectors/DraggableSectorItem/DraggableSectorItem.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import DraggableSectorItem from "@components/features/EditModal/sectors/DraggableSectorItem/DraggableSectorItem.tsx";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddSectorsModalItem from "@components/features/EditModal/sectors/AddSectorsModalItem/AddSectorsModalItem.tsx";
 
 const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerSectors, onSelect, onSectorsDrag}) => {
@@ -47,11 +46,12 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 
 	const handleAddSectors = () => {
 		openModal({
-			id: 'unknown',
+			id: 'AddSectorsModalItem',
 			title: 'Dodaj sektory',
 			btnWithIcon: true,
 			btnText: 'Dodaj sektory',
 			shouldCloseOnSaving: true,
+			withSaveBtn: true,
 			child: <AddSectorsModalItem sectorsToChoose={getSectorsToChoose()} onSave={onAddNewSectors}/>
 		});
 	};

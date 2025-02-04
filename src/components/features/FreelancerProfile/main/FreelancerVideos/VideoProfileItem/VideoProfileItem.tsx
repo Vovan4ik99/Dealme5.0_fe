@@ -3,8 +3,7 @@ import styles from "./VideoProfileItem.module.scss";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
 import { IVideoProfileItemProps } from "./videoProfileItemTypes.ts";
 import calendar from "@icons/freelancer_profile/secondary_info/calendar.svg";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
+import { transformVideoDate } from "@utils/dateUtils.ts";
 
 const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUrl, date, onEdit }) => {
 
@@ -15,12 +14,6 @@ const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUr
 		maxWidth: "281px",
 		maxHeight: "100%",
 	});
-
-	const transformDate = (dateString: string): string => {
-		const date = new Date(dateString);
-
-		return format(date, 'd MMM yyyy', { locale: pl });
-	};
 
 	const updateVideoStyle = () => {
 		if (!videoRef.current) return;
@@ -81,7 +74,7 @@ const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUr
 				<p className={ styles['item__title'] }>{ title }</p>
 				<div className={ styles['item__date'] }>
 					<img src={ calendar } alt={ 'date of obtaining the video' }/>
-					<p className={ styles['item__text'] }>{ transformDate(date) }</p>
+					<p className={ styles['item__text'] }>{ transformVideoDate(date) }</p>
 				</div>
 			</div>
 		</div>
