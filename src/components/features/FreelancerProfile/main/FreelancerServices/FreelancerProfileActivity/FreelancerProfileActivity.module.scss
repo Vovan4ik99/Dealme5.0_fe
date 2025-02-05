@@ -1,0 +1,59 @@
+@use "@styles/variables" as vars;
+
+.activity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 16px 24px;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+
+  &__content {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+  }
+
+  &__name {
+	color: vars.$color-black;
+	font-size: 18px;
+	line-height: 120%;
+  }
+
+  &__wrapper {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+  }
+
+  &__rating {
+	color: vars.$color-black;
+	font-size: 14px;
+	line-height: 100%;
+
+	svg path {
+	  color: vars.$color-black;
+	}
+
+	&--empty {
+	  color: vars.$color-gray;
+
+	  svg path {
+		color: vars.$color-gray;
+	  }
+	}
+  }
+
+  &__orders {
+	color: vars.$color-gray;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 100%;
+	text-underline-position: from-font;
+	text-decoration-style: solid;
+	text-decoration-skip-ink: none;
+	text-decoration-thickness: auto;
+	text-underline-offset: auto;
+	text-decoration-line: underline;
+  }
+}

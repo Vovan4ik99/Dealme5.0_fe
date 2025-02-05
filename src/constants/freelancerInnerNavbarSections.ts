@@ -3,9 +3,9 @@ export const NAVBAR_SECTIONS = {
 	certifications: 'Certyfikaty i licencje',
 	tools: 'Narzędzia sprzedażowe',
 	videos: 'Wideo',
+	services: 'Usługi',
 	experience: 'Doświadczenie',
 	education: 'Wykształcenie',
-	services: 'Usługi',
 	skills: 'Umiejętności',
 } as const;
 
