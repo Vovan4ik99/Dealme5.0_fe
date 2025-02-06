@@ -1,0 +1,71 @@
+@use "@styles/variables" as vars;
+
+.reviews {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__content {
+    display: flex;
+    gap: 77px;
+  }
+
+  &__title {
+    color: vars.$color-gray;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 120%;
+  }
+
+  &__items {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 516px;
+    margin-bottom: 8px;
+  }
+
+  &__scores {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    margin-bottom: 32px;
+  }
+
+  &__categories {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  &__category {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__category-name {
+    color: vars.$color-black;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 100%;
+    width: 247px;
+  }
+
+  &__category-wrapper {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__category-point {
+    width: 10px;
+    color: vars.$color-black;
+    text-align: center;
+    font-size: 14px;
+    line-height: 100%;
+  }
+}

@@ -1,10 +1,7 @@
-import {useHttp} from "../hooks/http.hook";
-import {useCallback} from "react";
-import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {
-	IAboutMeInfo,
-	IFreelancerBackgroundResponse,
-} from "@shared/freelancerTypes";
+import { useHttp } from "../hooks/http.hook";
+import { useCallback } from "react";
+import { API_ROUTES } from "@constants/apiRoutes.ts";
+import { IAboutMeInfo, IFreelancerBackgroundResponse, IFreelancerReview, } from "@shared/freelancerTypes";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
@@ -50,6 +47,12 @@ export const useFreelancerProfileService = () => {
 		})
 	}, [sendRequest]);
 
+	const getFreelancerReviews = useCallback(async (): Promise<IFreelancerReview[]> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.GET_REVIEWS
+		});
+	}, [sendRequest]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -59,5 +62,6 @@ export const useFreelancerProfileService = () => {
 		getFreelancerProfileProgress,
 		getAboutMeProfileInfo,
 		patchAboutMeProfileInfo,
+		getFreelancerReviews
 	};
 };

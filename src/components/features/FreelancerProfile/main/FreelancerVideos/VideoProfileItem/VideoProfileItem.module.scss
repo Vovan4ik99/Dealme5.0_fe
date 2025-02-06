@@ -19,9 +19,10 @@
 	gap: 8px;
 	align-self: flex-start;
 	transition: all 0.3s ease;
+	padding-bottom: 16px;
 
 	&--hovered {
-	  padding: 0 0 16px 16px;
+	  padding-left: 16px;
 	}
   }
 

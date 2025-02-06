@@ -1,11 +1,11 @@
-import {Link} from "react-router-dom";
-import {useForm} from "react-hook-form";
-import React, {useCallback, useContext, useState} from "react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import React, { useCallback, useContext, useState } from "react";
 import styles from './LoginForm.module.scss';
 import InputError from "../../../ui/InputError/InputError.tsx";
-import {ILoginRequest, ILoginResponse} from "@shared/loginTypes.ts";
-import {useAuthService} from '@services/authService.ts';
-import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
+import { useAuthService } from '@services/authService.ts';
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 
 const LoginForm = () => {

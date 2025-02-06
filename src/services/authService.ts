@@ -1,14 +1,14 @@
-import {useHttp} from "../hooks/http.hook.ts";
-import {useCallback} from "react";
+import { useHttp } from "../hooks/http.hook.ts";
+import { useCallback } from "react";
 import {
 	ICreateUserRequest,
 	ICreateUserResponse,
-	IUserAvatarResponse,
 	ILoggedUserResponse,
+	IUserAvatarResponse,
 	UserRole
 } from "@shared/userTypes.ts";
-import {ILoginRequest, ILoginResponse} from "@shared/loginTypes.ts";
-import {API_ROUTES} from "@constants/apiRoutes.ts";
+import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
+import { API_ROUTES } from "@constants/apiRoutes.ts";
 
 export const useAuthService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

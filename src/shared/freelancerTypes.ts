@@ -1,5 +1,6 @@
-import {WORKING_AREAS} from "@constants/workingAreas.ts";
-import {LANGUAGE_NAMES} from "@constants/language.ts";
+import { WORKING_AREAS } from "@constants/workingAreas.ts";
+import { LANGUAGE_NAMES } from "@constants/language.ts";
+import { REVIEW_CATEGORIES } from "@constants/reviewCategories.ts";
 
 export interface IFreelancerBackgroundResponse {
 	id: number;
@@ -82,13 +83,22 @@ export interface IFreelancerVideo {
 	date: string
 }
 
-export interface IVideoRequest {
-	title: string;
-	description: string;
-	file: string;
-}
-
 export interface IPatchVideoRequest {
 	title: string;
-	description: string;
 }
+
+interface IFreelancerReviewCategory {
+	id: number;
+	category: keyof typeof REVIEW_CATEGORIES;
+	score: number;
+}
+
+export interface IFreelancerReview {
+	id: number;
+	score: number;
+	date: string;
+	authorFirstName: string;
+	authorLastName: string;
+	categoryOpinions: IFreelancerReviewCategory[];
+}
+

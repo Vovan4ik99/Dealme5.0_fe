@@ -1,6 +1,6 @@
 .profile {
     position: relative;
-    min-height: 100vh;
+    padding-bottom: 16px;
 
     &__loading {
         min-height: 100vh;
@@ -19,6 +19,7 @@
     &__content {
         margin-left: 422px;
         max-width: 878px;
+        padding-bottom: 104px;
     }
 }
 

@@ -10,7 +10,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { createVideoBlob } from "@utils/videoUtils.ts";
 import InputError from "@ui/InputError/InputError.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import { IPatchVideoRequest } from "@shared/freelancerTypes.ts";
 
 const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 	                                                              registerOnSave,
@@ -77,7 +76,6 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 				formData.append("file", createVideoBlob(videoUrl), filename ?? 'My video');
 			}
 			formData.append("title", data.title!);
-			formData.append("description", ""); //TODO waiting fix from backend
 
 			addFreelancerVideo(formData)
 				.then(() => {
@@ -91,8 +89,7 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 		if (!isEdit) {
 			return;
 		}
-		const request: IPatchVideoRequest = { title: data.title!, description: '' }; //TODO waiting fix from backend
-		patchFreelancerVideo(videoId, request)
+		patchFreelancerVideo(videoId, { title: data.title! })
 			.then(() => {
 				onSave();
 				handleClose!(); //handle closing manually to control form
