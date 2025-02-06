@@ -4,9 +4,10 @@ export const NAVBAR_SECTIONS = {
 	tools: 'Narzędzia sprzedażowe',
 	videos: 'Wideo',
 	services: 'Usługi',
+	portfolio: 'Portfolio',
+	reviews: 'Opinie',
 	experience: 'Doświadczenie',
 	education: 'Wykształcenie',
-	skills: 'Umiejętności',
 } as const;
 
 export type NavbarSectionKey = keyof typeof NAVBAR_SECTIONS;

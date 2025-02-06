@@ -23,6 +23,7 @@ import { useVideoService } from "@services/videoService.ts";
 import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
 import FreelancerVideos from "@components/features/FreelancerProfile/main/FreelancerVideos/FreelancerVideos.tsx";
 import FreelancerServices from "@components/features/FreelancerProfile/main/FreelancerServices/FreelancerServices.tsx";
+import FreelancerReviews from "@components/features/FreelancerProfile/main/FreelancerReviews/FreelancerReviews.tsx";
 
 const FreelancerProfilePage = () => {
 
@@ -60,6 +61,7 @@ const FreelancerProfilePage = () => {
 						<SalesTools/>
 						<FreelancerVideos/>
 						<FreelancerServices/>
+						<FreelancerReviews/>
 					</div>
 					<Footer isHyphenated={false} isCentered={false}/>
 				</>

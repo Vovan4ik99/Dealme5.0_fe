@@ -1,0 +1,44 @@
+@use "@styles/variables" as vars;
+
+.score {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  &__wrapper {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+  }
+
+  &__point {
+	width: 10px;
+	text-align: center;
+	color: vars.$color-black;
+	font-size: 14px;
+	line-height: 100%;
+  }
+
+  &__bar {
+	width: 217px;
+	height: 7px;
+	background-color: vars.$color-warning-pastel;
+	border-radius: 100px;
+	padding: 0 2px;
+	display: flex;
+	align-items: center;
+
+	div {
+	  height: 3px;
+	  border-radius: 100px;
+	  background-color: vars.$color-warning;
+	}
+  }
+
+  &__procent {
+	color: vars.$color-gray;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 100%;
+  }
+}

@@ -26,21 +26,31 @@
 	gap: 4px;
   }
 
-  &__rating {
-	color: vars.$color-black;
-	font-size: 14px;
-	line-height: 100%;
+  &__icon {
+	width: 14px;
+	height: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	svg path {
 	  color: vars.$color-black;
 	}
 
 	&--empty {
-	  color: vars.$color-gray;
-
 	  svg path {
 		color: vars.$color-gray;
 	  }
+	}
+  }
+
+  &__rating {
+	color: vars.$color-black;
+	font-size: 14px;
+	line-height: 100%;
+
+	&--empty {
+	  color: vars.$color-gray;
 	}
   }
 

@@ -50,6 +50,7 @@ export const API_ROUTES = {
 			ADD_FREELANCER_CERTIFICATE: '/certificate/freelancer',
 			GET_VIDEO: '/video/freelancer',
 			ADD_VIDEO: '/video',
+			GET_REVIEWS: '/opinions/freelancer/me'
 		}
 	}
 } as const;

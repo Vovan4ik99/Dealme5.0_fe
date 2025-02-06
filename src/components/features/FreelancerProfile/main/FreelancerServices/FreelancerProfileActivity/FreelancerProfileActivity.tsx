@@ -11,19 +11,23 @@ const FreelancerProfileActivity: React.FC<IFreelancerProfileActivityProps> = ({
 	                                                                              rating
                                                                               }) => {
 
+	const isRatingEmpty = rating <= 0;
+
 	return (
 		<div className={ styles['activity'] }>
-			<p className={styles['activity__name']}>{name}</p>
+			<p className={ styles['activity__name'] }>{ name }</p>
 			<div className={ styles['activity__content'] }>
 				<div className={ styles['activity__wrapper'] }>
-					<LogoIcon width={12} height={12}/>
+					<div className={ `${ styles['activity__icon'] } ${ isRatingEmpty && styles['activity__icon--empty'] }` }>
+						<LogoIcon width={ 12 } height={ 14 }/>
+					</div>
 					<p className={
-						`${styles['activity__rating']} ${rating <= 0 && styles['activity__rating--empty']}`}>
-						{`${rating} pkt`}
+						`${ styles['activity__rating'] } ${ isRatingEmpty && styles['activity__rating--empty'] }` }>
+						{ `${ rating } pkt` }
 					</p>
-					<p className={ styles['activity__orders'] }>{`(${ordersCount} zleceń)`}</p>
+					<p className={ styles['activity__orders'] }>{ `(${ ordersCount } zleceń)` }</p>
 				</div>
-				<LevelPicker withoutHoverEffect={true} selectedLevel={level}/>
+				<LevelPicker withoutHoverEffect={ true } selectedLevel={ level }/>
 			</div>
 		</div>
 	)
