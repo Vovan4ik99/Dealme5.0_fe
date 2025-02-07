@@ -1,12 +1,12 @@
-import React, {useCallback, useRef, useState} from "react";
-import {RegisterOptions, useForm, useWatch} from "react-hook-form";
+import React, { useCallback, useRef, useState } from "react";
+import { RegisterOptions, useForm, useWatch } from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
-import {RegistrationFormData} from "./registrationFormTypes.ts";
-import {Link, useNavigate} from "react-router-dom";
-import {useAuthService} from "@services/authService.ts";
-import {ICreateUserRequest, UserRole} from "@shared/userTypes.ts";
-import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer_registration.svg";
-import {ReactComponent as InvestorIcon} from "@icons/named_exported/investor_registration.svg";
+import { RegistrationFormData } from "./registrationFormTypes.ts";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthService } from "@services/authService.ts";
+import { ICreateUserRequest, UserRole } from "@shared/userTypes.ts";
+import { ReactComponent as FreelancerIcon } from "@icons/named_exported/freelancer_registration.svg";
+import { ReactComponent as InvestorIcon } from "@icons/named_exported/investor_registration.svg";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
@@ -124,12 +124,15 @@ const RegistrationForm = () => {
 			<div className={styles['registration-form__terms']}>
 				<CustomCheckbox register={termsRegister}
 				                errorMessage={errors.terms?.message}
-				                isError={errors.terms !== undefined} id={'terms'}
+				                isError={errors.terms?.message !== undefined}
+				                id={'terms'}
 				                label={
 					                <>
 						                Akceptuję{' '}
 						                <Link to={'/terms'}>
-							                <span className={styles['registration-form__terms-underline']}>regulamin serwisu</span>
+							                <span className={styles['registration-form__terms-underline']}>
+								                regulamin serwisu
+											</span>
 						                </Link>
 					                </>
 				                }/>

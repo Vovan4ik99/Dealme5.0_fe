@@ -1,6 +1,6 @@
 import styles from './CustomCheckbox.module.scss';
 import React from "react";
-import {ICustomCheckboxProps} from "@ui/CustomCheckbox/customCheckboxTypes.ts";
+import { ICustomCheckboxProps } from "@ui/CustomCheckbox/customCheckboxTypes.ts";
 import checkbox_checked from '@icons/auth/checkbox_checked.svg';
 import InputError from "@ui/InputError/InputError.tsx";
 
@@ -23,7 +23,10 @@ const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({
 					type="checkbox"
 					checked={isChecked}
 					{...register}
-					onChange={onChange}
+					onChange={(e) => {
+						register?.onChange?.(e);
+						onChange?.();
+					}}
 				/>
 				<span className={`${styles['checkbox__custom']} ${isError && styles['checkbox__custom--error']}`}>
 					<img src={checkbox_checked} alt={'checkbox'}/>
