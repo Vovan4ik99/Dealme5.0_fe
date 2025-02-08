@@ -1,5 +1,5 @@
-import {AuthAction, AuthActionType} from "./authActions.ts";
-import {IAuthInitialState} from "./AuthContext.ts";
+import { AuthAction, AuthActionType } from "./authActions.ts";
+import { IAuthInitialState } from "./AuthContext.ts";
 
 export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuthInitialState => {
 	switch (action.type) {
@@ -35,6 +35,11 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				...state,
 				userAvatar: null,
 				loadingStatus: 'idle',
+			};
+		case AuthActionType.SET_LOADING_STATUS:
+			return {
+				...state,
+				loadingStatus: action.payload,
 			};
 		default:
 			return state;

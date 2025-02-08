@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Footer.module.scss';
-import {IFooterProps} from "./footerTypes.ts";
+import { IFooterProps } from "./footerTypes.ts";
 
 const Footer: React.FC<IFooterProps> = ({isHyphenated, isCentered}) => {
 
@@ -19,7 +19,7 @@ const Footer: React.FC<IFooterProps> = ({isHyphenated, isCentered}) => {
 	}
 
 	return (
-		<footer className={`${styles['footer']} ${isCentered ? styles['footer--centered'] : ''}`}>
+		<footer className={`${styles['footer']} ${isCentered && styles['footer--centered']}`}>
 			{renderFooter()}
 		</footer>
 	)

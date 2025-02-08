@@ -1,6 +1,6 @@
-import {useContext, useEffect} from "react";
-import {AuthContext} from "@context/AuthContext/AuthContext.ts";
-import {Outlet, useNavigate} from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const PublicRoute = () => {
 	const {user} = useContext(AuthContext);
@@ -9,7 +9,6 @@ const PublicRoute = () => {
 	useEffect(() => {
 		if (user) {
 			navigate("/");
-			return;
 		}
 	}, [navigate, user]);
 

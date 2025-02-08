@@ -1,8 +1,9 @@
-import {LANGUAGE_LEVEL_DESCRIPTIONS, LANGUAGE_LEVEL_NAMES, LANGUAGE_NAMES} from "@constants/language.ts";
-import {ILanguage} from "@shared/freelancerTypes.ts";
+import { LANGUAGE_LEVEL_NAMES, LANGUAGE_NAMES } from "@constants/language.ts";
+import { ILanguage } from "@shared/freelancerTypes.ts";
 import {
 	IFreelancerDraggableLanguage
 } from "@components/features/EditModal/language/LanguageModalItem/languageModalItemTypes.ts";
+import { SKILL_LEVELS } from "@constants/constans.ts";
 
 export const getLanguageLevelName = (level: number | null) => {
 	if (!level) return 'Wybierz poziom';
@@ -11,7 +12,7 @@ export const getLanguageLevelName = (level: number | null) => {
 
 export const getLanguageLevelDescription = (level: number | null) => {
 	if (!level) return 'Wybierz poziom';
-	return LANGUAGE_LEVEL_DESCRIPTIONS[level - 1];
+	return SKILL_LEVELS[level - 1];
 };
 
 export const getAbsentLanguageNames = (

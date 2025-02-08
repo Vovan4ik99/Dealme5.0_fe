@@ -22,6 +22,8 @@ export interface IFreelancerActivity {
 	activityId: number;
 	name: string;
 	level: number;
+	points: number | null;
+	orderCount: number | null;
 }
 
 export interface IActivity {
