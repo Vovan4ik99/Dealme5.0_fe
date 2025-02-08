@@ -1,12 +1,6 @@
 import { useHttp } from "../hooks/http.hook.ts";
 import { useCallback } from "react";
-import {
-	ICreateUserRequest,
-	ICreateUserResponse,
-	ILoggedUserResponse,
-	IUserAvatarResponse,
-	UserRole
-} from "@shared/userTypes.ts";
+import { ICreateUserRequest, ICreateUserResponse, ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
 import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 
@@ -24,7 +18,8 @@ export const useAuthService = () => {
 
 	const createUser = useCallback(async (createUserRequest: ICreateUserRequest, role: UserRole): Promise<ICreateUserResponse> => {
 
-		const url = role === 'INVESTOR' ? API_ROUTES.AUTH.REGISTER_INVESTOR : API_ROUTES.AUTH.REGISTER_FREELANCER;
+		const url = role === 'INVESTOR' ?
+			API_ROUTES.AUTH.REGISTER_INVESTOR : API_ROUTES.AUTH.REGISTER_FREELANCER;
 
 		return await sendRequest({
 			url,
@@ -40,28 +35,13 @@ export const useAuthService = () => {
 		})
 	}, [sendRequest]);
 
-	const getAvatar = useCallback(async (): Promise<IUserAvatarResponse> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-		});
-	}, [sendRequest]);
-
-	const patchAvatar = useCallback(async (formData: FormData): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-			method: "PATCH",
-			body: formData,
-		});
-	}, [sendRequest]);
-
-	const deleteAvatar = useCallback(async (): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
-			method: "DELETE",
-		});
-	}, [sendRequest]);
-
-	return {loadingStatus, errorMessage, login, createUser, fetchLoggedUserData, getAvatar, patchAvatar, deleteAvatar};
+	return {
+		loadingStatus,
+		errorMessage,
+		login,
+		createUser,
+		fetchLoggedUserData
+	};
 };
 
 
