@@ -1,8 +1,8 @@
 import React from "react";
-import {RegisterOptions, UseFormRegister} from "react-hook-form";
+import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 export type PresetType = 'email' | 'password' | 'firstName' | 'lastName' | 'company' | 'certificateName'
-	| 'certificateOrganization' | 'videoTitle';
+	| 'certificateOrganization' | 'videoTitle' | 'jobTitle' | 'workExperienceCompany';
 
 interface IBaseInputProps {
 	errorMessage?: string;

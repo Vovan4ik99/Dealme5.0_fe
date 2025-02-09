@@ -1,16 +1,32 @@
-import {IFreelancerCountry, IFreelancerState} from "@shared/freelancerTypes.ts";
-import {ISelectItem} from "@ui/SelectInput/selectInputTypes.ts";
+import { IFreelancerCountry, IFreelancerState } from "@shared/freelancerTypes.ts";
+import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
+
+export const sortCountries = (countries: IFreelancerCountry[]) => {
+	return countries.toSorted((a, b) => {
+		if (a.name === PRIORITY_COUNTRY_KEY) {
+			return -1;
+		}
+		if (b.name === PRIORITY_COUNTRY_KEY) {
+			return 1;
+		}
+		return 0;
+	});
+};
+
+export const getStatesAsSelectItems = (states: IFreelancerState[]): ISelectItem[] => {
+	return states.map(state => {
+		return {text: state.description, info: null}
+	});
+};
 
 export const getStateDescriptionByStateName = (
 	states: IFreelancerState[],
 	selectedState: string | null
 ) => {
-	if (!selectedState && states.length > 0) {
-		return states[0]?.description;
-	}
 	const freelancerState = states
 		.find(state => state.state === selectedState);
-	return freelancerState?.description ?? 'Brak';
+	return freelancerState?.description;
 }
 
 export const getDescriptionByCountryName = (
@@ -19,19 +35,16 @@ export const getDescriptionByCountryName = (
 ) => {
 	const freelancerCountry = countries
 		.find(country => country.name === selectedCountry);
-	return freelancerCountry?.description ?? 'Brak';
+	return freelancerCountry?.description;
 };
 
-export const getCountriesAsSelectItems = (countries: IFreelancerCountry[]): ISelectItem[] => {
-	return countries.map(country => {
-		return {text: country.description, info: null};
-	});
-};
-
-export const getStatesAsSelectItems = (states: IFreelancerState[]): ISelectItem[] => {
-	return states.map(state => {
-		return {text: state.description, info: null}
-	});
+export const getStateNameByDescription = (
+	states: IFreelancerState[],
+	description: string
+) => {
+	const state = states
+		.find(state => state.description === description);
+	return state?.state ?? null;
 };
 
 export const getCountryNameByDescription = (
@@ -43,13 +56,6 @@ export const getCountryNameByDescription = (
 	return country?.name ?? null;
 };
 
-export const getStateNameByDescription = (
-	states: IFreelancerState[],
-	description: string
-) => {
-	const state = states
-		.find(state => state.description === description);
-	return state?.state ?? null;
-};
+
 
 

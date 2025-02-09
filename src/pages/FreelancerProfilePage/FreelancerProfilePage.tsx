@@ -24,6 +24,9 @@ import { useFreelancerCertificateService } from "@services/freelancerCertificate
 import FreelancerVideos from "@components/features/FreelancerProfile/main/FreelancerVideos/FreelancerVideos.tsx";
 import FreelancerServices from "@components/features/FreelancerProfile/main/FreelancerServices/FreelancerServices.tsx";
 import FreelancerReviews from "@components/features/FreelancerProfile/main/FreelancerReviews/FreelancerReviews.tsx";
+import FreelancerWorkExperience
+	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/FreelancerWorkExperience.tsx";
+import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
 
 const FreelancerProfilePage = () => {
 
@@ -33,7 +36,8 @@ const FreelancerProfilePage = () => {
 		useFreelancerProfileAsideInfoService(),
 		useOnboardingService(),
 		useVideoService(),
-		useFreelancerCertificateService()
+		useFreelancerCertificateService(),
+		useFreelancerWorkExperienceService()
 	);
 
 	return (
@@ -62,6 +66,7 @@ const FreelancerProfilePage = () => {
 						<FreelancerVideos/>
 						<FreelancerServices/>
 						<FreelancerReviews/>
+						<FreelancerWorkExperience/>
 					</div>
 					<Footer isHyphenated={false} isCentered={false}/>
 				</>

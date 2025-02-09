@@ -45,7 +45,7 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 			title: 'Edytuj lokalizację i obszar świadczenia usług',
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
-			shouldCloseOnSaving: true,
+			shouldCloseOnSaving: false,
 			withSaveBtn: true,
 			child: <LocalizationModalItem freelancerWorkingArea={ freelancerWorkingArea }
 			                              freelancerWorkingAreaValue={ freelancerWorkingAreaValue }

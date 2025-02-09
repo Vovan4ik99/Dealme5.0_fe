@@ -1,20 +1,33 @@
 import styles from "./AddActivityModalItem.module.scss";
 import SelectInput from "@ui/SelectInput/SelectInput.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { IActivity } from "@shared/onboardingTypes.ts";
 import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
 import {
+	IActivityAddForm,
 	IAddActivityModalItemProps
 } from "@components/features/EditModal/activities/AddActivityModalItem/addActivityModalItemTypes.ts";
 import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
 import LevelPicker from "@ui/LevelPicker/LevelPicker.tsx";
 import { SKILL_LEVELS } from "@constants/constans.ts";
+import { useForm, useWatch } from "react-hook-form";
+import InputError from "@ui/InputError/InputError.tsx";
 
-const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({onSave, registerOnSave, activitiesToRender}) => {
+const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({
+	                                                                    onSave,
+	                                                                    registerOnSave,
+	                                                                    handleClose,
+	                                                                    activitiesToRender
+                                                                    }) => {
 
-	const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
-	const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
-	const [isLevelItemHovered, setIsLevelItemHovered] = useState<boolean>(false);
+	const [ isLevelItemHovered, setIsLevelItemHovered ] = useState<boolean>(false);
+
+	const { register, handleSubmit, trigger, control, setValue, formState: { errors } } = useForm<IActivityAddForm>({
+		shouldFocusError: false,
+		mode: 'onChange',
+	});
+
+	const activityName = useWatch({name: 'name', control});
+	const level = useWatch({name: 'level', control});
 
 	const getSelectItems = (): ISelectItem[] => {
 		return activitiesToRender.map(activity => ({
@@ -24,12 +37,12 @@ const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({onSave, reg
 	};
 
 	const onActivitySelect = (newActivityName: string) => {
-		const newActivity = activitiesToRender
-			.find(activity => activity.name === newActivityName);
+		setValue('name', newActivityName);
+	};
 
-		if (!newActivity) return;
-
-		setSelectedActivity({...newActivity});
+	const onLevelSelect = (newLevel: number) => {
+		setValue('level', newLevel);
+		trigger('level');
 	};
 
 	const getLevelDescription = (level: number | null) => {
@@ -38,39 +51,58 @@ const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({onSave, reg
 	};
 
 	const handleSave = useCallback(() => {
-		if (!selectedActivity || !selectedLevel) return;
-		onSave(selectedActivity, selectedLevel);
-	}, [onSave, selectedActivity, selectedLevel]);
+		handleSubmit(data => {
+			const selectedActivity = activitiesToRender
+				.find(activity => activity.name === data.name);
+
+			if (!selectedActivity) return;
+			onSave(selectedActivity, data.level);
+			handleClose!();
+		})();
+	}, [ activitiesToRender, handleClose, handleSubmit, onSave ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
-	
+	}, [ handleSave, registerOnSave ]);
+
 	return (
-		<div className={styles['modal']}>
-			<SelectInput text={selectedActivity?.name ?? 'Wybierz'}
-			             selectItems={getSelectItems()}
-			             labelText={'Usługa'}
-			             onClick={onActivitySelect}/>
-			<div className={ styles['modal__content'] }>
-				<div className={ styles['modal__wrapper'] }
-				     role={ 'button' }
-				     onMouseEnter={ () => setIsLevelItemHovered(true) }
-				     onMouseLeave={ () => setIsLevelItemHovered(false) }
-				>
-					<TooltipIcon isLeft={ true }
-					             isIconTop={ true }
-					             text={ getLevelDescription(selectedLevel) }
-					             isActive={ isLevelItemHovered }
-					/>
-					<div className={ styles['modal__info'] }>
-						<span>Poziom znajomości</span>
-						<p>{ getLevelDescription(selectedLevel) }</p>
+		<form className={ styles['modal'] }>
+			<SelectInput text={ activityName ?? null }
+			             selectItems={ getSelectItems() }
+			             labelText={ 'Usługa' }
+			             id={ 'name' }
+			             trigger={ trigger }
+			             register={ register }
+			             validationRules={ {
+				             required: "Wybierz usługę"
+			             } }
+			             error={ errors.name ?? null }
+			             onValueChange={ onActivitySelect }/>
+			<div>
+				<div className={ `${styles['modal__content'] } ${ errors.level && styles['modal__content--error']}` }>
+					<input type="hidden"
+					       id={'level'}
+					       {...register('level', {required: 'Wybierz poziom'})}/>
+					<div className={ styles['modal__wrapper'] }
+					     role={ 'button' }
+					     onMouseEnter={ () => setIsLevelItemHovered(true) }
+					     onMouseLeave={ () => setIsLevelItemHovered(false) }
+					>
+						<TooltipIcon isLeft={ true }
+						             isIconTop={ true }
+						             text={ getLevelDescription(level) }
+						             isActive={ isLevelItemHovered }
+						/>
+						<div className={ styles['modal__info'] }>
+							<span>Poziom znajomości</span>
+							<p>{ getLevelDescription(level) }</p>
+						</div>
 					</div>
+					<LevelPicker selectedLevel={ level } onLevelSelect={ onLevelSelect }/>
 				</div>
-				<LevelPicker selectedLevel={ selectedLevel } onLevelSelect={ setSelectedLevel }/>
+				{ errors.level?.message && <InputError text={ errors.level.message }/> }
 			</div>
-		</div>
+		</form>
 	);
 };
 

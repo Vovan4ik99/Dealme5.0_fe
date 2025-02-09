@@ -11,6 +11,10 @@
     align-items: center;
     border-radius: 12px;
     border: 1px solid vars.$color-gray-border;
+
+    &--error {
+      border: 1px solid vars.$color-danger;
+    }
   }
 
   &__wrapper {

@@ -66,7 +66,7 @@ const EdtActivitiesModalItem: React.FC<IEditActivitiesModalItemProps> = ({regist
 		openModal({
 			id: 'AddActivityModalItem',
 			title: 'Dodaj usługę',
-			shouldCloseOnSaving: true,
+			shouldCloseOnSaving: false,
 			withSaveBtn: true,
 			child: <AddActivityModalItem onSave={ addNewActivity }
 			                             activitiesToRender={ getActivitiesToAdd() }/>,

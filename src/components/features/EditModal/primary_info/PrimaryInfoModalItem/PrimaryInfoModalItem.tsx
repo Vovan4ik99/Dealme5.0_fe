@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {IPrimaryInfoEditFormData, IPrimaryInfoModalItemProps} from "./primaryInfoModalItemTypes.ts";
-import {ReactComponent as FreelancerIcon} from "@icons/named_exported/freelancer_registration.svg";
+import React, { useEffect, useState } from "react";
+import { IPrimaryInfoEditFormData, IPrimaryInfoModalItemProps } from "./primaryInfoModalItemTypes.ts";
+import { ReactComponent as FreelancerIcon } from "@icons/named_exported/freelancer_registration.svg";
 import styles from "./PrimaryInfoModalItem.module.scss";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import {useForm, useWatch} from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import {useOnboardingService} from "@services/onboardingService.ts";
-import {IIncomeGoal, ISpecialization} from "@shared/onboardingTypes.ts";
-import {EXPERIENCE_LEVELS, ExperienceLevelKey} from "@constants/experienceLevel.ts";
-import {useFreelancerProfileAsideInfoService} from "@services/freelancerProfileAsideInfoService.ts";
+import { useOnboardingService } from "@services/onboardingService.ts";
+import { IIncomeGoal, ISpecialization } from "@shared/onboardingTypes.ts";
+import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/experienceLevel.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import InputError from "@ui/InputError/InputError.tsx";
 
 const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	                                                                    onSave,
@@ -27,15 +28,15 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	const {getSpecializations, getIncomeGoals, patchSpecialization, patchIncomeGoal, patchExperienceLevel} = useOnboardingService();
 	const {patchFreelancerName, patchFreelancerCompany} = useFreelancerProfileAsideInfoService();
 
-	const {register, handleSubmit, formState: {errors}, control, setValue} = useForm<IPrimaryInfoEditFormData>({
+	const {register, handleSubmit, formState: {errors}, control, setValue, trigger} = useForm<IPrimaryInfoEditFormData>({
 		shouldFocusError: false,
 		mode: 'onChange',
 		defaultValues: {firstName, lastName, company, specialization, experience, incomeGoal},
 	});
 
-	const currentSpecialization = useWatch({name: 'specialization', control, defaultValue: specialization});
-	const currentExperience = useWatch({name: 'experience', control, defaultValue: experience});
-	const currentIncomeGoal = useWatch({name: 'incomeGoal', control, defaultValue: incomeGoal});
+	const currentSpecialization = useWatch({name: 'specialization', control});
+	const currentExperience = useWatch({name: 'experience', control});
+	const currentIncomeGoal = useWatch({name: 'incomeGoal', control});
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -158,25 +159,57 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 					             register={register}/>
 				</div>
 			</div>
-			<SelectInput labelText={'Specjalizacja handlowa'}
-			             text={currentSpecialization}
-			             selectItems={getSpecializationSelectItems()}
-			             onClick={chooseSpecialization}/>
+			<div>
+				<SelectInput key={'specialization'}
+				             labelText={'Specjalizacja handlowa'}
+				             text={currentSpecialization}
+				             selectItems={getSpecializationSelectItems()}
+				             id={'specialization'}
+				             error={errors.specialization ?? null}
+				             register={register}
+				             trigger={trigger}
+				             validationRules={{
+					             required: 'Wybierz specjalizacje'
+				             }}
+				             onValueChange={chooseSpecialization}/>
+				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+			</div>
 			<CustomInput key={'company'}
 			             preset={'company'}
 			             register={register}
 			             errorMessage={errors.company?.message}/>
-			<SelectInput labelText={'Doświadczenie w sprzedaży'}
-			             text={EXPERIENCE_LEVELS[currentExperience].title}
-			             selectItems={getExperienceLevelSelectItems()}
-			             additionalText={EXPERIENCE_LEVELS[currentExperience].info}
-			             onClick={chooseExperience}/>
-			<SelectInput labelText={'Oczekiwane zarobki w Dealme'}
-			             text={`${getUserIncomeGoal().range} / tydzień`}
-			             additionalText={getUserIncomeGoal().description}
-			             onClick={chooseIncomeGoal}
-			             selectItems={getIncomeGoalSelectItems()}
-			/>
+			<div>
+				<SelectInput key={'Experience'}
+				             id={'experience'}
+				             register={register}
+				             trigger={trigger}
+				             error={errors.experience ?? null}
+				             onValueChange={chooseExperience}
+				             validationRules={{
+					             required: 'Wybierz doświadczenie w sprzedaży'
+				             }}
+				             labelText={'Doświadczenie w sprzedaży'}
+				             text={EXPERIENCE_LEVELS[currentExperience].title}
+				             selectItems={getExperienceLevelSelectItems()}
+				             additionalText={EXPERIENCE_LEVELS[currentExperience].info}/>
+				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+			</div>
+			<div>
+				<SelectInput key={'incomeGoal'}
+				             id={'incomeGoal'}
+				             register={register}
+				             trigger={trigger}
+				             error={errors.incomeGoal ?? null}
+				             onValueChange={chooseIncomeGoal}
+				             validationRules={{
+					             required: 'Wybierz oczekiwane zarobki w Dealme'
+				             }}
+				             labelText={'Oczekiwane zarobki w Dealme'}
+				             text={`${getUserIncomeGoal().range} / tydzień`}
+				             additionalText={getUserIncomeGoal().description}
+				             selectItems={getIncomeGoalSelectItems()}/>
+				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+			</div>
 		</form>
 	);
 };

@@ -49,11 +49,11 @@
 
 	span {
 	  font-size: 14px;
-	  color: vars.$color-gray;
 	}
 
-	p {
-	  text-align: left;
+	&--default {
+	  color: vars.$color-gray;
+	  opacity: 0.5;
 	}
   }
 

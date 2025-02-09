@@ -1,13 +1,20 @@
+import { FieldError, Path, RegisterOptions, UseFormRegister, UseFormTrigger } from "react-hook-form";
+
 export interface ISelectItem {
 	text: string;
-	info: string | null;
+	info?: string | null;
 }
 
-export interface ISelectInputProps {
+export interface ISelectInputProps<T extends Record<string, any>> {
 	labelText: string;
-	text: string;
+	text: string | null;
+	id: Path<T>;
 	additionalText?: string;
-	onClick: (newValue: string) => void;
+	register: UseFormRegister<T>;
+	trigger: UseFormTrigger<T>;
+	error: FieldError | null;
 	selectItems: ISelectItem[];
-	isError?: boolean;
+	validationRules?: RegisterOptions<T, Path<T>>;
+	onValueChange: (value: any) => void;
 }
+

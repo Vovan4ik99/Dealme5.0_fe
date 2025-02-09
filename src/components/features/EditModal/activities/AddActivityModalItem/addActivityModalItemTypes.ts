@@ -5,3 +5,8 @@ export interface IAddActivityModalItemProps extends ISaveableChildProps {
 	onSave: (newActivity: IActivity, level: number) => void;
 	activitiesToRender: IActivity[];
 }
+
+export interface IActivityAddForm {
+	name: string;
+	level: number;
+}

@@ -1,22 +1,17 @@
-import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
-import {CertificateType, IFreelancerCertificate} from "@shared/freelancerTypes.ts";
+import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
+import { CertificateType, IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 
 export interface ICertificateLicenseAddModalItemProps extends ISaveableChildProps {
-	onSave: (certificate: Omit<IFreelancerCertificate, 'id'>) => void;
+	onSave: (certificate: IFreelancerCertificateRequest) => void;
 	certificate?: Omit<IFreelancerCertificate, 'id'>;
 }
 
-export interface IFormValues {
+export interface ICertificateForm {
 	type: CertificateType;
 	name: string;
 	info: string;
+	startMonth: number;
+	startYear: number;
+	endMonth: number;
+	endYear: number;
 }
-
-export type DateErrorKey = 'startMonth' | 'startYear' | 'endMonth' | 'endYear';
-
-export const DATE_ERROR_MESSAGE = {
-	startMonth: 'Wybierz miesiąc początkowy',
-	endMonth: 'Wybierz miesiąc końcowy',
-	startYear: 'Wybierz początkowy rok',
-	endYear: 'Wybierz końcowy rok'
-} as const;

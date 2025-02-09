@@ -2,7 +2,7 @@ import styles from './CertificatesAndLicenses.module.scss';
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import React, { useCallback, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import { IFreelancerCertificate } from "@shared/freelancerTypes.ts";
+import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
@@ -64,7 +64,7 @@ const CertificatesAndLicenses = () => {
 		});
 	}
 
-	const handleCertificateAdd = (certificate: Omit<IFreelancerCertificate, 'id'>) => {
+	const handleCertificateAdd = (certificate: IFreelancerCertificateRequest) => {
 		addCertificate(certificate)
 			.then(fetchCertificates)
 			.catch(console.error);

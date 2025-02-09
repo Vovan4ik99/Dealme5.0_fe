@@ -65,6 +65,14 @@ export interface IAboutMeInfo {
 
 export type CertificateType = 'CERTIFICATE' | 'LICENSE';
 
+export interface IFreelancerCertificateRequest {
+	name: string;
+	dateOfObtaining: string;
+	endDate?: string;
+	certificateType: CertificateType;
+	info: string;
+}
+
 export interface IFreelancerCertificate {
 	id: number;
 	name: string;
@@ -100,5 +108,22 @@ export interface IFreelancerReview {
 	authorFirstName: string;
 	authorLastName: string;
 	categoryOpinions: IFreelancerReviewCategory[];
+}
+
+export interface IFreelancerWorkExperience {
+	id: number;
+	freelancer: string;
+	jobTitle: string;
+	startDate: string;
+	endDate: string | null;
+	localization: IFreelancerLocalization;
+}
+
+export interface IFreelancerWorkExperienceRequest {
+	jobTitle: string;
+	companyName: string;
+	startDate: string;
+	endDate: string | null;
+	localization: IFreelancerLocalization;
 }
 

@@ -2,54 +2,72 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { IFreelancerCountry, IFreelancerLocalization, IFreelancerState } from "@shared/freelancerTypes.ts";
 import {
+	IFreelancerLocalizationForm,
 	ILocalizationModalItemProps
 } from "@components/features/EditModal/localization/LocalizationModalItem/localizationModalItemTypes.ts";
-import LocalizationWorkingArea
-	from "@components/features/EditModal/localization/LocalizationWorkingArea/LocalizationWorkingArea.tsx";
 import { WORKING_AREAS } from "@constants/workingAreas.ts";
-import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
-import LocalizationPrimaryInfo
-	from "@components/features/EditModal/localization/LocalizationPrimaryInfo/LocalizationPrimaryInfo.tsx";
-import { getCountryNameByDescription, getStateNameByDescription } from "@utils/localizationUtils.ts";
+import {
+	getCountryNameByDescription,
+	getDescriptionByCountryName,
+	getStateDescriptionByStateName,
+	getStateNameByDescription,
+	getStatesAsSelectItems,
+	sortCountries
+} from "@utils/localizationUtils.ts";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useForm, useWatch } from "react-hook-form";
+import LocalizationForm from "@components/features/EditModal/localization/LocalizationForm/LocalizationForm.tsx";
+import styles
+	from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.module.scss";
+import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
+import SelectInput from "@ui/SelectInput/SelectInput.tsx";
+import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
 
 const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	                                                                      userLocalization,
 	                                                                      onSave,
 	                                                                      registerOnSave,
 	                                                                      freelancerWorkingArea,
-	                                                                      freelancerWorkingAreaValue
+	                                                                      freelancerWorkingAreaValue,
+	                                                                      handleClose
                                                                       }) => {
 
-	const [ selectedCountry, setSelectedCountry ] = useState<string | null>(userLocalization?.country ?? null);
-	const [ selectedState, setSelectedState ] = useState<string | null>(userLocalization?.state ?? null);
-	const [ city, setCity ] = useState<string | null>(userLocalization?.city ?? null);
-	const [ selectedWorkingArea, setSelectedWorkingArea ] = useState<keyof typeof WORKING_AREAS>(freelancerWorkingArea ?? 'COUNTRY');
-	const [ selectedWorkingAreaValue, setSelectedWorkingAreaValue ] = useState<string | null>(freelancerWorkingAreaValue);
 	const [ countries, setCountries ] = useState<IFreelancerCountry[]>([]);
 	const [ states, setStates ] = useState<IFreelancerState[]>([]);
 
 	const {
 		patchFreelancerLocalization,
 		patchFreelancerWorkingArea,
-		getCountries,
 		getStates,
+		getCountries,
 		loadingStatus
 	} = useFreelancerProfileAsideInfoService();
 
-	useEffect(() => {
-		if (!selectedCountry) {
-			setSelectedCountry(PRIORITY_COUNTRY_KEY);
+	const {
+		register,
+		trigger,
+		setValue,
+		formState: { errors },
+		handleSubmit,
+		control
+	} = useForm<IFreelancerLocalizationForm>({
+		shouldFocusError: false,
+		mode: 'onChange',
+		defaultValues: {
+			country: userLocalization?.country,
+			state: userLocalization?.state,
+			city: userLocalization?.city,
+			workingArea: freelancerWorkingArea ?? 'COUNTRY',
+			workingAreaValue: freelancerWorkingAreaValue ?? undefined
 		}
-	}, [ selectedCountry ]);
+	});
 
-	useEffect(() => {
-		if (selectedCountry === PRIORITY_COUNTRY_KEY && states.length === 0) {
-			getStates()
-				.then(setStates)
-				.catch(console.error);
-		}
-	}, [ getStates, selectedCountry, states ]);
+	const country = useWatch({name: 'country', control});
+	const state = useWatch({name: 'state', control});
+	const city = useWatch({name: 'city', control});
+	const workingArea = useWatch({name: 'workingArea', control});
+	const workingAreaValue = useWatch({name: 'workingAreaValue', control});
 
 	useEffect(() => {
 		getCountries()
@@ -57,67 +75,74 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 			.catch(console.error);
 	}, [ getCountries ]);
 
-	const sortCountries = (countries: IFreelancerCountry[]) => {
-		return countries.toSorted((a, b) => {
-			if (a.name === PRIORITY_COUNTRY_KEY) {
-				return -1;
-			}
-			if (b.name === PRIORITY_COUNTRY_KEY) {
-				return 1;
-			}
-			return 0;
-		});
-	};
+	useEffect(() => {
+		getStates()
+			.then(setStates)
+			.catch(console.error);
+	}, [ getStates ]);
 
-	const chooseCountry = (description: string) => {
-		const countryName = getCountryNameByDescription(countries, description);
-		setSelectedCountry(countryName);
-		setSelectedState(null);
-		setStates([]);
-		setCity(null);
-	};
-
-	const chooseState = (stateDescription: string) => {
-		const stateName = getStateNameByDescription(states, stateDescription);
-		setSelectedState(stateName);
-		setCity(null);
-	};
-
-	const chooseWorkingArea = (workingArea: keyof typeof WORKING_AREAS) => {
-		setSelectedWorkingArea(workingArea);
-		setSelectedWorkingAreaValue(null);
-	}
-
-	const chooseWorkingAreaValue = (value: string | null) => {
-		console.log('chooseWorkingAreaValue: ', value);
-		if (selectedWorkingArea === 'COUNTRY') {
-			setSelectedWorkingAreaValue(value ?? PRIORITY_COUNTRY_KEY);
+	const chooseWorkingArea = () => {
+		if (workingArea === 'COUNTRY') {
+			setValue('workingArea', 'STATE');
 		} else {
-			setSelectedWorkingAreaValue(getStateNameByDescription(states, (value ?? 'Dolnośląskie')));
+			setValue('workingArea', 'COUNTRY');
 		}
+		setValue('workingAreaValue', '');
 	};
 
-	const patchWorkingArea = useCallback(() => {
-		if (!selectedWorkingArea || !selectedWorkingAreaValue) return;
-		patchFreelancerWorkingArea({ workingArea: selectedWorkingArea, workingAreaValue: selectedWorkingAreaValue })
+	const renderWorkingAreaInfo = () => {
+		const areaToPaste = workingArea === "STATE" ? 'województwa' : 'kraju';
+		return `Wybranie ${ areaToPaste } oznacza świadczenie usług na terenie całego ${ areaToPaste }`;
+	};
+
+	//Workaround, because now working area is only Poland
+	const renderWorkingAreaValueSelectItems = (): ISelectItem[] => {
+		if (countries.length === 0) return [];
+		if (workingArea === "COUNTRY") {
+			return [ { text: sortCountries(countries)[0].description, info: null } ];
+		}
+		return getStatesAsSelectItems(states);
+	};
+
+	const onWorkingAreaValueChange = (workingAreaValue: string) => {
+		if (workingArea === "COUNTRY") {
+			setValue('workingAreaValue', getCountryNameByDescription(countries, workingAreaValue) ?? '')
+			return;
+		}
+		setValue('workingAreaValue', getStateNameByDescription(states, workingAreaValue) ?? '');
+	};
+
+	const getWorkingAreaValueDescription = () => {
+		if (workingArea === "COUNTRY") {
+			return getDescriptionByCountryName(countries, workingAreaValue);
+		}
+		return getStateDescriptionByStateName(states, workingAreaValue);
+	};
+
+	const patchWorkingArea = useCallback((
+		workingArea: keyof typeof WORKING_AREAS, workingAreaValue: string
+	) => {
+		const request = { workingArea: workingArea, workingAreaValue: workingAreaValue };
+		patchFreelancerWorkingArea(request)
 			.then(onSave)
 			.catch(console.error);
-	}, [ onSave, patchFreelancerWorkingArea, selectedWorkingArea, selectedWorkingAreaValue ]);
+		handleClose!();
+	}, [ handleClose, onSave, patchFreelancerWorkingArea ]);
 
 	const handleSave = useCallback(() => {
-		if (selectedCountry && selectedState) {
+		handleSubmit(data => {
 			const localizationData: IFreelancerLocalization = {
-				country: selectedCountry,
-				state: selectedState,
+				country: data.country,
+				state: data.state,
 			};
-			if (city && city.trim() !== '') {
-				localizationData.city = city.trim();
+			if (data.city && data.city.trim() !== '') {
+				localizationData.city = data.city.trim();
 			}
 			patchFreelancerLocalization(localizationData)
-				.then(() => patchWorkingArea())
+				.then(() => patchWorkingArea(data.workingArea, data.workingAreaValue))
 				.catch(console.error);
-		}
-	}, [ city, patchFreelancerLocalization, patchWorkingArea, selectedCountry, selectedState ]);
+		})();
+	}, [ handleSubmit, patchFreelancerLocalization, patchWorkingArea ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -128,22 +153,43 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	}
 
 	return (
-		<>
-			<LocalizationPrimaryInfo countries={ sortCountries(countries) }
-			                         selectedCountry={ selectedCountry }
-			                         onCountrySelect={ chooseCountry }
-			                         states={ states }
-			                         selectedState={ selectedState }
-			                         onStateSelect={ chooseState }
-			                         selectedCity={ city }
-			                         onCitySelect={ setCity }/>
-			<LocalizationWorkingArea userWorkingArea={ selectedWorkingArea }
-			                         userWorkingAreaValue={ selectedWorkingAreaValue }
-			                         onWorkingAreaChange={ chooseWorkingArea }
-			                         countries={ sortCountries(countries) }
-			                         states={ states }
-			                         onWorkingAreaValueChange={ chooseWorkingAreaValue }/>
-		</>
+		<div className={ styles['item'] }>
+			<p className={ styles['item__title'] }>Ustaw swoją lokalizację</p>
+			<div className={ styles['item__wrapper'] }>
+				<LocalizationForm
+					formData={ { country, state, city } }
+					register={ register }
+					setValue={ setValue }
+					trigger={ trigger }
+					errors={ errors }/>
+			</div>
+			<p className={ styles['item__title'] }>Określ obszar świadczenia usług</p>
+			<SwitchBtn isActive={ workingArea === "COUNTRY" }
+			           onClick={ chooseWorkingArea }
+			           leftContent={
+				           <p className={ styles['item__text'] }>{ WORKING_AREAS.COUNTRY }</p>
+			           }
+			           rightContent={
+				           <p>{ WORKING_AREAS.STATE }</p>
+			           }/>
+			<div className={ styles['item__footer'] }>
+				<div className={ styles['item__icon'] }>
+					<InfoIcon width={ 14 } height={ 14 }/>
+				</div>
+				<p className={ styles['item__info'] }>{ renderWorkingAreaInfo() }</p>
+			</div>
+			<SelectInput text={ getWorkingAreaValueDescription() ?? null }
+			             labelText={ workingArea === "COUNTRY" ? WORKING_AREAS.COUNTRY : WORKING_AREAS.STATE }
+			             id={ "workingAreaValue" }
+			             selectItems={ renderWorkingAreaValueSelectItems() }
+			             register={ register }
+			             trigger={ trigger }
+			             onValueChange={ onWorkingAreaValueChange }
+			             validationRules={ {
+				             required: 'Wybierz obszar świadczenia usług'
+			             } }
+			             error={ errors?.workingAreaValue ?? null }/>
+		</div>
 	)
 }
 

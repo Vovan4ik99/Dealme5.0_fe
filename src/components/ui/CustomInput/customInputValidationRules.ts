@@ -1,5 +1,5 @@
-import {PresetType} from "@ui/CustomInput/customInputTypes.ts";
-import {RegisterOptions} from "react-hook-form";
+import { PresetType } from "@ui/CustomInput/customInputTypes.ts";
+import { RegisterOptions } from "react-hook-form";
 
 export const CUSTOM_INPUT_VALIDATION_RULES: Record<PresetType, RegisterOptions> = {
 	email: {
@@ -68,7 +68,21 @@ export const CUSTOM_INPUT_VALIDATION_RULES: Record<PresetType, RegisterOptions> 
 		}
 	},
 	videoTitle: {
-		required: 'Podaj nazwe video / komentarz',
+		required: 'Podaj nazwę video / komentarz',
+		max: {
+			value: 50,
+			message: 'Długość od 2 do 50 znaków'
+		}
+	},
+	jobTitle: {
+		required: 'Podaj nazwę stanowiska',
+		max: {
+			value: 50,
+			message: 'Długość od 2 do 50 znaków'
+		}
+	},
+	workExperienceCompany: {
+		required: 'Podaj nazwę firmy w której pracowałeś / aś',
 		max: {
 			value: 50,
 			message: 'Długość od 2 do 50 znaków'

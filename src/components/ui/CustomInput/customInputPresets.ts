@@ -1,5 +1,5 @@
-import {CustomInputProps, PresetType} from "@ui/CustomInput/customInputTypes.ts";
-import {CUSTOM_INPUT_VALIDATION_RULES} from "@ui/CustomInput/customInputValidationRules.ts";
+import { CustomInputProps, PresetType } from "@ui/CustomInput/customInputTypes.ts";
+import { CUSTOM_INPUT_VALIDATION_RULES } from "@ui/CustomInput/customInputValidationRules.ts";
 
 export const CUSTOM_INPUT_PRESETS: Record<PresetType, Partial<CustomInputProps>> = {
 	email: {
@@ -66,4 +66,20 @@ export const CUSTOM_INPUT_PRESETS: Record<PresetType, Partial<CustomInputProps>>
 		labelText: 'Nazwa / Komentarz',
 		validation: CUSTOM_INPUT_VALIDATION_RULES.videoTitle
 	},
+	jobTitle: {
+		id: 'jobTitle',
+		type: 'text',
+		placeholder: 'np. Project manager',
+		autoComplete: '',
+		labelText: 'Nazwa stanowiska',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.jobTitle
+	},
+	workExperienceCompany: {
+		id: 'companyName',
+		type: 'text',
+		placeholder: 'np. Sales Agency',
+		autoComplete: '',
+		labelText: 'Nazwa firmy',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.workExperienceCompany
+	}
 } as const;
