@@ -1,10 +1,11 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import AuthPage from "@pages/AuthPage/AuthPage.tsx";
+import AuthPage from "@pages/AuthPage/RegisterAndLoginPage/AuthPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
 import PublicRoute from "./PublicRoute.tsx";
 import Dashboard from "@pages/Dashboard/Dashboard.tsx";
 import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
+import ResetPasswordPage from "@pages/AuthPage/ResetPasswordPage/ResetPasswordPage.tsx";
 
 const AppRouter = () => {
 	return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
 				<Route element={<PublicRoute/>}>
 					<Route path={'/login'} element={<AuthPage isLogin={true}/>} />
 					<Route path={'/registration'} element={<AuthPage isLogin={false}/>} />
+					<Route path={'/reset-password'} element={<ResetPasswordPage name={'false'}/>} />
 				</Route>
 				<Route element={<ProtectedRoute/>}>
 					<Route path={'/onboarding'} element={<OnboardingPage/>}/>

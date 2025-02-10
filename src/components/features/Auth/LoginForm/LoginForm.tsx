@@ -19,7 +19,7 @@ const LoginForm = () => {
 	});
 
 	const {register, handleSubmit, formState: {errors}} = useForm<ILoginRequest>({
-		shouldFocusError: false,
+		shouldFocusError: true,
 		mode: 'onChange',
 		defaultValues: formData,
 	});
@@ -57,7 +57,7 @@ const LoginForm = () => {
 			             }}
 			             errorMessage={errors?.password?.message}/>
 			<div className={styles['login-form__wrapper']}>
-				<Link className={styles['login-form__link']} to={'/'}>Zapomniałeś hasło?</Link>
+				<Link className={styles['login-form__link']} to={'/reset-password'}>Zapomniałeś hasło?</Link>
 			</div>
 
 			<button className={'btn'} type="submit" disabled={loadingStatus === 'loading'}>

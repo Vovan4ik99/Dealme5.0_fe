@@ -1,11 +1,11 @@
 import styles from "./AuthPage.module.scss";
-import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
+import Navbar from "@components/layout/OnboardingNavbar/Navbar.tsx";
 import google_icon from "@icons/auth/google_login.svg";
 import facebook_login from "@icons/auth/facebook_login.svg";
 import React from "react";
-import LoginForm from "../../components/features/Auth/LoginForm/LoginForm.tsx";
-import RegistrationForm from "../../components/features/Auth/RegistrationForm/RegistrationForm.tsx";
-import Footer from "../../components/layout/Footer/Footer.tsx";
+import LoginForm from "@components/features/Auth/LoginForm/LoginForm.tsx";
+import RegistrationForm from "@components/features/Auth/RegistrationForm/RegistrationForm.tsx";
+import Footer from "@components/layout/Footer/Footer.tsx";
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 
 interface LoginPageProps {

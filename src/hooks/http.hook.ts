@@ -41,7 +41,7 @@ export const useHttp = (): IHTTPResponse => {
 		setLoadingStatus('loading');
 
 		const locationPath = window.location.pathname;
-		const isAuthPage = locationPath === API_ROUTES.AUTH.LOGIN || locationPath === API_ROUTES.AUTH.REGISTER;
+		const isAuthPage = locationPath === API_ROUTES.AUTH.LOGIN || locationPath === API_ROUTES.AUTH.REGISTER || locationPath === API_ROUTES.TOKEN.PASSWORD_FORGET;
 
 		const token = localStorage.getItem('token');
 		const authHeaders: IHTTPHeaders = {
