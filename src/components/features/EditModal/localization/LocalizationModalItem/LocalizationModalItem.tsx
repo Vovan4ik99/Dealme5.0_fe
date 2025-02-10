@@ -161,7 +161,8 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 					register={ register }
 					setValue={ setValue }
 					trigger={ trigger }
-					errors={ errors }/>
+					errors={ errors }
+					isCityRequired={false}/>
 			</div>
 			<p className={ styles['item__title'] }>Określ obszar świadczenia usług</p>
 			<SwitchBtn isActive={ workingArea === "COUNTRY" }

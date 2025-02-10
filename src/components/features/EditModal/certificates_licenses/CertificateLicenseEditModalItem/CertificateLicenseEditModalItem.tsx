@@ -2,7 +2,7 @@ import styles from './CertificateLicenseEditModalItem.module.scss';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import { IFreelancerCertificate } from "@shared/freelancerTypes.ts";
+import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
@@ -39,13 +39,13 @@ const CertificateLicenseEditModalItem = () => {
 			.catch(console.error);
 	};
 
-	const handleAddCertificate = (certificate: Omit<IFreelancerCertificate, 'id'>) => {
+	const handleAddCertificate = (certificate: IFreelancerCertificateRequest) => {
 		addCertificate(certificate)
 			.then(fetchFreelancerCertificates)
 			.catch(console.error);
 	};
 
-	const handlePatchCertificate = (id: number, certificate: Omit<IFreelancerCertificate, 'id'>) => {
+	const handlePatchCertificate = (id: number, certificate: IFreelancerCertificateRequest) => {
 		patchCertificate(id, certificate)
 			.then(fetchFreelancerCertificates)
 			.catch(console.error);
@@ -73,7 +73,7 @@ const CertificateLicenseEditModalItem = () => {
 			shouldCloseOnSaving: false,
 			child: <CertificateLicenseAddModalItem certificate={ certificate }
 			                                       onSave={
-				                                       (updatedCertificate: Omit<IFreelancerCertificate, 'id'>) =>
+				                                       (updatedCertificate: IFreelancerCertificateRequest) =>
 					                                       handlePatchCertificate(certificate.id, updatedCertificate)
 			                                       }/>
 		});

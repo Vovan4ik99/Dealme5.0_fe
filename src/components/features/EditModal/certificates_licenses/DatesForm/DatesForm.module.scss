@@ -17,6 +17,10 @@
 	column-gap: 16px;
   }
 
+  &__checkbox {
+	grid-column: 1 / 3;
+  }
+
   &__text {
 	color: vars.$color-gray;
 	font-size: 14px;

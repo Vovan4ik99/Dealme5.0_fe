@@ -123,7 +123,7 @@ export interface IFreelancerWorkExperienceRequest {
 	jobTitle: string;
 	companyName: string;
 	startDate: string;
-	endDate: string | null;
+	endDate?: string | null;
 	localization: IFreelancerLocalization;
 }
 

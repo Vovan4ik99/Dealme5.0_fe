@@ -11,26 +11,35 @@ import {
 	getPolishLanguageName
 } from "@utils/languageUtils.ts";
 import {
-	IAddLanguageModalItemProps
+	IAddLanguageModalItemProps,
+	ILanguageForm
 } from "@components/features/EditModal/language/AddLanguageModalItem/addLanguageModalItemTypes.ts";
-import { LANGUAGE_NAMES } from "@constants/language.ts";
+import { useForm, useWatch } from "react-hook-form";
+import InputError from "@ui/InputError/InputError.tsx";
 
-const AddLanguageModalItem: React.FC<IAddLanguageModalItemProps> = ({ registerOnSave, languages, onSave }) => {
+const AddLanguageModalItem: React.FC<IAddLanguageModalItemProps> = ({
+	                                                                    registerOnSave,
+	                                                                    languages,
+	                                                                    onSave,
+	                                                                    handleClose
+                                                                    }) => {
 
-	const [ selectedLevel, setSelectedLevel ] = useState<number | null>(null);
-	const [ selectedLanguage, setSelectedLanguage ] = useState<keyof typeof LANGUAGE_NAMES | null>(null);
+	const { register, setValue, trigger, control, handleSubmit, formState: { errors } } = useForm<ILanguageForm>({
+		shouldFocusError: false,
+		mode: 'onChange',
+	});
+
+	const language = useWatch({ name: 'language', control });
+	const level = useWatch({ name: 'level', control });
+
 	const [ isLevelItemHovered, setIsLevelItemHovered ] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (!selectedLanguage) {
-			setSelectedLanguage(languages[0]);
-		}
-	}, [ languages, selectedLanguage ]);
-
 	const handleSave = useCallback(() => {
-		if (!selectedLanguage || !selectedLevel) return;
-		onSave({ language: selectedLanguage, level: selectedLevel });
-	}, [ onSave, selectedLanguage, selectedLevel ]);
+		handleSubmit(data => {
+			onSave({ language: data.language, level: data.level });
+			handleClose!();
+		})();
+	}, [ handleClose, handleSubmit, onSave ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -43,33 +52,54 @@ const AddLanguageModalItem: React.FC<IAddLanguageModalItemProps> = ({ registerOn
 	};
 
 	const selectLanguage = (language: string) => {
-		setSelectedLanguage(getLanguageKeyFromEnumByValue(language) ?? null);
-		setSelectedLevel(null);
+		const languageToSave = getLanguageKeyFromEnumByValue(language);
+
+		if (!languageToSave) return;
+
+		setValue('language', languageToSave);
+	};
+
+	const onLevelSelect = (level: number) => {
+		setValue('level', level);
+		trigger('level');
 	};
 
 	return (
 		<div className={ styles['item'] }>
-			<SelectInput text={ getPolishLanguageName(selectedLanguage ?? languages[0]) }
+			<SelectInput text={ getPolishLanguageName(language) }
+			             id={ 'language' }
 			             labelText={ 'Język' }
 			             selectItems={ getSelectInputItems() }
-			             onClick={ selectLanguage }/>
-			<div className={ styles['item__content'] }>
-				<div className={ styles['item__wrapper'] }
-				     role={ 'button' }
-				     onMouseEnter={ () => setIsLevelItemHovered(true) }
-				     onMouseLeave={ () => setIsLevelItemHovered(false) }
-				>
-					<TooltipIcon isLeft={ true }
-					             isIconTop={ true }
-					             text={ getLanguageLevelDescription(selectedLevel) }
-					             isActive={ isLevelItemHovered }
-					/>
-					<div className={ styles['item__info'] }>
-						<span>Poziom znajomości</span>
-						<p>{ getLanguageLevelName(selectedLevel) }</p>
+			             register={ register }
+			             trigger={ trigger }
+			             validationRules={ {
+				             required: "Wybierz język"
+			             } }
+			             error={ errors.language ?? null }
+			             onValueChange={ selectLanguage }/>
+			<div>
+				<div className={ `${styles['item__content']} ${ errors.level && styles['item__content--error'] }` }>
+					<input type="hidden"
+					       id={ 'level' }
+					       { ...register('level', { required: 'Wybierz poziom' }) }/>
+					<div className={ styles['item__wrapper'] }
+					     role={ 'button' }
+					     onMouseEnter={ () => setIsLevelItemHovered(true) }
+					     onMouseLeave={ () => setIsLevelItemHovered(false) }>
+						<TooltipIcon isLeft={ true }
+						             isIconTop={ true }
+						             text={ getLanguageLevelDescription(level) }
+						             isActive={ isLevelItemHovered }
+						/>
+						<div className={ styles['item__info'] }>
+							<span>Poziom znajomości</span>
+							<p>{ getLanguageLevelName(level) }</p>
+						</div>
 					</div>
+					<LevelPicker selectedLevel={ level }
+					             onLevelSelect={ onLevelSelect }/>
 				</div>
-				<LevelPicker selectedLevel={ selectedLevel } onLevelSelect={ setSelectedLevel }/>
+				{ errors.level?.message && <InputError text={ errors.level.message }/> }
 			</div>
 		</div>
 	)

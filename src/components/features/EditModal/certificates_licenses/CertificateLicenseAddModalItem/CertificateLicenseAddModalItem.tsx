@@ -5,8 +5,9 @@ import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg"
 import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
 import { useForm, useWatch } from "react-hook-form";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import DatesForm from "@components/features/EditModal/certificates_licenses/CertificateDatesItem/DatesForm.tsx";
+import DatesForm from "@components/features/EditModal/certificates_licenses/DatesForm/DatesForm.tsx";
 import { IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
+import { createDateFromYearMonth, mapDateToYearMonth } from "@utils/dateUtils.ts";
 
 const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemProps> = ({
 	                                                                                        onSave,
@@ -14,15 +15,6 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 	                                                                                        handleClose,
 	                                                                                        certificate
                                                                                         }) => {
-
-	const mapCertificateDate = (dateString: string | undefined | null) => {
-		if (!dateString) return;
-		const date = new Date(dateString);
-		return {
-			year: date.getFullYear(),
-			month: date.getMonth() + 1
-		};
-	};
 
 	const {
 		register,
@@ -40,10 +32,10 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 			name: certificate?.name,
 			info: certificate?.info,
 			type: certificate?.certificateType ?? 'CERTIFICATE',
-			startMonth: mapCertificateDate(certificate?.dateOfObtaining)?.month,
-			startYear: mapCertificateDate(certificate?.dateOfObtaining)?.year,
-			endMonth: mapCertificateDate(certificate?.endDate)?.month,
-			endYear: mapCertificateDate(certificate?.endDate)?.year,
+			startMonth: mapDateToYearMonth(certificate?.dateOfObtaining)?.month,
+			startYear: mapDateToYearMonth(certificate?.dateOfObtaining)?.year,
+			endMonth: mapDateToYearMonth(certificate?.endDate)?.month,
+			endYear: mapDateToYearMonth(certificate?.endDate)?.year,
 		}
 	});
 
@@ -61,23 +53,17 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 		setValue('type', 'CERTIFICATE');
 	};
 
-	const createDate = (year: number, month: number) => {
-		const startDate = new Date(year, month);
-		console.log(startDate);
-		return startDate.toISOString().split("T")[0];
-	};
-
 	const handleSave = useCallback(() => {
 		handleSubmit(data => {
 			const request: IFreelancerCertificateRequest = {
 				name: data.name,
 				info: data.info,
-				dateOfObtaining: createDate(startYear, startMonth),
+				dateOfObtaining: createDateFromYearMonth(startYear, startMonth),
 				certificateType
 			};
 
 			if (endMonth && endYear) {
-				request.endDate = createDate(endYear, endMonth);
+				request.endDate = createDateFromYearMonth(endYear, endMonth);
 			}
 
 			onSave(request);

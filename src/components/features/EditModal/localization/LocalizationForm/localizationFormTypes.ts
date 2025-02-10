@@ -15,5 +15,6 @@ export interface ILocalizationFormProps<T extends ILocalizationFormState> {
 		country?: FieldError;
 		state?: FieldError;
 		city?: FieldError;
-	}
+	};
+	isCityRequired?: boolean;
 }
