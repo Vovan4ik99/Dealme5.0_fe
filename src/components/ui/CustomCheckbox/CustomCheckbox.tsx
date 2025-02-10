@@ -16,7 +16,7 @@ const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({
 
 	return (
 		<>
-			<div className={styles['checkbox']}>
+			<label htmlFor={id} className={styles['checkbox']}>
 				<input
 					id={id}
 					className={`${styles['checkbox__input']}`}
@@ -31,10 +31,10 @@ const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({
 				<span className={`${styles['checkbox__custom']} ${isError && styles['checkbox__custom--error']}`}>
 					<img src={checkbox_checked} alt={'checkbox'}/>
 				</span>
-				<label htmlFor={id} className={styles['checkbox__label']}>
+				<p className={styles['checkbox__text']}>
 					{label}
-				</label>
-			</div>
+				</p>
+			</label>
 			{(isError && errorMessage) && <InputError text={errorMessage}/>}
 		</>
 	);

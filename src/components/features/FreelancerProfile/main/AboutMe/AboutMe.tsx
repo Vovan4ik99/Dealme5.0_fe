@@ -62,7 +62,7 @@ const AboutMe = () => {
 		openModal({
 			id: 'AboutMeModalItem',
 			title: 'Edytuj dane “o mnie”',
-			shouldCloseOnSaving: true,
+			shouldCloseOnSaving: false,
 			btnText: 'Zapisz zmiany',
 			btnWithIcon: false,
 			withSaveBtn: true,

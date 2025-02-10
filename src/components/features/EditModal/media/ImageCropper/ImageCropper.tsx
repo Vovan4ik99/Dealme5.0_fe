@@ -13,7 +13,6 @@ const ImageCropper: React.FC<IImageCropperProps> = ({
 	                                                    isAvatar,
 	                                                    onSave
                                                     }) => {
-	const BASE_CROP_AREA_WIDTH = 504
 	const INITIAL_CROP = { x: 0, y: 0 };
 
 	const [ crop, setCrop ] = useState(INITIAL_CROP);
@@ -78,27 +77,34 @@ const ImageCropper: React.FC<IImageCropperProps> = ({
 	});
 
 	return (
-		<div className={ `${ styles['modal'] } ${ isAvatar && styles['modal--avatar'] }` }>
-			<Cropper
-				image={ mediaSrc }
-				crop={ crop }
-				zoom={ zoom }
-				aspect={ aspect }
-				onCropChange={ setCrop }
-				onZoomChange={ handleZoomChange }
-				onCropComplete={ onCropComplete }
-				showGrid={ false }
-				cropSize={ {
-					width: BASE_CROP_AREA_WIDTH,
-					height: BASE_CROP_AREA_WIDTH / aspect,
-				} }
-				objectFit="cover"
-				style={ {
-					cropAreaStyle: {
-						borderRadius: '16px',
-					},
-				} }
-			/>
+		<div className={ `${ styles['modal'] }` }>
+			<div className={ `${ styles['modal__cropper'] } ${ isAvatar && styles['modal__cropper--avatar'] }` }>
+				<Cropper
+					image={ mediaSrc }
+					crop={ crop }
+					zoom={ zoom }
+					aspect={ aspect }
+					onCropChange={ setCrop }
+					onZoomChange={ handleZoomChange }
+					onCropComplete={ onCropComplete }
+					showGrid={ false }
+					style={ {
+						cropAreaStyle: {
+							borderRadius: '16px',
+						},
+					} }
+				/>
+			</div>
+			<div className={ styles['modal__controls'] }>
+				<span>Zoom</span>
+				<input type={'range'}
+				       value={zoom}
+				       min={1}
+				       max={3}
+				       step={0.1}
+				       className={ styles['modal__zoom'] }
+				       onChange={e => setZoom(Number(e.target.value))} />
+			</div>
 		</div>
 	);
 };

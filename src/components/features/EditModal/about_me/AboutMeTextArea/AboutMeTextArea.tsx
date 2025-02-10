@@ -1,7 +1,8 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from './AboutMeTextArea.module.scss';
-import {IAboutMeTextAreaProps} from "@components/features/EditModal/about_me/AboutMeTextArea/aboutMeTextAreaTypes.ts";
+import { IAboutMeTextAreaProps } from "@components/features/EditModal/about_me/AboutMeTextArea/aboutMeTextAreaTypes.ts";
 import resizing_img from "@icons/freelancer_profile/about_me/area_resizing.svg";
+import InputError from "@ui/InputError/InputError.tsx";
 
 const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 	                                                          maxSymbols,
@@ -11,20 +12,18 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 	                                                          placeholder,
 	                                                          minHeight = 100,
 	                                                          onTextChange,
-	                                                          value
+	                                                          value,
+	                                                          error,
+	                                                          register,
+	                                                          trigger,
+	                                                          id,
+	                                                          validation
                                                           }) => {
 
-	const [text, setText] = useState('');
-	const [height, setHeight] = useState(minHeight);
+	const [ height, setHeight ] = useState(minHeight);
 
 	const isResizing = useRef(false);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-	useEffect(() => {
-		if (value !== '') {
-			setText(value);
-		}
-	}, [value]);
 
 	const calculateMaxHeight = useCallback(() => {
 		const canvas = document.createElement("canvas");
@@ -33,7 +32,7 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 			throw new Error("Canvas 2D context is not supported or failed to initialize.");
 		}
 
-		context.font = `${fontSize}px Outfit`;
+		context.font = `${ fontSize }px Outfit`;
 		const maxWidth = 504;
 		const lineHeight = 1.2 * fontSize;
 		const text = "a".repeat(maxSymbols);
@@ -53,14 +52,14 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 		}
 
 		return lineCount * lineHeight;
-	}, [fontSize, maxSymbols]);
+	}, [ fontSize, maxSymbols ]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const value = event.target.value;
 
 		if (value.length <= maxSymbols) {
-			setText(value);
 			onTextChange(value);
+			trigger(id);
 		}
 
 		if (textareaRef.current) {
@@ -76,15 +75,15 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 		const scrollHeight = textarea.scrollHeight + padding + gap + labelHeight;
 		const maxHeight = calculateMaxHeight();
 		const newHeight = Math.min(Math.max(scrollHeight, height), maxHeight);
-		textarea.style.height = `${newHeight}px`;
+		textarea.style.height = `${ newHeight }px`;
 		setHeight(newHeight);
-	}, [calculateMaxHeight, height]);
+	}, [ calculateMaxHeight, height ]);
 
 	useEffect(() => {
 		if (textareaRef.current) {
 			updateHeights(textareaRef.current);
 		}
-	}, [text, updateHeights]);
+	}, [updateHeights ]);
 
 	const handleMouseDown = (e: React.MouseEvent) => {
 		isResizing.current = true;
@@ -113,22 +112,29 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 	}
 
 	return (
-		<div className={styles['textarea']} style={{height: `${height}px`}}>
-			<div className={styles['textarea__label']}>
-				<span>{label}</span>
-				<span>{text.length} / {maxSymbols}</span>
+		<div>
+			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error']}` }
+			     style={ { height: `${ height }px` } }>
+				<div className={ styles['textarea__label'] }>
+					<span>{ label }</span>
+					<span>{ value.length } / { maxSymbols }</span>
+				</div>
+				<textarea className={ styles['textarea__input'] }
+				          value={ value }
+				          { ...register(id, {
+					          ...validation,
+					          onChange: (e) => handleChange(e),
+				          }) }
+				          ref={ textareaRef }
+				          maxLength={ maxSymbols }
+				          placeholder={ placeholder }
+				          style={ { fontSize: `${ fontSize }px`, fontWeight: fontWeight } }/>
+				<button className={ styles['textarea__btn'] }
+				        onMouseDown={ handleMouseDown }>
+					<img src={ resizing_img } alt="resize"/>
+				</button>
 			</div>
-			<textarea className={styles['textarea__input']}
-			          ref={textareaRef}
-			          onChange={handleChange}
-			          value={text}
-			          maxLength={maxSymbols}
-			          placeholder={placeholder}
-			          style={{fontSize: `${fontSize}px`, fontWeight: fontWeight}}/>
-			<button className={styles['textarea__btn']}
-			        onMouseDown={handleMouseDown}>
-				<img src={resizing_img} alt="resize"/>
-			</button>
+			{ error?.message && <InputError text={ error.message }/> }
 		</div>
 	);
 };

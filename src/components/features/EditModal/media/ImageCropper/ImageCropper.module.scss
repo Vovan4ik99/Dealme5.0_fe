@@ -1,14 +1,80 @@
-.modal {
-  width: 504px;
-  height: 300px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  background-color: #f9fafc;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
+@use "@styles/variables" as vars;
 
-  &--avatar {
-    height: 504px;
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__cropper {
+    position: relative;
+    width: 504px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 16px;
+    background-color: #f9fafc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+
+    &--avatar {
+      height: 504px;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    span {
+      font-size: 18px;
+      color: vars.$color-black;
+    }
+  }
+
+  &__zoom {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: vars.$color-gray;
+    border-radius: 2px;
+    outline: none;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: #aaa;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background: vars.$color-black;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    // Firefox
+    &::-moz-range-track {
+      width: 100%;
+      height: 2px;
+      background: vars.$color-gray;
+      border-radius: 2px;
+    }
+
+    &::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      background: vars.$color-black;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   }
 }
