@@ -7,6 +7,7 @@ import InputError from "@ui/InputError/InputError.tsx";
 import {Link} from "react-router-dom";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import styles from "./ResetPassword.module.scss"
+import {ErrorMessages} from "@shared/errorMessages.ts";
 
 const ResetPasswordForm = () => {
     const [formData, setFormData]= useState({
@@ -19,26 +20,24 @@ const ResetPasswordForm = () => {
 
     const {register, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
         shouldFocusError: false,
-        mode: 'onChange',
+        mode: 'onSubmit',
         values: formData,
     });
     const onSubmit = useCallback((request: ResetPasswordFormProps) => {
-
-
+    setStatus(false);
         resetPassword(request.email)
             .then(() => {
                 setError('');
                 setStatus(true)
             })
             .catch(error => {
-                setStatus(false);
-                setError(errorMessage);
+                setError(errorMessage || ErrorMessages.UNKNOWN_ERROR );
                 console.log(error);
                 setFormData(request);
             });
-
         setFormData(request);
-    },[])
+    },[resetPassword, errorMessage, setFormData])
+
 
     return (
         <form className={styles['reset-password-form']} onSubmit={handleSubmit(onSubmit)} noValidate={true}>
@@ -54,7 +53,7 @@ const ResetPasswordForm = () => {
             <div className={styles['reset-password-form__wrapper']}>
                 <Link className={styles['reset-password-form__link']} to={'/'}>Wróć do logowania</Link>
             </div>
-            {error && <InputError text={error}/>}
+            {error && <InputError text={error?.toString()}/>}
         </form>
             )
 }
