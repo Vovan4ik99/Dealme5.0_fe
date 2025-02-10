@@ -19,7 +19,7 @@ const LoginForm = () => {
 	});
 
 	const {register, handleSubmit, formState: {errors}} = useForm<ILoginRequest>({
-		shouldFocusError: true,
+		shouldFocusError: false,
 		mode: 'onChange',
 		defaultValues: formData,
 	});
