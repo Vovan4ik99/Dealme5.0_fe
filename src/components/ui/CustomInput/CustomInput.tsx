@@ -1,8 +1,8 @@
 import styles from './CustomInput.module.scss';
 import React from "react";
-import {CustomInputProps} from "@ui/CustomInput/customInputTypes.ts";
+import { CustomInputProps } from "@ui/CustomInput/customInputTypes.ts";
 import InputError from "@ui/InputError/InputError.tsx";
-import {CUSTOM_INPUT_PRESETS} from "@ui/CustomInput/customInputPresets.ts";
+import { CUSTOM_INPUT_PRESETS } from "@ui/CustomInput/customInputPresets.ts";
 
 const CustomInput: React.FC<CustomInputProps> = (props) => {
 

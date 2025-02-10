@@ -1,10 +1,10 @@
 import React from "react";
-import {ICertificateItemProps} from "./certificateItemTypes.ts";
+import { ICertificateItemProps } from "./certificateItemTypes.ts";
 import styles from "./CertificateItem.module.scss";
 import company_img from '@icons/freelancer_profile/secondary_info/cloud.svg';
 import date_img from '@icons/freelancer_profile/secondary_info/calendar.svg';
-import {getPolishMonthShort} from "@utils/dateUtils.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
+import { formatDateRange } from "@utils/dateUtils.ts";
 
 
 const CertificateItem: React.FC<ICertificateItemProps> = ({
@@ -13,18 +13,6 @@ const CertificateItem: React.FC<ICertificateItemProps> = ({
 	                                                          onDelete = () => {},
 	                                                          onPatch = () => {}
                                                           }) => {
-
-	const formatDateRange = () => {
-		const startDate = new Date(certificate.dateOfObtaining);
-		const startMonthYear = `${getPolishMonthShort(certificate.dateOfObtaining)} ${startDate.getFullYear()}`;
-		let endMonthYear = 'Teraz';
-		if (certificate.endDate) {
-			const endDate = new Date(certificate.endDate);
-			endMonthYear = `${getPolishMonthShort(certificate.endDate)} ${endDate.getFullYear()}`;
-		}
-
-		return `${startMonthYear} - ${endMonthYear}`;
-	}
 
 	return (
 		<div className={`${styles['certificate']} ${isModalItem && styles['certificate--modal']}`}>
@@ -45,7 +33,9 @@ const CertificateItem: React.FC<ICertificateItemProps> = ({
 				</div>
 				<div className={styles['certificate__item']}>
 					<img src={date_img} alt="date"/>
-					<p className={styles['certificate__text']}>{formatDateRange()}</p>
+					<p className={styles['certificate__text']}>
+						{formatDateRange(certificate.dateOfObtaining, certificate.endDate)}
+					</p>
 				</div>
 			</div>
 		</div>

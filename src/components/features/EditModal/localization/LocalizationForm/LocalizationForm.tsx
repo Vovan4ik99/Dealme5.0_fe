@@ -4,7 +4,7 @@ import { IFreelancerCountry, IFreelancerState } from "@shared/freelancerTypes.ts
 import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
 import {
 	ILocalizationFormProps,
-	ILocalizationFormState
+	ILocalizationFormState,
 } from "@components/features/EditModal/localization/LocalizationForm/localizationFormTypes.ts";
 import { Path, PathValue } from "react-hook-form";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
@@ -25,6 +25,7 @@ const LocalizationForm = <T extends ILocalizationFormState>({
 	                                                            trigger,
 	                                                            register,
 	                                                            setValue,
+	                                                            isCityRequired
                                                             }: ILocalizationFormProps<T>) => {
 
 	const { getCountries, getStates } = useFreelancerProfileAsideInfoService();
@@ -75,12 +76,12 @@ const LocalizationForm = <T extends ILocalizationFormState>({
 			             validationRules={ {
 				             required: 'Wybierz kraj'
 			             } }
-			             onValueChange={onCountryChange}
+			             onValueChange={ onCountryChange }
 			             error={ errors.country ?? null }/>
 			<SelectInput key={ 'state' }
 			             selectItems={ getStatesAsSelectItems(states) }
 			             text={ getStateDescriptionByStateName(states, formData.state) ?? null }
-			             onValueChange={onStateChange}
+			             onValueChange={ onStateChange }
 			             trigger={ trigger }
 			             register={ register }
 			             id={ "state" as Path<T> }
@@ -91,9 +92,11 @@ const LocalizationForm = <T extends ILocalizationFormState>({
 			             error={ errors.state ?? null }/>
 			<CustomInput id={ 'city' }
 			             autoComplete={ 'city' }
-			             labelText={ 'Miejscowość (opcjonalnie)' }
+			             labelText={ `Miejscowość ${ !isCityRequired ? '(opcjonalnie)' : '' }` }
 			             type={ 'text' }
 			             placeholder={ 'Podaj miasto' }
+			             validation={isCityRequired ? { required: 'Podaj miasto' } : {}}
+			             errorMessage={errors.city?.message}
 			             onChange={
 				             (newCity: string) => setValue("city" as Path<T>, newCity as PathValue<T, Path<T>>)
 			             }

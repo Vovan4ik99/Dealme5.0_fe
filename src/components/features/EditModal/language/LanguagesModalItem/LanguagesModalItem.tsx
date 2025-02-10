@@ -88,7 +88,7 @@ const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave
 		return openModal({
 			id: 'AddLanguageModalItem',
 			title: 'Dodaj język',
-			shouldCloseOnSaving: true,
+			shouldCloseOnSaving: false,
 			btnText: 'Dodaj język',
 			btnWithIcon: true,
 			withSaveBtn: true,

@@ -1,10 +1,7 @@
 import styles from "./DatesForm.module.scss";
 import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { generatePolishMonthNames, generateYearItems, getMonthNumber, getMonthPolishName } from "@utils/dateUtils.ts";
 import React, { useEffect, useState } from "react";
-import {
-	IDatesFormProps
-} from "@components/features/EditModal/certificates_licenses/CertificateDatesItem/datesFormTypes.ts";
+import { IDatesFormProps } from "@components/features/EditModal/certificates_licenses/DatesForm/datesFormTypes.ts";
 import CustomCheckbox from "@ui/CustomCheckbox/CustomCheckbox.tsx";
 
 const DatesForm: React.FC<IDatesFormProps> = ({
@@ -30,6 +27,37 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 		register('endMonth', { required: 'Wybierz miesiąc końcowy' });
 		register('endYear', { required: 'Wybierz końcowy rok' });
 	}, [ clearErrors, isOngoing, register, unregister ]);
+
+	const getMonthNumber = (monthPolishName: string): number | null => {
+		const polishMonthNames = generatePolishMonthNames();
+		const index = polishMonthNames.indexOf(monthPolishName);
+		return index !== -1 ? index + 1 : null;
+	};
+
+	const getMonthPolishName = (monthNumber: number): string => {
+		const polishMonthNames = generatePolishMonthNames();
+		return polishMonthNames[monthNumber - 1];
+	};
+
+	const generateYearItems = (yearFrom?: number): string[] => {
+		const years = [];
+		const startYear = yearFrom ?? 1990;
+		const endYear = yearFrom ? yearFrom + 60 : 2050;
+		for (let year = startYear; year <= endYear; year++) {
+			years.push(year.toString());
+		}
+		return years;
+	};
+
+	const generatePolishMonthNames = (): string[] => {
+		const formatter = new Intl.DateTimeFormat('pl-PL', { month: 'long' });
+		const months = [];
+		for (let month = 0; month < 12; month++) {
+			const date = new Date(1990, month); //any year, does not matter
+			months.push(formatter.format(date));
+		}
+		return months.map(month => month[0].toUpperCase() + month.slice(1));
+	};
 
 	const selectStartMonth = (monthName: string) => {
 		setValue('startMonth', getMonthNumber(monthName));
@@ -87,7 +115,7 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 				             text={ formData.startYear ? `${ formData.startYear }` : null }
 				             error={ errors.startYear ?? null }
 				             labelText={ 'Rok' }/>
-				<div>
+				<div className={styles['dates__checkbox']}>
 					<CustomCheckbox label={ checkboxLabel }
 					                id={ 'ongoing' }
 					                isChecked={ isOngoing }
