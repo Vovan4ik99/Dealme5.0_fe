@@ -1,7 +1,8 @@
 import styles from './AboutMeModalItem.module.scss';
 import AboutMeTextArea from "@components/features/EditModal/about_me/AboutMeTextArea/AboutMeTextArea.tsx";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
+	IAboutMeForm,
 	IAboutMeModalItemProps
 } from "@components/features/EditModal/about_me/AboutMeModalItem/aboutMeModalItemTypes.ts";
 import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
@@ -10,31 +11,28 @@ import VideoModalItem from "@components/features/EditModal/video/VideoModalItem/
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "@components/features/EditModal/media/MediaUploader/MediaUploader.tsx";
 import { createVideoBlob } from "@utils/videoUtils.ts";
+import { useForm, useWatch } from "react-hook-form";
+import InputError from "@ui/InputError/InputError.tsx";
 
-const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSave, registerOnSave }) => {
-
-	const [ aboutText, setAboutText ] = useState<string>('');
-	const [ aboutDescription, setAboutDescription ] = useState<string>('');
-	const [ video, setVideo ] = useState<string | null>(null);
-	const [ filename, setFilename ] = useState<string | null>(null);
+const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSave, registerOnSave, handleClose }) => {
 
 	const { patchAboutMeProfileInfo, loadingStatus } = useFreelancerProfileService();
 	const { openModal } = useModal();
 
-	useEffect(() => {
-		if (aboutMeInfo === null) {
-			return;
+	const { register, handleSubmit, formState: { errors }, control, setValue, trigger } = useForm<IAboutMeForm>({
+		shouldFocusError: false,
+		mode: 'onChange',
+		defaultValues: {
+			about: aboutMeInfo?.about ?? undefined,
+			mainPassion: aboutMeInfo?.mainPassion ?? undefined,
+			video: aboutMeInfo?.video ?? undefined
 		}
-		if (aboutMeInfo.about !== null) {
-			setAboutText(aboutMeInfo.about);
-		}
-		if (aboutMeInfo.mainPassion !== null) {
-			setAboutDescription(aboutMeInfo.mainPassion);
-		}
-		if (aboutMeInfo.video !== null) {
-			setVideo(aboutMeInfo.video);
-		}
-	}, [ aboutMeInfo ]);
+	});
+
+	const about = useWatch({ name: 'about', control });
+	const mainPassion = useWatch({ name: 'mainPassion', control });
+	const video = useWatch({ name: 'video', control, defaultValue: undefined });
+	const filename = useWatch({ name: 'filename', control });
 
 	const onVideoEdit = () => {
 		openModal({
@@ -51,26 +49,24 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 	}
 
 	const onVideoSave = (videoUrl: string, fileName: string) => {
-		setVideo(videoUrl);
-		setFilename(fileName);
-	}
+		setValue('filename', fileName);
+		setValue('video', videoUrl);
+	};
 
 	const handleSave = useCallback(() => {
-		if (!aboutText.trim() || video === null) {
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append("about", aboutText);
-		formData.append("mainPassion", aboutDescription);
-		if (video.startsWith('data:video/')) {
-			formData.append("video", createVideoBlob(video), filename ?? 'Intro video');
-		}
-
-		patchAboutMeProfileInfo(formData)
-			.then(onSave)
-			.catch(console.error);
-	}, [ aboutDescription, aboutText, filename, onSave, patchAboutMeProfileInfo, video ]);
+		handleSubmit(data => {
+			const formData = new FormData();
+			formData.append("about", data.about);
+			formData.append("mainPassion", data.mainPassion);
+			if (video.startsWith('data:video/')) {
+				formData.append("video", createVideoBlob(data.video), data.filename ?? 'Intro video');
+			}
+			patchAboutMeProfileInfo(formData)
+				.then(onSave)
+				.catch(console.error);
+			handleClose!();
+		})();
+	}, [ handleClose, handleSubmit, onSave, patchAboutMeProfileInfo, video ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -85,21 +81,41 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 			<AboutMeTextArea label={ 'Główna zajawka' }
 			                 maxSymbols={ 500 }
 			                 placeholder={ 'Wpisz tutaj swoje zajawki..' }
-			                 value={ aboutText }
-			                 onTextChange={ setAboutText }/>
+			                 value={ about }
+			                 error={ errors.about }
+			                 register={ register }
+			                 validation={ {
+				                 required: "Wpisz swoje zajawki",
+			                 } }
+			                 trigger={ trigger }
+			                 id={ 'about' }
+			                 onTextChange={ (newText: string) => setValue('about', newText) }/>
 			<AboutMeTextArea label={ 'Opis (opcjonalne)' }
 			                 maxSymbols={ 600 }
 			                 placeholder={ 'Wpisz tutaj opis..' }
 			                 fontWeight={ 400 }
-			                 value={ aboutDescription }
-			                 onTextChange={ setAboutDescription }/>
-			<VideoModalItem videoUrl={ video }
-			                withDelete={true}
-			                label={ 'Wideo (opcjonalne)' }
-			                emptyStateText={ 'Nagraj krótkie video o sobie' }
-			                fileName={ filename ?? 'Intro video' }
-			                onClick={ onVideoEdit }
-			                onDelete={ () => setVideo(null) }/>
+			                 value={ mainPassion }
+			                 id={ 'mainPassion' }
+			                 trigger={ trigger }
+			                 register={ register }
+			                 onTextChange={ (newText: string) => setValue('mainPassion', newText) }/>
+			<div>
+				<input type={ 'hidden' }
+				       id={ 'video' }
+				       { ...register('video', { required: 'Dodaj video' }) }/>
+				<VideoModalItem videoUrl={ video }
+				                withDelete={ true }
+				                label={ 'Wideo (opcjonalne)' }
+				                emptyStateText={ 'Nagraj krótkie video o sobie' }
+				                fileName={ filename ?? 'Intro video' }
+				                onClick={ onVideoEdit }
+				                error={ errors.video }
+				                onDelete={ () => {
+					                setValue('video', '')
+					                setValue('filename', '');
+				                } }/>
+				{ errors.video?.message && <InputError text={ errors.video.message }/> }
+			</div>
 		</div>
 	);
 };

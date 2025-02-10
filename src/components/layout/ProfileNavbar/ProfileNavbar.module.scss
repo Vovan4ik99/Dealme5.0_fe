@@ -72,9 +72,7 @@
     height: 30px;
 
     img {
-      display: block;
-      width: fit-content;
-      height: fit-content;
+      object-fit: cover;
       border-radius: 4px;
     }
   }

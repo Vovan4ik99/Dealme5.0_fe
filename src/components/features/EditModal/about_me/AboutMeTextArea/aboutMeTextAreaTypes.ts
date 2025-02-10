@@ -1,3 +1,5 @@
+import { FieldError, RegisterOptions, UseFormRegister, UseFormTrigger } from "react-hook-form";
+
 export interface IAboutMeTextAreaProps {
 	label: string;
 	maxSymbols: number;
@@ -7,4 +9,9 @@ export interface IAboutMeTextAreaProps {
 	minHeight?: number;
 	onTextChange: (text: string) => void;
 	value: string;
+	error?: FieldError;
+	register: UseFormRegister<any>;
+	trigger: UseFormTrigger<any>;
+	validation?: RegisterOptions;
+	id: string;
 }

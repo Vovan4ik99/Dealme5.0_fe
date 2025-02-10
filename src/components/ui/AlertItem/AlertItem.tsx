@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from './AlertItem.module.scss';
-import {IAlertItemProps} from "@ui/AlertItem/alertItemTypes.ts";
+import { IAlertItemProps } from "@ui/AlertItem/alertItemTypes.ts";
 import success_icon from "@icons/alert/success_icon.svg";
 import danger_icon from "@icons/alert/danger_icon.svg";
 import warning_icon from "@icons/alert/warning_icon.svg";
-import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
+import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
 
-const AlertItem: React.FC<IAlertItemProps> = ({kind, text, hasMarginTop = false}) => {
+const AlertItem: React.FC<IAlertItemProps> = ({kind, text, hasMarginTop}) => {
 
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -50,7 +50,7 @@ const AlertItem: React.FC<IAlertItemProps> = ({kind, text, hasMarginTop = false}
 	}
 
 	return (
-		<div style={{marginTop: `${hasMarginTop} ? 20px : 0`}}
+		<div style={{marginTop: `${hasMarginTop ? '20px' : '0'} `}}
 		     className={`${styles['item']} ${isVisible ? styles['item--enter'] : styles['item--exit']}`}>
 			{getAlertItemByKind()}
 		</div>

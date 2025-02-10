@@ -12,7 +12,8 @@ const VideoModalItem: React.FC<IVideoModalItemProps> = ({
 	                                                        onDelete,
 	                                                        emptyStateText,
 	                                                        label,
-	                                                        withDelete
+	                                                        withDelete,
+	                                                        error
                                                         }) => {
 
 	const renderVideo = () => {
@@ -29,7 +30,7 @@ const VideoModalItem: React.FC<IVideoModalItemProps> = ({
 	}
 
 	return (
-		<div className={ styles['video'] }>
+		<div className={ `${ styles['video'] } ${ error && styles['video--error'] }` }>
 			<p className={ styles['video__label'] }>{ label }</p>
 			<p className={ styles['video__title'] }>{ fileName }</p>
 			<div className={ styles['video__wrapper'] }>

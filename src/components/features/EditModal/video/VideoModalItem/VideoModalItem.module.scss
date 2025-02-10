@@ -6,6 +6,10 @@
   border: 1px dashed vars.$color-gray-border;
   background: rgba(240, 241, 247, 0.40);
 
+  &--error {
+	border-color: vars.$color-danger;
+  }
+
   &__label {
 	font-size: 14px;
 	line-height: 120%;
