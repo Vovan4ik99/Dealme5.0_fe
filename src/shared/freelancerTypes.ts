@@ -110,20 +110,14 @@ export interface IFreelancerReview {
 	categoryOpinions: IFreelancerReviewCategory[];
 }
 
-export interface IFreelancerWorkExperience {
+export interface IFreelancerWorkExperience extends IFreelancerLocalization {
 	id: number;
-	freelancer: string;
-	jobTitle: string;
-	startDate: string;
-	endDate: string | null;
-	localization: IFreelancerLocalization;
-}
-
-export interface IFreelancerWorkExperienceRequest {
-	jobTitle: string;
 	companyName: string;
+	jobTitle: string;
 	startDate: string;
 	endDate?: string | null;
-	localization: IFreelancerLocalization;
+	city: string;
 }
+
+export type IFreelancerWorkExperienceRequest = Omit<IFreelancerWorkExperience, "id">;
 

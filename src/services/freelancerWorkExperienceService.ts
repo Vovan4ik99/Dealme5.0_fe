@@ -1,10 +1,17 @@
 import { useHttp } from "../hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
+import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
 
 export const useFreelancerWorkExperienceService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();
+
+	const getFreelancerWorkExperience = useCallback(
+		async (freelancerId: number): Promise<IFreelancerWorkExperience[]> => {
+		return sendRequest({
+			url: `${API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE}/${freelancerId}`,
+		});
+	}, [sendRequest]);
 
 	const addWorkExperience = useCallback(async (request: IFreelancerWorkExperienceRequest): Promise<void> => {
 		return sendRequest({
@@ -33,6 +40,7 @@ export const useFreelancerWorkExperienceService = () => {
 		addWorkExperience,
 		deleteWorkExperience,
 		patchWorkExperience,
+		getFreelancerWorkExperience,
 		loadingStatus,
 		errorMessage,
 	}

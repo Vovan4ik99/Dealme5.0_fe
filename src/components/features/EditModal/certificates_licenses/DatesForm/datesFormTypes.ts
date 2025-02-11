@@ -27,5 +27,6 @@ export interface IDatesFormProps {
 		endYear?: FieldError;
 		startMonth?: FieldError;
 		endMonth?: FieldError;
-	}
+	},
+	isOngoingChecked?: boolean;
 }

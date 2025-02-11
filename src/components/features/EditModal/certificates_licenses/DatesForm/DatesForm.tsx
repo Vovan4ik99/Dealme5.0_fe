@@ -12,9 +12,16 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 	                                              checkboxLabel,
 	                                              unregister,
 	                                              clearErrors,
-	                                              errors
+	                                              errors,
+	                                              isOngoingChecked,
                                               }) => {
 	const [ isOngoing, setIsOngoing ] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (isOngoingChecked && (!formData.endMonth && !formData.endYear)) {
+			setIsOngoing(true);
+		}
+	}, [formData.endMonth, formData.endYear, isOngoingChecked]);
 
 	useEffect(() => {
 		if (isOngoing) {
@@ -115,7 +122,7 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 				             text={ formData.startYear ? `${ formData.startYear }` : null }
 				             error={ errors.startYear ?? null }
 				             labelText={ 'Rok' }/>
-				<div className={styles['dates__checkbox']}>
+				<div className={ styles['dates__checkbox'] }>
 					<CustomCheckbox label={ checkboxLabel }
 					                id={ 'ongoing' }
 					                isChecked={ isOngoing }

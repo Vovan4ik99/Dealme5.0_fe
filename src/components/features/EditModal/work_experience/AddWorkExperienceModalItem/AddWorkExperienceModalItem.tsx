@@ -9,12 +9,14 @@ import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import LocalizationForm from "@components/features/EditModal/localization/LocalizationForm/LocalizationForm.tsx";
 import DatesForm from "@components/features/EditModal/certificates_licenses/DatesForm/DatesForm.tsx";
 import { IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
-import { createDateFromYearMonth } from "@utils/dateUtils.ts";
+import { createDateFromYearMonth, mapDateToYearMonth } from "@utils/dateUtils.ts";
 
 const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = ({
 	                                                                                onSave,
 	                                                                                registerOnSave,
-	                                                                                handleClose
+	                                                                                handleClose,
+	                                                                                workExperience,
+	                                                                                isEdit
                                                                                 }) => {
 
 	const {
@@ -29,6 +31,17 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 	} = useForm<IWorkExperienceForm>({
 		shouldFocusError: false,
 		mode: 'onChange',
+		defaultValues: {
+			jobTitle: workExperience?.jobTitle,
+			companyName: workExperience?.companyName,
+			country: workExperience?.country,
+			state: workExperience?.state,
+			city: workExperience?.city,
+			startMonth: mapDateToYearMonth(workExperience?.startDate)?.month,
+			startYear: mapDateToYearMonth(workExperience?.startDate)?.year,
+			endMonth: mapDateToYearMonth(workExperience?.endDate)?.month,
+			endYear: mapDateToYearMonth(workExperience?.endDate)?.year,
+		}
 	});
 
 	const country = useWatch({ name: 'country', control });
@@ -44,11 +57,9 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 			const request: IFreelancerWorkExperienceRequest = {
 				jobTitle: data.jobTitle,
 				companyName: data.companyName,
-				localization: {
-					country: data.country,
-					state: data.state,
-					city: data.city
-				},
+				country: data.country,
+				state: data.state,
+				city: data.city,
 				startDate: createDateFromYearMonth(startYear, startMonth)
 			}
 			if (endMonth && endYear) {
@@ -57,7 +68,7 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 			onSave(request);
 			handleClose!();
 		})();
-	}, [endMonth, endYear, handleClose, handleSubmit, onSave, startMonth, startYear]);
+	}, [ endMonth, endYear, handleClose, handleSubmit, onSave, startMonth, startYear ]);
 
 	useEffect(() => {
 		registerOnSave!(onSubmit);
@@ -77,7 +88,7 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 			                  register={ register }
 			                  setValue={ setValue }
 			                  trigger={ trigger }
-			                  isCityRequired={true}
+			                  isCityRequired={ true }
 			                  errors={ errors }/>
 			<div className={ styles['modal__dates'] }>
 				<p className={ styles['modal__title'] }>
@@ -90,6 +101,7 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 				           errors={ errors }
 				           checkboxLabel={ 'Aktualnie pracuję na tym stanowisku' }
 				           clearErrors={ clearErrors }
+				           isOngoingChecked={ isEdit }
 				           unregister={ unregister }/>
 			</div>
 		</form>
