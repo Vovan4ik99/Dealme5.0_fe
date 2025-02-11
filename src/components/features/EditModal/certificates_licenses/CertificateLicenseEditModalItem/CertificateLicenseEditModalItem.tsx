@@ -68,10 +68,11 @@ const CertificateLicenseEditModalItem = () => {
 			id: 'CertificateLicenseAddModalItem',
 			title: 'Edytuj licencje lub certyfikat',
 			btnText: 'Edytuj licencje lub certyfikat',
-			btnWithIcon: true,
+			btnWithIcon: false,
 			withSaveBtn: true,
 			shouldCloseOnSaving: false,
 			child: <CertificateLicenseAddModalItem certificate={ certificate }
+			                                       isEdit={ true }
 			                                       onSave={
 				                                       (updatedCertificate: IFreelancerCertificateRequest) =>
 					                                       handlePatchCertificate(certificate.id, updatedCertificate)

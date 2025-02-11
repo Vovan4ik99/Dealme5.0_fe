@@ -3,6 +3,8 @@ import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
 
 export interface IAddWorkExperienceModalItemProps extends ISaveableChildProps {
 	onSave: (request: IFreelancerWorkExperienceRequest) => void;
+	workExperience?: IFreelancerWorkExperienceRequest;
+	isEdit?: boolean;
 }
 
 export interface IWorkExperienceForm {

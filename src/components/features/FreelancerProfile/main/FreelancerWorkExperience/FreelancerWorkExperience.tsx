@@ -1,28 +1,64 @@
 import styles from "./FreelancerWorkExperience.module.scss";
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import AddWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/AddWorkExperienceModalItem/AddWorkExperienceModalItem.tsx";
+import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
+import {
+	IFreelancerState,
+	IFreelancerWorkExperience,
+	IFreelancerWorkExperienceRequest
+} from "@shared/freelancerTypes.ts";
+import WorkExperienceItem
+	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/WorkExperienceItem/WorkExperienceItem.tsx";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import EditWorkExperienceModalItem
+	from "@components/features/EditModal/work_experience/EditWorkExperienceModalItem/EditWorkExperienceModalItem.tsx";
 
 const FreelancerWorkExperience = () => {
 
 	const SECTION_ID: NavbarSectionKey = 'experience';
 
 	const {openModal} = useModal();
-
 	const {user} = useContext(AuthContext);
+	const {addWorkExperience, getFreelancerWorkExperience} = useFreelancerWorkExperienceService();
+	const {getStates} = useFreelancerProfileAsideInfoService();
+	
+	const [workExperienceItems, setWorkExperienceItems] = useState<IFreelancerWorkExperience[]>([]);
+	const [states, setStates] = useState<IFreelancerState[]>([]);
+	
+	useEffect(() => {
+		getStates()
+			.then(setStates)
+			.catch(console.error);
+	}, [getStates]);
 
-	if (!user) return null;
+	const fetchWorkExperience = useCallback(() => {
+		if (!user) return null;
+		getFreelancerWorkExperience(user.id)
+			.then(setWorkExperienceItems)
+			.catch(console.error);
+	}, [getFreelancerWorkExperience, user]);
+
+	useEffect(() => {
+		fetchWorkExperience();
+	}, [fetchWorkExperience]);
+
+	const onWorkExperienceAdd = (request: IFreelancerWorkExperienceRequest) => {
+		addWorkExperience(request)
+			.then(fetchWorkExperience)
+			.catch(console.error);
+	};
 
 	const handleAddWorkExperience = () => {
 		openModal({
 			id: 'AddWorkExperienceModalItem',
 			title: 'Dodaj doświadczenie',
-			child: <AddWorkExperienceModalItem onSave={ () => {} }/>,
+			child: <AddWorkExperienceModalItem onSave={ onWorkExperienceAdd }/>,
 			shouldCloseOnSaving: false,
 			withSaveBtn: true,
 			btnWithIcon: true,
@@ -31,18 +67,26 @@ const FreelancerWorkExperience = () => {
 	};
 
 	const handleEditWorkExperience = () => {
+		if (!user) return null;
 		openModal({
 			id: 'EditWorkExperienceModalItem',
 			title: 'Edytuj doświadczenie',
-			child: <></>,
-			withSaveBtn: false
+			child: <EditWorkExperienceModalItem states={states} freelancerId={user?.id}/>,
+			withSaveBtn: false,
+			onClose: fetchWorkExperience,
 		});
 	};
 
 	const renderWorkExperience = () => {
-		if (user?.workExperiences.length === 0) {
+		if (workExperienceItems.length === 0) {
 			return <AlertItem kind={'neutral'} text={'Nie uzupełniłeś/aś dane o doświadczeniu'}/>;
 		}
+		return workExperienceItems.map(workExperience => {
+			return <WorkExperienceItem key={workExperience.id}
+			                           workExperience={workExperience}
+			                           isModalItem={false}
+			                           states={states}/>;
+		});
 	};
 
 	return (
@@ -53,13 +97,13 @@ const FreelancerWorkExperience = () => {
 					<ActionBtn kind={ 'Add' }
 					           key={ 'Add' }
 					           withBorder={ true }
-					           backgroundColor={ 'transparent' }
+					           backgroundColor={ 'white' }
 					           onClick={ handleAddWorkExperience }/>
-					{ user?.workExperiences.length > 0 &&
+					{ workExperienceItems.length > 0 &&
                         <ActionBtn kind={ 'Edit' }
                                    key={ 'Edit' }
                                    withBorder={ true }
-                                   backgroundColor={ 'transparent' }
+                                   backgroundColor={ 'white' }
                                    onClick={ handleEditWorkExperience }/>
 					}
 				</div>

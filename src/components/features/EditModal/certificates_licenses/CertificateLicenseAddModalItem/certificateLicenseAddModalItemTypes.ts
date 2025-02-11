@@ -4,6 +4,7 @@ import { CertificateType, IFreelancerCertificate, IFreelancerCertificateRequest 
 export interface ICertificateLicenseAddModalItemProps extends ISaveableChildProps {
 	onSave: (certificate: IFreelancerCertificateRequest) => void;
 	certificate?: Omit<IFreelancerCertificate, 'id'>;
+	isEdit?: boolean;
 }
 
 export interface ICertificateForm {

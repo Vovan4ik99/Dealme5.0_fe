@@ -13,7 +13,8 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 	                                                                                        onSave,
 	                                                                                        registerOnSave,
 	                                                                                        handleClose,
-	                                                                                        certificate
+	                                                                                        certificate,
+	                                                                                        isEdit
                                                                                         }) => {
 
 	const {
@@ -103,6 +104,7 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 			           clearErrors={ clearErrors }
 			           checkboxLabel={ 'Jestem w trakcie' }
 			           trigger={ trigger }
+			           isOngoingChecked={ isEdit }
 			           errors={ errors }/>
 		</form>
 	);

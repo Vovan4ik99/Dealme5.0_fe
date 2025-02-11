@@ -1,0 +1,53 @@
+@use '@styles/variables' as vars;
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border-color: vars.$color-gray-border;
+  gap: 12px;
+
+  &__buttons {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	display: flex;
+	gap: 8px;
+  }
+
+  &__title {
+	color: vars.$color-black;
+	line-height: 100%;
+  }
+
+  &__content {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+  }
+
+  &__wrapper {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+  }
+
+  &__text {
+	text-wrap: nowrap;
+	color: vars.$color-gray;
+	font-size: 14px;
+	line-height: 120%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+
+	&--date {
+	  overflow: visible;
+	}
+
+	&--company {
+		max-width: 138px;
+	}
+  }
+}
