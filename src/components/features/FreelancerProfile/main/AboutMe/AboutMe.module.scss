@@ -39,12 +39,12 @@
 	border: none;
 	background-color: white;
 	border-radius: 12px;
+	max-width: 234px;
 
 	&--empty {
 	  width: 100%;
 	  border: 1px dashed #E3E5FA;
 	  height: 350px;
-	  max-width: 234px;
 	}
   }
 }

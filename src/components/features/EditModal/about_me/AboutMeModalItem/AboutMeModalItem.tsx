@@ -51,13 +51,14 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 	const onVideoSave = (videoUrl: string, fileName: string) => {
 		setValue('filename', fileName);
 		setValue('video', videoUrl);
+		trigger('video');
 	};
 
 	const handleSave = useCallback(() => {
 		handleSubmit(data => {
 			const formData = new FormData();
 			formData.append("about", data.about);
-			formData.append("mainPassion", data.mainPassion);
+			formData.append("mainPassion", data.mainPassion ?? '');
 			if (video.startsWith('data:video/')) {
 				formData.append("video", createVideoBlob(data.video), data.filename ?? 'Intro video');
 			}
@@ -107,7 +108,7 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 				                withDelete={ true }
 				                label={ 'Wideo (opcjonalne)' }
 				                emptyStateText={ 'Nagraj krótkie video o sobie' }
-				                fileName={ filename ?? 'Intro video' }
+				                fileName={ filename ?? "" }
 				                onClick={ onVideoEdit }
 				                error={ errors.video }
 				                onDelete={ () => {
