@@ -1,7 +1,7 @@
 import {useCallback, useState} from "react";
 import {ErrorMessages} from "@shared//errorMessages.ts";
-import {API_ROUTES} from "@constants/apiRoutes.ts";
 import {getErrorMessage} from "../utils/errorUtils.ts";
+import {AUTH_PAGES} from "@constants/constans.ts";
 
 type HTTPRequestMethods = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
@@ -41,7 +41,7 @@ export const useHttp = (): IHTTPResponse => {
 		setLoadingStatus('loading');
 
 		const locationPath = window.location.pathname;
-		const isAuthPage = locationPath === API_ROUTES.AUTH.LOGIN || locationPath === API_ROUTES.AUTH.REGISTER || locationPath === API_ROUTES.TOKEN.PASSWORD_FORGET;
+		const isAuthPage = AUTH_PAGES.includes(locationPath);
 
 		const token = localStorage.getItem('token');
 		const authHeaders: IHTTPHeaders = {

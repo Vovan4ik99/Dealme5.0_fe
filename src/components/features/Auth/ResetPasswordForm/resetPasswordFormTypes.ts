@@ -1,4 +1,3 @@
-
-export interface ResetPasswordFormProps {
+export interface IResetPasswordFormData {
     email: string;
 }

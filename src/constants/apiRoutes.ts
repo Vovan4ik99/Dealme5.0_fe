@@ -6,7 +6,7 @@ export const API_ROUTES = {
 		REGISTER_FREELANCER: '/auth/register/freelancer',
 	},
 	TOKEN: {
-		PASSWORD_FORGET: '/token-reset/send-email',
+		PASSWORD_RESET: '/token-reset/send-email',
 	},
 	USER: {
 		FREELANCER_PROFILE: '/freelancer/me',

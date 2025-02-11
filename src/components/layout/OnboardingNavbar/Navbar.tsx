@@ -10,22 +10,20 @@ const Navbar = () => {
 	const renderContent = useCallback(() => {
 		const pathname = location.pathname;
 		switch (pathname) {
+
 			case '/login':
+			case '/reset-password':
 				return <>
 					<p className={styles.navbar__text}>Nie masz konta?</p>
 					<Link className={styles.navbar__link} to={'/registration'}>Załóż konto</Link>
 				</>;
+
 			case '/registration':
 				return <>
 					<p className={styles.navbar__text}>Masz konto?</p>
 					<Link className={styles.navbar__link} to={'/login'}>Zaloguj się</Link>
 				</>;
 
-			case '/reset-password':
-				return <>
-					<p className={styles.navbar__text}>Masz konto?</p>
-					<Link className={styles.navbar__link} to={'/login'}>Zaloguj się</Link>
-				</>
 			default:
 				return <>
 					<p className={styles.navbar__text}>{`Cześć, ${user?.firstName} ${user?.lastName}`}</p>
