@@ -33,12 +33,14 @@ const AboutMe = () => {
 		if (aboutMeInfo === null) {
 			return <></>;
 		}
-		if (aboutMeInfo.about === null && aboutMeInfo.mainPassion === null) {
+		if (aboutMeInfo.about === null) {
 			return <AlertItem kind={ 'neutral' } text={ 'Nie uzupełniłeś/aś danych o sobie' }/>
 		}
 		return <div className={ styles['about__wrapper'] }>
 			<p className={ styles['about__info'] }>{ aboutMeInfo.about }</p>
-			<p className={ styles['about__text'] }>{ aboutMeInfo.mainPassion }</p>
+			<p className={ styles['about__text'] }>
+				{ aboutMeInfo.mainPassion }
+			</p>
 		</div>;
 	}
 

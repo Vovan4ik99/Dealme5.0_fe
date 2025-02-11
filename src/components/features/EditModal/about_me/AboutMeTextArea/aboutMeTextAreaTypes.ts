@@ -8,7 +8,7 @@ export interface IAboutMeTextAreaProps {
 	placeholder: string;
 	minHeight?: number;
 	onTextChange: (text: string) => void;
-	value: string;
+	value: string | undefined;
 	error?: FieldError;
 	register: UseFormRegister<any>;
 	trigger: UseFormTrigger<any>;
