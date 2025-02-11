@@ -117,7 +117,7 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 			     style={ { height: `${ height }px` } }>
 				<div className={ styles['textarea__label'] }>
 					<span>{ label }</span>
-					<span>{ value.length } / { maxSymbols }</span>
+					<span>{ value?.length ?? 0 } / { maxSymbols }</span>
 				</div>
 				<textarea className={ styles['textarea__input'] }
 				          value={ value }
