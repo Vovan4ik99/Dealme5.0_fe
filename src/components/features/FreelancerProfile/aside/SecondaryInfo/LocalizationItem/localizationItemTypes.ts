@@ -1,5 +1,5 @@
-import {IFreelancerLocalization} from "@shared/freelancerTypes.ts";
 import {WORKING_AREAS} from "@constants/workingAreas.ts";
+import { IFreelancerLocalization } from "@shared/freelancer/localization.ts";
 
 export interface ILocalizationItemProps {
 	isUndefined: boolean;

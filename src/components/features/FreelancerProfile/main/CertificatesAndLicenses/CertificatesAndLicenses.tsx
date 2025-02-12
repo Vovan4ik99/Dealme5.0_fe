@@ -2,7 +2,6 @@ import styles from './CertificatesAndLicenses.module.scss';
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import React, { useCallback, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
@@ -12,6 +11,7 @@ import CertificateItem
 import CertificateLicenseEditModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseEditModalItem/CertificateLicenseEditModalItem.tsx";
 import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
+import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
 
 const CertificatesAndLicenses = () => {
 

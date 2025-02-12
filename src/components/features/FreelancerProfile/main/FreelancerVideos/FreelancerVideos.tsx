@@ -3,7 +3,6 @@ import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNav
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import { IFreelancerVideo } from "@shared/freelancerTypes.ts";
 import { useVideoService } from "@services/videoService.ts";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
@@ -11,6 +10,7 @@ import AddVideoModalItem from "@components/features/EditModal/video/AddVideoModa
 import VideoProfileItem
 	from "@components/features/FreelancerProfile/main/FreelancerVideos/VideoProfileItem/VideoProfileItem.tsx";
 import EditVideosModalItem from "@components/features/EditModal/video/EditVideosModalItem/EditVideosModalItem.tsx";
+import { IFreelancerVideo } from "@shared/freelancer/video.ts";
 
 const FreelancerVideos = () => {
 

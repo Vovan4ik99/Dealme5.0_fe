@@ -2,13 +2,13 @@ import styles from './CertificateLicenseEditModalItem.module.scss';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseAddModalItem/CertificateLicenseAddModalItem.tsx";
 import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
+import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
 
 const CertificateLicenseEditModalItem = () => {
 

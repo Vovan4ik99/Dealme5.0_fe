@@ -2,12 +2,12 @@ import styles from './EditVideosModalItem.module.scss';
 import { useVideoService } from "@services/videoService.ts";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { IFreelancerVideo } from "@shared/freelancerTypes.ts";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import VideoEditModalItem from "@components/features/EditModal/video/VideoEditModalItem/VideoEditModalItem.tsx";
 import AddVideoModalItem from "@components/features/EditModal/video/AddVideoModalItem/AddVideoModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import { IFreelancerVideo } from "@shared/freelancer/video.ts";
 
 const EditVideosModalItem = () => {
 

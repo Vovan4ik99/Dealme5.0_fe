@@ -6,11 +6,11 @@ import WorkingDaysProfileItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/WorkingDaysProfileItem.tsx";
 import WorkingHoursProfileItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/WorkingHoursProfileItem.tsx";
-import { IFreelancerBarResponse } from "@shared/freelancerTypes.ts";
 import LocalizationItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { IFreelancerBarResponse } from "@shared/freelancer/common.ts";
 
 const SecondaryInfo = () => {
 

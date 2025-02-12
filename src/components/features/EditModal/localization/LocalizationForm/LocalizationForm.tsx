@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { IFreelancerCountry, IFreelancerState } from "@shared/freelancerTypes.ts";
 import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
 import {
 	ILocalizationFormProps,
@@ -18,6 +17,7 @@ import {
 	getStatesAsSelectItems,
 	sortCountries
 } from "@utils/localizationUtils.ts";
+import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 
 const LocalizationForm = <T extends ILocalizationFormState>({
 	                                                            formData,

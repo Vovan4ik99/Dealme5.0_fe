@@ -1,5 +1,5 @@
-import { IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
+import { IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
 
 export interface IAddWorkExperienceModalItemProps extends ISaveableChildProps {
 	onSave: (request: IFreelancerWorkExperienceRequest) => void;

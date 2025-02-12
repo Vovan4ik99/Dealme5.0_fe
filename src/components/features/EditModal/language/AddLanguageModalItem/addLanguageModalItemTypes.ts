@@ -1,6 +1,6 @@
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
 import { LANGUAGE_NAMES } from "@constants/language.ts";
-import { IFreelancerLanguage } from "@shared/freelancerTypes.ts";
+import { IFreelancerLanguage } from "@shared/freelancer/language.ts";
 
 export interface IAddLanguageModalItemProps extends ISaveableChildProps {
 	languages: (keyof typeof LANGUAGE_NAMES)[];

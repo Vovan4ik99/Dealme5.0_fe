@@ -52,6 +52,7 @@ export const API_ROUTES = {
 			ADD_VIDEO: '/video',
 			GET_REVIEWS: '/opinions/freelancer/me',
 			WORK_EXPERIENCE: '/workExperience/freelancer',
+			EDUCATION: '/freelancer/education',
 		}
 	}
 } as const;

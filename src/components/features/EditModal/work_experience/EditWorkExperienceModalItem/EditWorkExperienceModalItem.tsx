@@ -2,9 +2,8 @@ import styles from './EditWorkExperienceModalItem.module.scss';
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
 import React, { useCallback, useEffect, useState } from "react";
-import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
-import WorkExperienceItem
-	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/WorkExperienceItem/WorkExperienceItem.tsx";
+import WorkExperienceEducationItem
+	from "@components/features/FreelancerProfile/common/WorkExperienceEducationItem/WorkExperienceEducationItem.tsx";
 import {
 	IEditWorkExperienceModalItemProps
 } from "@components/features/EditModal/work_experience/EditWorkExperienceModalItem/editWorkExperienceModalItemTypes.ts";
@@ -12,6 +11,7 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/AddWorkExperienceModalItem/AddWorkExperienceModalItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
 
 const EditWorkExperienceModalItem: React.FC<IEditWorkExperienceModalItemProps> = ({ freelancerId, states }) => {
 
@@ -83,12 +83,18 @@ const EditWorkExperienceModalItem: React.FC<IEditWorkExperienceModalItemProps> =
 
 	const renderItems = () => {
 		return workExperienceItems.map(item => {
-			return <WorkExperienceItem key={ item.id }
-			                           workExperience={ item }
-			                           isModalItem={ true }
-			                           states={ states }
-			                           onEdit={ () => onWorkExperienceEdit(item.id, item) }
-			                           onDelete={ () => handleDeleteWorkExperience(item.id) }/>;
+			return <WorkExperienceEducationItem key={ item.id }
+			                                    title={item.jobTitle}
+			                                    organization={item.companyName}
+			                                    itemType={'workExperience'}
+			                                    city={item.city}
+			                                    state={item.state}
+			                                    startDate={item.startDate}
+			                                    endDate={item.endDate ?? undefined}
+			                                    isModalItem={ true }
+			                                    states={ states }
+			                                    onEdit={ () => onWorkExperienceEdit(item.id, item) }
+			                                    onDelete={ () => handleDeleteWorkExperience(item.id) }/>;
 		});
 	};
 

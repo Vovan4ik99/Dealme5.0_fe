@@ -1,30 +1,37 @@
 import React from "react";
-import styles from "./WorkExperienceItem.module.scss";
+import styles from "./WorkExperienceEducationItem.module.scss";
 import company_icon from '@icons/freelancer_profile/secondary_info/cloud.svg';
 import date_icon from '@icons/freelancer_profile/secondary_info/calendar.svg';
 import { formatDateRange } from "@utils/dateUtils.ts";
 import localization_icon from '@icons/freelancer_profile/secondary_info/localization.svg';
 import { getStateDescriptionByStateName } from "@utils/localizationUtils.ts";
-import { WorkExperienceItemProps } from "./workExperienceItemTypes.ts";
+import { WorkExperienceEducationItemProps } from "./workExperienceEducationItemTypes.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
+import education_icon from '@icons/freelancer_profile/education/university.svg';
 
-const WorkExperienceItem: React.FC<WorkExperienceItemProps> = ({
-	                                                               workExperience,
-	                                                               states,
-	                                                               onEdit,
-	                                                               onDelete,
-	                                                               isModalItem
-                                                               }) => {
+const WorkExperienceEducationItem: React.FC<WorkExperienceEducationItemProps> = ({
+	                                                                                 title,
+	                                                                                 organization,
+	                                                                                 city,
+	                                                                                 state,
+	                                                                                 startDate,
+	                                                                                 endDate,
+	                                                                                 itemType,
+	                                                                                 states,
+	                                                                                 onEdit,
+	                                                                                 onDelete,
+	                                                                                 isModalItem
+                                                                                 }) => {
 
 	const getLocalization = () => {
-		const city = workExperience.city.slice(0, 1).toUpperCase().concat(workExperience.city.slice(1));
+		const changedCity = city.slice(0, 1).toUpperCase().concat(city.slice(1));
 
-		const stateDescription = getStateDescriptionByStateName(states, workExperience.state);
+		const stateDescription = getStateDescriptionByStateName(states, state);
 
 		if (!stateDescription) return 'Brak danych';
 
-		const state = stateDescription.slice(0, 1).toUpperCase().concat(stateDescription.slice(1));
-		return `${ city }, ${ state }`;
+		const changedState = stateDescription.slice(0, 1).toUpperCase().concat(stateDescription.slice(1));
+		return `${ changedCity }, ${ changedState }`;
 	};
 
 	return (
@@ -47,19 +54,19 @@ const WorkExperienceItem: React.FC<WorkExperienceItemProps> = ({
 			}
 			<p style={ isModalItem ? { fontSize: '16px' } : { fontSize: '18px' } }
 			   className={ styles['item__title'] }>
-				{ workExperience.jobTitle }
+				{ title }
 			</p>
 			<div className={ styles['item__content'] }>
 				<div className={ styles['item__wrapper'] }>
-					<img src={ company_icon } alt="company"/>
-					<span className={ `${ styles['item__text'] } ${ isModalItem && styles['item__text--company'] }` }>
-						{ workExperience.companyName }
+					<img src={ itemType === 'workExperience' ? company_icon : education_icon } alt="organization"/>
+					<span className={ `${ styles['item__text'] }` }>
+						{ organization }
 					</span>
 				</div>
 				<div className={ styles['item__wrapper'] }>
 					<img src={ date_icon } alt="date"/>
 					<span className={ `${ styles['item__text'] } ${ styles['item__text--date'] }` }>
-						{ formatDateRange(workExperience.startDate, workExperience.endDate ?? null) }
+						{ formatDateRange(startDate, endDate ?? null) }
 					</span>
 				</div>
 				<div className={ styles['item__wrapper'] }>
@@ -73,4 +80,4 @@ const WorkExperienceItem: React.FC<WorkExperienceItemProps> = ({
 	);
 };
 
-export default WorkExperienceItem;
+export default WorkExperienceEducationItem;

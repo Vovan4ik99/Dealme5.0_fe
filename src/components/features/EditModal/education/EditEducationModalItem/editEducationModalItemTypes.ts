@@ -1,6 +1,6 @@
 import { IFreelancerState } from "@shared/freelancer/localization.ts";
 
-export interface IEditWorkExperienceModalItemProps {
+export interface IEditEducationModalItemProps {
 	freelancerId: number;
 	states: IFreelancerState[];
 }

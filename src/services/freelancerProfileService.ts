@@ -1,7 +1,8 @@
 import { useHttp } from "../hooks/http.hook";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { IAboutMeInfo, IFreelancerBackgroundResponse, IFreelancerReview, } from "@shared/freelancerTypes";
+import { IAboutMeInfo, IFreelancerBackgroundResponse } from "@shared/freelancer/common.ts";
+import { IFreelancerReview } from "@shared/freelancer/review.ts";
 
 export const useFreelancerProfileService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

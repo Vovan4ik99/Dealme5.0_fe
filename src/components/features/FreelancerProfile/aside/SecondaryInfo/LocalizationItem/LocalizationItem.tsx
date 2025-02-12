@@ -8,10 +8,10 @@ import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import LocalizationModalItem
 	from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.tsx";
-import { IFreelancerCountry, IFreelancerState } from "@shared/freelancerTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { getDescriptionByCountryName, getStateDescriptionByStateName } from "@utils/localizationUtils.ts";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 
 const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 	                                                            userLocalization,

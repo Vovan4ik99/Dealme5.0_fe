@@ -1,6 +1,6 @@
-import { IFreelancerCountry, IFreelancerState } from "@shared/freelancerTypes.ts";
 import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
 import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
+import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 
 export const sortCountries = (countries: IFreelancerCountry[]) => {
 	return countries.toSorted((a, b) => {

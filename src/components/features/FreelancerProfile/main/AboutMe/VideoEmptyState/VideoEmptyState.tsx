@@ -1,6 +1,6 @@
 import styles from './VideoEmptyState.module.scss';
 import about_me_video from '@icons/freelancer_profile/about_me/about_me_empty.png';
-import {ReactComponent as PlayIcon} from "@icons/named_exported/play_icon.svg";
+import { ReactComponent as PlayIcon } from "@icons/named_exported/play_icon.svg";
 import React from "react";
 import {
 	IVideoEmptyStateProps

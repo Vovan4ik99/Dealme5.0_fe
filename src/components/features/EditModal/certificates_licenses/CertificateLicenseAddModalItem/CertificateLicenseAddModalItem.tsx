@@ -6,8 +6,8 @@ import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
 import { useForm, useWatch } from "react-hook-form";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import DatesForm from "@components/features/EditModal/certificates_licenses/DatesForm/DatesForm.tsx";
-import { IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import { createDateFromYearMonth, mapDateToYearMonth } from "@utils/dateUtils.ts";
+import { IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
 
 const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemProps> = ({
 	                                                                                        onSave,

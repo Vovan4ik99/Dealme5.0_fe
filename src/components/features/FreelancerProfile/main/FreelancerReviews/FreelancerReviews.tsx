@@ -1,7 +1,6 @@
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import React, { useEffect, useState } from "react";
 import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
-import { IFreelancerReview } from "@shared/freelancerTypes.ts";
 import styles from "./FreelancerReviews.module.scss";
 import FreelancerReview
 	from "@components/features/FreelancerProfile/main/FreelancerReviews/FreelancerReview/FreelancerReview.tsx";
@@ -10,6 +9,7 @@ import FreelancerReviewScore
 import { REVIEW_CATEGORIES } from "@constants/reviewCategories.ts";
 import star from '@icons/freelancer_profile/primary_info/star.svg';
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
+import { IFreelancerReview } from "@shared/freelancer/review.ts";
 
 const FreelancerReviews = () => {
 

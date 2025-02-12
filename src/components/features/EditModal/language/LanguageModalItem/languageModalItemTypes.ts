@@ -1,4 +1,4 @@
-import {IFreelancerLanguage} from "@shared/freelancerTypes.ts";
+import { IFreelancerLanguage } from "@shared/freelancer/language.ts";
 
 export interface ILanguageModalItemProps {
 	language: string;
