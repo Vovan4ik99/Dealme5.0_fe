@@ -14,7 +14,7 @@ const ResetPasswordForm = () => {
     const [email, setEmail] = useState<string>('');
     const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
     const {resetPassword, errorMessage, loadingStatus} = useAuthService();
-
+    const hasError: boolean | undefined = errorMessage && loadingStatus === 'error' ? true : undefined;
 
     const {register, handleSubmit, formState: {errors}} = useForm<IResetPasswordFormData>({
         shouldFocusError: false,
@@ -56,7 +56,7 @@ const ResetPasswordForm = () => {
                     <div className={styles['form__wrapper']}>
                         <Link className={styles['form__link']} to={'/login'}>Wróć do logowania</Link>
                     </div>
-                    {errorMessage && loadingStatus === 'error' && <InputError text={errorMessage!}/>}
+                    {hasError && <InputError text={errorMessage!}/>}
                 </div>
             </form>
         </>
