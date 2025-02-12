@@ -11,6 +11,7 @@ const Navbar = () => {
 		const pathname = location.pathname;
 		switch (pathname) {
 			case '/login':
+			case '/reset-password':
 				return <>
 					<p className={styles.navbar__text}>Nie masz konta?</p>
 					<Link className={styles.navbar__link} to={'/registration'}>Załóż konto</Link>

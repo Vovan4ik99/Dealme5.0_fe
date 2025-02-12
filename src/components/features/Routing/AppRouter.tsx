@@ -4,6 +4,8 @@ import ProtectedRoute from "./ProtectedRoute.tsx";
 import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
 import Dashboard from "@pages/Dashboard/Dashboard.tsx";
 import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
+import ResetPasswordPage from "@pages/Auth/ResetPasswordPage/ResetPasswordPage.tsx";
+import AuthPage from "@pages/Auth/AuthPage/AuthPage.tsx";
 
 const AppRouter = () => {
 	return (
@@ -11,6 +13,7 @@ const AppRouter = () => {
 			<Routes>
 				<Route path={ '/login' } element={ <AuthPage isLogin={ true }/> }/>
 				<Route path={ '/registration' } element={ <AuthPage isLogin={ false }/> }/>
+                <Route path={'/reset-password'} element={<ResetPasswordPage/>} />
 				<Route element={ <ProtectedRoute/> }>
 					<Route path={ '/freelancer/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/onboarding' } element={ <OnboardingPage/> }/>

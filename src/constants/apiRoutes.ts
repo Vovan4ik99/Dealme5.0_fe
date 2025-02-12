@@ -5,6 +5,9 @@ export const API_ROUTES = {
 		REGISTER_INVESTOR: '/auth/register/investor',
 		REGISTER_FREELANCER: '/auth/register/freelancer'
 	},
+	TOKEN: {
+		PASSWORD_RESET: '/token-reset/send-email',
+	},
 	USER: {
 		FREELANCER_PROFILE: '/freelancer/me',
 		INVESTOR_PROFILE: '/investor/me'
