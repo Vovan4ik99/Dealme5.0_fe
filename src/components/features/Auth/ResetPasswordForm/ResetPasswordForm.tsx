@@ -11,30 +11,32 @@ import styles from "./ResetPasswordForm.module.scss"
 
 const ResetPasswordForm = () => {
 
-    const [email, setEmail] = useState<string>('');
-    const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
     const {resetPassword, errorMessage, loadingStatus} = useAuthService();
-    const hasError: boolean | undefined = errorMessage && loadingStatus === 'error' ? true : undefined;
 
-    const {register, handleSubmit, formState: {errors}} = useForm<IResetPasswordFormData>({
+    const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
+
+
+    const hasError: boolean = errorMessage !== null && loadingStatus === 'error';
+
+    const {register, handleSubmit, formState: { errors } } = useForm<IResetPasswordFormData>({
         shouldFocusError: false,
         mode: 'onChange',
-        values: {email},
     });
-
 
     const onSubmit = useCallback((request: IResetPasswordFormData) => {
         resetPassword(request.email)
             .then(() => setIsEmailSent(true))
             .catch(error => console.log(error));
 
-        setEmail(request.email);
-    }, [resetPassword, setEmail])
+    }, [resetPassword])
 
 
     return (
         <>
-            <form className={styles['form']} onSubmit={handleSubmit(onSubmit)} noValidate={true}>
+            <form
+                className={styles['form']}
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate={true}>
                 <div className={styles['form__header']}>
                     <h1 className={'title'}>
                         Zapomniałeś hasła?
@@ -43,20 +45,26 @@ const ResetPasswordForm = () => {
                 </div>
                 <div className={styles['form__content']}>
                     {isEmailSent &&
-                        <AlertItem kind={'success'} text={'Link do resetowania hasła został wysłany na Twój e-mail'}
-                                   hasMarginTop={true}/>}
+                        <AlertItem
+                            kind={'success'}
+                            text={'Link do resetowania hasła został wysłany na Twój e-mail'}
+                            hasMarginTop={true}
+                        />}
                     <CustomInput
                         preset={'email'}
                         errorMessage={errors?.email?.message}
                         register={register}
                     />
-                    <button className={'btn'} disabled={loadingStatus === 'loading'} type={'submit'}>
+                    <button
+                        className={'btn'}
+                        disabled={loadingStatus === 'loading'}
+                        type={'submit'}>
                         {loadingStatus === 'loading' ? 'Ładowanie' : 'Zresetuj hasło'}
                     </button>
                     <div className={styles['form__wrapper']}>
                         <Link className={styles['form__link']} to={'/login'}>Wróć do logowania</Link>
                     </div>
-                    {hasError && <InputError text={errorMessage!}/>}
+                    { hasError && <InputError text={errorMessage!}/> }
                 </div>
             </form>
         </>
