@@ -10,9 +10,7 @@ const ResetPasswordPage = () => {
     return (
         <section className={styles['reset-password-page']}>
             <Navbar/>
-            <div className={styles['reset-password-page__content']}>
-                <ResetPasswordForm/>
-            </div>
+            <ResetPasswordForm/>
             <Footer isHyphenated={true} isCentered={true}/>
         </section>
     )
