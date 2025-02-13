@@ -2,13 +2,13 @@ import styles from "./AboutMe.module.scss";
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { IAboutMeInfo } from "@shared/freelancerTypes.ts";
 import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import VideoEmptyState from "@components/features/FreelancerProfile/main/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AboutMeModalItem from "@components/features/EditModal/about_me/AboutMeModalItem/AboutMeModalItem.tsx";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
+import { IAboutMeInfo } from "@shared/freelancer/common.ts";
 
 const AboutMe = () => {
 

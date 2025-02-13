@@ -1,7 +1,7 @@
 import { useHttp } from "../hooks/http.hook.ts";
 import { useCallback } from "react";
-import { IFreelancerVideo, IPatchVideoRequest, } from "@shared/freelancerTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
+import { IFreelancerVideo, IPatchVideoRequest } from "@shared/freelancer/video.ts";
 
 export const useVideoService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

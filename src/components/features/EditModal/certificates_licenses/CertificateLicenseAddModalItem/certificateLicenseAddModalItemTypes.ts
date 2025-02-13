@@ -1,5 +1,9 @@
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
-import { CertificateType, IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
+import {
+	CertificateType,
+	IFreelancerCertificate,
+	IFreelancerCertificateRequest
+} from "@shared/freelancer/certificate.ts";
 
 export interface ICertificateLicenseAddModalItemProps extends ISaveableChildProps {
 	onSave: (certificate: IFreelancerCertificateRequest) => void;

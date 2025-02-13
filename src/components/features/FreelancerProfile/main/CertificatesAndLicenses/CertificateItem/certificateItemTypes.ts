@@ -1,4 +1,4 @@
-import {IFreelancerCertificate} from "@shared/freelancerTypes.ts";
+import { IFreelancerCertificate } from "@shared/freelancer/certificate.ts";
 
 export interface ICertificateItemProps {
 	certificate: IFreelancerCertificate;

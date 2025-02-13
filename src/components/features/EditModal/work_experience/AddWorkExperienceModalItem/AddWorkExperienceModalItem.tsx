@@ -8,8 +8,8 @@ import React, { useCallback, useEffect } from "react";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import LocalizationForm from "@components/features/EditModal/localization/LocalizationForm/LocalizationForm.tsx";
 import DatesForm from "@components/features/EditModal/certificates_licenses/DatesForm/DatesForm.tsx";
-import { IFreelancerWorkExperienceRequest } from "@shared/freelancerTypes.ts";
 import { createDateFromYearMonth, mapDateToYearMonth } from "@utils/dateUtils.ts";
+import { IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
 
 const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = ({
 	                                                                                onSave,
@@ -60,10 +60,8 @@ const AddWorkExperienceModalItem: React.FC<IAddWorkExperienceModalItemProps> = (
 				country: data.country,
 				state: data.state,
 				city: data.city,
-				startDate: createDateFromYearMonth(startYear, startMonth)
-			}
-			if (endMonth && endYear) {
-				request.endDate = createDateFromYearMonth(endYear, endMonth);
+				startDate: createDateFromYearMonth(startYear, startMonth),
+				endDate: (endYear && endMonth) ? createDateFromYearMonth(endYear, endMonth) : null
 			}
 			onSave(request);
 			handleClose!();

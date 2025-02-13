@@ -8,16 +8,13 @@ import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import AddWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/AddWorkExperienceModalItem/AddWorkExperienceModalItem.tsx";
 import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
-import {
-	IFreelancerState,
-	IFreelancerWorkExperience,
-	IFreelancerWorkExperienceRequest
-} from "@shared/freelancerTypes.ts";
-import WorkExperienceItem
-	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/WorkExperienceItem/WorkExperienceItem.tsx";
+import WorkExperienceEducationItem
+	from "@components/features/FreelancerProfile/common/WorkExperienceEducationItem/WorkExperienceEducationItem.tsx";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
 import EditWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/EditWorkExperienceModalItem/EditWorkExperienceModalItem.tsx";
+import { IFreelancerState } from "@shared/freelancer/localization.ts";
+import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
 
 const FreelancerWorkExperience = () => {
 
@@ -82,10 +79,16 @@ const FreelancerWorkExperience = () => {
 			return <AlertItem kind={'neutral'} text={'Nie uzupełniłeś/aś dane o doświadczeniu'}/>;
 		}
 		return workExperienceItems.map(workExperience => {
-			return <WorkExperienceItem key={workExperience.id}
-			                           workExperience={workExperience}
-			                           isModalItem={false}
-			                           states={states}/>;
+			return <WorkExperienceEducationItem key={workExperience.id}
+			                                    title={workExperience.jobTitle}
+			                                    itemType={'workExperience'}
+			                                    organization={workExperience.companyName}
+			                                    startDate={workExperience.startDate}
+			                                    endDate={workExperience.endDate ?? undefined}
+			                                    state={workExperience.state}
+			                                    city={workExperience.city}
+			                                    isModalItem={false}
+			                                    states={states}/>;
 		});
 	};
 

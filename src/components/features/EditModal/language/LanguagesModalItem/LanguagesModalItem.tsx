@@ -1,7 +1,6 @@
 import styles from './LanguagesModalItem.module.scss';
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useEffect, useState } from "react";
-import { IFreelancerLanguage, ILanguage } from "@shared/freelancerTypes.ts";
 import LanguageModalItem from "@components/features/EditModal/language/LanguageModalItem/LanguageModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddLanguageModalItem
@@ -17,6 +16,7 @@ import {
 	ILanguagesModalItemProps
 } from "@components/features/EditModal/language/LanguagesModalItem/languagesModalItemTypes.ts";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { IFreelancerLanguage, ILanguage } from "@shared/freelancer/language.ts";
 
 const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave, onSave }) => {
 

@@ -25,6 +25,7 @@
 	display: flex;
 	gap: 12px;
 	align-items: center;
+	flex-wrap: wrap;
   }
 
   &__wrapper {
@@ -34,20 +35,8 @@
   }
 
   &__text {
-	text-wrap: nowrap;
 	color: vars.$color-gray;
 	font-size: 14px;
 	line-height: 120%;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-
-	&--date {
-	  overflow: visible;
-	}
-
-	&--company {
-		max-width: 138px;
-	}
   }
 }

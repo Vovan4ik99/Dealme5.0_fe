@@ -27,6 +27,9 @@ import FreelancerReviews from "@components/features/FreelancerProfile/main/Freel
 import FreelancerWorkExperience
 	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/FreelancerWorkExperience.tsx";
 import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
+import FreelancerEducation
+	from "@components/features/FreelancerProfile/main/FreelancerEducation/FreelancerEducation.tsx";
+import { useFreelancerEducationService } from "@services/freelancerEducationService.ts";
 
 const FreelancerProfilePage = () => {
 
@@ -37,7 +40,8 @@ const FreelancerProfilePage = () => {
 		useOnboardingService(),
 		useVideoService(),
 		useFreelancerCertificateService(),
-		useFreelancerWorkExperienceService()
+		useFreelancerWorkExperienceService(),
+		useFreelancerEducationService()
 	);
 
 	return (
@@ -67,6 +71,7 @@ const FreelancerProfilePage = () => {
 						<FreelancerServices/>
 						<FreelancerReviews/>
 						<FreelancerWorkExperience/>
+						<FreelancerEducation/>
 					</div>
 					<Footer isHyphenated={false} isCentered={false}/>
 				</>

@@ -1,9 +1,9 @@
-import { IFreelancerLocalization } from "@shared/freelancerTypes.ts";
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
 import { WORKING_AREAS } from "@constants/workingAreas.ts";
 import {
 	ILocalizationFormState
 } from "@components/features/EditModal/localization/LocalizationForm/localizationFormTypes.ts";
+import { IFreelancerLocalization } from "@shared/freelancer/localization.ts";
 
 export interface ILocalizationModalItemProps extends ISaveableChildProps {
 	userLocalization: IFreelancerLocalization | null;

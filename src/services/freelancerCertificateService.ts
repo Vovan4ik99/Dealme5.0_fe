@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancerTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { useHttp } from "../hooks/http.hook.ts";
+import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
 
 export const useFreelancerCertificateService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

@@ -1,7 +1,7 @@
 import { IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry } from "./onboardingTypes.ts";
 import { EXPERIENCE_LEVELS } from "@constants/experienceLevel.ts";
 import { WorkingDayKey } from "@constants/workingDays.ts";
-import { IFreelancerWorkExperience } from "@shared/freelancerTypes.ts";
+import { IFreelancerWorkExperience } from "@shared/freelancer/work-experience.ts";
 
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 

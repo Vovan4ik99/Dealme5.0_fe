@@ -1,12 +1,14 @@
 import {useHttp} from "../hooks/http.hook.ts";
 import {useCallback} from "react";
-import {
-	IFreelancerBarResponse,
-	IFreelancerCountry, IFreelancerLanguage,
-	IFreelancerLocalization,
-	IFreelancerNameRequest, IFreelancerState, IFreelancerWorkingArea, ILanguage
-} from "@shared/freelancerTypes.ts";
 import {API_ROUTES} from "@constants/apiRoutes.ts";
+import { IFreelancerBarResponse, IFreelancerNameRequest } from "@shared/freelancer/common.ts";
+import {
+	IFreelancerCountry,
+	IFreelancerLocalization,
+	IFreelancerState,
+	IFreelancerWorkingArea
+} from "@shared/freelancer/localization.ts";
+import { IFreelancerLanguage, ILanguage } from "@shared/freelancer/language.ts";
 
 export const useFreelancerProfileAsideInfoService = () => {
 	const {sendRequest, loadingStatus, errorMessage} = useHttp();

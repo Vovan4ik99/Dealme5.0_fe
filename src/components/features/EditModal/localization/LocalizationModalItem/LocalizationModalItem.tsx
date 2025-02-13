@@ -1,6 +1,5 @@
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { IFreelancerCountry, IFreelancerLocalization, IFreelancerState } from "@shared/freelancerTypes.ts";
 import {
 	IFreelancerLocalizationForm,
 	ILocalizationModalItemProps
@@ -23,6 +22,7 @@ import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
 import SelectInput from "@ui/SelectInput/SelectInput.tsx";
 import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
 import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
+import { IFreelancerCountry, IFreelancerLocalization, IFreelancerState } from "@shared/freelancer/localization.ts";
 
 const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 	                                                                      userLocalization,
