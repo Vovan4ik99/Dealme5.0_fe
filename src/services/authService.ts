@@ -34,6 +34,7 @@ export const useAuthService = () => {
 			url,
 		})
 	}, [sendRequest]);
+
 	const resetPassword = useCallback(async (email: string): Promise<void> => {
 		return await sendRequest({
 			url: API_ROUTES.TOKEN.PASSWORD_RESET,
@@ -41,7 +42,6 @@ export const useAuthService = () => {
 			body: email,
 		})
 	}, [sendRequest])
-
 
 	return {
 		loadingStatus,
