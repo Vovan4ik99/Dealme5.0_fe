@@ -68,11 +68,9 @@ const FreelancerEducation = () => {
 		openModal({
 			id: "EditEducationsModalItem",
 			title: 'Edytuj wykształcenie',
-			btnText: 'Edytuj wykształcenie',
-			btnWithIcon: false,
-			shouldCloseOnSaving: false,
-			withSaveBtn: true,
-			child: <EditEducationModalItem states={states} freelancerId={user?.id} />
+			withSaveBtn: false,
+			child: <EditEducationModalItem states={states} freelancerId={user?.id}/>,
+			onClose: fetchEducation,
 		});
 	};
 
