@@ -15,7 +15,6 @@ const ResetPasswordForm = () => {
 
     const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
 
-
     const hasError: boolean = errorMessage !== null && loadingStatus === 'error';
 
     const {register, handleSubmit, formState: { errors } } = useForm<IResetPasswordFormData>({
@@ -27,12 +26,9 @@ const ResetPasswordForm = () => {
         resetPassword(request.email)
             .then(() => setIsEmailSent(true))
             .catch(error => console.log(error));
-
     }, [resetPassword])
 
-
     return (
-        <>
             <form
                 className={styles['form']}
                 onSubmit={handleSubmit(onSubmit)}
@@ -67,7 +63,6 @@ const ResetPasswordForm = () => {
                     { hasError && <InputError text={errorMessage!}/> }
                 </div>
             </form>
-        </>
     )
 }
 

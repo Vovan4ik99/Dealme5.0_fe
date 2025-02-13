@@ -8,7 +8,7 @@ import Navbar from "@components/layout/OnboardingNavbar/Navbar.tsx";
 
 const ResetPasswordPage = () => {
     return (
-        <section className={styles['reset-password-page']}>
+        <section className={styles['reset-page']}>
             <Navbar/>
             <ResetPasswordForm/>
             <Footer isHyphenated={true} isCentered={true}/>
