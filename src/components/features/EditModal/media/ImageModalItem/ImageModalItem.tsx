@@ -41,7 +41,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
 		setImageBlob(parsedUserAvatar.blob);
 		setImageFileName(parsedUserAvatar.filename);
-	}, [ userAvatar ]);
+	}, [ userAvatar, getAvatar ]);
 
 	const getBgImage = useCallback(() => {
 		getBackgroundPicture()

@@ -24,7 +24,7 @@ const Avatar = () => {
 			else
 				setAvatar(null);
 		});
-	},[]);
+	},[getAvatar]);
 
 	useEventEmitter<string>(EMITTER_EVENTS[0], (newPicture) =>{
 		if(newPicture == null) {
