@@ -38,6 +38,7 @@ const ProfileNavbar = () => {
 			setAvatar(null);
 			return;
 		}
+
 		fetchAvatars();
 	})
 

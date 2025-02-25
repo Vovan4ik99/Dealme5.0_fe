@@ -16,12 +16,12 @@ const Avatar = () => {
 	const { patchAvatar, deleteAvatar, getAvatar } = useAvatarService();
 
 	const [userAvatar, setAvatar] = useState<string | null>(null);
-
+	
 	const fetchAvatars = useCallback(() => {
-		getAvatar().then((res) => {
-			if ( res )
-				setAvatar(res.picture);
-		});
+		getAvatar().then(({ picture }) => {
+			if (picture)
+				setAvatar(picture);
+		})
 	}, [getAvatar]);
 
 	useEffect(() => {
