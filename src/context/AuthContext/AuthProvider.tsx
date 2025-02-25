@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from "react";
-import { useAuthService } from "@services/authService.ts";
+import React, { useCallback, useMemo, useReducer } from "react";
+import { useAuthService } from "@services/auth/authService.ts";
 import { authReducer } from "./authReducer.ts";
 import { AuthActionType } from "./authActions.ts";
 import { AuthContext, IAuthContextValue, InitialAuthState } from "./AuthContext.ts";
 import { ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
 import { jwtDecode } from "jwt-decode";
-import { useAvatarService } from "@services/avatarService.ts";
+import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const { errorMessage, fetchLoggedUserData } = useAuthService();
@@ -14,7 +14,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		getAvatar,
 		deleteAvatar,
 		patchAvatar
-	} = useAvatarService();
+	} = useFreelancerAvatarService();
 
 	const [ state, dispatch ] = useReducer(authReducer, InitialAuthState);
 
@@ -35,10 +35,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				}
 			)
 			.catch(e => {
-				dispatch({ type: AuthActionType.SET_ERROR, payload: avatarErrorMessage ?? e });
-				dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'error' });
-			}
-		);
+					dispatch({ type: AuthActionType.SET_ERROR, payload: avatarErrorMessage ?? e });
+					dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'error' });
+				}
+			);
 	}, [ avatarErrorMessage, getAvatar ]);
 
 	const getLoggedUserData = useCallback((currentToken: string) => {
@@ -52,20 +52,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				getUserAvatar();
 			})
 			.catch(e => {
-				dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });
-				dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'error' });
-				localStorage.removeItem('token');
-				console.log(e);
-			}
-		)
+					dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });
+					dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'error' });
+					localStorage.removeItem('token');
+					console.log(e);
+				}
+			)
 	}, [ fetchLoggedUserData, getUserAvatar, errorMessage ]);
-
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (token) {
-			getLoggedUserData(token);
-		}
-	}, [ errorMessage, getLoggedUserData, getUserAvatar ]);
 
 	const getUserRole = (currentToken: string): UserRole => {
 		const decodedToken = jwtDecode<{ roles: UserRole[] }>(currentToken);

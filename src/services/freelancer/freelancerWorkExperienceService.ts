@@ -1,17 +1,17 @@
-import { useHttp } from "../hooks/http.hook.ts";
+import { useHttp } from "../../hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
 
 export const useFreelancerWorkExperienceService = () => {
-	const {sendRequest, loadingStatus, errorMessage} = useHttp();
+	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
 	const getFreelancerWorkExperience = useCallback(
 		async (freelancerId: number): Promise<IFreelancerWorkExperience[]> => {
-		return sendRequest({
-			url: `${API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE}/${freelancerId}`,
-		});
-	}, [sendRequest]);
+			return sendRequest({
+				url: `${ API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE }/${ freelancerId }`,
+			});
+		}, [ sendRequest ]);
 
 	const addWorkExperience = useCallback(async (request: IFreelancerWorkExperienceRequest): Promise<void> => {
 		return sendRequest({
@@ -19,22 +19,22 @@ export const useFreelancerWorkExperienceService = () => {
 			method: "POST",
 			body: JSON.stringify(request),
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const deleteWorkExperience = useCallback(async (id: number): Promise<void> => {
 		return sendRequest({
-			url: `${API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE}/${id}`,
+			url: `${ API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE }/${ id }`,
 			method: "DELETE",
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchWorkExperience = useCallback(async (id: number, request: IFreelancerWorkExperienceRequest): Promise<void> => {
 		return sendRequest({
-			url: `${API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE}/${id}`,
+			url: `${ API_ROUTES.PROFILE.FREELANCER.WORK_EXPERIENCE }/${ id }`,
 			method: "PATCH",
 			body: JSON.stringify(request),
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	return {
 		addWorkExperience,

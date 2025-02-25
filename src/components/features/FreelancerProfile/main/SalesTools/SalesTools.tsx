@@ -8,28 +8,29 @@ import SalesToolProfileItem
 	from "@components/features/FreelancerProfile/main/SalesTools/SalesToolProfileItem/SalesToolProfileItem.tsx";
 import { getPictureForSalesTools } from "@utils/salesToolsUtils.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsEditModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItem.tsx";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
+import { ISalesToolsProps } from "@components/features/FreelancerProfile/main/SalesTools/salesToolsTypes.ts";
 
-const SalesTools = () => {
+const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'tools';
 
 	const { user, getLoggedUserData } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useOnboardingService();
+	const { getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
 
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
 
 	useEffect(() => {
-		getSalesTools()
+		getSalesTools(freelancerId)
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [ getSalesTools ]);
+	}, [ freelancerId, getSalesTools ]);
 
 	if (!user) {
 		return <></>;
@@ -109,18 +110,20 @@ const SalesTools = () => {
 						           onClick={ () => handleNavigateClick('right') }/>
 					</div>
 				</div>
-				<div className={ styles['tools__buttons'] }>
-					<ActionBtn kind={ 'Add' }
-					           key={ 'Add' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ handleAddTools }/>
-					<ActionBtn kind={ 'Edit' }
-					           key={ 'Edit' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ onSalesToolsEdit }/>
-				</div>
+				{ isLoggedUserProfile &&
+                    <div className={ styles['tools__buttons'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   key={ 'Add' }
+                                   withBorder={ true }
+                                   backgroundColor={ 'white' }
+                                   onClick={ handleAddTools }/>
+                        <ActionBtn kind={ 'Edit' }
+                                   key={ 'Edit' }
+                                   withBorder={ true }
+                                   backgroundColor={ 'white' }
+                                   onClick={ onSalesToolsEdit }/>
+                    </div>
+				}
 			</div>
 			<div className={ styles['tools__content'] }>
 				<div

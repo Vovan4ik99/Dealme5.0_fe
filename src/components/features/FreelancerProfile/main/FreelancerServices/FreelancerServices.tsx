@@ -1,35 +1,47 @@
 import styles from "./FreelancerServices.module.scss";
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import { IActivity, IActivityRequest } from "@shared/onboardingTypes.ts";
+import { IActivity, IActivityRequest, IFreelancerActivity } from "@shared/onboardingTypes.ts";
 import FreelancerProfileActivity
 	from "@components/features/FreelancerProfile/main/FreelancerServices/FreelancerProfileActivity/FreelancerProfileActivity.tsx";
 import AddActivityModalItem
 	from "@components/features/EditModal/activities/AddActivityModalItem/AddActivityModalItem.tsx";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import EdtActivitiesModalItem
 	from "@components/features/EditModal/activities/EditActivitiesModalItem/EdtActivitiesModalItem.tsx";
+import {
+	IFreelancerServicesProps
+} from "@components/features/FreelancerProfile/main/FreelancerServices/freelancerServicesTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
-const FreelancerServices = () => {
+const FreelancerServices: React.FC<IFreelancerServicesProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'services';
 
 	const { openModal } = useModal();
-	const { user, getLoggedUserData } = useContext(AuthContext);
-	const { getActivities, patchActivities } = useOnboardingService();
-	
+	const { getActivities, patchActivities } = useFreelancerOnboardingService();
+	const { getFreelancerActivities } = useFreelancerProfileService()
+
 	const [ allActivities, setAllActivities ] = useState<IActivity[]>([]);
-	
+	const [ freelancerActivities, setFreelancerActivities ] = useState<IFreelancerActivity[]>([]);
+
 	useEffect(() => {
 		getActivities()
 			.then(setAllActivities)
 			.catch(console.error);
-	}, [getActivities]);
+	}, [ getActivities ]);
 
-	if (!user) return null;
+	const fetchFreelancerActivities = useCallback(() => {
+		getFreelancerActivities(freelancerId)
+			.then(setFreelancerActivities)
+			.catch(console.error);
+	}, [ freelancerId, getFreelancerActivities ]);
+
+	useEffect(() => {
+		fetchFreelancerActivities();
+	}, [ fetchFreelancerActivities ]);
 
 	const addNewActivity = (newActivity: IActivity, level: number) => {
 		//TODO should be request to post new Activity
@@ -37,13 +49,13 @@ const FreelancerServices = () => {
 
 	const editActivities = (request: IActivityRequest[]) => {
 		patchActivities(request)
-			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+			.then(() => fetchFreelancerActivities())
 			.catch(console.error);
 	};
-	
+
 	const getActivitiesToAdd = () => {
-		return  allActivities.filter(
-			activity => !user.selectedActivities.some(a => a.activityId === activity.id)
+		return allActivities.filter(
+			activity => freelancerActivities.some(a => a.activityId === activity.id)
 		);
 	};
 
@@ -73,7 +85,7 @@ const FreelancerServices = () => {
 	};
 
 	const renderServices = () => {
-		return user.selectedActivities.map(activity => {
+		return freelancerActivities.map(activity => {
 			return <FreelancerProfileActivity key={ activity.activityId }
 			                                  name={ activity.name }
 			                                  level={ activity.level }
@@ -86,16 +98,18 @@ const FreelancerServices = () => {
 		<section className={ styles['service'] } id={ SECTION_ID }>
 			<header className={ styles['service__header'] }>
 				<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
-				<div className={ styles['service__actions'] }>
-					<ActionBtn kind={ 'Add' }
-					           onClick={ onServiceAdd }
-					           withBorder={ true }
-					           backgroundColor={ 'transparent' }/>
-					<ActionBtn kind={ 'Edit' }
-					           onClick={ onServiceEdit }
-					           withBorder={ true }
-					           backgroundColor={ 'transparent' }/>
-				</div>
+				{ isLoggedUserProfile &&
+                    <div className={ styles['service__actions'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   onClick={ onServiceAdd }
+                                   withBorder={ true }
+                                   backgroundColor={ 'transparent' }/>
+                        <ActionBtn kind={ 'Edit' }
+                                   onClick={ onServiceEdit }
+                                   withBorder={ true }
+                                   backgroundColor={ 'transparent' }/>
+                    </div>
+				}
 			</header>
 			<div className={ styles['service__content'] }>
 				{ renderServices() }

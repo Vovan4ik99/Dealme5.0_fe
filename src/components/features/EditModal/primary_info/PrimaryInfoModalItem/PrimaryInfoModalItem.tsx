@@ -4,11 +4,11 @@ import { ReactComponent as FreelancerIcon } from "@icons/named_exported/freelanc
 import styles from "./PrimaryInfoModalItem.module.scss";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import { useForm, useWatch } from "react-hook-form";
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { IIncomeGoal, ISpecialization } from "@shared/onboardingTypes.ts";
 import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/experienceLevel.ts";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import InputError from "@ui/InputError/InputError.tsx";
 
 const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
@@ -22,21 +22,34 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	                                                                    company,
 	                                                                    incomeGoal
                                                                     }) => {
+	const {
+		getSpecializations,
+		getIncomeGoals,
+		patchSpecialization,
+		patchIncomeGoal,
+		patchExperienceLevel
+	} = useFreelancerOnboardingService();
+	const { patchFreelancerName, patchFreelancerCompany } = useFreelancerProfileAsideInfoService();
 
-	const [specializations, setSpecializations] = useState<ISpecialization[]>([]);
-	const [incomeGoals, setIncomeGoals] = useState<IIncomeGoal[]>([]);
-	const {getSpecializations, getIncomeGoals, patchSpecialization, patchIncomeGoal, patchExperienceLevel} = useOnboardingService();
-	const {patchFreelancerName, patchFreelancerCompany} = useFreelancerProfileAsideInfoService();
+	const [ specializations, setSpecializations ] = useState<ISpecialization[]>([]);
+	const [ incomeGoals, setIncomeGoals ] = useState<IIncomeGoal[]>([]);
 
-	const {register, handleSubmit, formState: {errors}, control, setValue, trigger} = useForm<IPrimaryInfoEditFormData>({
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		control,
+		setValue,
+		trigger
+	} = useForm<IPrimaryInfoEditFormData>({
 		shouldFocusError: false,
 		mode: 'onChange',
-		defaultValues: {firstName, lastName, company, specialization, experience, incomeGoal},
+		defaultValues: { firstName, lastName, company, specialization, experience, incomeGoal },
 	});
 
-	const currentSpecialization = useWatch({name: 'specialization', control});
-	const currentExperience = useWatch({name: 'experience', control});
-	const currentIncomeGoal = useWatch({name: 'incomeGoal', control});
+	const currentSpecialization = useWatch({ name: 'specialization', control });
+	const currentExperience = useWatch({ name: 'experience', control });
+	const currentIncomeGoal = useWatch({ name: 'incomeGoal', control });
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -46,13 +59,13 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 		getSpecializations()
 			.then(response => setSpecializations(response))
 			.catch(error => console.error('Failed to fetch specializations:', error));
-	}, [getSpecializations]);
+	}, [ getSpecializations ]);
 
 	useEffect(() => {
 		getIncomeGoals()
 			.then(response => setIncomeGoals(response))
 			.catch(error => console.error('Failed to fetch income goals:', error));
-	}, [getIncomeGoals]);
+	}, [ getIncomeGoals ]);
 
 	const getSpecializationSelectItems = () => {
 		return specializations.map(specialization => {
@@ -64,7 +77,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	};
 
 	const getExperienceLevelSelectItems = () => {
-		return Object.entries(EXPERIENCE_LEVELS).map(([, value]) => {
+		return Object.entries(EXPERIENCE_LEVELS).map(([ , value ]) => {
 			return {
 				text: value.title,
 				info: value.info
@@ -78,7 +91,7 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 				return incomeGoalItem;
 			}
 		}
-		return {range: '', description: '', incomeGoal: ''};
+		return { range: '', description: '', incomeGoal: '' };
 	};
 
 	const getIncomeGoalSelectItems = () => {
@@ -139,76 +152,76 @@ const PrimaryInfoModalItem: React.FC<IPrimaryInfoModalItemProps> = ({
 	};
 
 	return (
-		<form className={styles['item']} noValidate={true}>
-			<div className={styles['item__role']}>
-				<FreelancerIcon width={16.2} height={18}/>
-				<div className={styles['item__role-wrapper']}>
-					<span>Rodzaj konta</span>{''}
+		<form className={ styles['item'] } noValidate={ true }>
+			<div className={ styles['item__role'] }>
+				<FreelancerIcon width={ 16.2 } height={ 18 }/>
+				<div className={ styles['item__role-wrapper'] }>
+					<span>Rodzaj konta</span>{ '' }
 					Freelancer
 				</div>
 			</div>
-			<div className={styles['item__wrapper']}>
-				<div className={styles['item__wrapper']}>
-					<CustomInput key={'firstName'}
-					             preset={'firstName'}
-					             errorMessage={errors.firstName?.message}
-					             register={register}/>
-					<CustomInput key={'lastName'}
-					             preset={'lastName'}
-					             errorMessage={errors.lastName?.message}
-					             register={register}/>
+			<div className={ styles['item__wrapper'] }>
+				<div className={ styles['item__wrapper'] }>
+					<CustomInput key={ 'firstName' }
+					             preset={ 'firstName' }
+					             errorMessage={ errors.firstName?.message }
+					             register={ register }/>
+					<CustomInput key={ 'lastName' }
+					             preset={ 'lastName' }
+					             errorMessage={ errors.lastName?.message }
+					             register={ register }/>
 				</div>
 			</div>
 			<div>
-				<SelectInput key={'specialization'}
-				             labelText={'Specjalizacja handlowa'}
-				             text={currentSpecialization}
-				             selectItems={getSpecializationSelectItems()}
-				             id={'specialization'}
-				             error={errors.specialization ?? null}
-				             register={register}
-				             trigger={trigger}
-				             validationRules={{
-					             required: 'Wybierz specjalizacje'
-				             }}
-				             onValueChange={chooseSpecialization}/>
-				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+				<SelectFormInput key={ 'specialization' }
+				                 labelText={ 'Specjalizacja handlowa' }
+				                 text={ currentSpecialization }
+				                 selectItems={ getSpecializationSelectItems() }
+				                 id={ 'specialization' }
+				                 error={ errors.specialization ?? null }
+				                 register={ register }
+				                 trigger={ trigger }
+				                 validationRules={ {
+					                 required: 'Wybierz specjalizacje'
+				                 } }
+				                 onValueChange={ chooseSpecialization }/>
+				{ errors.specialization?.message && <InputError text={ errors.specialization.message }/> }
 			</div>
-			<CustomInput key={'company'}
-			             preset={'company'}
-			             register={register}
-			             errorMessage={errors.company?.message}/>
+			<CustomInput key={ 'company' }
+			             preset={ 'company' }
+			             register={ register }
+			             errorMessage={ errors.company?.message }/>
 			<div>
-				<SelectInput key={'Experience'}
-				             id={'experience'}
-				             register={register}
-				             trigger={trigger}
-				             error={errors.experience ?? null}
-				             onValueChange={chooseExperience}
-				             validationRules={{
-					             required: 'Wybierz doświadczenie w sprzedaży'
-				             }}
-				             labelText={'Doświadczenie w sprzedaży'}
-				             text={EXPERIENCE_LEVELS[currentExperience].title}
-				             selectItems={getExperienceLevelSelectItems()}
-				             additionalText={EXPERIENCE_LEVELS[currentExperience].info}/>
-				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+				<SelectFormInput key={ 'Experience' }
+				                 id={ 'experience' }
+				                 register={ register }
+				                 trigger={ trigger }
+				                 error={ errors.experience ?? null }
+				                 onValueChange={ chooseExperience }
+				                 validationRules={ {
+					                 required: 'Wybierz doświadczenie w sprzedaży'
+				                 } }
+				                 labelText={ 'Doświadczenie w sprzedaży' }
+				                 text={ EXPERIENCE_LEVELS[currentExperience].title }
+				                 selectItems={ getExperienceLevelSelectItems() }
+				                 additionalText={ EXPERIENCE_LEVELS[currentExperience].info }/>
+				{ errors.specialization?.message && <InputError text={ errors.specialization.message }/> }
 			</div>
 			<div>
-				<SelectInput key={'incomeGoal'}
-				             id={'incomeGoal'}
-				             register={register}
-				             trigger={trigger}
-				             error={errors.incomeGoal ?? null}
-				             onValueChange={chooseIncomeGoal}
-				             validationRules={{
-					             required: 'Wybierz oczekiwane zarobki w Dealme'
-				             }}
-				             labelText={'Oczekiwane zarobki w Dealme'}
-				             text={`${getUserIncomeGoal().range} / tydzień`}
-				             additionalText={getUserIncomeGoal().description}
-				             selectItems={getIncomeGoalSelectItems()}/>
-				{errors.specialization?.message && <InputError text={errors.specialization.message}/>}
+				<SelectFormInput key={ 'incomeGoal' }
+				                 id={ 'incomeGoal' }
+				                 register={ register }
+				                 trigger={ trigger }
+				                 error={ errors.incomeGoal ?? null }
+				                 onValueChange={ chooseIncomeGoal }
+				                 validationRules={ {
+					                 required: 'Wybierz oczekiwane zarobki w Dealme'
+				                 } }
+				                 labelText={ 'Oczekiwane zarobki w Dealme' }
+				                 text={ `${ getUserIncomeGoal().range } / tydzień` }
+				                 additionalText={ getUserIncomeGoal().description }
+				                 selectItems={ getIncomeGoalSelectItems() }/>
+				{ errors.specialization?.message && <InputError text={ errors.specialization.message }/> }
 			</div>
 		</form>
 	);

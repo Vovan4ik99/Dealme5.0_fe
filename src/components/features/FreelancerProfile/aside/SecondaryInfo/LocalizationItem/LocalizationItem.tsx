@@ -10,7 +10,7 @@ import LocalizationModalItem
 	from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { getDescriptionByCountryName, getStateDescriptionByStateName } from "@utils/localizationUtils.ts";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 
 const LocalizationItem: React.FC<ILocalizationItemProps> = ({
@@ -18,7 +18,8 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 	                                                            freelancerWorkingAreaValue,
 	                                                            freelancerWorkingArea,
 	                                                            onSave,
-	                                                            isUndefined
+	                                                            isUndefined,
+	                                                            isLoggedUserProfile
                                                             }) => {
 
 	const { getStates, getCountries, loadingStatus } = useFreelancerProfileAsideInfoService();
@@ -75,12 +76,14 @@ const LocalizationItem: React.FC<ILocalizationItemProps> = ({
 				<img src={ localization_img } alt="localization"/>
 			</div>
 			<p>{ getUserLocalization() }</p>
-			<div className={ styles['info__btn'] }>
-				<ActionBtn kind={ 'Edit' }
-				           withBorder={ false }
-				           backgroundColor={ 'transparent' }
-				           onClick={ onEdit }/>
-			</div>
+			{ isLoggedUserProfile &&
+                <div className={ styles['info__btn'] }>
+                    <ActionBtn kind={ 'Edit' }
+                               withBorder={ false }
+                               backgroundColor={ 'transparent' }
+                               onClick={ onEdit }/>
+                </div>
+			}
 		</>
 	);
 };

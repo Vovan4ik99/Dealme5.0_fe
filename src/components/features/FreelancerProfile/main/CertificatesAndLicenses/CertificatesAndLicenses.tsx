@@ -10,10 +10,13 @@ import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import CertificateLicenseEditModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseEditModalItem/CertificateLicenseEditModalItem.tsx";
-import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
+import { useFreelancerCertificateService } from "@services/freelancer/freelancerCertificateService.ts";
 import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
+import {
+	ICertificateAndLicensesProps
+} from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/certificateAndLicensesTypes.ts";
 
-const CertificatesAndLicenses = () => {
+const CertificatesAndLicenses: React.FC<ICertificateAndLicensesProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'certifications';
 
@@ -23,10 +26,10 @@ const CertificatesAndLicenses = () => {
 	const [ certificates, setCertificates ] = useState<IFreelancerCertificate[]>([]);
 
 	const fetchCertificates = useCallback(() => {
-		getFreelancerCertificates()
+		getFreelancerCertificates(freelancerId)
 			.then(setCertificates)
 			.catch(console.error);
-	}, [ getFreelancerCertificates ]);
+	}, [ freelancerId, getFreelancerCertificates ]);
 
 	useEffect(() => {
 		fetchCertificates();
@@ -34,8 +37,11 @@ const CertificatesAndLicenses = () => {
 
 	const renderCertificates = () => {
 		if (certificates.length === 0) {
+			const text = isLoggedUserProfile ?
+				'Nie dodałeś żadnych certyfikatów i licencji' :
+				'Nie dodano danych o certyfikatach i licencjach';
 			return <AlertItem kind={ 'neutral' }
-			                  text={ 'Nie dodałeś żadnych certyfikatów i licencji' }/>
+			                  text={ text }/>
 		}
 		return certificates.map(certificate => {
 			return <CertificateItem certificate={ certificate } key={ certificate.id }/>;
@@ -74,18 +80,20 @@ const CertificatesAndLicenses = () => {
 		<section id={ SECTION_ID } className={ styles['certificates'] }>
 			<header className={ styles['certificates__header'] }>
 				<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
-				<div className={ styles['certificates__wrapper'] }>
-					<ActionBtn kind={ 'Add' }
-					           onClick={ onCertificateAdd }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }/>
-					{ certificates.length > 0 &&
-                        <ActionBtn kind={ 'Edit' }
-                                   onClick={ onCertificateEdit }
+				{ isLoggedUserProfile &&
+                    <div className={ styles['certificates__wrapper'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   onClick={ onCertificateAdd }
                                    withBorder={ true }
                                    backgroundColor={ 'white' }/>
-					}
-				</div>
+						{ certificates.length > 0 &&
+                            <ActionBtn kind={ 'Edit' }
+                                       onClick={ onCertificateEdit }
+                                       withBorder={ true }
+                                       backgroundColor={ 'white' }/>
+						}
+                    </div>
+				}
 			</header>
 			<div className={ styles['certificates__content'] }>
 				{ renderCertificates() }

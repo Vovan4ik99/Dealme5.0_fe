@@ -1,49 +1,49 @@
 import styles from "./FreelancerWorkExperience.module.scss";
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import AddWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/AddWorkExperienceModalItem/AddWorkExperienceModalItem.tsx";
-import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
+import { useFreelancerWorkExperienceService } from "@services/freelancer/freelancerWorkExperienceService.ts";
 import WorkExperienceEducationItem
 	from "@components/features/FreelancerProfile/common/WorkExperienceEducationItem/WorkExperienceEducationItem.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import EditWorkExperienceModalItem
 	from "@components/features/EditModal/work_experience/EditWorkExperienceModalItem/EditWorkExperienceModalItem.tsx";
 import { IFreelancerState } from "@shared/freelancer/localization.ts";
 import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";
+import {
+	IFreelancerWorkExperienceProps
+} from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/freelancerWorkExperienceTypes.ts";
 
-const FreelancerWorkExperience = () => {
+const FreelancerWorkExperience: React.FC<IFreelancerWorkExperienceProps> = ({ isLoggedUserProfile, freelancerId }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'experience';
 
-	const {openModal} = useModal();
-	const {user} = useContext(AuthContext);
-	const {addWorkExperience, getFreelancerWorkExperience} = useFreelancerWorkExperienceService();
-	const {getStates} = useFreelancerProfileAsideInfoService();
-	
-	const [workExperienceItems, setWorkExperienceItems] = useState<IFreelancerWorkExperience[]>([]);
-	const [states, setStates] = useState<IFreelancerState[]>([]);
-	
+	const { openModal } = useModal();
+	const { addWorkExperience, getFreelancerWorkExperience } = useFreelancerWorkExperienceService();
+	const { getStates } = useFreelancerProfileAsideInfoService();
+
+	const [ workExperienceItems, setWorkExperienceItems ] = useState<IFreelancerWorkExperience[]>([]);
+	const [ states, setStates ] = useState<IFreelancerState[]>([]);
+
 	useEffect(() => {
 		getStates()
 			.then(setStates)
 			.catch(console.error);
-	}, [getStates]);
+	}, [ getStates ]);
 
 	const fetchWorkExperience = useCallback(() => {
-		if (!user) return null;
-		getFreelancerWorkExperience(user.id)
+		getFreelancerWorkExperience(freelancerId)
 			.then(setWorkExperienceItems)
 			.catch(console.error);
-	}, [getFreelancerWorkExperience, user]);
+	}, [ freelancerId, getFreelancerWorkExperience ]);
 
 	useEffect(() => {
 		fetchWorkExperience();
-	}, [fetchWorkExperience]);
+	}, [ fetchWorkExperience ]);
 
 	const onWorkExperienceAdd = (request: IFreelancerWorkExperienceRequest) => {
 		addWorkExperience(request)
@@ -64,11 +64,10 @@ const FreelancerWorkExperience = () => {
 	};
 
 	const handleEditWorkExperience = () => {
-		if (!user) return null;
 		openModal({
 			id: 'EditWorkExperienceModalItem',
 			title: 'Edytuj doświadczenie',
-			child: <EditWorkExperienceModalItem states={states} freelancerId={user?.id}/>,
+			child: <EditWorkExperienceModalItem states={ states } freelancerId={ freelancerId }/>,
 			withSaveBtn: false,
 			onClose: fetchWorkExperience,
 		});
@@ -76,43 +75,49 @@ const FreelancerWorkExperience = () => {
 
 	const renderWorkExperience = () => {
 		if (workExperienceItems.length === 0) {
-			return <AlertItem kind={'neutral'} text={'Nie uzupełniłeś/aś dane o doświadczeniu'}/>;
+			const text = isLoggedUserProfile ?
+				'Nie uzupełniłeś/aś dane o doświadczeniu' :
+				'Brak danych o doświadczeniu';
+
+			return <AlertItem kind={ 'neutral' } text={ text }/>;
 		}
 		return workExperienceItems.map(workExperience => {
-			return <WorkExperienceEducationItem key={workExperience.id}
-			                                    title={workExperience.jobTitle}
-			                                    itemType={'workExperience'}
-			                                    organization={workExperience.companyName}
-			                                    startDate={workExperience.startDate}
-			                                    endDate={workExperience.endDate ?? undefined}
-			                                    state={workExperience.state}
-			                                    city={workExperience.city}
-			                                    isModalItem={false}
-			                                    states={states}/>;
+			return <WorkExperienceEducationItem key={ workExperience.id }
+			                                    title={ workExperience.jobTitle }
+			                                    itemType={ 'workExperience' }
+			                                    organization={ workExperience.companyName }
+			                                    startDate={ workExperience.startDate }
+			                                    endDate={ workExperience.endDate ?? undefined }
+			                                    state={ workExperience.state }
+			                                    city={ workExperience.city }
+			                                    isModalItem={ false }
+			                                    states={ states }/>;
 		});
 	};
 
 	return (
-		<section id={SECTION_ID} className={styles['experience']}>
+		<section id={ SECTION_ID } className={ styles['experience'] }>
 			<header className={ styles['experience__header'] }>
 				<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
-				<div className={ styles['experience__buttons'] }>
-					<ActionBtn kind={ 'Add' }
-					           key={ 'Add' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ handleAddWorkExperience }/>
-					{ workExperienceItems.length > 0 &&
-                        <ActionBtn kind={ 'Edit' }
-                                   key={ 'Edit' }
+				{ isLoggedUserProfile &&
+                    <div className={ styles['experience__buttons'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   key={ 'Add' }
                                    withBorder={ true }
                                    backgroundColor={ 'white' }
-                                   onClick={ handleEditWorkExperience }/>
-					}
-				</div>
+                                   onClick={ handleAddWorkExperience }/>
+						{ workExperienceItems.length > 0 &&
+                            <ActionBtn kind={ 'Edit' }
+                                       key={ 'Edit' }
+                                       withBorder={ true }
+                                       backgroundColor={ 'white' }
+                                       onClick={ handleEditWorkExperience }/>
+						}
+                    </div>
+				}
 			</header>
 			<div className={ styles['experience__content'] }>
-				{renderWorkExperience()}
+				{ renderWorkExperience() }
 			</div>
 		</section>
 	);

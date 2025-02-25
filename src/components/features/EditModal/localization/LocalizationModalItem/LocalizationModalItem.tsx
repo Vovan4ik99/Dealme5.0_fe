@@ -13,14 +13,14 @@ import {
 	getStatesAsSelectItems,
 	sortCountries
 } from "@utils/localizationUtils.ts";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import { useForm, useWatch } from "react-hook-form";
 import LocalizationForm from "@components/features/EditModal/localization/LocalizationForm/LocalizationForm.tsx";
 import styles
 	from "@components/features/EditModal/localization/LocalizationModalItem/LocalizationModalItem.module.scss";
 import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
+import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
 import { IFreelancerCountry, IFreelancerLocalization, IFreelancerState } from "@shared/freelancer/localization.ts";
 
@@ -63,11 +63,11 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 		}
 	});
 
-	const country = useWatch({name: 'country', control});
-	const state = useWatch({name: 'state', control});
-	const city = useWatch({name: 'city', control});
-	const workingArea = useWatch({name: 'workingArea', control});
-	const workingAreaValue = useWatch({name: 'workingAreaValue', control});
+	const country = useWatch({ name: 'country', control });
+	const state = useWatch({ name: 'state', control });
+	const city = useWatch({ name: 'city', control });
+	const workingArea = useWatch({ name: 'workingArea', control });
+	const workingAreaValue = useWatch({ name: 'workingAreaValue', control });
 
 	useEffect(() => {
 		getCountries()
@@ -162,7 +162,7 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 					setValue={ setValue }
 					trigger={ trigger }
 					errors={ errors }
-					isCityRequired={false}/>
+					isCityRequired={ false }/>
 			</div>
 			<p className={ styles['item__title'] }>Określ obszar świadczenia usług</p>
 			<SwitchBtn isActive={ workingArea === "COUNTRY" }
@@ -179,17 +179,17 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 				</div>
 				<p className={ styles['item__info'] }>{ renderWorkingAreaInfo() }</p>
 			</div>
-			<SelectInput text={ getWorkingAreaValueDescription() ?? null }
-			             labelText={ workingArea === "COUNTRY" ? WORKING_AREAS.COUNTRY : WORKING_AREAS.STATE }
-			             id={ "workingAreaValue" }
-			             selectItems={ renderWorkingAreaValueSelectItems() }
-			             register={ register }
-			             trigger={ trigger }
-			             onValueChange={ onWorkingAreaValueChange }
-			             validationRules={ {
-				             required: 'Wybierz obszar świadczenia usług'
-			             } }
-			             error={ errors?.workingAreaValue ?? null }/>
+			<SelectFormInput text={ getWorkingAreaValueDescription() ?? null }
+			                 labelText={ workingArea === "COUNTRY" ? WORKING_AREAS.COUNTRY : WORKING_AREAS.STATE }
+			                 id={ "workingAreaValue" }
+			                 selectItems={ renderWorkingAreaValueSelectItems() }
+			                 register={ register }
+			                 trigger={ trigger }
+			                 onValueChange={ onWorkingAreaValueChange }
+			                 validationRules={ {
+				                 required: 'Wybierz obszar świadczenia usług'
+			                 } }
+			                 error={ errors?.workingAreaValue ?? null }/>
 		</div>
 	)
 }

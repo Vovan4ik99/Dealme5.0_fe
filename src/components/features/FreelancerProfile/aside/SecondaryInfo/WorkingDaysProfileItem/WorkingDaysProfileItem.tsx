@@ -7,14 +7,18 @@ import {
 } from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/workingDaysProfileItemTypes.ts";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import { WORKING_DAYS, WorkingDayKey } from "@constants/workingDays.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import WorkingDaysModalItem
 	from "@components/features/EditModal/working_days/WorkingDaysModalItem/WorkingDaysModalItem.tsx";
 
-const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({ userWorkingDays, onSave }) => {
+const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({
+	                                                                        userWorkingDays,
+	                                                                        onSave,
+	                                                                        isLoggedUserProfile
+                                                                        }) => {
 
 	const { openModal } = useModal();
-	const { patchWorkingDays } = useOnboardingService();
+	const { patchWorkingDays } = useFreelancerOnboardingService();
 
 	const formatWorkingDays = (): string => {
 		const allDays = Object.keys(WORKING_DAYS) as WorkingDayKey[];
@@ -85,12 +89,14 @@ const WorkingDaysProfileItem: React.FC<IWorkingDaysProfileItemProps> = ({ userWo
 				<img src={ calendar } alt="calendar"/>
 			</div>
 			<p>{ formatWorkingDays() }</p>
-			<div className={ styles['info__btn'] }>
-				<ActionBtn kind={ 'Edit' }
-				           withBorder={ false }
-				           backgroundColor={ 'transparent' }
-				           onClick={ editWorkingDays }/>
-			</div>
+			{ isLoggedUserProfile &&
+                <div className={ styles['info__btn'] }>
+                    <ActionBtn kind={ 'Edit' }
+                               withBorder={ false }
+                               backgroundColor={ 'transparent' }
+                               onClick={ editWorkingDays }/>
+                </div>
+			}
 		</>
 	);
 }

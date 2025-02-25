@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from './AddLanguageModalItem.module.scss';
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
+import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import LevelPicker from "@ui/LevelPicker/LevelPicker.tsx";
 import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
 import {
@@ -66,19 +66,19 @@ const AddLanguageModalItem: React.FC<IAddLanguageModalItemProps> = ({
 
 	return (
 		<div className={ styles['item'] }>
-			<SelectInput text={ getPolishLanguageName(language) }
-			             id={ 'language' }
-			             labelText={ 'Język' }
-			             selectItems={ getSelectInputItems() }
-			             register={ register }
-			             trigger={ trigger }
-			             validationRules={ {
-				             required: "Wybierz język"
-			             } }
-			             error={ errors.language ?? null }
-			             onValueChange={ selectLanguage }/>
+			<SelectFormInput text={ getPolishLanguageName(language) }
+			                 id={ 'language' }
+			                 labelText={ 'Język' }
+			                 selectItems={ getSelectInputItems() }
+			                 register={ register }
+			                 trigger={ trigger }
+			                 validationRules={ {
+				                 required: "Wybierz język"
+			                 } }
+			                 error={ errors.language ?? null }
+			                 onValueChange={ selectLanguage }/>
 			<div>
-				<div className={ `${styles['item__content']} ${ errors.level && styles['item__content--error'] }` }>
+				<div className={ `${ styles['item__content'] } ${ errors.level && styles['item__content--error'] }` }>
 					<input type="hidden"
 					       id={ 'level' }
 					       { ...register('level', { required: 'Wybierz poziom' }) }/>

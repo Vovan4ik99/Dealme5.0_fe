@@ -1,25 +1,26 @@
 import React, { useRef, useState } from "react";
-import { ISelectInputProps } from "@ui/SelectInput/selectInputTypes.ts";
-import styles from './SelectInput.module.scss';
+import { ISelectFormInputProps } from "@ui/SelectFormInput/selectFormInputTypes.ts";
+import styles from './SelectFormInput.module.scss';
 import { ReactComponent as ArrowIcon } from "@icons/named_exported/arrow-down.svg";
-import SelectOption from "@ui/SelectInput/SelectOption/SelectOption.tsx";
+import SelectOption from "@ui/SelectOption/SelectOption.tsx";
 import { CSSTransition } from "react-transition-group";
 import InputError from "@ui/InputError/InputError.tsx";
 
-const SelectInput = <T extends Record<string, any>>({
-	                                                    text,
-	                                                    labelText,
-	                                                    register,
-	                                                    trigger,
-	                                                    selectItems,
-	                                                    additionalText,
-	                                                    error,
-	                                                    id,
-	                                                    validationRules,
-	                                                    onValueChange
-                                                    }: ISelectInputProps<T>) => {
+const SelectFormInput = <T extends Record<string, any>>({
+	                                                        text,
+	                                                        labelText,
+	                                                        register,
+	                                                        trigger,
+	                                                        selectItems,
+	                                                        additionalText,
+	                                                        error,
+	                                                        id,
+	                                                        validationRules,
+	                                                        onValueChange
+                                                        }: ISelectFormInputProps<T>) => {
 
 	const [ isOpen, setIsOpen ] = useState<boolean>(false);
+	
 	const selectRef = useRef<HTMLDivElement | null>(null);
 
 	const toggleSelect = (e: React.MouseEvent) => {
@@ -88,4 +89,4 @@ const SelectInput = <T extends Record<string, any>>({
 	);
 };
 
-export default SelectInput;
+export default SelectFormInput;

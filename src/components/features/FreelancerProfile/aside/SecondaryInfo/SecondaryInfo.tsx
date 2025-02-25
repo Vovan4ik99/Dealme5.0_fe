@@ -1,6 +1,5 @@
 import styles from './SecondaryInfo.module.scss';
-import { useCallback, useContext, useEffect, useState } from "react";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import React, { useCallback, useEffect, useState } from "react";
 import SubIndustriesItem from "./SubIndustriesItem/SubIndustriesItem.tsx";
 import WorkingDaysProfileItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/WorkingDaysProfileItem.tsx";
@@ -9,30 +8,39 @@ import WorkingHoursProfileItem
 import LocalizationItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import { IFreelancerBarResponse } from "@shared/freelancer/common.ts";
+import { ISecondaryInfoProps } from "@components/features/FreelancerProfile/aside/SecondaryInfo/secondaryInfoTypes.ts";
+import { ILoggedUserResponse } from "@shared/userTypes.ts";
 
-const SecondaryInfo = () => {
+const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
+
+	const { getFreelancerBar, getFreelancerData } = useFreelancerProfileAsideInfoService();
 
 	const [ freelancerInfo, setFreelancerInfo ] = useState<IFreelancerBarResponse | null>(null);
-
-	const { user, getLoggedUserData } = useContext(AuthContext);
-	const { getFreelancerBar } = useFreelancerProfileAsideInfoService();
+	const [ freelancerData, setFreelancerData ] = useState<ILoggedUserResponse | undefined>(undefined);
 
 	const fetchFreelancerBarInfo = useCallback(() => {
-		getFreelancerBar()
+		getFreelancerBar(freelancerId)
 			.then(response => setFreelancerInfo(response))
 			.catch(console.error);
-	}, [ getFreelancerBar ]);
+	}, [ freelancerId, getFreelancerBar ]);
+
+	const fetchFreelancerData = useCallback(() => {
+		getFreelancerData(freelancerId)
+			.then(response => setFreelancerData(response))
+			.catch(console.error);
+	}, [ freelancerId, getFreelancerData ]);
 
 	useEffect(() => {
 		fetchFreelancerBarInfo();
-	}, [ fetchFreelancerBarInfo ]);
+		fetchFreelancerData();
+	}, [ fetchFreelancerBarInfo, fetchFreelancerData ]);
 
-	if (!user || !freelancerInfo) return null;
+	if (!freelancerData || !freelancerInfo) return;
 
 	const handleSave = () => {
-		getLoggedUserData(localStorage.getItem('token') as string);
+		fetchFreelancerData();
 	};
 
 	const handleAddDataSave = () => {
@@ -45,22 +53,28 @@ const SecondaryInfo = () => {
 
 	const isLanguagesUndefined = () => {
 		return freelancerInfo.languagesLevel.length === 0;
-	}
+	};
 
 	const getFreelancerLanguages = () => {
 		return freelancerInfo.languagesLevel.map(l => l.language);
-	}
+	};
 
 	return (
 		<div className={ styles['info'] }>
 			<div className={ styles['info__item'] }>
-				<SubIndustriesItem userSubIndustries={ user.subIndustries } onSave={ handleSave }/>
+				<SubIndustriesItem userSubIndustries={ freelancerData.subIndustries }
+				                   onSave={ handleSave }
+				                   isLoggedUserProfile={ isLoggedUserProfile }/>
 			</div>
 			<div className={ styles['info__item'] }>
-				<WorkingDaysProfileItem userWorkingDays={ user.workingDays } onSave={ handleSave }/>
+				<WorkingDaysProfileItem userWorkingDays={ freelancerData.workingDays }
+				                        onSave={ handleSave }
+				                        isLoggedUserProfile={ isLoggedUserProfile }/>
 			</div>
 			<div className={ styles['info__item'] }>
-				<WorkingHoursProfileItem userWorkingHour={ user.workingHours } onSave={ handleSave }/>
+				<WorkingHoursProfileItem userWorkingHour={ freelancerData.workingHours }
+				                         onSave={ handleSave }
+				                         isLoggedUserProfile={ isLoggedUserProfile }/>
 			</div>
 			<div
 				className={ `${ styles['info__item'] } ${ isLocalizationUndefined() && styles['info__item--empty'] }` }>
@@ -68,11 +82,13 @@ const SecondaryInfo = () => {
 				                  userLocalization={ freelancerInfo.localization }
 				                  freelancerWorkingArea={ freelancerInfo.workingArea }
 				                  freelancerWorkingAreaValue={ freelancerInfo.workingAreaValue }
+				                  isLoggedUserProfile={ isLoggedUserProfile }
 				                  onSave={ handleAddDataSave }/>
 			</div>
 			<div className={ `${ styles['info__item'] } ${ isLanguagesUndefined() && styles['info__item--empty'] }` }>
 				<LanguagesItem isUndefined={ isLanguagesUndefined() }
 				               onSave={ handleAddDataSave }
+				               isLoggedUserProfile={ isLoggedUserProfile }
 				               freelancerLanguages={ getFreelancerLanguages() }/>
 			</div>
 		</div>

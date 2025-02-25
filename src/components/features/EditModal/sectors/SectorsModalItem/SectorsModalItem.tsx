@@ -3,7 +3,7 @@ import {
 	ISectorsModalItemProps
 } from "@components/features/EditModal/sectors/SectorsModalItem/sectorsModalItemTypes.ts";
 import styles from "./SectorsModalItem.module.scss";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import TypeOfSalesList from "@entities/TypeOfSalesList/TypeOfSalesList.tsx";
@@ -15,7 +15,7 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 	const [ selectedTypeOfSale, setSelectedTypeOfSale ] = useState<string | null>(null);
 	const [ selectedSectors, setSelectedSectors ] = useState<ISector[]>([]);
 
-	const { patchTypeOfSales, patchSectors, loadingStatus } = useOnboardingService();
+	const { patchTypeOfSales, patchSectors, loadingStatus } = useFreelancerOnboardingService();
 	const { user } = useContext(AuthContext);
 
 	useEffect(() => {

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { ISubIndustriesModalItemProps } from "./subindustriesModalItemTypes.ts";
 import SubIndustryModalItem
 	from "@components/features/EditModal/sub_industries/SubIndustryModalItem/SubIndustryModalItem.tsx";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { IIndustry, ISubIndustry } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
@@ -18,7 +18,7 @@ const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({
 	                                                                        registerOnSave
                                                                         }) => {
 
-	const { getIndustries, patchSubIndustries } = useOnboardingService();
+	const { getIndustries, patchSubIndustries } = useFreelancerOnboardingService();
 	const { openModal } = useModal();
 
 	const [ industries, setIndustries ] = useState<IIndustry[]>([]);

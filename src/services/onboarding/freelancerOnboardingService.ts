@@ -1,20 +1,22 @@
-import {useHttp} from "../hooks/http.hook.ts";
-import {useCallback} from "react";
-import {API_ROUTES} from "@constants/apiRoutes.ts";
-import {ExperienceLevelKey} from "@constants/experienceLevel.ts";
+import { useHttp } from "../../hooks/http.hook.ts";
+import { useCallback } from "react";
+import { API_ROUTES } from "@constants/apiRoutes.ts";
+import { ExperienceLevelKey } from "@constants/experienceLevel.ts";
 import {
-	IActivity, IActivityRequest,
+	IActivity,
+	IActivityRequest,
 	IIncomeGoal,
-	IIndustry, ISalesTool,
+	IIndustry,
+	ISalesTool,
 	ISector,
 	ISpecialization,
 	ITypeOfSale,
 	IWorkingHour
 } from "@shared/onboardingTypes.ts";
-import {WorkingDayKey} from "@constants/workingDays.ts";
+import { WorkingDayKey } from "@constants/workingDays.ts";
 
-export const useOnboardingService = () => {
-	const {sendRequest, loadingStatus, errorMessage} = useHttp();
+export const useFreelancerOnboardingService = () => {
+	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
 	const patchExperienceLevel = useCallback(async (experienceLevel: ExperienceLevelKey): Promise<void> => {
 		return await sendRequest({
@@ -22,21 +24,21 @@ export const useOnboardingService = () => {
 			method: 'PATCH',
 			body: experienceLevel,
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getSpecializations = useCallback(async (): Promise<ISpecialization[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_SPECIALIZATIONS
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchSpecialization = useCallback(async (freelancerId: number, specialization_id: number): Promise<void> => {
 		return await sendRequest({
-			url: `${API_ROUTES.ONBOARDING.FREELANCER.PATCH_SPECIALIZATION}/${freelancerId}`,
+			url: `${ API_ROUTES.ONBOARDING.FREELANCER.PATCH_SPECIALIZATION }/${ freelancerId }`,
 			method: 'PATCH',
-			body: `${specialization_id}`
+			body: `${ specialization_id }`
 		})
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchWorkingDays = useCallback(async (request: WorkingDayKey[]): Promise<void> => {
 		return await sendRequest({
@@ -44,41 +46,41 @@ export const useOnboardingService = () => {
 			method: 'PATCH',
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const getWorkingHours = useCallback(async (): Promise<IWorkingHour[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_WORKING_HOURS
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const patchWorkingHours = useCallback(async (request: string): Promise<void> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_WORKING_HOURS,
 			method: 'PATCH',
 			body: request
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const getIncomeGoals = useCallback(async (): Promise<IIncomeGoal[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_INCOME_GOALS
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const patchIncomeGoal = useCallback(async (request: string): Promise<void> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_INCOME_GOALS,
 			method: 'PATCH',
 			body: request
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getIndustries = useCallback(async (): Promise<IIndustry[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_INDUSTRIES
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchSubIndustries = useCallback(async (request: number[]): Promise<void> => {
 		return await sendRequest({
@@ -86,27 +88,27 @@ export const useOnboardingService = () => {
 			method: 'PATCH',
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getTypesOfSales = useCallback(async (): Promise<ITypeOfSale[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_TYPES_OF_SALES
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const patchTypeOfSales = useCallback(async (request: string): Promise<void> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_TYPES_OF_SALES,
 			method: 'PATCH',
 			body: request
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getSectors = useCallback(async (): Promise<ISector[]> => {
 		return await sendRequest({
 			url: API_ROUTES.ONBOARDING.FREELANCER.GET_SECTORS
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchSectors = useCallback(async (request: number[]): Promise<void> => {
 		return await sendRequest({
@@ -114,13 +116,13 @@ export const useOnboardingService = () => {
 			method: 'PATCH',
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getActivities = useCallback(async (): Promise<IActivity[]> => {
 		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.GET_ACTIVITIES
+			url: API_ROUTES.ONBOARDING.FREELANCER.GET_ACTIVITIES,
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchActivities = useCallback(async (request: IActivityRequest[]): Promise<void> => {
 		return await sendRequest({
@@ -128,23 +130,26 @@ export const useOnboardingService = () => {
 			method: 'PATCH',
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
-	const getSalesTools = useCallback(async (): Promise<ISalesTool[]> => {
+	const getSalesTools = useCallback(async (freelancerId: number): Promise<ISalesTool[]> => {
 		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.GET_SALES_TOOLS
+			url: `${ API_ROUTES.ONBOARDING.FREELANCER.SALES_TOOLS }/${ freelancerId }`,
 		});
-	}, [sendRequest]);
-	
+	}, [ sendRequest ]);
+
 	const patchSalesTools = useCallback(async (request: number[]): Promise<void> => {
 		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_SALES_TOOLS,
+			url: API_ROUTES.ONBOARDING.FREELANCER.SALES_TOOLS,
 			method: 'PATCH',
-			body: JSON.stringify(request)})
-	}, [sendRequest]);
+			body: JSON.stringify(request)
+		})
+	}, [ sendRequest ]);
 
-	return {loadingStatus, errorMessage, patchExperienceLevel, getSpecializations, patchSpecialization,
+	return {
+		loadingStatus, errorMessage, patchExperienceLevel, getSpecializations, patchSpecialization,
 		patchWorkingDays, getWorkingHours, patchWorkingHours, getIncomeGoals, patchIncomeGoal, getIndustries,
 		patchSubIndustries, getTypesOfSales, patchTypeOfSales, getSectors, patchSectors, getActivities,
-		patchActivities, getSalesTools, patchSalesTools};
+		patchActivities, getSalesTools, patchSalesTools
+	};
 }

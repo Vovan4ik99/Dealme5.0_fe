@@ -5,7 +5,7 @@ export interface ISelectItem {
 	info?: string | null;
 }
 
-export interface ISelectInputProps<T extends Record<string, any>> {
+export interface ISelectFormInputProps<T extends Record<string, any>> {
 	labelText: string;
 	text: string | null;
 	id: Path<T>;

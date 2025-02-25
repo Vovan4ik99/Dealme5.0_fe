@@ -8,7 +8,7 @@ import DragAndDropContainer
 import { ISaveableChildProps, useModal } from "@context/ModalContext/ModalContext.ts";
 import SalesToolModalItem from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
 import { getPictureForSalesTools, getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 
@@ -16,16 +16,17 @@ const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({ registerOnSave
 
 	const { user, getLoggedUserData } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useOnboardingService();
+	const { getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
 
 	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
 	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>(user?.salesTools || []);
 
 	useEffect(() => {
-		getSalesTools()
+		if (!user) return;
+		getSalesTools(user.id)
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [ getSalesTools ]);
+	}, [ getSalesTools, user ]);
 
 	const handleSave = useCallback(() => {
 		patchSalesTools(salesTools.map(tool => tool.id))

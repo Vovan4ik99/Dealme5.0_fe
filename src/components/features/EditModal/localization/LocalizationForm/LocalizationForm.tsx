@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
-import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
+import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import {
 	ILocalizationFormProps,
 	ILocalizationFormState,
 } from "@components/features/EditModal/localization/LocalizationForm/localizationFormTypes.ts";
 import { Path, PathValue } from "react-hook-form";
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
 import {
 	getCountryNameByDescription,
@@ -66,37 +66,37 @@ const LocalizationForm = <T extends ILocalizationFormState>({
 
 	return (
 		<>
-			<SelectInput key={ 'country' }
-			             selectItems={ getCountriesAsSelectItems(sortCountries(countries)) }
-			             text={ getDescriptionByCountryName(countries, formData.country) ?? null }
-			             trigger={ trigger }
-			             register={ register }
-			             id={ "country" as Path<T> }
-			             labelText={ 'Kraj' }
-			             validationRules={ {
-				             required: 'Wybierz kraj'
-			             } }
-			             onValueChange={ onCountryChange }
-			             error={ errors.country ?? null }/>
-			<SelectInput key={ 'state' }
-			             selectItems={ getStatesAsSelectItems(states) }
-			             text={ getStateDescriptionByStateName(states, formData.state) ?? null }
-			             onValueChange={ onStateChange }
-			             trigger={ trigger }
-			             register={ register }
-			             id={ "state" as Path<T> }
-			             labelText={ 'Województwo' }
-			             validationRules={ {
-				             required: 'Wybierz województwo'
-			             } }
-			             error={ errors.state ?? null }/>
+			<SelectFormInput key={ 'country' }
+			                 selectItems={ getCountriesAsSelectItems(sortCountries(countries)) }
+			                 text={ getDescriptionByCountryName(countries, formData.country) ?? null }
+			                 trigger={ trigger }
+			                 register={ register }
+			                 id={ "country" as Path<T> }
+			                 labelText={ 'Kraj' }
+			                 validationRules={ {
+				                 required: 'Wybierz kraj'
+			                 } }
+			                 onValueChange={ onCountryChange }
+			                 error={ errors.country ?? null }/>
+			<SelectFormInput key={ 'state' }
+			                 selectItems={ getStatesAsSelectItems(states) }
+			                 text={ getStateDescriptionByStateName(states, formData.state) ?? null }
+			                 onValueChange={ onStateChange }
+			                 trigger={ trigger }
+			                 register={ register }
+			                 id={ "state" as Path<T> }
+			                 labelText={ 'Województwo' }
+			                 validationRules={ {
+				                 required: 'Wybierz województwo'
+			                 } }
+			                 error={ errors.state ?? null }/>
 			<CustomInput id={ 'city' }
 			             autoComplete={ 'city' }
 			             labelText={ `Miejscowość ${ !isCityRequired ? '(opcjonalnie)' : '' }` }
 			             type={ 'text' }
 			             placeholder={ 'Podaj miasto' }
-			             validation={isCityRequired ? { required: 'Podaj miasto' } : {}}
-			             errorMessage={errors.city?.message}
+			             validation={ isCityRequired ? { required: 'Podaj miasto' } : {} }
+			             errorMessage={ errors.city?.message }
 			             onChange={
 				             (newCity: string) => setValue("city" as Path<T>, newCity as PathValue<T, Path<T>>)
 			             }

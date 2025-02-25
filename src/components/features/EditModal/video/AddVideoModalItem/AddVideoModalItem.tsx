@@ -1,4 +1,4 @@
-import { useVideoService } from "@services/videoService.ts";
+import { useFreelancerVideoService } from "@services/freelancer/freelancerVideoService.ts";
 import { useForm } from "react-hook-form";
 import styles from "./AddVideoModalItem.module.scss";
 import VideoModalItem from "@components/features/EditModal/video/VideoModalItem/VideoModalItem.tsx";
@@ -22,13 +22,13 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 	                                                              videoId
                                                               }) => {
 
-	const [videoUrl, setVideoUrl] = useState<string | null>(video ?? null);
-	const [videoFilename, setVideoFilename] = useState<string | null>(filename ?? null);
-	const [videoError, setVideoError] = useState<string | null>(null);
+	const [ videoUrl, setVideoUrl ] = useState<string | null>(video ?? null);
+	const [ videoFilename, setVideoFilename ] = useState<string | null>(filename ?? null);
+	const [ videoError, setVideoError ] = useState<string | null>(null);
 
 	const { openModal } = useModal();
-	const { addFreelancerVideo, patchFreelancerVideo, loadingStatus } = useVideoService();
-	const { register, handleSubmit, formState: {errors} } = useForm<{title: string | null}>({
+	const { addFreelancerVideo, patchFreelancerVideo, loadingStatus } = useFreelancerVideoService();
+	const { register, handleSubmit, formState: { errors } } = useForm<{ title: string | null }>({
 		shouldFocusError: false,
 		mode: 'onTouched',
 		defaultValues: {
@@ -53,7 +53,7 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 			child: (
 				<MediaUploader
 					mediaType={ 'video' }
-					onVideoAdd={ onVideoAdd}
+					onVideoAdd={ onVideoAdd }
 					text={ 'Akceptowalne formaty: MP4, MOV, AVI, rozmiar: do 10MB' }
 				/>
 			),
@@ -83,7 +83,7 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 					handleClose!(); //handle closing manually to control form
 				}).catch(console.error);
 		})();
-	}, [addFreelancerVideo, filename, handleClose, handleSubmit, onSave, videoUrl]);
+	}, [ addFreelancerVideo, filename, handleClose, handleSubmit, onSave, videoUrl ]);
 
 	const handleEditSave = handleSubmit((data) => {
 		if (!isEdit) {
@@ -114,7 +114,7 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 
 	useEffect(() => {
 		registerOnSave!(isEdit ? handleEditSave : handlePostSave);
-	}, [handleEditSave, handlePostSave, isEdit, registerOnSave]);
+	}, [ handleEditSave, handlePostSave, isEdit, registerOnSave ]);
 
 	if (loadingStatus === 'loading') {
 		return <div className={ styles['modal'] }>

@@ -1,34 +1,37 @@
-import React, {useEffect, useState} from "react";
-import {ISalesToolsStepProps} from "./salesToolsTypes.ts";
-import {useOnboardingService} from "@services/onboardingService.ts";
-import {ISalesTool} from "@shared/onboardingTypes.ts";
+import React, { useContext, useEffect, useState } from "react";
+import { ISalesToolsStepProps } from "./salesToolsTypes.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
+import { ISalesTool } from "@shared/onboardingTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import SalesToolsList from "@entities/SalesToolsList/SalesToolsList.tsx";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
-const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({userTools, onNext}) => {
+const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ userTools, onNext }) => {
 
-	const [salesTools, setSalesTools] = useState<ISalesTool[]>([]);
-	const [selectedSalesTools, setSelectedSalesTools] = useState<number[]>([]);
+	const { user } = useContext(AuthContext);
+	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
 
-	const {errorMessage, loadingStatus, getSalesTools, patchSalesTools} = useOnboardingService();
+	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
+	const [ selectedSalesTools, setSelectedSalesTools ] = useState<number[]>([]);
 
 	useEffect(() => {
-		getSalesTools()
+		if (!user) return;
+		getSalesTools(user.id)
 			.then(setSalesTools)
 			.catch(console.error);
-	}, [getSalesTools]);
+	}, [ getSalesTools, user ]);
 
 	useEffect(() => {
 		setSelectedSalesTools(userTools.map(tool => tool.id));
-	}, [userTools]);
+	}, [ userTools ]);
 
 	const onChange = (newSalesTool: number) => {
 		setSelectedSalesTools(prevState => {
 			return prevState?.includes(newSalesTool)
 				? prevState?.filter(item => item !== newSalesTool)
-				: [...prevState, newSalesTool];
+				: [ ...prevState, newSalesTool ];
 		});
 	};
 
@@ -46,15 +49,15 @@ const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({userTools, onNext}) => 
 
 	return (
 		<AnimatedStep>
-			<h1 className={'title title--fs40'}>Z jakich narzedzi sprzedażowych korzystałeś?</h1>
-			<SalesToolsList tools={salesTools}
-			                selectedTools={selectedSalesTools}
-			                onChange={onChange}/>
-			<button disabled={selectedSalesTools.length === 0}
-			        onClick={() => onSubmit()}
-			        className={'btn'}>Przejdż dalej
+			<h1 className={ 'title title--fs40' }>Z jakich narzedzi sprzedażowych korzystałeś?</h1>
+			<SalesToolsList tools={ salesTools }
+			                selectedTools={ selectedSalesTools }
+			                onChange={ onChange }/>
+			<button disabled={ selectedSalesTools.length === 0 }
+			        onClick={ () => onSubmit() }
+			        className={ 'btn' }>Przejdż dalej
 			</button>
-			{errorMessage && <InputError text={errorMessage}/>}
+			{ errorMessage && <InputError text={ errorMessage }/> }
 		</AnimatedStep>
 	);
 }
