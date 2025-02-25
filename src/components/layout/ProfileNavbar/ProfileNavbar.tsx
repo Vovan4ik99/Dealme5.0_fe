@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
-import {useContext, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {ReactComponent as PulpitIcon} from "@icons/named_exported/profile-navbar/desktop.svg";
 import {ReactComponent as OrdersIcon} from "@icons/named_exported/profile-navbar/orders.svg";
@@ -22,25 +22,23 @@ const ProfileNavbar = () => {
 
 	const [userAvatar, setAvatar] = useState<string | null>(null);
 
+	const fetchAvatars = useCallback(() => {
+		getAvatar().then((res) => {
+			if ( res )
+				setAvatar(res.picture);
+		});
+	}, [getAvatar]);
+
 	useEffect(() => {
-		getAvatar().then(({picture}) => {
-			if ( picture )
-				setAvatar(picture);
-			else
-				setAvatar(null);
-		})
-	}, [getAvatar])
+		fetchAvatars();
+	}, [fetchAvatars]);
 
 	useEventEmitter<string>(EMITTER_EVENTS[0], (newPicture) =>{
 		if(newPicture == null) {
 			setAvatar(null);
 			return;
 		}
-		getAvatar().then(({ picture }) => {
-			if (picture) {
-				setAvatar(picture);
-			}
-		})
+		fetchAvatars();
 	})
 
 	if (loadingStatus === "loading") {

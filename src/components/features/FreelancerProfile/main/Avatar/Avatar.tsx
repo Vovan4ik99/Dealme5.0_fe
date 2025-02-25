@@ -1,6 +1,6 @@
 import styles from './Avatar.module.scss';
 import { ReactComponent as LogoIcon } from '@icons/named_exported/logo_icon.svg';
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import AvatarEmptyState from "@components/features/FreelancerProfile/main/Avatar/AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
@@ -17,14 +17,16 @@ const Avatar = () => {
 
 	const [userAvatar, setAvatar] = useState<string | null>(null);
 
-	useEffect(() => {
+	const fetchAvatars = useCallback(() => {
 		getAvatar().then((res) => {
 			if ( res )
 				setAvatar(res.picture);
-			else
-				setAvatar(null);
 		});
-	},[getAvatar]);
+	}, [getAvatar]);
+
+	useEffect(() => {
+		fetchAvatars();
+	},[fetchAvatars]);
 
 	useEventEmitter<string>(EMITTER_EVENTS[0], (newPicture) =>{
 		if(newPicture == null) {
@@ -32,10 +34,7 @@ const Avatar = () => {
 			return;
 		}
 
-		getAvatar().then(({ picture }) => {
-			if (picture)
-				setAvatar(picture);
-		})
+		fetchAvatars();
 	})
 
 	const handleAvatarEdit = () => {
