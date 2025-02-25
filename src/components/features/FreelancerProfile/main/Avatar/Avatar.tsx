@@ -1,16 +1,42 @@
 import styles from './Avatar.module.scss';
 import { ReactComponent as LogoIcon } from '@icons/named_exported/logo_icon.svg';
-import React, { useContext } from "react";
+import React, {useEffect, useState} from "react";
 import AvatarEmptyState from "@components/features/FreelancerProfile/main/Avatar/AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import {useAvatarService} from "@services/avatarService.ts";
+import {EMITTER_EVENTS, publishEvent, useEventEmitter} from "@hooks/emmiter.hook";
+
+
 
 const Avatar = () => {
-
-	const { userAvatar, patchUserAvatar, deleteUserAvatar } = useContext(AuthContext);
 	const { openModal } = useModal();
+
+	const { patchAvatar, deleteAvatar, getAvatar } = useAvatarService();
+
+	const [userAvatar, setAvatar] = useState<string | null>(null);
+
+	useEffect(() => {
+		getAvatar().then((res) => {
+			if ( res )
+				setAvatar(res.picture);
+			else
+				setAvatar(null);
+		});
+	},[]);
+
+	useEventEmitter<string>(EMITTER_EVENTS[0], (newPicture) =>{
+		if(newPicture == null) {
+			setAvatar(null);
+			return;
+		}
+
+		getAvatar().then(({ picture }) => {
+			if (picture)
+				setAvatar(picture);
+		})
+	})
 
 	const handleAvatarEdit = () => {
 		openModal({
@@ -32,13 +58,14 @@ const Avatar = () => {
 	};
 
 	const handleDeleteAvatar = () => {
-		deleteUserAvatar();
+		deleteAvatar().then(() => publishEvent(EMITTER_EVENTS[0], null));
 	};
 
 	const handleSaveAvatar = (imageBlob: Blob, filename: string) => {
 		const formData = new FormData();
 		formData.append("file", imageBlob, filename);
-		patchUserAvatar(formData);
+
+		patchAvatar(formData).then(() => publishEvent(EMITTER_EVENTS[0], "newPicture"));
 	};
 
 	return (

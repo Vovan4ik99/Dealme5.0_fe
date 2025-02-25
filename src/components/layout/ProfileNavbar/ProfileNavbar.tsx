@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {ReactComponent as PulpitIcon} from "@icons/named_exported/profile-navbar/desktop.svg";
 import {ReactComponent as OrdersIcon} from "@icons/named_exported/profile-navbar/orders.svg";
@@ -12,10 +12,36 @@ import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
 import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow-down.svg";
 import avatar from "@icons/profile_navbar/default_avatar.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import {EMITTER_EVENTS, useEventEmitter} from "@hooks/emmiter.hook.ts";
+import {useAvatarService} from "@services/avatarService.ts";
 
 const ProfileNavbar = () => {
+	const {user, loadingStatus} = useContext(AuthContext);
 
-	const {user, userAvatar, loadingStatus} = useContext(AuthContext);
+	const { getAvatar } = useAvatarService();
+
+	const [userAvatar, setAvatar] = useState<string | null>(null);
+
+	useEffect(() => {
+		getAvatar().then(({picture}) => {
+			if ( picture )
+				setAvatar(picture);
+			else
+				setAvatar(null);
+		})
+	}, [])
+
+	useEventEmitter<string>(EMITTER_EVENTS[0], (newPicture) =>{
+		if(newPicture == null) {
+			setAvatar(null);
+			return;
+		}
+		getAvatar().then(({ picture }) => {
+			if (picture) {
+				setAvatar(picture);
+			}
+		})
+	})
 
 	if (loadingStatus === "loading") {
 		return <LoadingSpinner/>;

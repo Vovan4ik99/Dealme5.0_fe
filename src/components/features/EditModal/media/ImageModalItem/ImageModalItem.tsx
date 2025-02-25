@@ -1,13 +1,13 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import { IImageModalItemProps } from "./imageModalItemTypes.ts";
+import {IImageModalItemProps} from "./imageModalItemTypes.ts";
 import styles from "./ImageModalItem.module.scss";
-import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
-import { useModal } from "@context/ModalContext/ModalContext.ts";
+import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
+import {useModal} from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "../MediaUploader/MediaUploader.tsx";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import { parseBase64Image } from "@utils/imageUtils.ts";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import {parseBase64Image} from "@utils/imageUtils.ts";
+import {useFreelancerProfileService} from "@services/freelancerProfileService.ts";
+import {useAvatarService} from "@services/avatarService.ts";
 
 const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        title,
@@ -18,15 +18,25 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        onSave,
 	                                                        registerOnSave,
                                                         }) => {
-	const { userAvatar } = useContext(AuthContext);
+
 	const { getBackgroundPicture } = useFreelancerProfileService();
+	const { getAvatar } = useAvatarService();
+
 	const { openModal } = useModal();
 
 	const [ isDeleted, setIsDeleted ] = useState(false);
 	const [ imageBlob, setImageBlob ] = useState<Blob | null>(null);
 	const [ imageFileName, setImageFileName ] = useState<string | null>(null);
+	const [ userAvatar, setUserAvatar ] = useState<string | null>(null);
 
-	const getAvatar = useCallback(() => {
+	const getAvatarCallback = useCallback(() => {
+		getAvatar().then(({ picture }) => {
+			if ( picture )
+				setUserAvatar(picture);
+			else
+				setUserAvatar(null);
+		});
+
 		if (!userAvatar) return;
 		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
 		setImageBlob(parsedUserAvatar.blob);
@@ -45,11 +55,11 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 
 	useEffect(() => {
 		if (isAvatar) {
-			getAvatar();
+			getAvatarCallback();
 			return;
 		}
 		getBgImage();
-	}, [ getAvatar, getBgImage, isAvatar, userAvatar ]);
+	}, [ getAvatarCallback, getBgImage, isAvatar, userAvatar ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
