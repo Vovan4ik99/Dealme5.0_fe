@@ -18,7 +18,7 @@ import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freel
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesTools from "@components/features/FreelancerProfile/main/SalesTools/SalesTools.tsx";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
-import { useLoadingStatus } from "../../hooks/loadingStatus.hook.ts";
+import { useLoadingStatus } from "@hooks/loadingStatus.hook.ts";
 import { useFreelancerVideoService } from "@services/freelancer/freelancerVideoService.ts";
 import { useFreelancerCertificateService } from "@services/freelancer/freelancerCertificateService.ts";
 import FreelancerVideos from "@components/features/FreelancerProfile/main/FreelancerVideos/FreelancerVideos.tsx";

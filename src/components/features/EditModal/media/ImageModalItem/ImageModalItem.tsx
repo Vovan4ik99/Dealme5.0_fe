@@ -33,7 +33,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 
 	const fetchAvatar = useCallback(() => {
 		getAvatar()
-			.then((res) => {
+			.then(res => {
 				if (res) {
 					setUserAvatar(res.picture);
 				}
@@ -63,7 +63,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 			return;
 		}
 		getBgImage();
-	}, [ fetchAvatar, getBgImage, isAvatar, userAvatar ]);
+	}, [ fetchAvatar, getBgImage, isAvatar ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

@@ -20,7 +20,7 @@ const Avatar = () => {
 
 	const fetchAvatar = useCallback(() => {
 		getAvatar()
-			.then((res) => {
+			.then(res => {
 				setAvatar(res ? res.picture : null); // When there is no avatar hole response is null so we check response first
 			})
 			.catch(console.error)
@@ -47,24 +47,25 @@ const Avatar = () => {
 		});
 	};
 
-	const fetchWithEmit = (action: Promise<void>) => {
-		action
+	const handleDeleteAvatar = () => {
+		deleteAvatar()
 			.then(() => {
 				publishEvent(EVENT);
 				fetchAvatar();
 			})
 			.catch(console.error);
-	}
-
-	const handleDeleteAvatar = () => {
-		fetchWithEmit(deleteAvatar());
 	};
 
 	const handleSaveAvatar = (imageBlob: Blob, filename: string) => {
 		const formData = new FormData();
 		formData.append("file", imageBlob, filename);
 
-		fetchWithEmit(patchAvatar(formData));
+		patchAvatar(formData)
+			.then(() => {
+				publishEvent(EVENT);
+				fetchAvatar();
+			})
+			.catch(console.error);
 	};
 
 	return (

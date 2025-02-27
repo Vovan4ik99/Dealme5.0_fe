@@ -1,4 +1,4 @@
-import { useHttp } from "../../hooks/http.hook.ts";
+import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { IUserAvatarResponse } from "@shared/userTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
