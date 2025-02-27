@@ -8,6 +8,7 @@ import MediaUploader from "../MediaUploader/MediaUploader.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { parseBase64Image } from "@utils/imageUtils.ts";
 import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
 
 const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        title,
@@ -18,16 +19,29 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        onSave,
 	                                                        registerOnSave,
                                                         }) => {
-	const { userAvatar, user } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
+
 	const { getBackgroundPicture } = useFreelancerProfileService();
+	const { getAvatar } = useFreelancerAvatarService();
+
 	const { openModal } = useModal();
 
 	const [ isDeleted, setIsDeleted ] = useState(false);
 	const [ imageBlob, setImageBlob ] = useState<Blob | null>(null);
 	const [ imageFileName, setImageFileName ] = useState<string | null>(null);
+	const [ userAvatar, setUserAvatar ] = useState<string | null>(null);
 
-	const getAvatar = useCallback(() => {
+	const fetchAvatar = useCallback(() => {
+		getAvatar()
+			.then((res) => {
+				if (res) {
+					setUserAvatar(res.picture);
+				}
+			})
+			.catch(console.error);
+
 		if (!userAvatar || !user) return;
+
 		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
 		setImageBlob(parsedUserAvatar.blob);
 		setImageFileName(parsedUserAvatar.filename);
@@ -45,11 +59,11 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 
 	useEffect(() => {
 		if (isAvatar) {
-			getAvatar();
+			fetchAvatar();
 			return;
 		}
 		getBgImage();
-	}, [ getAvatar, getBgImage, isAvatar, userAvatar ]);
+	}, [ fetchAvatar, getBgImage, isAvatar, userAvatar ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

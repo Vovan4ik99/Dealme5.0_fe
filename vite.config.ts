@@ -34,6 +34,7 @@ export default defineConfig({
 			'@components': path.resolve(__dirname, './src/components'),
 			'@entities': path.resolve(__dirname, './src/entities'),
 			'@shared': path.resolve(__dirname, './src/shared'),
+			'@hooks': path.resolve(__dirname, './src/hooks'),
             '@ui': path.resolve(__dirname, './src/components/ui'),
             '@constants': path.resolve(__dirname, './src/constants'),
             '@pages': path.resolve(__dirname, './src/pages'),

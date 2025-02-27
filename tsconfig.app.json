@@ -47,6 +47,9 @@
       "@shared/*": [
         "src/shared/*"
       ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
       "@ui/*": [
         "src/components/ui/*"
       ],
