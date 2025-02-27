@@ -1,6 +1,6 @@
-import {useHttp} from "../hooks/http.hook.ts";
-import {useCallback} from "react";
-import {API_ROUTES} from "@constants/apiRoutes.ts";
+import { useHttp } from "../../hooks/http.hook.ts";
+import { useCallback } from "react";
+import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerBarResponse, IFreelancerNameRequest } from "@shared/freelancer/common.ts";
 import {
 	IFreelancerCountry,
@@ -9,15 +9,22 @@ import {
 	IFreelancerWorkingArea
 } from "@shared/freelancer/localization.ts";
 import { IFreelancerLanguage, ILanguage } from "@shared/freelancer/language.ts";
+import { ILoggedUserResponse } from "@shared/userTypes.ts";
 
 export const useFreelancerProfileAsideInfoService = () => {
-	const {sendRequest, loadingStatus, errorMessage} = useHttp();
+	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
-	const getFreelancerBar = useCallback(async (): Promise<IFreelancerBarResponse> => {
+	const getFreelancerData = useCallback(async (freelancerId: number): Promise<ILoggedUserResponse> => {
 		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.INFO,
+			url: `${ API_ROUTES.USER.FREELANCER_PROFILE }/${ freelancerId }`,
+		})
+	}, [ sendRequest ]);
+
+	const getFreelancerBar = useCallback(async (freelancerId: number): Promise<IFreelancerBarResponse> => {
+		return await sendRequest({
+			url: `${ API_ROUTES.PROFILE.FREELANCER.INFO }/${ freelancerId }`,
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchFreelancerName = useCallback(async (request: IFreelancerNameRequest): Promise<void> => {
 		return await sendRequest({
@@ -25,7 +32,7 @@ export const useFreelancerProfileAsideInfoService = () => {
 			method: "PATCH",
 			body: JSON.stringify(request),
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchFreelancerCompany = useCallback(async (request: string): Promise<void> => {
 		return await sendRequest({
@@ -33,7 +40,7 @@ export const useFreelancerProfileAsideInfoService = () => {
 			method: "PATCH",
 			body: request,
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchFreelancerLocalization = useCallback(async (request: IFreelancerLocalization): Promise<void> => {
 		return await sendRequest({
@@ -41,19 +48,19 @@ export const useFreelancerProfileAsideInfoService = () => {
 			method: "PATCH",
 			body: JSON.stringify(request),
 		})
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getCountries = useCallback(async (): Promise<IFreelancerCountry[]> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.GET_COUNTRIES
 		})
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getStates = useCallback(async (): Promise<IFreelancerState[]> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.GET_STATES
 		})
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchFreelancerWorkingArea = useCallback(async (request: IFreelancerWorkingArea) => {
 		return await sendRequest({
@@ -61,13 +68,13 @@ export const useFreelancerProfileAsideInfoService = () => {
 			method: "PATCH",
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const getLanguages = useCallback(async (): Promise<ILanguage[]> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.GET_LANGUAGES
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	const patchFreelancerLanguages = useCallback(async (request: IFreelancerLanguage[]): Promise<void> => {
 		return await sendRequest({
@@ -75,11 +82,12 @@ export const useFreelancerProfileAsideInfoService = () => {
 			method: "PATCH",
 			body: JSON.stringify(request)
 		});
-	}, [sendRequest]);
+	}, [ sendRequest ]);
 
 	return {
 		loadingStatus,
 		errorMessage,
+		getFreelancerData,
 		getFreelancerBar,
 		patchFreelancerName,
 		patchFreelancerCompany,

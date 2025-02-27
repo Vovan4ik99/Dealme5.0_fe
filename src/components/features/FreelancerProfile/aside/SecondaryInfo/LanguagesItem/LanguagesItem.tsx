@@ -9,7 +9,12 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import LanguagesModalItem from "@components/features/EditModal/language/LanguagesModalItem/LanguagesModalItem.tsx";
 import { getPolishLanguageName } from "@utils/languageUtils.ts";
 
-const LanguagesItem: React.FC<ILanguagesItemProps> = ({ isUndefined, freelancerLanguages, onSave }) => {
+const LanguagesItem: React.FC<ILanguagesItemProps> = ({
+	                                                      isUndefined,
+	                                                      freelancerLanguages,
+	                                                      onSave,
+	                                                      isLoggedUserProfile
+                                                      }) => {
 
 	const { openModal } = useModal();
 
@@ -40,12 +45,14 @@ const LanguagesItem: React.FC<ILanguagesItemProps> = ({ isUndefined, freelancerL
 				<img src={ languages_img } alt="language"/>
 			</div>
 			<p>{ getFreelancerLanguages() }</p>
-			<div className={ styles['info__btn'] }>
-				<ActionBtn kind={ 'Edit' }
-				           withBorder={ false }
-				           backgroundColor={ 'transparent' }
-				           onClick={ onEdit }/>
-			</div>
+			{ isLoggedUserProfile &&
+                <div className={ styles['info__btn'] }>
+                    <ActionBtn kind={ 'Edit' }
+                               withBorder={ false }
+                               backgroundColor={ 'transparent' }
+                               onClick={ onEdit }/>
+                </div>
+			}
 		</>
 	)
 }

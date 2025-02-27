@@ -1,4 +1,4 @@
-import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
 import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 
@@ -16,7 +16,7 @@ export const sortCountries = (countries: IFreelancerCountry[]) => {
 
 export const getStatesAsSelectItems = (states: IFreelancerState[]): ISelectItem[] => {
 	return states.map(state => {
-		return {text: state.description, info: null}
+		return { text: state.description, info: null }
 	});
 };
 

@@ -2,15 +2,16 @@ import styles from "./AboutMe.module.scss";
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import VideoEmptyState from "@components/features/FreelancerProfile/main/AboutMe/VideoEmptyState/VideoEmptyState.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AboutMeModalItem from "@components/features/EditModal/about_me/AboutMeModalItem/AboutMeModalItem.tsx";
 import VideoItem from "@ui/VideoItem/VideoItem.tsx";
 import { IAboutMeInfo } from "@shared/freelancer/common.ts";
+import { IAboutMeProps } from "@components/features/FreelancerProfile/main/AboutMe/aboutMeTypes.ts";
 
-const AboutMe = () => {
+const AboutMe: React.FC<IAboutMeProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'about';
 
@@ -20,10 +21,10 @@ const AboutMe = () => {
 	const [ aboutMeInfo, setAboutMeInfo ] = useState<IAboutMeInfo | null>(null);
 
 	const fetchAboutMeInfo = useCallback(() => {
-		getAboutMeProfileInfo()
+		getAboutMeProfileInfo(freelancerId)
 			.then(setAboutMeInfo)
 			.catch(console.error);
-	}, [ getAboutMeProfileInfo ]);
+	}, [freelancerId, getAboutMeProfileInfo]);
 
 	useEffect(() => {
 		fetchAboutMeInfo();
@@ -34,7 +35,11 @@ const AboutMe = () => {
 			return <></>;
 		}
 		if (aboutMeInfo.about === null) {
-			return <AlertItem kind={ 'neutral' } text={ 'Nie uzupełniłeś/aś danych o sobie' }/>
+			const text = isLoggedUserProfile ?
+				'Nie uzupełniłeś/aś danych o sobie' :
+				'Nie dodano danych o sobie';
+
+			return <AlertItem kind={ 'neutral' } text={ text }/>
 		}
 		return <div className={ styles['about__wrapper'] }>
 			<p className={ styles['about__info'] }>{ aboutMeInfo.about }</p>
@@ -49,10 +54,14 @@ const AboutMe = () => {
 			return <></>;
 		}
 		if (aboutMeInfo?.video === null) {
-			return <button className={ `${ styles['about__video'] } ${ styles['about__video--empty'] }` }
-			               onClick={ handleAboutMeInfoEdit }>
-				<VideoEmptyState text={ 'Nagraj krótkie video o sobie' }/>
-			</button>;
+			return isLoggedUserProfile ?
+				<button className={ `${ styles['about__video'] } ${ styles['about__video--empty'] }` }
+				        onClick={ handleAboutMeInfoEdit }>
+					<VideoEmptyState text={ 'Nagraj krótkie video o sobie' }/>
+				</button> :
+				<div className={ `${ styles['about__video'] } ${ styles['about__video--empty'] }` }>
+					<VideoEmptyState text={ 'Brak video' }/>
+				</div>;
 		}
 		return <div className={ styles['about__video'] }>
 			<VideoItem key={ aboutMeInfo.video }
@@ -80,10 +89,12 @@ const AboutMe = () => {
 		<section className={ styles['about'] } id={ SECTION_ID }>
 			<header className={ styles['about__header'] }>
 				<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
-				<ActionBtn kind={ 'Edit' }
-				           onClick={ handleAboutMeInfoEdit }
-				           withBorder={ true }
-				           backgroundColor={ 'transparent' }/>
+				{ isLoggedUserProfile &&
+                    <ActionBtn kind={ 'Edit' }
+                               onClick={ handleAboutMeInfoEdit }
+                               withBorder={ true }
+                               backgroundColor={ 'transparent' }/>
+				}
 			</header>
 			<div className={ styles['about__content'] }>
 				{ renderAboutMeInfo() }

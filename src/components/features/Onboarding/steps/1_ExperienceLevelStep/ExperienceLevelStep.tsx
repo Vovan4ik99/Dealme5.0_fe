@@ -1,18 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from '../../Onboarding.module.scss';
 import ExperienceLevelItem from "../../items/ExperienceLeveIItem/ExperienceLevelItem.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
-import {EXPERIENCE_LEVELS, ExperienceLevelKey} from "@constants/experienceLevel.ts";
-import {useOnboardingService} from "@services/onboardingService.ts";
+import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/experienceLevel.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
-import {IExperienceLevelProps} from "./experienceLevelStepTypes.ts";
+import { IExperienceLevelProps } from "./experienceLevelStepTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 
-const ExperienceLevelStep: React.FC<IExperienceLevelProps> = ({onNext, selectedExperience}) => {
+const ExperienceLevelStep: React.FC<IExperienceLevelProps> = ({ onNext, selectedExperience }) => {
 
-	const [selectedLevel, setSelectedLevel] = useState<ExperienceLevelKey | null>(selectedExperience as ExperienceLevelKey);
+	const [ selectedLevel, setSelectedLevel ] = useState<ExperienceLevelKey | null>(selectedExperience as ExperienceLevelKey);
 
-	const {errorMessage, patchExperienceLevel, loadingStatus} = useOnboardingService();
+	const { errorMessage, patchExperienceLevel, loadingStatus } = useFreelancerOnboardingService();
 
 	const onItemChange = (selectedLevel: ExperienceLevelKey) => {
 		setSelectedLevel(selectedLevel);
@@ -29,15 +29,15 @@ const ExperienceLevelStep: React.FC<IExperienceLevelProps> = ({onNext, selectedE
 	}
 
 	const renderExperienceLevels = (): React.ReactNode[] => {
-		return Object.entries(EXPERIENCE_LEVELS).map(([key, {info, title}]) => {
+		return Object.entries(EXPERIENCE_LEVELS).map(([ key, { info, title } ]) => {
 			const isSelected = selectedLevel == key;
 			return <ExperienceLevelItem
-				key={key}
-				title={title}
-				info={info}
-				id={key}
-				isSelected={isSelected}
-				onChange={() => onItemChange(key as ExperienceLevelKey)}/>
+				key={ key }
+				title={ title }
+				info={ info }
+				id={ key }
+				isSelected={ isSelected }
+				onChange={ () => onItemChange(key as ExperienceLevelKey) }/>
 		});
 	}
 
@@ -47,16 +47,16 @@ const ExperienceLevelStep: React.FC<IExperienceLevelProps> = ({onNext, selectedE
 
 	return (
 		<AnimatedStep>
-			<h1 className={'title title--fs40'}>
+			<h1 className={ 'title title--fs40' }>
 				Jakie jest Twoje doświadczenie w sprzedaży?
 			</h1>
-			<div className={styles['onboarding-step__items']}>
-				{renderExperienceLevels()}
+			<div className={ styles['onboarding-step__items'] }>
+				{ renderExperienceLevels() }
 			</div>
-			<button disabled={selectedLevel === null}
-			        onClick={() => onSubmit()} className={'btn'}>Przejdż dalej
+			<button disabled={ selectedLevel === null }
+			        onClick={ () => onSubmit() } className={ 'btn' }>Przejdż dalej
 			</button>
-			{errorMessage && <InputError text={errorMessage}/>}
+			{ errorMessage && <InputError text={ errorMessage }/> }
 		</AnimatedStep>
 	)
 

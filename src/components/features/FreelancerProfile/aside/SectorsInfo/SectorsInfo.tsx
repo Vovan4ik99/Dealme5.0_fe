@@ -1,26 +1,29 @@
 import styles from "./SectorsInfo.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import React, { useCallback, useEffect, useState } from "react";
 import { ISector } from "@shared/onboardingTypes.ts";
 import { calculateBlocks } from "@utils/sectorsUtils.ts";
 import SectorsModalItem from "@components/features/EditModal/sectors/SectorsModalItem/SectorsModalItem.tsx";
+import { ISectorsInfoProps } from "@components/features/FreelancerProfile/aside/SectorsInfo/sectorsInfoTypes.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 
-const SectorsInfo = () => {
-
-	const [ freelancerSectors, setFreelancerSectors ] = useState<ISector[]>([])
+const SectorsInfo: React.FC<ISectorsInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const { openModal } = useModal();
-	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { getFreelancerData } = useFreelancerProfileAsideInfoService();
+
+	const [ freelancerSectors, setFreelancerSectors ] = useState<ISector[]>([]);
+
+	const fetchFreelancerSectors = useCallback(() => {
+		getFreelancerData(freelancerId)
+			.then(data => setFreelancerSectors(data.sectors ?? []))
+			.catch(console.error);
+	}, [ freelancerId, getFreelancerData ]);
 
 	useEffect(() => {
-		setFreelancerSectors(user?.sectors ?? [])
-	}, [ user?.sectors ]);
-
-	if (user === null) {
-		return null;
-	}
+		fetchFreelancerSectors();
+	}, [ fetchFreelancerSectors ]);
 
 	const onEdit = () => {
 		openModal({
@@ -55,17 +58,19 @@ const SectorsInfo = () => {
 	};
 
 	const handleSave = () => {
-		getLoggedUserData(localStorage.getItem('token') as string);
-	}
+		fetchFreelancerSectors();
+	};
 
 	return (
 		<div className={ styles['sectors'] }>
 			<div className={ styles['sectors__wrapper'] }>
 				<p className={ styles['sectors__title'] }>Sektory</p>
-				<ActionBtn kind={ 'Edit' }
-				           onClick={ onEdit }
-				           withBorder={ true }
-				           backgroundColor={ 'transparent' }/>
+				{ isLoggedUserProfile &&
+                    <ActionBtn kind={ 'Edit' }
+                               onClick={ onEdit }
+                               withBorder={ true }
+                               backgroundColor={ 'transparent' }/>
+				}
 			</div>
 			<div className={ styles['sectors__list'] }>
 				{ renderSectors() }

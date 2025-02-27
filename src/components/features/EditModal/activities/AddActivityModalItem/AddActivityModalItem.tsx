@@ -1,7 +1,7 @@
 import styles from "./AddActivityModalItem.module.scss";
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { ISelectItem } from "@ui/SelectInput/selectInputTypes.ts";
+import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import {
 	IActivityAddForm,
 	IAddActivityModalItemProps
@@ -26,8 +26,8 @@ const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({
 		mode: 'onChange',
 	});
 
-	const activityName = useWatch({name: 'name', control});
-	const level = useWatch({name: 'level', control});
+	const activityName = useWatch({ name: 'name', control });
+	const level = useWatch({ name: 'level', control });
 
 	const getSelectItems = (): ISelectItem[] => {
 		return activitiesToRender.map(activity => ({
@@ -67,22 +67,22 @@ const AddActivityModalItem: React.FC<IAddActivityModalItemProps> = ({
 
 	return (
 		<form className={ styles['modal'] }>
-			<SelectInput text={ activityName ?? null }
-			             selectItems={ getSelectItems() }
-			             labelText={ 'Usługa' }
-			             id={ 'name' }
-			             trigger={ trigger }
-			             register={ register }
-			             validationRules={ {
-				             required: "Wybierz usługę"
-			             } }
-			             error={ errors.name ?? null }
-			             onValueChange={ onActivitySelect }/>
+			<SelectFormInput text={ activityName ?? null }
+			                 selectItems={ getSelectItems() }
+			                 labelText={ 'Usługa' }
+			                 id={ 'name' }
+			                 trigger={ trigger }
+			                 register={ register }
+			                 validationRules={ {
+				                 required: "Wybierz usługę"
+			                 } }
+			                 error={ errors.name ?? null }
+			                 onValueChange={ onActivitySelect }/>
 			<div>
-				<div className={ `${styles['modal__content'] } ${ errors.level && styles['modal__content--error']}` }>
+				<div className={ `${ styles['modal__content'] } ${ errors.level && styles['modal__content--error'] }` }>
 					<input type="hidden"
-					       id={'level'}
-					       {...register('level', {required: 'Wybierz poziom'})}/>
+					       id={ 'level' }
+					       { ...register('level', { required: 'Wybierz poziom' }) }/>
 					<div className={ styles['modal__wrapper'] }
 					     role={ 'button' }
 					     onMouseEnter={ () => setIsLevelItemHovered(true) }

@@ -1,6 +1,6 @@
 import styles from './ProgressBar.module.scss';
 import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import { useEffect, useState } from "react";
 
 const ProgressBar = () => {

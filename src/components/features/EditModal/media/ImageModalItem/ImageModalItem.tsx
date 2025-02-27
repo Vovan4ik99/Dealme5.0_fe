@@ -7,7 +7,7 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "../MediaUploader/MediaUploader.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { parseBase64Image } from "@utils/imageUtils.ts";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        title,
@@ -18,7 +18,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	                                                        onSave,
 	                                                        registerOnSave,
                                                         }) => {
-	const { userAvatar } = useContext(AuthContext);
+	const { userAvatar, user } = useContext(AuthContext);
 	const { getBackgroundPicture } = useFreelancerProfileService();
 	const { openModal } = useModal();
 
@@ -27,21 +27,21 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	const [ imageFileName, setImageFileName ] = useState<string | null>(null);
 
 	const getAvatar = useCallback(() => {
-		if (!userAvatar) return;
+		if (!userAvatar || !user) return;
 		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
 		setImageBlob(parsedUserAvatar.blob);
 		setImageFileName(parsedUserAvatar.filename);
-	}, [ userAvatar ]);
+	}, [ user, userAvatar ]);
 
 	const getBgImage = useCallback(() => {
-		getBackgroundPicture()
+		getBackgroundPicture(user!.id)
 			.then(response => {
 				const parsedImage =
 					parseBase64Image(response?.pictureData ?? null, 'bg-image');
 				setImageBlob(parsedImage.blob);
 				setImageFileName(parsedImage.filename);
 			}).catch(console.error);
-	}, [ getBackgroundPicture ]);
+	}, [ getBackgroundPicture, user ]);
 
 	useEffect(() => {
 		if (isAvatar) {

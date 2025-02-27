@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
 	IWorkingHoursProfileItemProps
 } from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingHoursProfileItem/workingHoursProfileItemTypes.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import clock from "@icons/freelancer_profile/secondary_info/clock.svg";
 import styles from "@components/features/FreelancerProfile/aside/SecondaryInfo/SecondaryInfo.module.scss";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
@@ -11,9 +11,13 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import WorkingHoursModalItem
 	from "@components/features/EditModal/working_hours/WorkingHoursModalItem/WorkingHoursModalItem.tsx";
 
-const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({ userWorkingHour, onSave }) => {
+const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({
+	                                                                          userWorkingHour,
+	                                                                          onSave,
+	                                                                          isLoggedUserProfile
+                                                                          }) => {
 
-	const { getWorkingHours, patchWorkingHours, loadingStatus } = useOnboardingService();
+	const { getWorkingHours, patchWorkingHours, loadingStatus } = useFreelancerOnboardingService();
 	const { openModal } = useModal();
 
 	const [ workingHourDescription, setWorkingHourDescription ] = useState<string>('');
@@ -55,12 +59,14 @@ const WorkingHoursProfileItem: React.FC<IWorkingHoursProfileItemProps> = ({ user
 				<img src={ clock } alt="clock"/>
 			</div>
 			<p>{ workingHourDescription } / tydzień</p>
-			<div className={ styles['info__btn'] }>
-				<ActionBtn kind={ 'Edit' }
-				           withBorder={ false }
-				           backgroundColor={ 'transparent' }
-				           onClick={ onEdit }/>
-			</div>
+			{ isLoggedUserProfile &&
+                <div className={ styles['info__btn'] }>
+                    <ActionBtn kind={ 'Edit' }
+                               withBorder={ false }
+                               backgroundColor={ 'transparent' }
+                               onClick={ onEdit }/>
+                </div>
+			}
 		</>
 	)
 };

@@ -5,7 +5,7 @@ import {
 	IAboutMeForm,
 	IAboutMeModalItemProps
 } from "@components/features/EditModal/about_me/AboutMeModalItem/aboutMeModalItemTypes.ts";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import VideoModalItem from "@components/features/EditModal/video/VideoModalItem/VideoModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";

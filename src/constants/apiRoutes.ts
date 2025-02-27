@@ -27,8 +27,7 @@ export const API_ROUTES = {
 			PATCH_SECTORS: '/sector/freelancer',
 			GET_ACTIVITIES: '/activities',
 			PATCH_ACTIVITIES: '/freelancer/me/activities',
-			GET_SALES_TOOLS: '/tools',
-			PATCH_SALES_TOOLS: '/freelancer/tools',
+			SALES_TOOLS: '/freelancer/tools',
 		}
 	},
 	PROFILE: {
@@ -44,15 +43,16 @@ export const API_ROUTES = {
 			PATCH_WORKING_AREA: '/freelancer/me/localization/workingArea',
 			GET_LANGUAGES: '/languages',
 			GET_PROFILE_PROGRESS: '/complete/freelancer/me',
-			GET_ABOUT_ME_INFO: '/about/me',
+			GET_ABOUT_ME_INFO: '/about/freelancer',
 			PATCH_ABOUT_ME_INFO: '/about',
-			GET_FREELANCER_CERTIFICATES: '/certificate/freelancer/me',
+			GET_FREELANCER_CERTIFICATES: '/certificate/freelancer',
 			ADD_FREELANCER_CERTIFICATE: '/certificate/freelancer',
 			GET_VIDEO: '/video/freelancer',
 			ADD_VIDEO: '/video',
-			GET_REVIEWS: '/opinions/freelancer/me',
+			GET_REVIEWS: '/opinions/freelancer',
 			WORK_EXPERIENCE: '/workExperience/freelancer',
 			EDUCATION: '/freelancer/education',
+			GET_ACTIVITIES: '/activities/freelancer',
 		}
 	}
 } as const;

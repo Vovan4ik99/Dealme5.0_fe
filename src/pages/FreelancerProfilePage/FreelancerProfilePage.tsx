@@ -13,23 +13,24 @@ import CertificatesAndLicenses
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificatesAndLicenses.tsx";
 import { useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesTools from "@components/features/FreelancerProfile/main/SalesTools/SalesTools.tsx";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { useLoadingStatus } from "../../hooks/loadingStatus.hook.ts";
-import { useVideoService } from "@services/videoService.ts";
-import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
+import { useFreelancerVideoService } from "@services/freelancer/freelancerVideoService.ts";
+import { useFreelancerCertificateService } from "@services/freelancer/freelancerCertificateService.ts";
 import FreelancerVideos from "@components/features/FreelancerProfile/main/FreelancerVideos/FreelancerVideos.tsx";
 import FreelancerServices from "@components/features/FreelancerProfile/main/FreelancerServices/FreelancerServices.tsx";
 import FreelancerReviews from "@components/features/FreelancerProfile/main/FreelancerReviews/FreelancerReviews.tsx";
 import FreelancerWorkExperience
 	from "@components/features/FreelancerProfile/main/FreelancerWorkExperience/FreelancerWorkExperience.tsx";
-import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
+import { useFreelancerWorkExperienceService } from "@services/freelancer/freelancerWorkExperienceService.ts";
 import FreelancerEducation
 	from "@components/features/FreelancerProfile/main/FreelancerEducation/FreelancerEducation.tsx";
-import { useFreelancerEducationService } from "@services/freelancerEducationService.ts";
+import { useFreelancerEducationService } from "@services/freelancer/freelancerEducationService.ts";
+import { useParams } from "react-router-dom";
 
 const FreelancerProfilePage = () => {
 
@@ -37,44 +38,54 @@ const FreelancerProfilePage = () => {
 		useContext(AuthContext),
 		useFreelancerProfileService(),
 		useFreelancerProfileAsideInfoService(),
-		useOnboardingService(),
-		useVideoService(),
+		useFreelancerOnboardingService(),
+		useFreelancerVideoService(),
 		useFreelancerCertificateService(),
 		useFreelancerWorkExperienceService(),
 		useFreelancerEducationService()
 	);
 
+	const { id } = useParams();
+	const { user } = useContext(AuthContext);
+
+	if (!user) return;
+
+	const isLoggedUserProfile = id === undefined;
+	const freelancerId = isLoggedUserProfile ? user.id : parseInt(id);
+
 	return (
-		<div className={styles['profile']}>
-			{isLoading &&
-				<div className={styles['profile__loading']}>
-					<LoadingSpinner/>
-				</div>
+		<div className={ styles['profile'] }>
+			{ isLoading &&
+                <div className={ styles['profile__loading'] }>
+                    <LoadingSpinner/>
+                </div>
 			}
-			{!isLoading &&
-				<>
-					<ProfileNavbar/>
-					<BgImage/>
-					<aside className={styles["profile__aside"]}>
-						<Avatar/>
-						<PrimaryInfo/>
-						<SecondaryInfo/>
-						<SectorsInfo/>
-					</aside>
-					<div className={styles["profile__content"]}>
-						<InnerNavbar/>
-						<ProgressBar/>
-						<AboutMe/>
-						<CertificatesAndLicenses/>
-						<SalesTools/>
-						<FreelancerVideos/>
-						<FreelancerServices/>
-						<FreelancerReviews/>
-						<FreelancerWorkExperience/>
-						<FreelancerEducation/>
-					</div>
-					<Footer isHyphenated={false} isCentered={false}/>
-				</>
+			{ !isLoading &&
+                <>
+                    <ProfileNavbar/>
+                    <BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                    <aside className={ styles["profile__aside"] }>
+                        <Avatar/>
+                        <PrimaryInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <SecondaryInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <SectorsInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                    </aside>
+                    <div className={ styles["profile__content"] }>
+                        <InnerNavbar/>
+						{ isLoggedUserProfile && <ProgressBar/> }
+                        <AboutMe freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <CertificatesAndLicenses freelancerId={ freelancerId }
+                                                 isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <SalesTools freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <FreelancerVideos freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <FreelancerServices freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <FreelancerReviews freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <FreelancerWorkExperience freelancerId={ freelancerId }
+                                                  isLoggedUserProfile={ isLoggedUserProfile }/>
+                        <FreelancerEducation freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+                    </div>
+                    <Footer isHyphenated={ false } isCentered={ false }/>
+                </>
 			}
 		</div>
 
