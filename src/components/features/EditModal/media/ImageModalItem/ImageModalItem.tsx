@@ -21,10 +21,10 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
                                                         }) => {
 	const { user } = useContext(AuthContext);
 
+	const { openModal } = useModal();
+
 	const { getBackgroundPicture } = useFreelancerProfileService();
 	const { getAvatar } = useFreelancerAvatarService();
-
-	const { openModal } = useModal();
 
 	const [ isDeleted, setIsDeleted ] = useState(false);
 	const [ imageBlob, setImageBlob ] = useState<Blob | null>(null);
@@ -45,7 +45,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
 		setImageBlob(parsedUserAvatar.blob);
 		setImageFileName(parsedUserAvatar.filename);
-	}, [ user, userAvatar ]);
+	}, [ user, userAvatar, getAvatar ]);
 
 	const getBgImage = useCallback(() => {
 		getBackgroundPicture(user!.id)
