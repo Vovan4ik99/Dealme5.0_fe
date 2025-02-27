@@ -22,12 +22,13 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 	                                                              videoId
                                                               }) => {
 
+	const { openModal } = useModal();
+	const { addFreelancerVideo, patchFreelancerVideo, loadingStatus } = useFreelancerVideoService();
+
 	const [ videoUrl, setVideoUrl ] = useState<string | null>(video ?? null);
 	const [ videoFilename, setVideoFilename ] = useState<string | null>(filename ?? null);
 	const [ videoError, setVideoError ] = useState<string | null>(null);
 
-	const { openModal } = useModal();
-	const { addFreelancerVideo, patchFreelancerVideo, loadingStatus } = useFreelancerVideoService();
 	const { register, handleSubmit, formState: { errors } } = useForm<{ title: string | null }>({
 		shouldFocusError: false,
 		mode: 'onTouched',

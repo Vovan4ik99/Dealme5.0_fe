@@ -101,7 +101,7 @@ const OnboardingSwitcher = () => {
 					<div className={ styles["onboarding-step__info-wrapper"] }>
 						{ step > 1 && (
 							<button
-								onClick={ () => decrementStep() }
+								onClick={ decrementStep }
 								className={ "btn btn--back" }
 							>
 								<img src={ btn_back } alt={ 'btn back' }/>

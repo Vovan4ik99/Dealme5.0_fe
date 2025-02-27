@@ -20,8 +20,8 @@ const SectorStep: React.FC<ISectorStepProps> = ({ userSectors, onNext }) => {
 
 	useEffect(() => {
 		getSectors()
-			.then(sectors => setSectors(sectors))
-			.catch(e => console.error(e));
+			.then(setSectors)
+			.catch(console.error);
 	}, [ getSectors ]);
 
 	useEffect(() => {

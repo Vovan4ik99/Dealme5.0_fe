@@ -137,8 +137,11 @@ const RegistrationForm = () => {
 					                </>
 				                }/>
 			</div>
-			{ isUserCreated && <AlertItem kind={ 'success' } text={ 'Użytkownik został zarejestrowany. ' +
-				'Za chwilę przekierujemy Ci na stronę logowania.' }/> }
+			{ isUserCreated && <AlertItem kind={ 'success' }
+                                          text={
+				                              'Użytkownik został zarejestrowany. ' +
+	                                          'Za chwilę przekierujemy Ci na stronę logowania.'
+			                              }/> }
 			<button className={ 'btn btn--mt0' } type="submit" disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto' }
 			</button>
