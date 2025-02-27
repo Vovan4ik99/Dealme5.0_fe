@@ -43,6 +43,5 @@ export const useFreelancerEducationService = () => {
 		deleteEducation,
 		loadingStatus,
 		errorMessage,
-		sendRequest
 	};
 };
