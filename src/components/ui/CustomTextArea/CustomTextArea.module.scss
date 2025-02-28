@@ -20,10 +20,16 @@
 
 	span {
 	  font-size: 14px;
-	  color: vars.$color-gray;
 	  line-height: 120%;
 	}
 
+	&--gray {
+	  color: vars.$color-gray;
+	}
+
+	&--black {
+	  color: vars.$color-black;
+	}
   }
 
   &__input {
@@ -38,8 +44,9 @@
 	}
 
 	&::placeholder {
-	  font-weight: 400;
-	  font-size: 15px;
+	  font-weight: 500;
+	  font-size: 18px;
+	  opacity: 0.5;
 	}
   }
 

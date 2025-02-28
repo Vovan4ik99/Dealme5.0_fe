@@ -1,11 +1,7 @@
 import { useHttp } from "../../hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import {
-	IFreelancerPortfolio,
-	IFreelancerPortfolioCreateRequest,
-	IFreelancerPortfolioUpdateRequest
-} from "@shared/freelancer/portfolio.ts";
+import { IFreelancerPortfolio, IFreelancerPortfolioUpdateRequest } from "@shared/freelancer/portfolio.ts";
 
 export const useFreelancerPortfolioService = () => {
 
@@ -20,7 +16,7 @@ export const useFreelancerPortfolioService = () => {
 		}, [ sendRequest ]);
 
 	const addPortfolioItem = useCallback(
-		async (request: IFreelancerPortfolioCreateRequest): Promise<void> => {
+		async (request: FormData): Promise<void> => {
 
 			return sendRequest({
 				url: API_ROUTES.PROFILE.FREELANCER.PORTFOLIO,

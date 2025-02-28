@@ -1,6 +1,6 @@
 import { FieldError, RegisterOptions, UseFormRegister, UseFormTrigger } from "react-hook-form";
 
-export interface IAboutMeTextAreaProps {
+export interface ICustomTextAreaProps {
 	label: string;
 	maxSymbols: number;
 	fontSize?: number;
@@ -13,5 +13,8 @@ export interface IAboutMeTextAreaProps {
 	register: UseFormRegister<any>;
 	trigger: UseFormTrigger<any>;
 	validation?: RegisterOptions;
+	labelColor: LabelColor;
 	id: string;
 }
+
+export type LabelColor = 'gray' | 'black';

@@ -1,27 +1,35 @@
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import styles from "./FreelancerPortfolio.module.scss";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useFreelancerPortfolioService } from "@services/freelancer/freelancerPortfolioService.ts";
 import { IFreelancerPortfolioProps } from "./freelancerPortfolioTypes.ts";
 import { IFreelancerPortfolio } from "@shared/freelancer/portfolio.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
+import PortfolioAddModalItem
+	from "@components/features/EditModal/portfolio/PortfolioAddModalItem/PortfolioAddModalItem.tsx";
 
 const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'portfolio';
 
-	const { getPortfolioItems } = useFreelancerPortfolioService();
+	const { getPortfolioItems, addPortfolioItem } = useFreelancerPortfolioService();
+	const { openModal } = useModal();
 
 	const [ portfolioItems, setPortfolioItems ] = useState<IFreelancerPortfolio[]>([]);
 	const [ startVisibleItemIndex, setStartVisibleItemIndex ] = useState<number>(0);
 
-	useEffect(() => {
+	const fetchPortfolioItems = useCallback(() => {
 		getPortfolioItems(freelancerId)
 			.then(setPortfolioItems)
 			.catch(console.error);
 	}, [ freelancerId, getPortfolioItems ]);
+
+	useEffect(() => {
+		fetchPortfolioItems();
+	}, [ fetchPortfolioItems ]);
 
 	const navigateLeft = () => {
 		setStartVisibleItemIndex(prev => prev - 1);
@@ -31,8 +39,22 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 		setStartVisibleItemIndex(prev => prev + 1);
 	};
 
-	const handleAddPortfolioItem = () => {
+	const onPortfolioItemAdd = (request: FormData) => {
+		addPortfolioItem(request)
+			.then(fetchPortfolioItems)
+			.catch(console.error);
+	};
 
+	const handleAddPortfolioItem = () => {
+		openModal({
+			id: 'AddPortfolioModal',
+			title: 'Dodaj projekt do portfolio',
+			child: <PortfolioAddModalItem onSave={ onPortfolioItemAdd }/>,
+			withSaveBtn: true,
+			btnWithIcon: true,
+			btnText: 'Dodaj projekt',
+			shouldCloseOnSaving: false,
+		});
 	};
 
 	const handleEditPortfolioItem = () => {
@@ -42,22 +64,20 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 	const renderContent = () => {
 		const itemsToRender: ReactElement[] = [];
 
-		for (let i = startVisibleItemIndex; i < startVisibleItemIndex + 3; i++) {
-			if (i >= portfolioItems.length) break;
-
-			const itemToRender = portfolioItems[i];
-			itemsToRender.push(
-				<></> //TODO portfolio item should be pushed
-			);
-		}
+		portfolioItems.slice(startVisibleItemIndex, startVisibleItemIndex + 3)
+			.forEach(portfolioItem => {
+				itemsToRender.push(
+					<></> //TODO portfolio item should be pushed
+				);
+			});
 
 		for (let i = itemsToRender.length; i < 3; i++) {
 			itemsToRender.push(
 				<button key={ i }
 				        className={ styles['portfolio__empty'] }
-				        style={isLoggedUserProfile ? {cursor: 'pointer'} : {cursor: 'default'}}
+				        style={ isLoggedUserProfile ? { cursor: 'pointer' } : { cursor: 'default' } }
 				        onClick={ isLoggedUserProfile ? handleAddPortfolioItem : undefined }>
-					<AddIcon width={12} height={12}/>
+					<AddIcon width={ 12 } height={ 12 }/>
 				</button>
 			);
 		}

@@ -92,6 +92,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 			shouldCloseOnSaving: false,
 			withSaveBtn: true,
 			child: <MediaUploader
+				mediaType={'image'}
 				text={ `Zalecany rozmiar: ${ imageSize }\nAkceptowalne formaty: JPG, PNG, WEBP, rozmiar: do 3MB` }
 				aspectRatio={ isAvatar ? 1 : 1320 / 250 }
 				onImageAdd={ onImageAdd }

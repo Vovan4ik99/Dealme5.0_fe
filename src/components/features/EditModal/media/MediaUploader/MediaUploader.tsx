@@ -8,10 +8,10 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import ImageCropper from "@components/features/EditModal/media/ImageCropper/ImageCropper.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import success_icon from "@icons/alert/success_icon.svg";
-import { IMediaUploaderProps } from "./mediaUploaderTypes.ts";
+import { MediaUploaderProps } from "./mediaUploaderTypes.ts";
 import VideoPreviewer from "@components/features/EditModal/media/VideoPreviewer/VideoPreviewer.tsx";
 
-const MediaUploader: React.FC<IMediaUploaderProps> = ({
+const MediaUploader: React.FC<MediaUploaderProps> = ({
 	                                                      text,
 	                                                      registerOnSave,
 	                                                      onVideoAdd,
@@ -74,7 +74,7 @@ const MediaUploader: React.FC<IMediaUploaderProps> = ({
 				filename={ fileName }
 				aspect={ aspectRatio }
 				onClose={ handleUploaderClose }
-			/>;
+			/>; 
 		}
 
 		openModal({

@@ -5,6 +5,4 @@ export interface IFreelancerPortfolio {
 	info: string;
 }
 
-export type IFreelancerPortfolioCreateRequest = Omit<IFreelancerPortfolio, "id">;
-
 export type IFreelancerPortfolioUpdateRequest = Omit<IFreelancerPortfolio, "pictureData">;
