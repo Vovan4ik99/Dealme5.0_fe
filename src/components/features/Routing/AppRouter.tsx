@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthPage from "@pages/AuthPage/AuthPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
 import Dashboard from "@pages/Dashboard/Dashboard.tsx";

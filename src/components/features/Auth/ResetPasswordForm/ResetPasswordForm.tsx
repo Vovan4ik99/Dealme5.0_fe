@@ -1,10 +1,10 @@
 import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import React, {useCallback, useState} from "react";
-import {useForm} from "react-hook-form";
-import {IResetPasswordFormData} from "@components/features/Auth/ResetPasswordForm/resetPasswordFormTypes.ts";
-import {useAuthService} from "@services/authService.ts";
+import React, { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { IResetPasswordFormData } from "@components/features/Auth/ResetPasswordForm/resetPasswordFormTypes.ts";
+import { useAuthService } from "@services/auth/authService.ts";
 import InputError from "@ui/InputError/InputError.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import styles from "./ResetPasswordForm.module.scss"
 
