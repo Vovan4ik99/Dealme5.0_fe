@@ -8,6 +8,9 @@ export const getErrorMessage: ErrorHandler = (status, message = '') => {
 			if (message === 'Picture not found') {
 				return ErrorMessages.BACKGROUND_PICTURE_NOT_FOUND;
 			}
+			if (message === 'User not found') {
+				return ErrorMessages.USER_NOT_FOUND;
+			}
 			return ErrorMessages.INVALID_CREDENTIALS;
 		case 403:
 			return ErrorMessages.TOKEN_EXPIRED_OR_INVALID;
