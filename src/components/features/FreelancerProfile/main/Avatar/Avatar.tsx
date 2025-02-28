@@ -21,7 +21,7 @@ const Avatar = () => {
 	const fetchAvatar = useCallback(() => {
 		getAvatar()
 			.then(res => {
-				setAvatar(res ? res.picture : null); // When there is no avatar hole response is null so we check response first
+				setAvatar(res ? res.picture : null);
 			})
 			.catch(console.error)
 	}, [ getAvatar ]);
