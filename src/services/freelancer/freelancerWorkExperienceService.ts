@@ -1,4 +1,4 @@
-import { useHttp } from "../../hooks/http.hook.ts";
+import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerWorkExperience, IFreelancerWorkExperienceRequest } from "@shared/freelancer/work-experience.ts";

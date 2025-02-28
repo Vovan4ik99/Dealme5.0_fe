@@ -1,4 +1,4 @@
-import { useHttp } from "../../hooks/http.hook.ts";
+import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { ICreateUserRequest, ICreateUserResponse, ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
 import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
