@@ -65,7 +65,7 @@ const FreelancerProfilePage = () => {
                     <ProfileNavbar/>
                     <BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                     <aside className={ styles["profile__aside"] }>
-                        <Avatar/>
+                        <Avatar freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <PrimaryInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <SecondaryInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <SectorsInfo freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>

@@ -25,12 +25,12 @@ const ProfileNavbar = () => {
 	const [ userAvatar, setAvatar ] = useState<string | null>(null);
 
 	const fetchAvatar = useCallback(() => {
-		getAvatar()
+		getAvatar(user!.id)
 			.then((res) => {
 				setAvatar(res ? res.picture : null);
 			})
 			.catch(console.error);
-	}, [ getAvatar ]);
+	}, [ getAvatar, user ]);
 
 	useEffect(fetchAvatar, [ fetchAvatar ]);
 
