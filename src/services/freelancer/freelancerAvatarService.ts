@@ -6,9 +6,9 @@ import { API_ROUTES } from "@constants/apiRoutes.ts";
 export const useFreelancerAvatarService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
-	const getAvatar = useCallback(async (): Promise<IUserAvatarResponse> => {
+	const getAvatar = useCallback(async (freelancerId: number): Promise<IUserAvatarResponse> => {
 		return await sendRequest({
-			url: API_ROUTES.PROFILE.FREELANCER.AVATAR,
+			url: API_ROUTES.PROFILE.FREELANCER.AVATAR + `/${ freelancerId }`
 		});
 	}, [ sendRequest ]);
 

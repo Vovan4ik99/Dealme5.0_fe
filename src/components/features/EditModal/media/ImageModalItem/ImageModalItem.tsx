@@ -29,23 +29,18 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 	const [ isDeleted, setIsDeleted ] = useState(false);
 	const [ imageBlob, setImageBlob ] = useState<Blob | null>(null);
 	const [ imageFileName, setImageFileName ] = useState<string | null>(null);
-	const [ userAvatar, setUserAvatar ] = useState<string | null>(null);
 
 	const fetchAvatar = useCallback(() => {
-		getAvatar()
+		getAvatar(user!.id)
 			.then(res => {
 				if (res) {
-					setUserAvatar(res.picture);
+					const parsedUserAvatar = parseBase64Image(res.picture, 'awatar');
+					setImageBlob(parsedUserAvatar.blob);
+					setImageFileName(parsedUserAvatar.filename);
 				}
 			})
 			.catch(console.error);
-
-		if (!userAvatar || !user) return;
-
-		const parsedUserAvatar = parseBase64Image(userAvatar, 'awatar');
-		setImageBlob(parsedUserAvatar.blob);
-		setImageFileName(parsedUserAvatar.filename);
-	}, [ user, userAvatar, getAvatar ]);
+	}, [ user, getAvatar ]);
 
 	const getBgImage = useCallback(() => {
 		getBackgroundPicture(user!.id)

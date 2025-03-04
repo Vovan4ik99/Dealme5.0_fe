@@ -1,15 +1,16 @@
 import styles from './Avatar.module.scss';
-import {ReactComponent as LogoIcon} from '@icons/named_exported/logo_icon.svg';
-import React, {useCallback, useEffect, useState} from "react";
+import { ReactComponent as LogoIcon } from '@icons/named_exported/logo_icon.svg';
+import React, { useCallback, useEffect, useState } from "react";
 import AvatarEmptyState from "@components/features/FreelancerProfile/main/Avatar/AvatarEmptyState/AvatarEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import {useModal} from "@context/ModalContext/ModalContext.ts";
+import { useModal } from "@context/ModalContext/ModalContext.ts";
 import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
 import { EMITTER_EVENTS, publishEvent } from "@hooks/emitter.hook..ts";
+import { IAvatarProps } from "@components/features/FreelancerProfile/main/Avatar/avatarTypes.ts";
 
 
-const Avatar = () => {
+const Avatar: React.FC<IAvatarProps> = ({ freelancerId, isLoggedUserProfile }) => {
 	const EVENT: EMITTER_EVENTS = 'updateAvatar';
 
 	const { openModal } = useModal();
@@ -19,12 +20,12 @@ const Avatar = () => {
 	const [ userAvatar, setAvatar ] = useState<string | null>(null);
 
 	const fetchAvatar = useCallback(() => {
-		getAvatar()
+		getAvatar(freelancerId)
 			.then(res => {
 				setAvatar(res ? res.picture : null);
 			})
 			.catch(console.error)
-	}, [ getAvatar ]);
+	}, [ getAvatar, freelancerId ]);
 
 	useEffect(fetchAvatar, [ fetchAvatar ]);
 
@@ -70,12 +71,12 @@ const Avatar = () => {
 
 	return (
 		<div className={ `${ styles['avatar'] } ${ !userAvatar && styles['avatar--empty'] }` }>
-			<div className={ styles['avatar__icon'] }>
-				<ActionBtn kind={ 'Edit' }
-						   onClick={ handleAvatarEdit }
-						   withBorder={ userAvatar === null }
-						   backgroundColor={ userAvatar ? 'lightgray' : 'white' }/>
-			</div>
+			{ isLoggedUserProfile && <div className={styles['avatar__icon']}>
+				<ActionBtn kind={'Edit'}
+						   onClick={handleAvatarEdit}
+						   withBorder={userAvatar === null}
+						   backgroundColor={userAvatar ? 'lightgray' : 'white'}/>
+			</div> }
 			{ userAvatar ?
 				<>
 					<img className={ styles['avatar__img'] } src={ userAvatar } alt={ 'avatar' }/>
