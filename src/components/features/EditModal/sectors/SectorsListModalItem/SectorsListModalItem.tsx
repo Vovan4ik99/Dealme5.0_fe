@@ -41,7 +41,7 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({ freelancer
 	};
 
 	const getSectorsToChoose = () => {
-		return allSectors.filter(sector => !freelancerSectors.includes(sector));
+		return allSectors.filter(sector => !freelancerSectors.some(s => s.id === sector.id));
 	};
 
 	const handleAddSectors = () => {
