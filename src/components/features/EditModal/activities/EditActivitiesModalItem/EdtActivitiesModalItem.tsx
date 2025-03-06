@@ -45,7 +45,6 @@ const EdtActivitiesModalItem: React.FC<IEditActivitiesModalItemProps> = ({ regis
 
 	useEffect(() => {
 		if (!user) return;
-
 		getActivities()
 			.then(setAllActivities)
 			.catch(console.error);
