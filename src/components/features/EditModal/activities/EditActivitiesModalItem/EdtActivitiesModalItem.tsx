@@ -38,14 +38,13 @@ const EdtActivitiesModalItem: React.FC<IEditActivitiesModalItemProps> = ({ regis
 					id: activity.activityId,
 					...activity,
 				}))
-			}).catch(console.error);
-
-		setDraggableActivities(mappedActivities);
+				setDraggableActivities(mappedActivities);
+			})
+			.catch(console.error);
 	}, [ getFreelancerActivities, user ]);
 
 	useEffect(() => {
 		if (!user) return;
-		
 		getActivities()
 			.then(setAllActivities)
 			.catch(console.error);
