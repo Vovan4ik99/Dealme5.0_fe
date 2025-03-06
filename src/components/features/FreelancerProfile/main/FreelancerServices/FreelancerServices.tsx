@@ -22,7 +22,7 @@ const FreelancerServices: React.FC<IFreelancerServicesProps> = ({ freelancerId, 
 
 	const { openModal } = useModal();
 	const { getActivities, patchActivities } = useFreelancerOnboardingService();
-	const { getFreelancerActivities } = useFreelancerProfileService()
+	const { getFreelancerActivities, createActivity } = useFreelancerProfileService()
 
 	const [ allActivities, setAllActivities ] = useState<IActivity[]>([]);
 	const [ freelancerActivities, setFreelancerActivities ] = useState<IFreelancerActivity[]>([]);
@@ -44,7 +44,14 @@ const FreelancerServices: React.FC<IFreelancerServicesProps> = ({ freelancerId, 
 	}, [ fetchFreelancerActivities ]);
 
 	const addNewActivity = (newActivity: IActivity, level: number) => {
-		//TODO should be request to post new Activity
+		const request: IActivityRequest = {
+			activityId: newActivity.id,
+			level: level,
+		}
+
+		createActivity(request)
+			.then(fetchFreelancerActivities)
+			.catch(console.error);
 	};
 
 	const editActivities = (request: IActivityRequest[]) => {
@@ -55,7 +62,7 @@ const FreelancerServices: React.FC<IFreelancerServicesProps> = ({ freelancerId, 
 
 	const getActivitiesToAdd = () => {
 		return allActivities.filter(
-			activity => freelancerActivities.some(a => a.activityId === activity.id)
+			activity => !freelancerActivities.some(a => activity.id === a.activityId)
 		);
 	};
 

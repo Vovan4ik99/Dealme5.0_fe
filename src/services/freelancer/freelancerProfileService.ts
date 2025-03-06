@@ -4,7 +4,7 @@ import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IAboutMeInfo, IFreelancerBackgroundResponse } from "@shared/freelancer/common.ts";
 import { IFreelancerReview } from "@shared/freelancer/review.ts";
 import { ILoggedUserResponse } from "@shared/userTypes.ts";
-import { IFreelancerActivity } from "@shared/onboardingTypes.ts";
+import { IActivityRequest, IFreelancerActivity } from "@shared/onboardingTypes.ts";
 
 export const useFreelancerProfileService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
@@ -74,6 +74,14 @@ export const useFreelancerProfileService = () => {
 			})
 		}, [ sendRequest ]);
 
+	const createActivity = useCallback(async (request: IActivityRequest): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.PROFILE.FREELANCER.ADD_ACTIVITY,
+			method: "POST",
+			body: JSON.stringify(request)
+		})
+	}, [ sendRequest ]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -85,6 +93,7 @@ export const useFreelancerProfileService = () => {
 		patchAboutMeProfileInfo,
 		getFreelancerReviews,
 		getFreelancerPrimaryInfo,
-		getFreelancerActivities
+		getFreelancerActivities,
+		createActivity
 	};
 };

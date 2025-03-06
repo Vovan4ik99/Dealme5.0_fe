@@ -54,6 +54,7 @@ export const API_ROUTES = {
 			ADD_VIDEO: '/video',
 			GET_REVIEWS: '/opinions/freelancer',
 			WORK_EXPERIENCE: '/workExperience/freelancer',
+			ADD_ACTIVITY: '/freelancer/me/activity',
 			EDUCATION: '/freelancer/education',
 			GET_ACTIVITIES: '/activities/freelancer',
 		}
