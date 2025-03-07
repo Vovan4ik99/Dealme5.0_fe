@@ -30,7 +30,8 @@ export const API_ROUTES = {
 			PATCH_SECTORS: '/sector/freelancer',
 			GET_ACTIVITIES: '/activities',
 			PATCH_ACTIVITIES: '/freelancer/me/activities',
-			SALES_TOOLS: '/freelancer/tools',
+			SALES_TOOLS: '/tools',
+			FREELANCER_SALES_TOOLS: '/freelancer/tools'
 		}
 	},
 	PROFILE: {

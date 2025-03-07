@@ -14,6 +14,7 @@ import SalesToolsEditModalItem
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 import { ISalesToolsProps } from "@components/features/FreelancerProfile/main/SalesTools/salesToolsTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
@@ -21,16 +22,17 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 
 	const { user, getLoggedUserData } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
+	const { patchSalesTools } = useFreelancerOnboardingService();
+	const { getFreelancerSalesTools } = useFreelancerProfileService();
 
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
 
 	useEffect(() => {
-		getSalesTools(freelancerId)
+		getFreelancerSalesTools(freelancerId)
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [ freelancerId, getSalesTools ]);
+	}, [ freelancerId, getFreelancerSalesTools]);
 
 	if (!user) {
 		return <></>;

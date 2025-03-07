@@ -32,21 +32,7 @@ const ProtectedRoute = () => {
 
 	const isProfileCompleted = (user: ILoggedUserData) => {
 		const requiredFields = [
-			"email",
-			"experienceLevel",
-			"firstName",
-			"id",
-			"lastName",
-			"role",
-			"incomeGoal",
-			"salesTools",
-			"sectors",
-			"selectedActivities",
-			"specialization",
-			"subIndustries",
-			"typeOfSales",
-			"workingDays",
-			"workingHours",
+			"salesTools"
 		];
 		return !Object.entries(user)
 			.filter(([ key ]) => requiredFields.includes(key))
