@@ -1,32 +1,32 @@
 import styles from './SalesToolsEditModalItem.module.scss';
-import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import {ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
-import { ISaveableChildProps, useModal } from "@context/ModalContext/ModalContext.ts";
+import {useModal} from "@context/ModalContext/ModalContext.ts";
 import SalesToolModalItem from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
-import { getPictureForSalesTools, getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
+import { getPictureForSalesTools , getToolKindNameByKind} from "@utils/salesToolsUtils.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import { ISalesToolsEditModalItemProps } from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItemTypes.ts";
 
-const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({ registerOnSave }) => {
+const SalesToolsEditModalItem: React.FC<ISalesToolsEditModalItemProps> = ({ registerOnSave, allSalesTools }) => {
 
 	const { user, getLoggedUserData } = useContext(AuthContext);
 	const { openModal } = useModal();
 	const { patchSalesTools } = useFreelancerOnboardingService();
 	const { getFreelancerSalesTools }= useFreelancerProfileService();
 
-	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
 	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>(user?.salesTools || []);
 
 	useEffect(() => {
 		if (!user) return;
 		getFreelancerSalesTools(user.id)
-			.then(setAllSalesTools)
+			.then(setSalesTools)
 			.catch(console.error);
 	}, [ getFreelancerSalesTools, user ]);
 
