@@ -26,7 +26,7 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 				setSelectedTypeOfSale(data.typeOfSales ?? null);
 			})
 			.catch(console.error)
-	}, [ selectedSectors.length, selectedTypeOfSale, user, getFreelancerData ]);
+	}, [ setSelectedTypeOfSale,setSelectedSectors, getFreelancerData, user ]);
 
 	const handleTypeOfSaleSave = useCallback(async () => {
 		if (!selectedTypeOfSale) return;
@@ -34,6 +34,7 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 	}, [ patchTypeOfSales, selectedTypeOfSale ]);
 
 	const handleSectorsSave = useCallback(async () => {
+		console.log(selectedSectors);
 		if (selectedSectors.length === 0) return;
 		await patchSectors(selectedSectors.map(s => s.id));
 	}, [ patchSectors, selectedSectors ]);
