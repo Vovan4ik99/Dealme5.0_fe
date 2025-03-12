@@ -31,7 +31,8 @@ export const API_ROUTES = {
 			GET_ACTIVITIES: '/activities',
 			PATCH_ACTIVITIES: '/freelancer/me/activities',
 			SALES_TOOLS: '/tools',
-			FREELANCER_SALES_TOOLS: '/freelancer/tools'
+			FREELANCER_SALES_TOOLS: '/freelancer/tools',
+			ONBOARDING_STATUS: '/onboarding ',
 		}
 	},
 	PROFILE: {

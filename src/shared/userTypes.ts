@@ -37,6 +37,7 @@ export interface ILoggedUserResponse {
 	selectedActivities: IFreelancerActivity[],
 	salesTools: ISalesTool[];
 	workExperiences: IFreelancerWorkExperience[];
+	isOnboardingPassed: boolean;
 }
 
 export interface IUserAvatarResponse {

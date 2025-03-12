@@ -146,10 +146,17 @@ export const useFreelancerOnboardingService = () => {
 		})
 	}, [ sendRequest ]);
 
+	const updateOnboardingStatus = useCallback(async (): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.ONBOARDING.FREELANCER.ONBOARDING_STATUS,
+			method: 'PATCH',
+		})
+	}, [ sendRequest ]);
+
 	return {
 		loadingStatus, errorMessage, patchExperienceLevel, getSpecializations, patchSpecialization,
 		patchWorkingDays, getWorkingHours, patchWorkingHours, getIncomeGoals, patchIncomeGoal, getIndustries,
 		patchSubIndustries, getTypesOfSales, patchTypeOfSales, getSectors, patchSectors, getActivities,
-		patchActivities, getSalesTools, patchSalesTools
+		patchActivities, getSalesTools, patchSalesTools, updateOnboardingStatus
 	};
 }

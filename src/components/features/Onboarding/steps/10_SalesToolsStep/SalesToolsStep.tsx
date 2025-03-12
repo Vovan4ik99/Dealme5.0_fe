@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { ISalesToolsStepProps } from "./salesToolsTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
@@ -8,8 +8,7 @@ import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import SalesToolsList from "@entities/SalesToolsList/SalesToolsList.tsx";
 
 const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ onNext }) => {
-
-	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
+	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools, updateOnboardingStatus } = useFreelancerOnboardingService();
 
 	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
 	const [ selectedSalesTools, setSelectedSalesTools ] = useState<number[]>([]);
@@ -31,10 +30,16 @@ const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ onNext }) => {
 	const onSubmit = () => {
 		if (selectedSalesTools.length > 0) {
 			patchSalesTools(selectedSalesTools)
-				.then(() => onNext())
+				.then(handleOnboardingPass)
 				.catch(e => console.error(e));
 		}
 	};
+
+	const handleOnboardingPass = useCallback(() => {
+		updateOnboardingStatus()
+			.then(onNext)
+			.catch(console.error);
+	}, [ updateOnboardingStatus ]);
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;
