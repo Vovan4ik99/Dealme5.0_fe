@@ -10,10 +10,11 @@ import { ReactComponent as GuardianIcon } from "@icons/named_exported/profile-na
 import { ReactComponent as PaymentsIcon } from "@icons/named_exported/profile-navbar/payments.svg";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import { ReactComponent as ArrowDown } from "@icons/named_exported/arrow-down.svg";
-import avatar from "@icons/profile_navbar/default_avatar.svg";
+import  AvatarIcon  from "@icons/profile_navbar/default_avatar.svg";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook..ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
+import SelectOption from "@ui/SelectOption/SelectOption.tsx";
 
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
@@ -23,6 +24,7 @@ const ProfileNavbar = () => {
 	const { getAvatar } = useFreelancerAvatarService();
 
 	const [ userAvatar, setAvatar ] = useState<string | null>(null);
+	const [ isModalOpened, setIsModalOpened ] = useState<boolean>(false);
 
 	const fetchAvatar = useCallback(() => {
 		getAvatar(user!.id)
@@ -75,14 +77,21 @@ const ProfileNavbar = () => {
 					<AddIcon/>
 					Przyjmij zlecenie
 				</button>
-				<button className={ `btn btn--more ${ styles["navbar__btn"] } ${ styles["navbar__btn--avatar"] }
-				 ${ userAvatar !== null && styles["navbar__btn--pl53"] }` }>
-					<div className={ `${ styles["navbar__avatar"] }` }>
-						<img src={ userAvatar ?? avatar } alt="avatar"/>
-					</div>
-					{ user?.firstName } { user?.lastName }
-					<ArrowDown/>
-				</button>
+				<div className={ styles["navbar__menu"] }>
+					<button
+						className={ `btn btn--more ${ styles["navbar__btn"] } ${ styles["navbar__btn--avatar"] }
+					 ${ userAvatar !== null && styles["navbar__btn--pl53"] } ${ isModalOpened && styles["navbar__btn--active"] }`}
+						onClick={() => setIsModalOpened(!isModalOpened)}>
+						<div className={ `${ styles["navbar__avatar"] }`}>
+							<img src={userAvatar ?? AvatarIcon} alt="avatar" />
+						</div>
+						{ user?.firstName } { user?.lastName }
+						<ArrowDown/>
+					</button>
+					{ isModalOpened && (
+						<SelectOption value={ "Login" } onClick={() => console.log("works")} info={"some"}/>
+					)}
+				</div>
 			</div>
 		</nav>
 	);
