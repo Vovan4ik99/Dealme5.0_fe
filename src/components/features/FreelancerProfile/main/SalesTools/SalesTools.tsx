@@ -97,7 +97,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 			withSaveBtn: true,
 			child: <SalesToolsAddModalItem
 				salesTools={ getSalesToolsToAdd() }
-				onSave={ onSalesToolsAdd }/>
+				onSave = { onSalesToolsAdd }/>
 		});
 	};
 

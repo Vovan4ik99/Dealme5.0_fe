@@ -1,8 +1,9 @@
 import {ISalesTool} from "@shared/onboardingTypes.ts";
-import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
+import { OnSaveCallback } from "@context/ModalContext/ModalContext.ts";
 
-interface ISalesToolsArray {
+export interface ISalesToolsEditModalItemProps {
     allSalesTools: ISalesTool[];
+    registerOnSave?: (onSave: OnSaveCallback) => void;
 }
 
-export type ISalesToolsEditModalItemProps = ISalesToolsArray & ISaveableChildProps;
+

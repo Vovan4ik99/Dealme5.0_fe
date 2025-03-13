@@ -34,8 +34,6 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 	}, [ patchTypeOfSales, selectedTypeOfSale ]);
 
 	const handleSectorsSave = useCallback(async () => {
-		console.log(selectedSectors);
-		if (selectedSectors.length === 0) return;
 		await patchSectors(selectedSectors.map(s => s.id));
 	}, [ patchSectors, selectedSectors ]);
 
