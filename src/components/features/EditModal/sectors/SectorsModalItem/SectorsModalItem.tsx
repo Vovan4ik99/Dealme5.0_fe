@@ -26,7 +26,7 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 				setSelectedTypeOfSale(data.typeOfSales ?? null);
 			})
 			.catch(console.error)
-	}, [ setSelectedTypeOfSale,setSelectedSectors, getFreelancerData, user ]);
+	}, [ setSelectedTypeOfSale, setSelectedSectors, getFreelancerData, user ]);
 
 	const handleTypeOfSaleSave = useCallback(async () => {
 		if (!selectedTypeOfSale) return;

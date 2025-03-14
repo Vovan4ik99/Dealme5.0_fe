@@ -33,7 +33,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 		getFreelancerSalesTools(freelancerId)
 			.then(setSelectedSalesTool)
 			.catch(console.error);
-	}, [ freelancerId, getFreelancerSalesTools]);
+	}, [ freelancerId, getFreelancerSalesTools ]);
 
 	useEffect(() => {
 		getSalesTools()
