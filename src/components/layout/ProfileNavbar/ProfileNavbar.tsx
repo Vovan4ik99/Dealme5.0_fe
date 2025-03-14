@@ -1,25 +1,25 @@
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
 import {useCallback, useContext, useEffect, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import { ReactComponent as PulpitIcon } from "@icons/named_exported/profile-navbar/desktop.svg";
-import { ReactComponent as OrdersIcon } from "@icons/named_exported/profile-navbar/orders.svg";
-import { ReactComponent as ProductsIcon } from "@icons/named_exported/profile-navbar/products.svg";
-import { ReactComponent as GuardianIcon } from "@icons/named_exported/profile-navbar/guardian.svg";
-import { ReactComponent as PaymentsIcon } from "@icons/named_exported/profile-navbar/payments.svg";
-import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import { ReactComponent as ArrowDown } from "@icons/named_exported/arrow-down.svg";
-import  AvatarIcon  from "@icons/profile_navbar/default_avatar.svg";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook..ts";
-import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
+import {ReactComponent as PulpitIcon} from "@icons/named_exported/profile-navbar/desktop.svg";
+import {ReactComponent as OrdersIcon} from "@icons/named_exported/profile-navbar/orders.svg";
+import {ReactComponent as ProductsIcon} from "@icons/named_exported/profile-navbar/products.svg";
+import {ReactComponent as GuardianIcon} from "@icons/named_exported/profile-navbar/guardian.svg";
+import {ReactComponent as ArrowUp} from "@icons/named_exported/profile-navbar/arrow_up.svg";
+import {ReactComponent as PaymentsIcon} from "@icons/named_exported/profile-navbar/payments.svg";
+import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
+import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow-down.svg";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import {EMITTER_EVENTS, useEventEmitter} from "@hooks/emitter.hook..ts";
+import {useFreelancerAvatarService} from "@services/freelancer/freelancerAvatarService.ts";
 import SelectOption from "@ui/SelectOption/SelectOption.tsx";
+import {AvatarMenuOptions} from "@constants/avatarMenu.tsx";
 
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
-
-	const { user, loadingStatus } = useContext(AuthContext);
+	const { user, loadingStatus, logout } = useContext(AuthContext);
 
 	const { getAvatar } = useFreelancerAvatarService();
 
@@ -83,13 +83,21 @@ const ProfileNavbar = () => {
 					 ${ userAvatar !== null && styles["navbar__btn--pl53"] } ${ isModalOpened && styles["navbar__btn--active"] }`}
 						onClick={() => setIsModalOpened(!isModalOpened)}>
 						<div className={ `${ styles["navbar__avatar"] }`}>
-							<img src={userAvatar ?? AvatarIcon} alt="avatar" />
+							{ userAvatar ? <img src={ userAvatar } alt="avatar"/> : <GuardianIcon/> }
 						</div>
 						{ user?.firstName } { user?.lastName }
-						<ArrowDown/>
+						{isModalOpened ? <ArrowUp/> : <ArrowDown/>}
 					</button>
 					{ isModalOpened && (
-						<SelectOption value={ "Login" } onClick={() => console.log("works")} info={"some"}/>
+						<div className={ styles["navbar__dropdown"] }>
+							{ AvatarMenuOptions.map((option, index) => (
+								<SelectOption value={ option.label }
+											  info={ null }
+											  icon={ option.icon }
+											  onClick={ () => logout() }
+											  key={ index } />
+							))}
+						</div>
 					)}
 				</div>
 			</div>

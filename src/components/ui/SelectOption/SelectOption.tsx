@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ISelectOptionProps } from "@ui/SelectOption/selectOptionTypes.ts";
 import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
 
-const SelectOption: React.FC<ISelectOptionProps> = ({ value, info, onClick }) => {
+const SelectOption: React.FC<ISelectOptionProps> = ({ value, info, onClick, icon }) => {
 
 	const [ isHover, setIsHover ] = useState<boolean>(false);
 
@@ -12,11 +12,14 @@ const SelectOption: React.FC<ISelectOptionProps> = ({ value, info, onClick }) =>
 			onMouseEnter={ () => setIsHover(true) }
 			onFocus={ () => setIsHover(true) }
 			onMouseLeave={ () => setIsHover(false) }
-			className={ styles['option'] }
+			className={ `btn btn--more ${ styles["btn"] }` }
 			role="button"
 			onClick={ onClick }
 		>
-			{ value }
+			<div className={styles["option"]}>
+				{ icon }
+				{ value }
+			</div>
 			{ info && <TooltipIcon text={ info } isLeft={ false } isActive={ isHover }/> }
 		</div>
 	);
