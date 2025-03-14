@@ -1,7 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import {
-	ISectorsModalItemProps
-} from "@components/features/EditModal/sectors/SectorsModalItem/sectorsModalItemTypes.ts";
+import { ISectorsModalItemProps } from "@components/features/EditModal/sectors/SectorsModalItem/sectorsModalItemTypes.ts";
 import styles from "./SectorsModalItem.module.scss";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
@@ -9,6 +7,7 @@ import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import TypeOfSalesList from "@entities/TypeOfSalesList/TypeOfSalesList.tsx";
 import SectorsListModalItem from "@components/features/EditModal/sectors/SectorsListModalItem/SectorsListModalItem.tsx";
 import { ISector } from "@shared/onboardingTypes.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 
 const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOnSave }) => {
 
@@ -16,17 +15,18 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 	const [ selectedSectors, setSelectedSectors ] = useState<ISector[]>([]);
 
 	const { patchTypeOfSales, patchSectors, loadingStatus } = useFreelancerOnboardingService();
+	const { getFreelancerData } = useFreelancerProfileAsideInfoService()
 	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (!user) return;
-		if (selectedTypeOfSale == null) {
-			setSelectedTypeOfSale(user.typeOfSales);
-		}
-		if (selectedSectors.length === 0) {
-			setSelectedSectors(user.sectors);
-		}
-	}, [ selectedSectors.length, selectedTypeOfSale, user ]);
+		getFreelancerData(user.id)
+			.then(data => {
+				setSelectedSectors(data.sectors ?? []);
+				setSelectedTypeOfSale(data.typeOfSales ?? null);
+			})
+			.catch(console.error)
+	}, [ setSelectedTypeOfSale, setSelectedSectors, getFreelancerData, user ]);
 
 	const handleTypeOfSaleSave = useCallback(async () => {
 		if (!selectedTypeOfSale) return;
@@ -34,7 +34,6 @@ const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOn
 	}, [ patchTypeOfSales, selectedTypeOfSale ]);
 
 	const handleSectorsSave = useCallback(async () => {
-		if (selectedSectors.length === 0) return;
 		await patchSectors(selectedSectors.map(s => s.id));
 	}, [ patchSectors, selectedSectors ]);
 

@@ -14,23 +14,32 @@ import SalesToolsEditModalItem
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 import { ISalesToolsProps } from "@components/features/FreelancerProfile/main/SalesTools/salesToolsTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'tools';
 
-	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
+	const { patchSalesTools, getSalesTools } = useFreelancerOnboardingService();
+	const { getFreelancerSalesTools } = useFreelancerProfileService();
 
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
+	const [ selectedSalesTool, setSelectedSalesTool ] = useState<ISalesTool[]>([]);
 
 	useEffect(() => {
-		getSalesTools(freelancerId)
+		getFreelancerSalesTools(freelancerId)
+			.then(setSelectedSalesTool)
+			.catch(console.error);
+	}, [ freelancerId, getFreelancerSalesTools ]);
+
+	useEffect(() => {
+		getSalesTools()
 			.then(setAllSalesTools)
 			.catch(console.error);
-	}, [ freelancerId, getSalesTools ]);
+	}, [ getSalesTools ]);
 
 	if (!user) {
 		return <></>;
@@ -45,12 +54,12 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 	};
 
 	const getSalesToolsToAdd = () => {
-		return allSalesTools.filter(tool => !user.salesTools
+		return allSalesTools.filter(tool => !selectedSalesTool
 			.some(t => t.id === tool.id));
 	};
 
 	const renderSalesTools = () => {
-		return user.salesTools.map(tool => {
+		return selectedSalesTool.map(tool => {
 			return <SalesToolProfileItem key={ tool.id }
 			                             toolName={ tool.toolName }
 			                             categoryName={ tool.kind }
@@ -66,13 +75,15 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 			btnText: 'Zapisz zmiany',
 			withSaveBtn: true,
 			btnWithIcon: false,
-			child: <SalesToolsEditModalItem/>
+			child: <SalesToolsEditModalItem allSalesTools={ allSalesTools }/>
 		});
 	};
 
 	const onSalesToolsAdd = (newTools: ISalesTool[]) => {
-		patchSalesTools(newTools.map(tool => tool.id))
-			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+		const request = [ ...selectedSalesTool, ...newTools ];
+
+		patchSalesTools(request.map(tool => tool.id))
+			.then(() => setSelectedSalesTool(request))
 			.catch(console.error);
 	};
 
@@ -86,7 +97,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 			withSaveBtn: true,
 			child: <SalesToolsAddModalItem
 				salesTools={ getSalesToolsToAdd() }
-				onSave={ onSalesToolsAdd }/>
+				onSave = { onSalesToolsAdd }/>
 		});
 	};
 
@@ -106,7 +117,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 						           key={ 'Right Btn' }
 						           withBorder={ true }
 						           backgroundColor={ 'white' }
-						           disabled={ currentIndex + 5 >= user.salesTools.length }
+						           disabled={ currentIndex + 5 >= selectedSalesTool.length }
 						           onClick={ () => handleNavigateClick('right') }/>
 					</div>
 				</div>

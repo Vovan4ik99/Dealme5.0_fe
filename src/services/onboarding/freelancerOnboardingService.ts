@@ -132,17 +132,24 @@ export const useFreelancerOnboardingService = () => {
 		});
 	}, [ sendRequest ]);
 
-	const getSalesTools = useCallback(async (freelancerId: number): Promise<ISalesTool[]> => {
+	const getSalesTools = useCallback(async (): Promise<ISalesTool[]> => {
 		return await sendRequest({
-			url: `${ API_ROUTES.ONBOARDING.FREELANCER.SALES_TOOLS }/${ freelancerId }`,
-		});
+			url: API_ROUTES.ONBOARDING.FREELANCER.SALES_TOOLS
+		})
 	}, [ sendRequest ]);
 
 	const patchSalesTools = useCallback(async (request: number[]): Promise<void> => {
 		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.SALES_TOOLS,
+			url: API_ROUTES.ONBOARDING.FREELANCER.FREELANCER_SALES_TOOLS,
 			method: 'PATCH',
 			body: JSON.stringify(request)
+		})
+	}, [ sendRequest ]);
+
+	const updateOnboardingStatus = useCallback(async (): Promise<void> => {
+		return await sendRequest({
+			url: API_ROUTES.ONBOARDING.FREELANCER.ONBOARDING_STATUS,
+			method: 'PATCH',
 		})
 	}, [ sendRequest ]);
 
@@ -150,6 +157,6 @@ export const useFreelancerOnboardingService = () => {
 		loadingStatus, errorMessage, patchExperienceLevel, getSpecializations, patchSpecialization,
 		patchWorkingDays, getWorkingHours, patchWorkingHours, getIncomeGoals, patchIncomeGoal, getIndustries,
 		patchSubIndustries, getTypesOfSales, patchTypeOfSales, getSectors, patchSectors, getActivities,
-		patchActivities, getSalesTools, patchSalesTools
+		patchActivities, getSalesTools, patchSalesTools, updateOnboardingStatus
 	};
 }

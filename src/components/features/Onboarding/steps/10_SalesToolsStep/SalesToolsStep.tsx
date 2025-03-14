@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { ISalesToolsStepProps } from "./salesToolsTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
@@ -6,26 +6,18 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import SalesToolsList from "@entities/SalesToolsList/SalesToolsList.tsx";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
-const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ userTools, onNext }) => {
-
-	const { user } = useContext(AuthContext);
-	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools } = useFreelancerOnboardingService();
+const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ onNext }) => {
+	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools, updateOnboardingStatus } = useFreelancerOnboardingService();
 
 	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
 	const [ selectedSalesTools, setSelectedSalesTools ] = useState<number[]>([]);
 
 	useEffect(() => {
-		if (!user) return;
-		getSalesTools(user.id)
+		getSalesTools()
 			.then(setSalesTools)
 			.catch(console.error);
-	}, [ getSalesTools, user ]);
-
-	useEffect(() => {
-		setSelectedSalesTools(userTools.map(tool => tool.id));
-	}, [ userTools ]);
+	}, [ getSalesTools ]);
 
 	const onChange = (newSalesTool: number) => {
 		setSelectedSalesTools(prevState => {
@@ -38,10 +30,16 @@ const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ userTools, onNext }) =
 	const onSubmit = () => {
 		if (selectedSalesTools.length > 0) {
 			patchSalesTools(selectedSalesTools)
-				.then(() => onNext())
+				.then(handleOnboardingPass)
 				.catch(e => console.error(e));
 		}
 	};
+
+	const handleOnboardingPass = useCallback(() => {
+		updateOnboardingStatus()
+			.then(onNext)
+			.catch(console.error);
+	}, [ updateOnboardingStatus ]);
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;

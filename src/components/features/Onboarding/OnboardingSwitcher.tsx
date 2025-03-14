@@ -33,7 +33,7 @@ const OnboardingSwitcher = () => {
 		if (step > 10) {
 			navigate("/profile");
 		}
-	}, [ navigate, step ]);
+	}, [ step, loadingStatus, navigate ]);
 
 	if (!user) {
 		return null;
@@ -80,9 +80,9 @@ const OnboardingSwitcher = () => {
 			case 9:
 				return <ActivitiesStep userActivities={ user.selectedActivities } onNext={ incrementStep }/>;
 			case 10:
-				return <SalesToolsStep userTools={ user.salesTools } onNext={ incrementStep }/>;
+				return <SalesToolsStep onNext={ incrementStep }/>;
 			default:
-				return <></>;
+				return <LoadingSpinner/>;
 		}
 	};
 
