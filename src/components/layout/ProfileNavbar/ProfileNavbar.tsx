@@ -1,24 +1,37 @@
 import {NavLink} from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
-import {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {ReactComponent as PulpitIcon} from "@icons/named_exported/profile-navbar/desktop.svg";
 import {ReactComponent as OrdersIcon} from "@icons/named_exported/profile-navbar/orders.svg";
 import {ReactComponent as ProductsIcon} from "@icons/named_exported/profile-navbar/products.svg";
 import {ReactComponent as GuardianIcon} from "@icons/named_exported/profile-navbar/guardian.svg";
-import {ReactComponent as ArrowUp} from "@icons/named_exported/profile-navbar/arrow_up.svg";
 import {ReactComponent as PaymentsIcon} from "@icons/named_exported/profile-navbar/payments.svg";
 import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
 import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow-down.svg";
 import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import { ReactComponent as LogoutIcon } from "@icons/named_exported/profile-navbar/logout.svg";
+import { ReactComponent as LockIcon } from "@icons/named_exported/profile-navbar/lock.svg";
+import { ReactComponent as GearIcon } from "@icons/named_exported/profile-navbar/gear.svg";
+import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
 import {EMITTER_EVENTS, useEventEmitter} from "@hooks/emitter.hook..ts";
 import {useFreelancerAvatarService} from "@services/freelancer/freelancerAvatarService.ts";
+import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
+import {ISelectOptionProps} from "@ui/SelectOption/selectOptionTypes.ts";
 import SelectOption from "@ui/SelectOption/SelectOption.tsx";
-import {AvatarMenuOptions} from "@constants/avatarMenu.tsx";
 
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
+
+	// TODO add OnClick fn to rest of elements
+	 const AvatarMenuOptions: ISelectOptionProps[]= [
+		{ value: "Edycja danych", icon: <EditIcon/>, onClick: () =>  null, info: null },
+		{ value: "Zmień hasło", icon: <LockIcon/>, onClick: () =>  null, info: null },
+		{ value: "Ustawienia", icon: <GearIcon/>, onClick: () =>  null, info: null },
+		{ value: "Wyloguj się", icon: <LogoutIcon/>, onClick: () =>  logout(), info: null },
+	]
+
 	const { user, loadingStatus, logout } = useContext(AuthContext);
 
 	const { getAvatar } = useFreelancerAvatarService();
@@ -33,6 +46,18 @@ const ProfileNavbar = () => {
 			})
 			.catch(console.error);
 	}, [ getAvatar, user ]);
+
+	const renderAvatarOptions = () => {
+		return AvatarMenuOptions.map((item, index) => {
+			return (
+				<SelectOption key={ index }
+							  value={ item.value }
+							  icon={ item.icon }
+							  info={ null }
+							  onClick={ item.onClick }/>
+			);
+		});
+	}
 
 	useEffect(fetchAvatar, [ fetchAvatar ]);
 
@@ -79,29 +104,25 @@ const ProfileNavbar = () => {
 				</button>
 				<div className={ styles["navbar__menu"] }>
 					<button
-						className={ `btn btn--more ${ styles["navbar__btn"] } ${ styles["navbar__btn--avatar"] }
-					 ${ userAvatar !== null && styles["navbar__btn--pl53"] } ${ isModalOpened && styles["navbar__btn--active"] }`}
+						className={ `btn btn--more 
+									 ${ styles["navbar__btn"] }
+									 ${ styles["navbar__btn--avatar"] }
+					 				 ${ userAvatar !== null && styles["navbar__btn--pl53"] } 
+					 				 ${ isModalOpened && styles["navbar__btn--active"] }`}
 						onClick={() => setIsModalOpened(!isModalOpened)}>
 						<div className={ `${ styles["navbar__avatar"] }`}>
 							{ userAvatar ? <img src={ userAvatar } alt="avatar"/> : <GuardianIcon/> }
 						</div>
 						{ user?.firstName } { user?.lastName }
-						{isModalOpened ? <ArrowUp/> : <ArrowDown/>}
+						 <ArrowDown className={ isModalOpened ? styles["navbar__btn--active"] : "" }/>
 					</button>
-					{ isModalOpened && (
-						<div className={ styles["navbar__dropdown"] }>
-							{ AvatarMenuOptions.map((option, index) => (
-								<SelectOption value={ option.label }
-											  info={ null }
-											  icon={ option.icon }
-											  onClick={ () => logout() }
-											  key={ index } />
-							))}
-						</div>
-					)}
+					<DropDownModal isOpen={ isModalOpened }
+								   renderEntities={ renderAvatarOptions }
+								   isFullWidth={ false }/>
 				</div>
 			</div>
 		</nav>
+
 	);
 };
 export default ProfileNavbar;
