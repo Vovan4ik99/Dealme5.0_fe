@@ -1,12 +1,13 @@
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
 
-export interface IMediaUploaderBase extends ISaveableChildProps {
+interface IMediaUploaderBase extends ISaveableChildProps {
 	text: string;
 	aspectRatio?: number;
 	isAvatar?: boolean;
 	onVideoAdd?: (videoUrl: string, filename: string) => void;
 	onImageAdd?: (avatarBlob: Blob, filename: string) => void;
 	mediaType?: MediaType;
+	isPortfolioImage?: boolean;
 }
 
 type MediaType = 'image' | 'video';
@@ -17,6 +18,7 @@ interface IMediaImageUploader extends IMediaUploaderBase {
 	aspectRatio?: number;
 	onImageAdd: (avatarBlob: Blob, filename: string) => void;
 	onVideoAdd?: never;
+	isPortfolioImage?: boolean;
 }
 
 interface IMediaVideoUploader extends IMediaUploaderBase {
@@ -25,6 +27,7 @@ interface IMediaVideoUploader extends IMediaUploaderBase {
 	onImageAdd?: never;
 	isAvatar?: never;
 	aspectRatio?: never;
+	isPortfolioImage?: never;
 }
 
 export type MediaUploaderProps = IMediaImageUploader | IMediaVideoUploader;

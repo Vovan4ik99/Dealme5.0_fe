@@ -1,4 +1,6 @@
-export const parseBase64Image = (dataURL: string | null, defaultFileName: string = 'image') => {
+export const parseBase64Image = (
+	dataURL: string | null, defaultFileName: string = 'image'
+) => {
 	if (!dataURL?.includes(',')) {
 		console.error('Error decoding base64 image from server. Wrong image format.');
 		return {blob: null, filename: null};
@@ -15,8 +17,7 @@ export const parseBase64Image = (dataURL: string | null, defaultFileName: string
 	}
 	const blob = new Blob([byteNumbers], { type: mimeType });
 
-	const extension = mimeType.split('/')[1] || 'bin';
-	const filename = `${defaultFileName}.${extension}`;
+	const filename = `${defaultFileName}`;
 
 	return {
 		blob,

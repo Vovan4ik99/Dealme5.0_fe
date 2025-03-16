@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {ReactComponent as InfoIcon} from "@icons/named_exported/info_icon.svg";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
 import styles from './TooltipIcon.module.scss';
-import {ITooltipIconProps} from "@ui/TooltipIconBtn/tooltipIconTypes.ts";
-import {createPortal} from "react-dom";
-import {CSSTransition} from "react-transition-group";
+import { ITooltipIconProps } from "@ui/TooltipIconBtn/tooltipIconTypes.ts";
+import { createPortal } from "react-dom";
+import { CSSTransition } from "react-transition-group";
 
 const TooltipIcon: React.FC<ITooltipIconProps> = ({text, isLeft = false, isActive = false, isIconTop = false}) => {
 	const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({});
@@ -50,7 +50,7 @@ const TooltipIcon: React.FC<ITooltipIconProps> = ({text, isLeft = false, isActiv
 		};
 	}, [isActive, isLeft, isIconTop, updateTooltipPosition]);
 
-	const getToolipStyle = () => {
+	const getTooltipStyle = () => {
 		if (isIconTop) {
 			return {alignItems: 'flex-start', marginTop: '2px'};
 		}
@@ -59,7 +59,7 @@ const TooltipIcon: React.FC<ITooltipIconProps> = ({text, isLeft = false, isActiv
 
 	return (
 		<div ref={iconRef}
-		     style={getToolipStyle()}
+		     style={getTooltipStyle()}
 		     role="tooltip"
 		     onMouseEnter={updateTooltipPosition}
 		     className={`${styles['item']} ${isActive && styles['item--active']}`}>

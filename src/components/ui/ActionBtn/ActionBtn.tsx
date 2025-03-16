@@ -7,6 +7,7 @@ import { ReactComponent as CloseIcon } from "@icons/named_exported/close_icon.sv
 import { ReactComponent as DeleteIcon } from "@icons/named_exported/delete_icon.svg";
 import { ReactComponent as ArrowLeft } from "@icons/named_exported/arrow_left.svg";
 import { ReactComponent as ArrowRight } from "@icons/named_exported/arrow_right.svg";
+import { ReactComponent as PreviewIcon } from "@icons/named_exported/preview_icon.svg";
 
 const ActionBtn: React.FC<IActionBtnProps> = ({
 	                                              onClick,
@@ -36,6 +37,9 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 			case 'Navigate Right':
 				return <ArrowRight
 					className={ `${ styles['action-btn__icon'] } ${ styles['icon--navigate'] }` }/>;
+			case 'Preview':
+				return <PreviewIcon
+					className={ `${ styles['action-btn__icon'] } ${ styles['icon--preview'] }` }/>
 			default:
 				return <></>;
 		}

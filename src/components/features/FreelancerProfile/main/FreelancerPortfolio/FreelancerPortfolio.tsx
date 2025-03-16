@@ -53,7 +53,7 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 			withSaveBtn: true,
 			btnWithIcon: true,
 			btnText: 'Dodaj projekt',
-			shouldCloseOnSaving: false,
+			shouldCloseOnSaving: true,
 		});
 	};
 

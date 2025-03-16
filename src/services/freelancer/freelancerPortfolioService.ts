@@ -1,4 +1,4 @@
-import { useHttp } from "../../hooks/http.hook.ts";
+import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerPortfolio, IFreelancerPortfolioUpdateRequest } from "@shared/freelancer/portfolio.ts";
@@ -21,7 +21,7 @@ export const useFreelancerPortfolioService = () => {
 			return sendRequest({
 				url: API_ROUTES.PROFILE.FREELANCER.PORTFOLIO,
 				method: "POST",
-				body: JSON.stringify(request),
+				body: request,
 			});
 		}, [ sendRequest ]);
 

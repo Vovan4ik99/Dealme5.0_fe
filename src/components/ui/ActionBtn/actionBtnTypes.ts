@@ -6,4 +6,4 @@ export interface IActionBtnProps {
 	disabled?: boolean;
 }
 
-type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left';
+type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left' | 'Preview';

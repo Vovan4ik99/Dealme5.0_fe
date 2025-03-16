@@ -10,17 +10,20 @@ import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import success_icon from "@icons/alert/success_icon.svg";
 import { MediaUploaderProps } from "./mediaUploaderTypes.ts";
 import VideoPreviewer from "@components/features/EditModal/media/VideoPreviewer/VideoPreviewer.tsx";
+import { parseBase64Image } from "@utils/imageUtils.ts";
 
 const MediaUploader: React.FC<MediaUploaderProps> = ({
-	                                                      text,
-	                                                      registerOnSave,
-	                                                      onVideoAdd,
-	                                                      onImageAdd,
-	                                                      aspectRatio = 0,
-	                                                      isAvatar = false,
-	                                                      mediaType = 'image',
-                                                      }) => {
+	                                                     text,
+	                                                     registerOnSave,
+	                                                     onVideoAdd,
+	                                                     onImageAdd,
+	                                                     aspectRatio = 0,
+	                                                     isAvatar = false,
+	                                                     mediaType,
+	                                                     isPortfolioImage,
+                                                     }) => {
 	const { openModal } = useModal();
+
 	const [ mediaSrc, setMediaSrc ] = useState<string | null>(null);
 	const [ fileName, setFileName ] = useState<string | null>(null);
 	const [ error, setError ] = useState<string | null>(null);
@@ -36,7 +39,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 		video: {
 			'video/mp4': [ '.mp4' ],
 			'video/mov': [ '.mov' ],
-			'video/avi': [ '.avi' ]
+			'video/avi': [ '.avi' ],
 		}
 	};
 
@@ -58,9 +61,27 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 		handleUploaderClose();
 	}, [ fileName, handleUploaderClose, mediaSrc, onVideoAdd ]);
 
+	const onPortfolioImageAdd = useCallback((
+		onImageAdd: (image: Blob, filename: string) => void
+	) => {
+		const parsedImage = parseBase64Image(mediaSrc, fileName ?? undefined);
+
+		if (!parsedImage.blob) {
+			setError('Wybierz plik');
+			return;
+		}
+
+		onImageAdd(parsedImage.blob, parsedImage.filename);
+	}, [ fileName, mediaSrc ]);
+
 	const handleSave = useCallback(() => {
 		if (!mediaSrc || !mediaType || !fileName) {
 			setError('Wybierz plik');
+			return;
+		}
+
+		if (isPortfolioImage) {
+			onPortfolioImageAdd(onImageAdd);
 			return;
 		}
 
@@ -74,7 +95,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 				filename={ fileName }
 				aspect={ aspectRatio }
 				onClose={ handleUploaderClose }
-			/>; 
+			/>;
 		}
 
 		openModal({
@@ -86,11 +107,12 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 			withSaveBtn: true,
 			child: child
 		});
-	}, [ aspectRatio, fileName, handleUploaderClose, handleVideoAdd, isAvatar, mediaSrc, mediaType, onImageAdd, openModal ]);
+	}, [aspectRatio, fileName, handleUploaderClose, handleVideoAdd, isAvatar, isPortfolioImage, mediaSrc, mediaType,
+		onImageAdd, onPortfolioImageAdd, openModal]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [ handleSave, registerOnSave ]);
+	}, [handleSave, registerOnSave]);
 
 	const handleDrop = (acceptedFiles: File[]) => {
 		setError(null);
