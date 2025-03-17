@@ -11,6 +11,10 @@
 
   &:hover {
 	background-color: vars.$color-gray-light;
+
+	.item__title {
+	  text-decoration: underline;
+	}
   }
 
   &__info {
@@ -27,6 +31,7 @@
   }
 
   &__title {
+	transition: all 0.3s ease;
 	color: vars.$color-black;
 	font-size: 16px;
 	line-height: 100%;

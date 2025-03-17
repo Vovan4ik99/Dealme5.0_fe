@@ -107,12 +107,12 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 			withSaveBtn: true,
 			child: child
 		});
-	}, [aspectRatio, fileName, handleUploaderClose, handleVideoAdd, isAvatar, isPortfolioImage, mediaSrc, mediaType,
-		onImageAdd, onPortfolioImageAdd, openModal]);
+	}, [ aspectRatio, fileName, handleUploaderClose, handleVideoAdd, isAvatar, isPortfolioImage, mediaSrc, mediaType,
+		onImageAdd, onPortfolioImageAdd, openModal ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
-	}, [handleSave, registerOnSave]);
+	}, [ handleSave, registerOnSave ]);
 
 	const handleDrop = (acceptedFiles: File[]) => {
 		setError(null);

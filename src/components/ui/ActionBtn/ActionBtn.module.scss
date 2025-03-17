@@ -1,6 +1,6 @@
 @use "@styles/variables" as vars;
 
-.action-btn {
+.action {
   width: 32px;
   height: 32px;
   border-radius: 100%;
@@ -10,12 +10,6 @@
   cursor: pointer;
   border: 1px solid transparent;
   transition: background-color 300ms ease-in-out, color 300ms ease-in-out, border 300ms ease-in-out;
-
-  &--disabled {
-	cursor: not-allowed;
-	opacity: 0.5;
-	pointer-events: none;
-  }
 
   &__icon {
 	width: 100%;
@@ -27,9 +21,15 @@
   &:hover {
 	border: 1px solid vars.$color-black;
 
-	.action-btn__icon {
+	.action__icon {
 	  color: vars.$color-black;
 	}
+  }
+
+  &--disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+	pointer-events: none;
   }
 
   &--wb {
@@ -39,6 +39,14 @@
   &--active {
 	background-color: vars.$primary-color;
 	border: none;
+
+	&:hover {
+	  border: none;
+
+	  .action__icon {
+		color: white;
+	  }
+	}
   }
 }
 
@@ -61,37 +69,25 @@
   &--delete {
 	width: 11px;
 	height: 12px;
-
-	svg path {
-	  fill: vars.$color-gray;
-	}
   }
 
   &--play {
 	margin-left: 1px;
 	width: 12px;
 	height: 12px;
-
-	svg path {
-	  fill: vars.$color-gray;
-	}
   }
 
   &--navigate {
 	width: 6px;
 	height: 10px;
-
-	svg path {
-	  fill: vars.$color-gray;
-	}
   }
 
   &--preview {
 	width: 14px;
 	height: 12px;
+  }
 
-	svg path {
-	  fill: vars.$color-gray;
-	}
+  &--hovered {
+	color: white;
   }
 }

@@ -1,0 +1,75 @@
+@use "@styles/variables" as vars;
+
+.item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 281px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding-bottom: 16px;
+
+  &:hover {
+	background-color: vars.$color-gray-light;
+
+	.item__title {
+	  text-decoration: underline;
+	  padding-left: 16px;
+	}
+
+	.item__description {
+	  padding-left: 16px;
+	}
+
+	.item__img {
+	  background-color: white;
+	}
+  }
+
+  &__actions {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px;
+  }
+
+  &__img {
+	transition: all 0.3s ease;
+	width: 100%;
+	border-radius: 12px;
+	height: 158px;
+	background-color: vars.$color-gray-light;
+	padding: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	img {
+	  width: 141px;
+	  height: 141px;
+	  object-fit: contain;
+	}
+  }
+
+  &__title {
+	transition: all 0.3s ease;
+	margin-top: 16px;
+	font-size: 16px;
+	line-height: 120%;
+	color: vars.$color-black;
+  }
+
+  &__description {
+	transition: all 0.3s ease;
+	margin-top: 8px;
+	font-size: 14px;
+	line-height: 120%;
+	color: vars.$color-gray;
+	font-weight: 400;
+  }
+}

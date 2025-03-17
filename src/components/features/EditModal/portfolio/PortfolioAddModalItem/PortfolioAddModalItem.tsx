@@ -13,8 +13,9 @@ import InputError from "@ui/InputError/InputError.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "@components/features/EditModal/media/MediaUploader/MediaUploader.tsx";
 import PreviewGalleryModal from "@ui/PreviewGalleryModal/PreviewGalleryModal.tsx";
+import { parseBase64Image } from "@utils/imageUtils.ts";
 
-const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, registerOnSave }) => {
+const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, registerOnSave, handleClose, portfolio }) => {
 
 	const { openModal } = useModal();
 
@@ -32,10 +33,10 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, 
 		shouldFocusError: false,
 		mode: 'onChange',
 		defaultValues: {
-			info: undefined,
-			title: undefined,
-			picture: undefined,
-			filename: undefined,
+			info: portfolio?.info,
+			title: portfolio?.title,
+			picture: parseBase64Image(portfolio?.pictureData ?? null).blob ?? undefined,
+			filename: parseBase64Image(portfolio?.pictureData ?? null, 'portfolio project').filename ?? undefined,
 		}
 	});
 
@@ -73,11 +74,12 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, 
 		handleSubmit(data => {
 			const formData = new FormData();
 			formData.append("title", data.title);
-			formData.append("info", data.info);
 			formData.append("picture", data.picture!, data.filename ?? 'Portfolio picture');
+			formData.append("info", data.info ?? '');
 			onSave(formData);
+			handleClose!();
 		})();
-	}, [ handleSubmit, onSave ]);
+	}, [ handleClose, handleSubmit, onSave ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);
@@ -150,7 +152,7 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, 
 			                value={ info }/>
 			{ picture &&
                 <PreviewGalleryModal onClose={ () => setIsPreviewOpened(false) }
-                                     isModalOpened={isPreviewOpened}
+                                     isModalOpened={ isPreviewOpened }
                                      galleryItems={
 					                     [ {
 						                     picture: URL.createObjectURL(picture),

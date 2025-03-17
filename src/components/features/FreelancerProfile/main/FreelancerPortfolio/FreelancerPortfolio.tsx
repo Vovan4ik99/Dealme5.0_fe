@@ -10,6 +10,9 @@ import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import PortfolioAddModalItem
 	from "@components/features/EditModal/portfolio/PortfolioAddModalItem/PortfolioAddModalItem.tsx";
+import PortfolioProfileItem
+	from "@components/features/FreelancerProfile/main/FreelancerPortfolio/PortfolioProfileItem/PortfolioProfileItem.tsx";
+import PreviewGalleryModal from "@ui/PreviewGalleryModal/PreviewGalleryModal.tsx";
 
 const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
@@ -20,6 +23,8 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 
 	const [ portfolioItems, setPortfolioItems ] = useState<IFreelancerPortfolio[]>([]);
 	const [ startVisibleItemIndex, setStartVisibleItemIndex ] = useState<number>(0);
+	const [ isPreviewModalOpened, setIsPreviewModalOpened ] = useState<boolean>(false);
+	const [ previewItemIndex, setPreviewItemIndex ] = useState<number>(0);
 
 	const fetchPortfolioItems = useCallback(() => {
 		getPortfolioItems(freelancerId)
@@ -53,7 +58,7 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 			withSaveBtn: true,
 			btnWithIcon: true,
 			btnText: 'Dodaj projekt',
-			shouldCloseOnSaving: true,
+			shouldCloseOnSaving: false,
 		});
 	};
 
@@ -61,19 +66,39 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 
 	};
 
+	const onPortfolioItemEdit = (portfolio: IFreelancerPortfolio) => {
+		openModal({
+			id: 'AddPortfolioModal',
+			title: 'Edytuj projekt do portfolio',
+			child: <PortfolioAddModalItem onSave={ onPortfolioItemAdd }
+			                              portfolio={ portfolio }/>,
+			withSaveBtn: true,
+			btnWithIcon: true,
+			btnText: 'Zapisz zmiany',
+			shouldCloseOnSaving: false,
+		});
+	};
+
 	const renderContent = () => {
 		const itemsToRender: ReactElement[] = [];
 
-		portfolioItems.slice(startVisibleItemIndex, startVisibleItemIndex + 3)
-			.forEach(portfolioItem => {
-				itemsToRender.push(
-					<></> //TODO portfolio item should be pushed
-				);
-			});
+		portfolioItems.forEach((portfolioItem, index) => {
+			itemsToRender.push(
+				<PortfolioProfileItem key={ portfolioItem.id }
+				                      picture={ portfolioItem.pictureData }
+				                      title={ portfolioItem.title }
+				                      comment={ portfolioItem.info }
+				                      onPreviewClick={ () => {
+					                      setPreviewItemIndex(index);
+					                      setIsPreviewModalOpened(true);
+				                      } }
+				                      onEditClick={ () => onPortfolioItemEdit(portfolioItem) }/>
+			);
+		});
 
 		for (let i = itemsToRender.length; i < 3; i++) {
 			itemsToRender.push(
-				<button key={ i }
+				<button key={ i + '-empty' }
 				        className={ styles['portfolio__empty'] }
 				        style={ isLoggedUserProfile ? { cursor: 'pointer' } : { cursor: 'default' } }
 				        onClick={ isLoggedUserProfile ? handleAddPortfolioItem : undefined }>
@@ -83,6 +108,16 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 		}
 
 		return itemsToRender;
+	};
+
+	const getGalleryItems = () => {
+		return portfolioItems.map(portfolioItem => {
+			return {
+				title: portfolioItem.title,
+				picture: portfolioItem.pictureData,
+				description: portfolioItem.info,
+			}
+		});
 	};
 
 	return (
@@ -100,7 +135,10 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
                             <ActionBtn kind={ 'Navigate Right' }
                                        onClick={ navigateRight }
                                        withBorder={ true }
-                                       disabled={ startVisibleItemIndex === portfolioItems.length - 1 }
+                                       disabled={
+								           startVisibleItemIndex === portfolioItems.length - 3 ||
+								           portfolioItems.length <= 3
+							           }
                                        backgroundColor={ 'white' }/>
                         </div>
 					}
@@ -127,10 +165,20 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 						           'Nie dodałeś/aś żadnych projektów do portfolio' :
 						           'Brak projektów w portfolio' }/>
 				}
-				<div className={ styles['portfolio__items'] }>
+				<div
+					style={ {
+						transform: `translateX(-${ startVisibleItemIndex * (281 + 16) }px)`
+					} }
+					className={ styles['portfolio__inner'] }>
 					{ renderContent() }
 				</div>
 			</div>
+			{ portfolioItems.length > 0 &&
+                <PreviewGalleryModal galleryItems={ getGalleryItems() }
+                                     isModalOpened={ isPreviewModalOpened }
+                                     startIndex={ previewItemIndex }
+                                     onClose={ () => setIsPreviewModalOpened(false) }/>
+			}
 		</section>
 	);
 };
