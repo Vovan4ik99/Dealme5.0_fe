@@ -1,7 +1,7 @@
-import {useCallback, useState} from "react";
-import {ErrorMessages} from "@shared//errorMessages.ts";
-import {getErrorMessage} from "../utils/errorUtils.ts";
-import {AUTH_PAGES} from "@constants/constans.ts";
+import { useCallback, useState } from "react";
+import { ErrorMessages } from "@shared/errorMessages.ts";
+import { getErrorMessage } from "@utils/errorUtils.ts";
+import { AUTH_PAGES } from "@constants/constans.ts";
 
 type HTTPRequestMethods = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
@@ -32,11 +32,11 @@ interface IErrorResponse {
 const baseUrl: string = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 export const useHttp = (): IHTTPResponse => {
-	const [loadingStatus, setLoadingStatus] = useState<LoadingStatusOptions>('idle');
-	const [errorMessage, setErrorMessage] = useState<ErrorMessages | null>(null);
+	const [ loadingStatus, setLoadingStatus ] = useState<LoadingStatusOptions>('idle');
+	const [ errorMessage, setErrorMessage ] = useState<ErrorMessages | null>(null);
 
 	const sendRequest = useCallback(async (
-		{url, method = 'GET', body = null, headers = {}}: IRequestConfig,
+		{ url, method = 'GET', body = null, headers = {} }: IRequestConfig,
 	): Promise<any> => {
 		setLoadingStatus('loading');
 
@@ -45,13 +45,13 @@ export const useHttp = (): IHTTPResponse => {
 
 		const token = localStorage.getItem('token');
 		const authHeaders: IHTTPHeaders = {
-			...(body instanceof FormData ? {} : {'Content-Type': 'application/json'}),
-			...(token && !isAuthPage ? {'Authorization': `Bearer ${token}`} : {}),
+			...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
+			...(token && !isAuthPage ? { 'Authorization': `Bearer ${ token }` } : {}),
 			...headers,
 		};
 
 		try {
-			const response = await fetch(`${baseUrl}${url}`, {method, body, headers: authHeaders});
+			const response = await fetch(`${ baseUrl }${ url }`, { method, body, headers: authHeaders });
 			if (!response.ok) {
 				const errorData: IErrorResponse = await response.json().catch(() => null);
 				const errorMessage = getErrorMessage(response.status, errorData.message);
@@ -74,5 +74,5 @@ export const useHttp = (): IHTTPResponse => {
 		}
 	}, []);
 
-	return {loadingStatus, errorMessage, sendRequest};
+	return { loadingStatus, errorMessage, sendRequest };
 }

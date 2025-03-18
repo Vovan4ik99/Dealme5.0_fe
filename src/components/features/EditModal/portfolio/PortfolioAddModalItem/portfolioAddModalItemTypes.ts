@@ -1,5 +1,5 @@
 import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
-import { IFreelancerPortfolio } from "@shared/freelancer/portfolio.ts";
+import { IFreelancerPortfolio, IFreelancerPortfolioUpdateRequest } from "@shared/freelancer/portfolio.ts";
 
 export interface IPortfolioForm {
 	title: string;
@@ -8,7 +8,26 @@ export interface IPortfolioForm {
 	filename?: string;
 }
 
-export interface IPortfolioAddModalItemProps extends ISaveableChildProps {
-	onSave: (portfolio: FormData) => void;
+interface IPortfolioBaseModalItem extends ISaveableChildProps {
+	isEdit: boolean;
+	onSave?: (portfolio: FormData) => void;
+	onPatch?: (portfolio: IFreelancerPortfolioUpdateRequest) => void;
 	portfolio?: IFreelancerPortfolio;
 }
+
+interface IPortfolioAddModalItem extends IPortfolioBaseModalItem {
+	isEdit: false;
+	onSave: (portfolio: FormData) => void;
+	portfolio?: never;
+	onPatch?: never;
+}
+
+interface IPortfolioEditModalItem extends IPortfolioBaseModalItem {
+	isEdit: true;
+	onPatch: (portfolio: IFreelancerPortfolioUpdateRequest) => void;
+	portfolio: IFreelancerPortfolio;
+	onSave?: never;
+
+}
+
+export type IPortfolioAddModalItemProps = IPortfolioAddModalItem | IPortfolioEditModalItem;

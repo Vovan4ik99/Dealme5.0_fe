@@ -3,7 +3,7 @@ import styles from "./FreelancerPortfolio.module.scss";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useFreelancerPortfolioService } from "@services/freelancer/freelancerPortfolioService.ts";
 import { IFreelancerPortfolioProps } from "./freelancerPortfolioTypes.ts";
-import { IFreelancerPortfolio } from "@shared/freelancer/portfolio.ts";
+import { IFreelancerPortfolio, IFreelancerPortfolioUpdateRequest } from "@shared/freelancer/portfolio.ts";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
@@ -13,12 +13,14 @@ import PortfolioAddModalItem
 import PortfolioProfileItem
 	from "@components/features/FreelancerProfile/main/FreelancerPortfolio/PortfolioProfileItem/PortfolioProfileItem.tsx";
 import PreviewGalleryModal from "@ui/PreviewGalleryModal/PreviewGalleryModal.tsx";
+import PortfolioEditModalItem
+	from "@components/features/EditModal/portfolio/PortfolioEditModalItem/PortfolioEditModalItem.tsx";
 
 const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'portfolio';
 
-	const { getPortfolioItems, addPortfolioItem } = useFreelancerPortfolioService();
+	const { getPortfolioItems, addPortfolioItem, patchPortfolioItem } = useFreelancerPortfolioService();
 	const { openModal } = useModal();
 
 	const [ portfolioItems, setPortfolioItems ] = useState<IFreelancerPortfolio[]>([]);
@@ -50,11 +52,32 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 			.catch(console.error);
 	};
 
+	const onPortfolioItemPatch = (request: IFreelancerPortfolioUpdateRequest) => {
+		patchPortfolioItem(request)
+			.then(fetchPortfolioItems)
+			.catch(console.error);
+	};
+
+	const onPortfolioItemEdit = (portfolio: IFreelancerPortfolio) => {
+		openModal({
+			id: 'AddPortfolioModal',
+			title: 'Edytuj projekt do portfolio',
+			child: <PortfolioAddModalItem onPatch={ onPortfolioItemPatch }
+			                              portfolio={ portfolio }
+			                              isEdit={ true }/>,
+			withSaveBtn: true,
+			btnWithIcon: true,
+			btnText: 'Zapisz zmiany',
+			shouldCloseOnSaving: false,
+		});
+	};
+
 	const handleAddPortfolioItem = () => {
 		openModal({
 			id: 'AddPortfolioModal',
 			title: 'Dodaj projekt do portfolio',
-			child: <PortfolioAddModalItem onSave={ onPortfolioItemAdd }/>,
+			child: <PortfolioAddModalItem onSave={ onPortfolioItemAdd }
+			                              isEdit={ false }/>,
 			withSaveBtn: true,
 			btnWithIcon: true,
 			btnText: 'Dodaj projekt',
@@ -62,20 +85,12 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 		});
 	};
 
-	const handleEditPortfolioItem = () => {
-
-	};
-
-	const onPortfolioItemEdit = (portfolio: IFreelancerPortfolio) => {
+	const handleEditPortfolioItems = () => {
 		openModal({
-			id: 'AddPortfolioModal',
-			title: 'Edytuj projekt do portfolio',
-			child: <PortfolioAddModalItem onSave={ onPortfolioItemAdd }
-			                              portfolio={ portfolio }/>,
-			withSaveBtn: true,
-			btnWithIcon: true,
-			btnText: 'Zapisz zmiany',
-			shouldCloseOnSaving: false,
+			id: 'EdiPortfolioItemsModal',
+			title: 'Edytuj portfolio',
+			child: <PortfolioEditModalItem onClose={ fetchPortfolioItems }/>,
+			withSaveBtn: false,
 		});
 	};
 
@@ -151,7 +166,7 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
                                    backgroundColor={ 'white' }/>
 						{ portfolioItems.length > 0 &&
                             <ActionBtn kind={ 'Edit' }
-                                       onClick={ handleEditPortfolioItem }
+                                       onClick={ handleEditPortfolioItems }
                                        withBorder={ true }
                                        backgroundColor={ 'white' }/>
 						}

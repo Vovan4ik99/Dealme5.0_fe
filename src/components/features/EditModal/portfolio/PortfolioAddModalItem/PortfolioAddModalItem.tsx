@@ -14,8 +14,16 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import MediaUploader from "@components/features/EditModal/media/MediaUploader/MediaUploader.tsx";
 import PreviewGalleryModal from "@ui/PreviewGalleryModal/PreviewGalleryModal.tsx";
 import { parseBase64Image } from "@utils/imageUtils.ts";
+import { IFreelancerPortfolioUpdateRequest } from "@shared/freelancer/portfolio.ts";
 
-const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, registerOnSave, handleClose, portfolio }) => {
+const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({
+	                                                                      onSave,
+	                                                                      registerOnSave,
+	                                                                      handleClose,
+	                                                                      portfolio,
+	                                                                      isEdit,
+	                                                                      onPatch
+                                                                      }) => {
 
 	const { openModal } = useModal();
 
@@ -72,14 +80,23 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({ onSave, 
 
 	const handleSave = useCallback(() => {
 		handleSubmit(data => {
-			const formData = new FormData();
-			formData.append("title", data.title);
-			formData.append("picture", data.picture!, data.filename ?? 'Portfolio picture');
-			formData.append("info", data.info ?? '');
-			onSave(formData);
+			if (isEdit) {
+				const request: IFreelancerPortfolioUpdateRequest = {
+					id: portfolio.id,
+					title: data.title,
+					info: data.info
+				};
+				onPatch(request);
+			} else {
+				const formData = new FormData();
+				formData.append("title", data.title);
+				formData.append("info", data.info ?? '');
+				formData.append("picture", data.picture!, data.filename ?? 'Portfolio project');
+				onSave(formData);
+			}
 			handleClose!();
 		})();
-	}, [ handleClose, handleSubmit, onSave ]);
+	}, [ handleClose, handleSubmit, isEdit, onPatch, onSave, portfolio ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

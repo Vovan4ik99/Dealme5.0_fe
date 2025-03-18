@@ -2,7 +2,6 @@ export const parseBase64Image = (
 	dataURL: string | null, defaultFileName: string = 'image'
 ) => {
 	if (!dataURL?.includes(',')) {
-		console.error('Error decoding base64 image from server. Wrong image format.');
 		return { blob: null, filename: null };
 	}
 
