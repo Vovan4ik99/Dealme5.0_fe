@@ -1,0 +1,41 @@
+@use "@styles/variables" as vars;
+
+.portfolio {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	background-color: vars.$color-gray-light;
+	width: 128px;
+	height: 72px;
+
+	img {
+	  width: 70px;
+	  height: 70px;
+	  object-fit: contain;
+	}
+  }
+
+  &__title {
+	width: 245px;
+	margin-left: 4px;
+	color: vars.$color-black;
+	font-size: 16px;
+	line-height: 120%;
+  }
+
+  &__actions {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+  }
+}

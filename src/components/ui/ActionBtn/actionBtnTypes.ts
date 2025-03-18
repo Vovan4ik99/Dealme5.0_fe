@@ -4,6 +4,7 @@ export interface IActionBtnProps {
 	withBorder: boolean;
 	backgroundColor?: 'transparent' | 'lightgray' | 'white';
 	disabled?: boolean;
+	isHovered?: boolean;
 }
 
-type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left';
+type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left' | 'Preview';

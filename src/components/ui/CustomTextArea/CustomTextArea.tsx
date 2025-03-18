@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import styles from './AboutMeTextArea.module.scss';
-import { IAboutMeTextAreaProps } from "@components/features/EditModal/about_me/AboutMeTextArea/aboutMeTextAreaTypes.ts";
+import styles from './CustomTextArea.module.scss';
+import { ICustomTextAreaProps, LabelColor } from "@ui/CustomTextArea/customTextAreaTypes.ts";
 import resizing_img from "@icons/freelancer_profile/about_me/area_resizing.svg";
 import InputError from "@ui/InputError/InputError.tsx";
 
-const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
-	                                                          maxSymbols,
-	                                                          label,
-	                                                          fontSize = 18,
-	                                                          fontWeight = 500,
-	                                                          placeholder,
-	                                                          minHeight = 100,
-	                                                          onTextChange,
-	                                                          value,
-	                                                          error,
-	                                                          register,
-	                                                          trigger,
-	                                                          id,
-	                                                          validation
-                                                          }) => {
+const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
+	                                                         maxSymbols,
+	                                                         label,
+	                                                         labelColor,
+	                                                         fontSize = 18,
+	                                                         fontWeight = 500,
+	                                                         placeholder,
+	                                                         minHeight = 100,
+	                                                         onTextChange,
+	                                                         value,
+	                                                         error,
+	                                                         register,
+	                                                         trigger,
+	                                                         id,
+	                                                         validation
+                                                         }) => {
 
 	const [ height, setHeight ] = useState(minHeight);
 
@@ -83,7 +84,7 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 		if (textareaRef.current) {
 			updateHeights(textareaRef.current);
 		}
-	}, [updateHeights ]);
+	}, [ updateHeights ]);
 
 	const handleMouseDown = (e: React.MouseEvent) => {
 		isResizing.current = true;
@@ -109,13 +110,25 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 		document.addEventListener("mousemove", handleMouseMove);
 		document.addEventListener("mouseup", handleMouseUp);
 		e.preventDefault();
-	}
+	};
+
+	const getLabelClassName = (labelColor: LabelColor) => {
+		const className = styles['textarea__label'];
+		switch (labelColor) {
+			case "gray":
+				return className + " " + styles['textarea__label--gray'];
+			case "black":
+				return className + " " + styles['textarea__label--black'];
+			default:
+				return className;
+		}
+	}; 
 
 	return (
 		<div>
-			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error']}` }
+			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error'] }` }
 			     style={ { height: `${ height }px` } }>
-				<div className={ styles['textarea__label'] }>
+				<div className={ getLabelClassName(labelColor) }>
 					<span>{ label }</span>
 					<span>{ value?.length ?? 0 } / { maxSymbols }</span>
 				</div>
@@ -139,4 +152,4 @@ const AboutMeTextArea: React.FC<IAboutMeTextAreaProps> = ({
 	);
 };
 
-export default AboutMeTextArea;
+export default CustomTextArea;

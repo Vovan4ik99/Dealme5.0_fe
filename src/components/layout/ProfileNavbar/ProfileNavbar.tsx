@@ -15,7 +15,7 @@ import { ReactComponent as LogoutIcon } from "@icons/named_exported/profile-navb
 import { ReactComponent as LockIcon } from "@icons/named_exported/profile-navbar/lock.svg";
 import { ReactComponent as GearIcon } from "@icons/named_exported/profile-navbar/gear.svg";
 import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
-import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook..ts";
+import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook.ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
 import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
 import SelectOption from "@ui/SelectOption/SelectOption.tsx";
@@ -35,21 +35,20 @@ const ProfileNavbar = () => {
 
 	const { getAvatar } = useFreelancerAvatarService();
 
-	const [ userAvatar, setAvatar ] = useState<string | null>(null);
+	const [ avatar, setAvatar ] = useState<string | undefined>();
 	const [ isDropdownOpened, setIsDropdownOpened ] = useState<boolean>(false);
 
 	const fetchAvatar = useCallback(() => {
-		getAvatar(user!.id)
-			.then((res) => {
-				setAvatar(res ? res.picture : null);
-			})
+		if (!user) return;
+		getAvatar(user.id)
+			.then((res) => setAvatar(res ? res.picture : undefined))
 			.catch(console.error);
 	}, [ getAvatar, user ]);
 
 	const renderAvatarOptions = () => {
 		return avatarMenuOptions.map((item, index) => {
 			return (
-				<SelectOption key={ index }
+				<SelectOption key={ index + 1 }
 							  value={ item.value }
 							  icon={ item.icon }
 							  info={ null }
@@ -108,11 +107,11 @@ const ProfileNavbar = () => {
 						className={ `btn btn--more 
 									 ${ styles["navbar__btn"] }
 									 ${ styles["navbar__btn--avatar"] }
-					 				 ${ userAvatar !== null && styles["navbar__btn--pl43"] } 
+					 				 ${ avatar && styles["navbar__btn--pl43"] } 
 					 				 ${ isDropdownOpened && styles["navbar__btn--active"] }`}
 						onClick={ () => setIsDropdownOpened(!isDropdownOpened) }>
 						<div className={ `${ styles["navbar__avatar"] }`}>
-							{ userAvatar ? <img src={ userAvatar } alt="avatar"/> : <GuardianIcon/> }
+							{ avatar ? <img src={ avatar } alt="avatar"/> : <GuardianIcon/> }
 						</div>
 						{ user?.firstName } { user?.lastName }
 						 <ArrowDown className={ `${ isDropdownOpened && styles["navbar__btn--active"] }` }/>

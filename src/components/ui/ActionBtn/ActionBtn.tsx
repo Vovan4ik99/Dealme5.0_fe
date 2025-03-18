@@ -2,21 +2,12 @@ import React from "react";
 import styles from './ActionBtn.module.scss'
 import { IActionBtnProps } from "./actionBtnTypes.ts";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import {
-	ReactComponent as EditIcon
-} from "@icons/named_exported/edit_icon.svg";
-import {
-	ReactComponent as CloseIcon
-} from "@icons/named_exported/close_icon.svg";
-import {
-	ReactComponent as DeleteIcon
-} from "@icons/named_exported/delete_icon.svg";
-import {
-	ReactComponent as ArrowLeft
-} from "@icons/named_exported/arrow_left.svg";
-import {
-	ReactComponent as ArrowRight
-} from "@icons/named_exported/arrow_right.svg";
+import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
+import { ReactComponent as CloseIcon } from "@icons/named_exported/close_icon.svg";
+import { ReactComponent as DeleteIcon } from "@icons/named_exported/delete_icon.svg";
+import { ReactComponent as ArrowLeft } from "@icons/named_exported/arrow_left.svg";
+import { ReactComponent as ArrowRight } from "@icons/named_exported/arrow_right.svg";
+import { ReactComponent as PreviewIcon } from "@icons/named_exported/preview_icon.svg";
 
 const ActionBtn: React.FC<IActionBtnProps> = ({
 	                                              onClick,
@@ -24,28 +15,35 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 	                                              withBorder,
 	                                              backgroundColor = 'transparent',
 	                                              disabled = false,
+	                                              isHovered
                                               }) => {
 
 	const getBtnSvg = () => {
-		switch(kind) {
+		switch (kind) {
 			case 'Edit':
 				return <EditIcon
-					className={`${styles['action-btn__icon']} ${styles['icon--edit']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
 			case 'Add':
 				return <AddIcon
-					className={`${styles['action-btn__icon']} ${styles['icon--close']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--add'] }` }/>;
 			case 'Close':
 				return <CloseIcon
-					className={`${styles['action-btn__icon']} ${styles['icon--close']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--close'] }` }/>;
 			case 'Delete':
 				return <DeleteIcon
-					className={`${styles['action-btn__icon']} ${styles['icon--delete']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--delete'] }` }/>;
 			case 'Navigate Left':
 				return <ArrowLeft
-					className={`${styles['action-btn__icon']} ${styles['icon--navigate']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--navigate'] }` }/>;
 			case 'Navigate Right':
 				return <ArrowRight
-					className={`${styles['action-btn__icon']} ${styles['icon--navigate']}`}/>;
+					className={ `${ styles['action__icon'] } ${ styles['icon--navigate'] }` }/>;
+			case 'Preview':
+				return <PreviewIcon className={
+					`${ styles['action__icon'] } 
+					${ styles['icon--preview'] } 
+					${ isHovered && styles['icon--hovered'] }`
+				}/>
 			default:
 				return <></>;
 		}
@@ -56,13 +54,16 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 	};
 
 	const getBackgroundColor = () => {
-		if(backgroundColor === 'transparent') {
+		if (isHovered) {
+			return '';
+		}
+		if (backgroundColor === 'transparent') {
 			return backgroundColor;
 		}
-		if(backgroundColor === 'lightgray') {
+		if (backgroundColor === 'lightgray') {
 			return '#F0F1F7';
 		}
-		if(backgroundColor === 'white') {
+		if (backgroundColor === 'white') {
 			return '#FFFFFF';
 		}
 	};
@@ -73,15 +74,17 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 	};
 
 	return (
-		<button style={{ backgroundColor: getBackgroundColor() }}
-		        onClick={handleClick}
-		        onPointerDown={handlePointerDown}
-		        disabled={disabled}
-		        className={`
-		            ${styles['action-btn']} 
-		            ${withBorder && styles['action-btn--wb']} 
-		            ${disabled && styles['action-btn--disabled']}`}>
-			{getBtnSvg()}
+		<button style={ { backgroundColor: getBackgroundColor() } }
+		        onClick={ handleClick }
+		        onPointerDown={ handlePointerDown }
+		        disabled={ disabled }
+		        className={
+			        `${ styles['action'] } 
+		            ${ withBorder && styles['action--wb'] } 
+		            ${ isHovered && styles['action--active'] }
+		            ${ disabled && styles['action--disabled'] }`
+		        }>
+			{ getBtnSvg() }
 		</button>
 	);
 };

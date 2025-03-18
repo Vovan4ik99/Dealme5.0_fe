@@ -1,0 +1,54 @@
+@use "@styles/variables" as vars;
+
+.portfolio {
+  margin-top: 64px;
+
+  &__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+
+  &__wrapper {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+  }
+
+  &__actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+  }
+
+  &__content {
+	margin-top: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	overflow: hidden;
+  }
+
+  &__inner {
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+	transition: transform 0.3s ease-in-out;
+	width: max-content;
+  }
+
+  &__empty {
+	height: 270px;
+	width: 281px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	border: 2px dashed vars.$color-gray-border;
+	background-color: white;
+
+	svg path {
+	  fill: vars.$color-gray;
+	}
+  }
+}

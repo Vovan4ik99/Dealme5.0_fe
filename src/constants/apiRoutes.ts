@@ -59,6 +59,7 @@ export const API_ROUTES = {
 			ADD_ACTIVITY: '/freelancer/me/activity',
 			EDUCATION: '/freelancer/education',
 			GET_ACTIVITIES: '/activities/freelancer',
+			PORTFOLIO: '/freelancer/portfolios',
 		}
 	}
 } as const;

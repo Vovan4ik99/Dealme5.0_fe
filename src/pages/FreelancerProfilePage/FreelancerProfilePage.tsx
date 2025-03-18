@@ -31,6 +31,9 @@ import FreelancerEducation
 	from "@components/features/FreelancerProfile/main/FreelancerEducation/FreelancerEducation.tsx";
 import { useFreelancerEducationService } from "@services/freelancer/freelancerEducationService.ts";
 import { useParams } from "react-router-dom";
+import FreelancerPortfolio
+	from "@components/features/FreelancerProfile/main/FreelancerPortfolio/FreelancerPortfolio.tsx";
+import { useFreelancerPortfolioService } from "@services/freelancer/freelancerPortfolioService.ts";
 
 const FreelancerProfilePage = () => {
 
@@ -42,7 +45,8 @@ const FreelancerProfilePage = () => {
 		useFreelancerVideoService(),
 		useFreelancerCertificateService(),
 		useFreelancerWorkExperienceService(),
-		useFreelancerEducationService()
+		useFreelancerEducationService(),
+		useFreelancerPortfolioService()
 	);
 
 	const { id } = useParams();
@@ -79,6 +83,7 @@ const FreelancerProfilePage = () => {
                         <SalesTools freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <FreelancerVideos freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <FreelancerServices freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+	                    <FreelancerPortfolio freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <FreelancerReviews freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
                         <FreelancerWorkExperience freelancerId={ freelancerId }
                                                   isLoggedUserProfile={ isLoggedUserProfile }/>

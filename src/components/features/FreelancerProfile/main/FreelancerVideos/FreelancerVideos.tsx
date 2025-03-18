@@ -24,8 +24,7 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 	const [ videos, setVideos ] = useState<IFreelancerVideo[]>([]);
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 
-	const containerRef = useRef<HTMLDivElement>(null);
-	const itemRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+	const itemRefs = useRef<HTMLDivElement[]>([]);
 
 	const fetchVideos = useCallback(() => {
 		getFreelancerVideos(freelancerId)
@@ -33,23 +32,9 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 			.catch(console.error);
 	}, [ freelancerId, getFreelancerVideos ]);
 
-	const calculateVisibleCount = useCallback(() => {
-		if (!containerRef.current) return;
-
-		const containerWidth = containerRef.current.offsetWidth;
-		let totalWidth = 0;
-
-		itemRefs.current.forEach((item) => {
-			if (item && totalWidth + item.offsetWidth <= containerWidth) {
-				totalWidth += item.offsetWidth;
-			}
-		});
-	}, []);
-
 	useEffect(() => {
 		fetchVideos();
-		calculateVisibleCount();
-	}, [ calculateVisibleCount, fetchVideos ]);
+	}, [ fetchVideos ]);
 
 	const handleNavigateClick = (direction: 'left' | 'right') => {
 		if (direction === 'left') {
@@ -113,11 +98,11 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 			return <AlertItem kind={ 'neutral' } text={ text }/>
 		}
 
-		const videoItems = videos.map((video, index) => {
+		const videoItems = videos.map((video) => {
 			return <div key={ video.id }
 			            className={ styles['videos__item'] }
 			            ref={ (el) => {
-				            if (el) itemRefs.current.set(index, el);
+				            if (el) itemRefs.current.push(el);
 			            } }>
 				<VideoProfileItem key={ video.id }
 				                  id={ video.id }
@@ -132,7 +117,7 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 
 		return <div className={ styles['videos__inner'] }
 		            style={ {
-			            transform: `translateX(-${ itemRefs.current.get(currentIndex)?.offsetLeft ?? 0 }px)`
+			            transform: `translateX(-${ itemRefs.current[currentIndex]?.offsetLeft ?? 0 }px)`
 		            } }>
 			{ videoItems }
 		</div>
@@ -177,8 +162,7 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
                     </div>
 				}
 			</header>
-			<div className={ styles['videos__content'] }
-			     ref={ containerRef }>
+			<div className={ styles['videos__content'] }>
 				{ renderVideos() }
 			</div>
 		</section>

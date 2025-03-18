@@ -6,7 +6,7 @@ import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
-import { EMITTER_EVENTS, publishEvent } from "@hooks/emitter.hook..ts";
+import { EMITTER_EVENTS, publishEvent } from "@hooks/emitter.hook.ts";
 import { IAvatarProps } from "@components/features/FreelancerProfile/main/Avatar/avatarTypes.ts";
 
 
@@ -17,7 +17,7 @@ const Avatar: React.FC<IAvatarProps> = ({ freelancerId, isLoggedUserProfile }) =
 
 	const { patchAvatar, deleteAvatar, getAvatar } = useFreelancerAvatarService();
 
-	const [ userAvatar, setAvatar ] = useState<string | null>(null);
+	const [ avatar, setAvatar ] = useState<string | null>(null);
 
 	const fetchAvatar = useCallback(() => {
 		getAvatar(freelancerId)
@@ -70,16 +70,16 @@ const Avatar: React.FC<IAvatarProps> = ({ freelancerId, isLoggedUserProfile }) =
 	};
 
 	return (
-		<div className={ `${ styles['avatar'] } ${ !userAvatar && styles['avatar--empty'] }` }>
+		<div className={ `${ styles['avatar'] } ${ !avatar && styles['avatar--empty'] }` }>
 			{ isLoggedUserProfile && <div className={styles['avatar__icon']}>
 				<ActionBtn kind={'Edit'}
 						   onClick={handleAvatarEdit}
-						   withBorder={userAvatar === null}
-						   backgroundColor={userAvatar ? 'lightgray' : 'white'}/>
+						   withBorder={avatar === null}
+						   backgroundColor={avatar ? 'lightgray' : 'white'}/>
 			</div> }
-			{ userAvatar ?
+			{ avatar ?
 				<>
-					<img className={ styles['avatar__img'] } src={ userAvatar } alt={ 'avatar' }/>
+					<img className={ styles['avatar__img'] } src={ avatar } alt={ 'avatar' }/>
 					<div className={ styles['avatar__logo'] }>
 						<LogoIcon/>
 					</div>
