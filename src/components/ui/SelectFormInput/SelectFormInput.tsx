@@ -68,8 +68,8 @@ const SelectFormInput = <T extends Record<string, any>>({
 				<ArrowIcon width={ 12 } height={ 8 }/>
 			</button>
 			<DropDownModal isOpen={ isOpen }
-						   renderEntities={ renderSelectItems }
-						   isFullWidth={ true }/>
+						   renderItems={ renderSelectItems() }
+						   isFitting={ true }/>
 			{ error?.message && <InputError text={ error.message }/> }
 		</div>
 

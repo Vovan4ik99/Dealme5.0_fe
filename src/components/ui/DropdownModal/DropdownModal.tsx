@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { IDropdownModalProps } from "@ui/DropdownModal/DropDownModalTypes.ts";
 import styles from "./DropdownModal.module.scss";
 
-const DropDownModal : React.FC<IDropdownModalProps> = ({ isOpen, renderEntities, isFullWidth }) => {
+const DropDownModal : React.FC<IDropdownModalProps> = ({ isOpen, renderItems, isFitting }) => {
 
     const modalRef = useRef<HTMLDivElement>(null);
 
@@ -21,8 +21,8 @@ const DropDownModal : React.FC<IDropdownModalProps> = ({ isOpen, renderEntities,
         <div
             ref={ modalRef }
             className={ `${styles["dropdown"]} 
-                         ${ isFullWidth ? styles["dropdown__input"] : "" } ` }>
-            { renderEntities() }
+                         ${ isFitting ? styles["dropdown__input"] : "" } ` }>
+            { renderItems }
         </div>
     </CSSTransition>
     )

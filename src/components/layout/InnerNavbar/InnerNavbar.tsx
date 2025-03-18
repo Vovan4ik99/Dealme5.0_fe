@@ -10,15 +10,7 @@ const InnerNavbar = () => {
 	 * be used by that navbar
 	 */
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
-	const [ elementWidths, setElementWidths ]= useState<number[]>([]);
 	const itemRefs = useRef<HTMLDivElement[]>([]);
-
-	useEffect(() => {
-		Array.from(itemRefs.current?.values()).map((el) => {
-			elementWidths.push(el.clientWidth + 7);
-			setElementWidths(elementWidths);
-		});
-	}, [ elementWidths, itemRefs ]);
 
 	useEffect(() => {
 		const missingSections = Object.keys(NAVBAR_SECTIONS).filter(
@@ -31,7 +23,9 @@ const InnerNavbar = () => {
 	}, [ ] );
 
 	const handleElementMove = () => {
-		return elementWidths
+		return Array.from(itemRefs
+			.current?.values())
+			.map((el) => el.clientWidth + 7)
 			.slice(0, currentIndex)
 			.reduce((acc, width) => acc + width, 0);
 	}
@@ -76,7 +70,7 @@ const InnerNavbar = () => {
 						   key={ 'Right Btn' }
 						   withBorder={ true }
 						   backgroundColor={ 'white' }
-						   disabled={ currentIndex === ( elementWidths.length / 2 ) - 1 }
+						   disabled={ currentIndex === Object.keys(NAVBAR_SECTIONS).length - 1 }
 						   onClick={ () => handleNavigationClick('right') }/>
 		</nav>
 	)
