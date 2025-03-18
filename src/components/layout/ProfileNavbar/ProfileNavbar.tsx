@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/Logo/Logo.tsx";
-import {useCallback, useContext, useEffect, useState} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { ReactComponent as PulpitIcon } from "@icons/named_exported/profile-navbar/desktop.svg";
 import { ReactComponent as OrdersIcon } from "@icons/named_exported/profile-navbar/orders.svg";
@@ -10,19 +10,33 @@ import { ReactComponent as GuardianIcon } from "@icons/named_exported/profile-na
 import { ReactComponent as PaymentsIcon } from "@icons/named_exported/profile-navbar/payments.svg";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import { ReactComponent as ArrowDown } from "@icons/named_exported/arrow-down.svg";
-import avatar from "@icons/profile_navbar/default_avatar.svg";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import { ReactComponent as LogoutIcon } from "@icons/named_exported/profile-navbar/logout.svg";
+import { ReactComponent as LockIcon } from "@icons/named_exported/profile-navbar/lock.svg";
+import { ReactComponent as GearIcon } from "@icons/named_exported/profile-navbar/gear.svg";
+import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
 import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook..ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
+import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
+import SelectOption from "@ui/SelectOption/SelectOption.tsx";
+import { ILoggedUserOption } from "@components/layout/ProfileNavbar/ProfileNavbarTypes.ts";
 
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
 
-	const { user, loadingStatus } = useContext(AuthContext);
+	 const avatarMenuOptions: ILoggedUserOption[]= [
+		{ value: "Edycja danych", icon: <EditIcon/> },
+		{ value: "Zmień hasło", icon: <LockIcon/> },
+		{ value: "Ustawienia", icon: <GearIcon/> },
+		{ value: "Wyloguj się", icon: <LogoutIcon/>, onClick: () =>  logout() },
+	]
+
+	const { user, loadingStatus, logout } = useContext(AuthContext);
 
 	const { getAvatar } = useFreelancerAvatarService();
 
 	const [ userAvatar, setAvatar ] = useState<string | null>(null);
+	const [ isDropdownOpened, setIsDropdownOpened ] = useState<boolean>(false);
 
 	const fetchAvatar = useCallback(() => {
 		getAvatar(user!.id)
@@ -31,6 +45,18 @@ const ProfileNavbar = () => {
 			})
 			.catch(console.error);
 	}, [ getAvatar, user ]);
+
+	const renderAvatarOptions = () => {
+		return avatarMenuOptions.map((item, index) => {
+			return (
+				<SelectOption key={ index }
+							  value={ item.value }
+							  icon={ item.icon }
+							  info={ null }
+							  onClick={ item.onClick }/>
+			);
+		});
+	}
 
 	useEffect(fetchAvatar, [ fetchAvatar ]);
 
@@ -71,20 +97,33 @@ const ProfileNavbar = () => {
 				</NavLink>
 			</div>
 			<div className={ styles["navbar__add-wrapper"] }>
-				<button className={ `btn btn--more ${ styles["navbar__btn"] }` }>
+				<button className={ `btn btn--more 
+									${ styles["navbar__btn"] } 
+									${ styles["navbar__btn--avatar"] }` }>
 					<AddIcon/>
 					Przyjmij zlecenie
 				</button>
-				<button className={ `btn btn--more ${ styles["navbar__btn"] } ${ styles["navbar__btn--avatar"] }
-				 ${ userAvatar !== null && styles["navbar__btn--pl53"] }` }>
-					<div className={ `${ styles["navbar__avatar"] }` }>
-						<img src={ userAvatar ?? avatar } alt="avatar"/>
-					</div>
-					{ user?.firstName } { user?.lastName }
-					<ArrowDown/>
-				</button>
+				<div className={ styles["navbar__menu"] }>
+					<button
+						className={ `btn btn--more 
+									 ${ styles["navbar__btn"] }
+									 ${ styles["navbar__btn--avatar"] }
+					 				 ${ userAvatar !== null && styles["navbar__btn--pl43"] } 
+					 				 ${ isDropdownOpened && styles["navbar__btn--active"] }`}
+						onClick={ () => setIsDropdownOpened(!isDropdownOpened) }>
+						<div className={ `${ styles["navbar__avatar"] }`}>
+							{ userAvatar ? <img src={ userAvatar } alt="avatar"/> : <GuardianIcon/> }
+						</div>
+						{ user?.firstName } { user?.lastName }
+						 <ArrowDown className={ `${ isDropdownOpened && styles["navbar__btn--active"] }` }/>
+					</button>
+					<DropDownModal isOpen={ isDropdownOpened }
+								   renderItems={ renderAvatarOptions() }
+								   isFitting={ false }/>
+				</div>
 			</div>
 		</nav>
+
 	);
 };
 export default ProfileNavbar;

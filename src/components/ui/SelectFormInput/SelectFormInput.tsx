@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { ISelectFormInputProps } from "@ui/SelectFormInput/selectFormInputTypes.ts";
 import styles from './SelectFormInput.module.scss';
 import { ReactComponent as ArrowIcon } from "@icons/named_exported/arrow-down.svg";
 import SelectOption from "@ui/SelectOption/SelectOption.tsx";
-import { CSSTransition } from "react-transition-group";
 import InputError from "@ui/InputError/InputError.tsx";
+import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
 
 const SelectFormInput = <T extends Record<string, any>>({
 	                                                        text,
@@ -20,8 +20,6 @@ const SelectFormInput = <T extends Record<string, any>>({
                                                         }: ISelectFormInputProps<T>) => {
 
 	const [ isOpen, setIsOpen ] = useState<boolean>(false);
-	
-	const selectRef = useRef<HTMLDivElement | null>(null);
 
 	const toggleSelect = (e: React.MouseEvent) => {
 		e.preventDefault();
@@ -56,33 +54,22 @@ const SelectFormInput = <T extends Record<string, any>>({
 			<input type="hidden" { ...register(id, validationRules) } />
 			<button
 				className={
-					`${ styles['input__btn'] } ${ isOpen && styles['input__btn--open'] } ${ error && styles['input__btn--error'] }`
-				}
+					`${ styles['input__btn'] }
+					 ${ isOpen && styles['input__btn--open'] }
+					 ${ error && styles['input__btn--error'] }` }
 				onClick={ toggleSelect }>
 				<div className={ styles['input__text'] }>
 					<span>{ labelText }</span>
 					<p className={ !text ? styles['input__text--default'] : '' }>
 						{ !text ? 'Wybierz' : text }
 					</p>
-					{ additionalText && <span className={ styles['input__text-add'] }>({ additionalText })</span> }
+					{ additionalText && <span className={ styles['input__text-add'] }> ({ additionalText }) </span> }
 				</div>
 				<ArrowIcon width={ 12 } height={ 8 }/>
 			</button>
-			<CSSTransition in={ isOpen }
-			               timeout={ 300 }
-			               unmountOnExit
-			               classNames={ {
-				               enter: styles['input__select-enter'],
-				               enterActive: styles['input__select-enter-active'],
-				               exit: styles['input__select-exit'],
-				               exitActive: styles['input__select-exit-active'],
-			               } }
-			               nodeRef={ selectRef }>
-				<div ref={ selectRef }
-				     className={ `${ styles['input__select'] } ${ isOpen && styles['input__select--open'] }` }>
-					{ renderSelectItems() }
-				</div>
-			</CSSTransition>
+			<DropDownModal isOpen={ isOpen }
+						   renderItems={ renderSelectItems() }
+						   isFitting={ true }/>
 			{ error?.message && <InputError text={ error.message }/> }
 		</div>
 
