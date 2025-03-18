@@ -24,7 +24,6 @@ import { ILoggedUserOption } from "@components/layout/ProfileNavbar/ProfileNavba
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
 
-	// TODO add OnClick fn to rest of elements
 	 const avatarMenuOptions: ILoggedUserOption[]= [
 		{ value: "Edycja danych", icon: <EditIcon/> },
 		{ value: "Zmień hasło", icon: <LockIcon/> },

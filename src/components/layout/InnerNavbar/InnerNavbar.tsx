@@ -10,6 +10,7 @@ const InnerNavbar = () => {
 	 * be used by that navbar
 	 */
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
+
 	const itemRefs = useRef<HTMLDivElement[]>([]);
 
 	useEffect(() => {
@@ -23,8 +24,7 @@ const InnerNavbar = () => {
 	}, [ ] );
 
 	const handleElementMove = () => {
-		return Array.from(itemRefs
-			.current?.values())
+		return Array.from(itemRefs.current?.values())
 			.map((el) => el.clientWidth + 7)
 			.slice(0, currentIndex)
 			.reduce((acc, width) => acc + width, 0);
