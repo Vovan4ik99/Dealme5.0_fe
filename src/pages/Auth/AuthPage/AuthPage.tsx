@@ -6,7 +6,8 @@ import React from "react";
 
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 import LoginForm from "@components/features/Auth/LoginForm/LoginForm.tsx";
-import Navbar from "@components/layout/OnboardingNavbar/Navbar.tsx";
+import FreelancerOnboardingNavbar
+	from "@components/layout/onboarding/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import RegistrationForm from "@components/features/Auth/RegistrationForm/RegistrationForm.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
 
@@ -17,7 +18,7 @@ interface LoginPageProps {
 const AuthPage: React.FC<LoginPageProps> = ({isLogin}) => {
 	return (
 		<section className={styles['login-page']}>
-			<Navbar/>
+			<FreelancerOnboardingNavbar/>
 			<div className={styles['login-page__content']}>
 				<h1 className={'title'}>{isLogin ? 'Zaloguj się' : 'Załóż konto'}</h1>
 				<div className={styles['login-page__social']}>
