@@ -1,6 +1,6 @@
 import styles from "./SwitchBtn.module.scss";
 import React from "react";
-import {ISwitchBtnProps} from "@ui/SwitchBtn/switchBtnTypes.ts";
+import { ISwitchBtnProps } from "@ui/SwitchBtn/switchBtnTypes.ts";
 
 const SwitchBtn: React.FC<ISwitchBtnProps> = ({onClick, isActive, leftContent, rightContent}) => {
 
