@@ -1,5 +1,5 @@
 import FreelancerOnboardingNavbar
-	from "@components/layout/onboarding/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
+	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import styles from "./OnboardingPage.module.scss";
 import OnboardingSwitcher from "../../components/features/Onboarding/OnboardingSwitcher.tsx";
 

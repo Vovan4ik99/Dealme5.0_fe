@@ -3,7 +3,7 @@ import Footer from "@components/layout/Footer/Footer.tsx";
 import React from "react";
 import ResetPasswordForm from "@components/features/Auth/ResetPasswordForm/ResetPasswordForm.tsx";
 import FreelancerOnboardingNavbar
-    from "@components/layout/onboarding/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
+    from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 
 
 const ResetPasswordPage = () => {

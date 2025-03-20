@@ -7,7 +7,7 @@ import React from "react";
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 import LoginForm from "@components/features/Auth/LoginForm/LoginForm.tsx";
 import FreelancerOnboardingNavbar
-	from "@components/layout/onboarding/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
+	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import RegistrationForm from "@components/features/Auth/RegistrationForm/RegistrationForm.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
 

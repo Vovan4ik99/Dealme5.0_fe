@@ -1,6 +1,6 @@
 import styles from "./Dashboard.module.scss";
 import FreelancerOnboardingNavbar
-	from "@components/layout/onboarding/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
+	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import Footer from "../../components/layout/Footer/Footer.tsx";
 import { Link } from "react-router-dom";
 
