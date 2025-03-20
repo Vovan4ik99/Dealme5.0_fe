@@ -44,5 +44,13 @@
 	&--active {
 	  color: vars.$color-black;
 	}
+
+	&:hover {
+	  background-color: rgba(vars.$color-white, 0.50);
+	  margin: 0 10px;
+	  border-radius: 8px;
+	  padding: 8px;
+	  height: 46px;
+	}
   }
 }

@@ -27,14 +27,14 @@
 		width: 12px;
 		height: 12px;
 	  }
+	}
 
-	  &:hover {
-        background-color: vars.$color-primary-pastel;
-        border: none;
+	&--hover {
+	  background-color: vars.$color-white;
+	  border: 1px solid vars.$primary-color;
 
-        div {
-          background-color: vars.$primary-color;
-        }
+	  div {
+		background-color: vars.$primary-color;
 	  }
 	}
 

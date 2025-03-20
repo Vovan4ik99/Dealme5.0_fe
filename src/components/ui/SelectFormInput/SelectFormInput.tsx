@@ -59,8 +59,10 @@ const SelectFormInput = <T extends Record<string, any>>({
 					 ${ error && styles['input__btn--error'] }` }
 				onClick={ toggleSelect }>
 				<div className={ styles['input__text'] }>
-					<span>{ labelText }</span>
-					<p className={ !text ? styles['input__text--default'] : '' }>
+					<span className={ `${ text && styles['input__text--filled'] }` }>
+						{ labelText }
+					</span>
+					<p className={ `${ !text && styles['input__text--default'] }`  }>
 						{ !text ? 'Wybierz' : text }
 					</p>
 					{ additionalText && <span className={ styles['input__text-add'] }> ({ additionalText }) </span> }
@@ -70,7 +72,7 @@ const SelectFormInput = <T extends Record<string, any>>({
 			<DropDownModal isOpen={ isOpen }
 						   renderItems={ renderSelectItems() }
 						   isFitting={ true }/>
-			{ error?.message && <InputError text={ error.message }/> }
+			{ (error?.message && !isOpen) && <InputError text={ error.message }/> }
 		</div>
 
 	);

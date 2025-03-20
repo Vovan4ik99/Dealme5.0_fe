@@ -17,18 +17,14 @@
   &__label {
 	display: flex;
 	justify-content: space-between;
+	color: vars.$color-black;
 
 	span {
 	  font-size: 14px;
 	  line-height: 120%;
 	}
-
 	&--gray {
 	  color: vars.$color-gray;
-	}
-
-	&--black {
-	  color: vars.$color-black;
 	}
   }
 
@@ -60,4 +56,13 @@
 	outline: none;
 	z-index: 1;
   }
+
+  &:focus-within {
+	border-color: vars.$color-black;
+
+	.textarea__label {
+		color: vars.$color-gray;
+	}
+  }
+
 }

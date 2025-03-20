@@ -162,7 +162,6 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({
 			                register={ register }
 			                placeholder={ 'Wpisz komentarz' }
 			                label={ 'Komentarz' }
-			                labelColor={ 'black' }
 			                maxSymbols={ 150 }
 			                trigger={ trigger }
 			                onTextChange={ setInfo }

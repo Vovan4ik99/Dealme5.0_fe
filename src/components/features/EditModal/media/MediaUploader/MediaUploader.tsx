@@ -3,14 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
 import { useDropzone } from "react-dropzone";
 import { ReactComponent as InfoIcon } from "@icons/named_exported/info_icon.svg";
-import upload_icon from "@icons/freelancer_profile/upload_icon.svg";
+import { ReactComponent as UploadIcon } from "@icons/named_exported/upload_icon.svg";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import ImageCropper from "@components/features/EditModal/media/ImageCropper/ImageCropper.tsx";
-import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import success_icon from "@icons/alert/success_icon.svg";
 import { MediaUploaderProps } from "./mediaUploaderTypes.ts";
 import VideoPreviewer from "@components/features/EditModal/media/VideoPreviewer/VideoPreviewer.tsx";
 import { parseBase64Image } from "@utils/imageUtils.ts";
+import InputError from "@ui/InputError/InputError.tsx";
 
 const MediaUploader: React.FC<MediaUploaderProps> = ({
 	                                                     text,
@@ -134,6 +134,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 		}
 
 		const reader = new FileReader();
+
 		reader.onload = () => {
 			setMediaSrc(reader.result as string);
 			setFileName(file.name);
@@ -141,7 +142,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 		reader.readAsDataURL(file);
 	};
 
-	const { getRootProps, getInputProps } = useDropzone({
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		accept: ACCEPTED_FORMATS[mediaType],
 		onDrop: handleDrop,
 		onDropRejected: () => setError('Niepoprawny format pliku'),
@@ -149,13 +150,22 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 
 	return (
 		<>
-			<div className={ styles['uploader'] }>
-				<div className={ styles['uploader__content'] } { ...getRootProps() }>
+			<div className={ `${ styles['uploader'] }  
+						 	  ${ error && styles['uploader--error']}
+						 	  ${ isDragActive && styles['uploader--drag']}` }>
+				<div className={` ${ styles['uploader__content'] } `}
+					 { ...getRootProps() }>
 					<input { ...getInputProps() } />
-					<img src={ upload_icon } alt="media-uploader"/>
-					<p className={ styles['uploader__text'] }>Przeciągnij i upuść plik tutaj aby dodać</p>
-					<CustomDivider/>
-					<button className="btn btn--more btn--uploader">Wybierz z dysku</button>
+					<UploadIcon />
+					{ !isDragActive ? (
+						<div className={ styles['uploader__prompt'] }>
+							<p className={ styles['uploader__text'] }>Przeciągnij i upuść plik tutaj aby dodać</p>
+							<CustomDivider/>
+							<button className="btn btn--more btn--uploader">Wybierz z dysku</button>
+						</div>
+					) : (
+							<p className={ styles['uploader__text'] }>Upuść plik tutaj aby dodać</p>
+					)}
 				</div>
 
 				<div className={ styles['uploader__info'] }>
@@ -173,7 +183,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 				</div>
 			) }
 
-			{ error && <AlertItem text={ error } kind="error" hasMarginTop/> }
+			{ error && <InputError text={ error } /> }
 		</>
 	);
 };
