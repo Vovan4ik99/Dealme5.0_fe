@@ -82,7 +82,6 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 			<CustomTextArea label={ 'Główna zajawka' }
 			                fontSize={ 18 }
 			                fontWeight={ 500 }
-			                labelColor={ 'gray' }
 			                maxSymbols={ 500 }
 			                placeholder={ 'Wpisz tutaj swoje zajawki..' }
 			                value={ about }
@@ -95,7 +94,6 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 			                id={ 'about' }
 			                onTextChange={ (newText: string) => setValue('about', newText) }/>
 			<CustomTextArea label={ 'Opis (opcjonalne)' }
-			                labelColor={ 'gray' }
 			                maxSymbols={ 600 }
 			                placeholder={ 'Wpisz tutaj opis..' }
 			                fontWeight={ 400 }

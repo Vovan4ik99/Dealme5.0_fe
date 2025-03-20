@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from './CustomTextArea.module.scss';
-import { ICustomTextAreaProps, LabelColor } from "@ui/CustomTextArea/customTextAreaTypes.ts";
+import { ICustomTextAreaProps } from "@ui/CustomTextArea/customTextAreaTypes.ts";
 import resizing_img from "@icons/freelancer_profile/about_me/area_resizing.svg";
 import InputError from "@ui/InputError/InputError.tsx";
 
 const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 	                                                         maxSymbols,
 	                                                         label,
-	                                                         labelColor,
 	                                                         fontSize = 18,
 	                                                         fontWeight = 500,
 	                                                         placeholder,
@@ -22,6 +21,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
                                                          }) => {
 
 	const [ height, setHeight ] = useState(minHeight);
+	const [ isEmpty, setIsEmpty ] = useState<boolean>(true);
 
 	const isResizing = useRef(false);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -57,6 +57,8 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 
 	const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const value = event.target.value;
+
+		setIsEmpty(value.length == 0 );
 
 		if (value.length <= maxSymbols) {
 			onTextChange(value);
@@ -112,25 +114,13 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 		e.preventDefault();
 	};
 
-	const getLabelClassName = (labelColor: LabelColor) => {
-		const className = styles['textarea__label'];
-		switch (labelColor) {
-			case "gray":
-				return className + " " + styles['textarea__label--gray'];
-			case "black":
-				return className + " " + styles['textarea__label--black'];
-			default:
-				return className;
-		}
-	}; 
-
 	return (
 		<div>
 			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error'] }` }
 			     style={ { height: `${ height }px` } }>
-				<div className={ getLabelClassName(labelColor) }>
-					<span>{ label }</span>
-					<span>{ value?.length ?? 0 } / { maxSymbols }</span>
+				<div className={ styles["textarea__label"] }>
+					<span className={ `${ !isEmpty && styles["textarea__label--gray"] }` }>{ label }</span>
+					<span className={ styles["textarea__label--gray"] }>{ value?.length ?? 0 } / { maxSymbols }</span>
 				</div>
 				<textarea className={ styles['textarea__input'] }
 				          value={ value }

@@ -13,8 +13,5 @@ export interface ICustomTextAreaProps {
 	register: UseFormRegister<any>;
 	trigger: UseFormTrigger<any>;
 	validation?: RegisterOptions;
-	labelColor: LabelColor;
 	id: string;
 }
-
-export type LabelColor = 'gray' | 'black';
