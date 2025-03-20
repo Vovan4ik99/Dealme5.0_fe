@@ -13,7 +13,7 @@ import OnboardingProgressTracker
 
 const OnboardingLayout: React.FC<IOnboardingLayoutProps> = ({ userType }) => {
 
-	const [ currentStep, setCurrentStep ] = useState<number>(4);
+	const [ currentStep, setCurrentStep ] = useState<number>(0);
 
 	const stepData: IStepData = ONBOARDING_STEPS_DATA[userType][currentStep];
 
