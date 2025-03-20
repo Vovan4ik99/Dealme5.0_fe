@@ -21,7 +21,6 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
                                                          }) => {
 
 	const [ height, setHeight ] = useState(minHeight);
-	const [ isEmpty, setIsEmpty ] = useState<boolean>(true);
 
 	const isResizing = useRef(false);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -57,8 +56,6 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 
 	const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const value = event.target.value;
-
-		setIsEmpty(value.length == 0 );
 
 		if (value.length <= maxSymbols) {
 			onTextChange(value);
@@ -119,7 +116,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error'] }` }
 			     style={ { height: `${ height }px` } }>
 				<div className={ styles["textarea__label"] }>
-					<span className={ `${ !isEmpty && styles["textarea__label--gray"] }` }>{ label }</span>
+					<span className={ `${ textareaRef.current?.value && styles["textarea__label--gray"] }` }>{ label }</span>
 					<span className={ styles["textarea__label--gray"] }>{ value?.length ?? 0 } / { maxSymbols }</span>
 				</div>
 				<textarea className={ styles['textarea__input'] }
