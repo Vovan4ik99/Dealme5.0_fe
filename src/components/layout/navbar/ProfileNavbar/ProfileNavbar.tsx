@@ -107,14 +107,14 @@ const ProfileNavbar = () => {
 						className={ `btn btn--more 
 									 ${ styles["navbar__btn"] }
 									 ${ styles["navbar__btn--avatar"] }
-					 				 ${ avatar && styles["navbar__btn--pl43"] } 
+					 				 ${ avatar ? styles["navbar__btn--pl43"] : styles["navbar__btn--pl35"] } 
 					 				 ${ isDropdownOpened && styles["navbar__btn--active"] }`}
 						onClick={ () => setIsDropdownOpened(!isDropdownOpened) }>
 						<div className={ `${ styles["navbar__avatar"] }`}>
 							{ avatar ? <img src={ avatar } alt="avatar"/> : <GuardianIcon/> }
 						</div>
 						{ user?.firstName } { user?.lastName }
-						 <ArrowDown className={ `${ isDropdownOpened && styles["navbar__btn--active"] }` }/>
+						 <ArrowDown className={ `${ isDropdownOpened && styles["navbar__btn--arrow"] }` }/>
 					</button>
 					<DropDownModal isOpen={ isDropdownOpened }
 								   renderItems={ renderAvatarOptions() }

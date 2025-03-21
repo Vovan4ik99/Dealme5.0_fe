@@ -1,6 +1,6 @@
-import {createContext} from "react";
-import {LoadingStatusOptions} from "@hooks/http.hook.ts";
-import {ILoggedUserData} from "@shared/userTypes.ts";
+import { createContext } from "react";
+import { LoadingStatusOptions } from "@hooks/http.hook.ts";
+import { ILoggedUserData } from "@shared/userTypes.ts";
 
 export const InitialAuthState: IAuthInitialState = {
 	user: null,

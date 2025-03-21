@@ -21,8 +21,9 @@ const FreelancerServices: React.FC<IFreelancerServicesProps> = ({ freelancerId, 
 	const SECTION_ID: NavbarSectionKey = 'services';
 
 	const { openModal } = useModal();
+
 	const { getActivities, patchActivities } = useFreelancerOnboardingService();
-	const { getFreelancerActivities, createActivity } = useFreelancerProfileService()
+	const { getFreelancerActivities, createActivity } = useFreelancerProfileService();
 
 	const [ allActivities, setAllActivities ] = useState<IActivity[]>([]);
 	const [ freelancerActivities, setFreelancerActivities ] = useState<IFreelancerActivity[]>([]);
