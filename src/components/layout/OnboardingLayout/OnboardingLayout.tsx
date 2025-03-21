@@ -53,12 +53,12 @@ const OnboardingLayout: React.FC<IOnboardingLayoutProps> = ({ userType }) => {
 								<BackIcon width={ 5 } height={ 8 }/>
 							</button>
 							<span className={ styles['onboarding__subtitle'] }>
-							{ currentStep + 1 } / { ONBOARDING_STEPS_DATA[userType].length }
-						</span>
-							<span className={ styles['onboarding__circle'] }></span>
+								{ currentStep + 1 } / { ONBOARDING_STEPS_DATA[userType].length }
+							</span>
+							<span className={ styles['onboarding__circle'] }/>
 							<span className={ styles['onboarding__subtitle'] }>
-							{ stepData.subtitle }
-						</span>
+								{ stepData.subtitle }
+							</span>
 						</header>
 						<h1 className={ styles['onboarding__title'] }>{ stepData.title }</h1>
 						{ getStepComponent() }
@@ -70,7 +70,7 @@ const OnboardingLayout: React.FC<IOnboardingLayoutProps> = ({ userType }) => {
 			</div>
 			<Footer isCentered={ false } isHyphenated={ false }/>
 		</section>
-	)
+	);
 };
 
 export default OnboardingLayout;

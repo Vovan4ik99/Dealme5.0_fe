@@ -11,16 +11,17 @@ const OnboardingProgressCategory: React.FC<OnboardingProgressCategoryProps> = ({
                                                                                }) => {
 
 	const getIcon = (iconType: 'gray' | 'success' | 'checked') => {
+		const baseClass = styles['category__icon'];
 		switch (iconType) {
 			case 'gray':
-				return <div className={ `${ styles['category__icon'] } ${ styles['category__icon--gray'] }` }></div>;
+				return <div className={ `${ baseClass } ${ styles['category__icon--gray'] }` }/>;
 			case 'success':
-				return <div className={ `${ styles['category__icon'] } ${ styles['category__icon--success'] }` }>
+				return <div className={ `${ baseClass } ${ styles['category__icon--success'] }` }>
 					<img src={ success_icon } alt={ 'success icon' }/>
 				</div>;
 			case 'checked':
-				return <div className={ `${ styles['category__icon'] } ${ styles['category__icon--checked'] }` }>
-					<div className={ styles['category__circle'] }></div>
+				return <div className={ `${ baseClass } ${ styles['category__icon--checked'] }` }>
+					<div className={ styles['category__circle'] }/>
 				</div>;
 			default:
 				return <></>;
@@ -28,30 +29,35 @@ const OnboardingProgressCategory: React.FC<OnboardingProgressCategoryProps> = ({
 	};
 
 	const getCategory = () => {
-		if (kind === 'category') {
-			if (status === 'active') {
-				return <div className={ `${ styles['category'] } ${ styles['category--main-active'] }` }>
-					{ title } ({ subcategoriesCount })
-				</div>
-			} else {
-				return <div className={ `${ styles['category'] } ${ styles['category--main-default'] }` }>
-					{ status === 'completed' && getIcon('success') }
-					{ title } ({ subcategoriesCount })
-				</div>;
-			}
-		} else {
-			if (status === 'active') {
-				return <div className={ `${ styles['category'] } ${ styles['category--sub-active'] }` }>
-					{ getIcon('checked') }
-					{ title }
-				</div>
-			} else {
-				return <div className={ `${ styles['category'] } ${ styles['category--sub-default'] }` }>
-					{ status === 'completed' ? getIcon('success') : getIcon('gray') }
-					{ title }
-				</div>
-			}
-		}
+		const isCategory = kind === 'category';
+		const isActive = status === 'active';
+		const isCompleted = status === 'completed';
+
+		const baseClass = styles['category'];
+		const statusClass = isCategory
+			? isActive
+				? styles['category--main-active']
+				: styles['category--main-default']
+			: isActive
+				? styles['category--sub-active']
+				: styles['category--sub-default'];
+
+		const icon = isCategory
+			? isCompleted
+				? getIcon('success')
+				: undefined
+			: isActive
+				? getIcon('checked')
+				: isCompleted
+					? getIcon('success')
+					: getIcon('gray');
+
+		return (
+			<div className={ `${ baseClass } ${ statusClass }` }>
+				{ icon }
+				{ title } {isCategory && `(${ subcategoriesCount })` }
+			</div>
+		);
 	};
 
 	return (
