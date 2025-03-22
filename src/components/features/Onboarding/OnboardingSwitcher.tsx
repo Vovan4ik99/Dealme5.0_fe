@@ -44,10 +44,10 @@ const OnboardingSwitcher = () => {
 	}, [ user, fetchLoggedUserData ]);
 
 	useEffect(() => {
-		if (step > 10) {
+		if (userData?.isOnboardingPassed) {
 			navigate("/profile");
 		}
-	}, [ step, loadingStatus, navigate ]);
+	}, [ userData, loadingStatus, navigate ]);
 
 	if (!user) {
 		return null;
