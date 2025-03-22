@@ -5,7 +5,7 @@ import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
 import { ReactComponent as CloseIcon } from "@icons/named_exported/close_icon.svg";
 import { ReactComponent as DeleteIcon } from "@icons/named_exported/delete_icon.svg";
-import { ReactComponent as ArrowLeft } from "@icons/named_exported/arrow_left.svg";
+import { ReactComponent as ArrowLeft } from "@icons/named_exported/onboarding/arrow_left.svg";
 import { ReactComponent as ArrowRight } from "@icons/named_exported/arrow_right.svg";
 import { ReactComponent as PreviewIcon } from "@icons/named_exported/preview_icon.svg";
 

@@ -1,5 +1,5 @@
-import styles from "../../layout/ProfileNavbar/ProfileNavbar.module.scss";
-import {Link} from "react-router-dom";
+import styles from "@components/layout/navbar/ProfileNavbar/ProfileNavbar.module.scss";
+import { Link } from "react-router-dom";
 import logo from '@icons/app/logo.svg';
 
 const Logo = () => {

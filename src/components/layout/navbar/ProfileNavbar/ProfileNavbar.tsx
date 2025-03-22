@@ -19,7 +19,7 @@ import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook.ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
 import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
 import SelectOption from "@ui/SelectOption/SelectOption.tsx";
-import { ILoggedUserOption } from "@components/layout/ProfileNavbar/ProfileNavbarTypes.ts";
+import { ILoggedUserOption } from "@components/layout/navbar/ProfileNavbar/ProfileNavbarTypes.ts";
 
 const ProfileNavbar = () => {
 	const EVENT: EMITTER_EVENTS = "updateAvatar";
