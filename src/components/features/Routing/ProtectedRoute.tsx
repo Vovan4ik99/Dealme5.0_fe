@@ -1,12 +1,26 @@
 import { useCallback, useContext, useEffect } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useAuthService } from "@services/auth/authService.ts";
 
 const ProtectedRoute = () => {
 	const { user, loadingStatus, getLoggedUserData } = useContext(AuthContext);
+
 	const navigate = useNavigate();
 
+	const { fetchLoggedUserData } = useAuthService();
+
 	const token = localStorage.getItem('token');
+
+	const checkFreelancerOnboardingStatus = useCallback(() => {
+		fetchLoggedUserData(user!.role)
+			.then(response => {
+				if (!response.isOnboardingPassed) {
+						navigate("/onboarding");
+					}
+				})
+			.catch(console.error);
+	}, [ fetchLoggedUserData, navigate, user ]);
 
 	const getUserData = useCallback(() => {
 		if (!token) {
@@ -20,14 +34,12 @@ const ProtectedRoute = () => {
 		if (!user && loadingStatus === 'error') {
 			navigate("/login");
 		}
-		if (user && !user?.isOnboardingPassed) {
-			navigate("/onboarding");
+		if (user && user.role === "FREELANCER") {
+			checkFreelancerOnboardingStatus();
 		}
-	}, [ getLoggedUserData, loadingStatus, navigate, token, user ]);
+	}, [ loadingStatus, navigate, user, checkFreelancerOnboardingStatus, token, getLoggedUserData ]);
 
-	useEffect(() => {
-		getUserData();
-	}, [ getUserData, loadingStatus, navigate, user ]);
+	useEffect(getUserData, [ getUserData, loadingStatus, navigate, user ]);
 
 	return <Outlet/>;
 };

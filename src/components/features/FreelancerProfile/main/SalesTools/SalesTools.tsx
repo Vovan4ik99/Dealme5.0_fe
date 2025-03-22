@@ -67,7 +67,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 		});
 	};
 
-	const onSalesToolsEdit = () => {
+	const handleSalesToolsEdit = () => {
 		openModal({
 			id: 'SalesToolsEditModalItem',
 			title: 'Edytuj narzędzia sprzedażowe',
@@ -75,7 +75,9 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 			btnText: 'Zapisz zmiany',
 			withSaveBtn: true,
 			btnWithIcon: false,
-			child: <SalesToolsEditModalItem allSalesTools={ allSalesTools }/>
+			child: <SalesToolsEditModalItem
+						allSalesTools={ allSalesTools }
+						onSave={ onSalesToolsEdit }/>
 		});
 	};
 
@@ -86,6 +88,12 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
 			.then(() => setSelectedSalesTool(request))
 			.catch(console.error);
 	};
+
+	const onSalesToolsEdit = (salesTools: ISalesTool[]) => {
+		patchSalesTools(salesTools.map(tool => tool.id))
+			.then(() => setSelectedSalesTool(salesTools))
+			.catch(console.error);
+	}
 
 	const handleAddTools = () => {
 		openModal({
@@ -132,7 +140,7 @@ const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProf
                                    key={ 'Edit' }
                                    withBorder={ true }
                                    backgroundColor={ 'white' }
-                                   onClick={ onSalesToolsEdit }/>
+                                   onClick={ handleSalesToolsEdit }/>
                     </div>
 				}
 			</div>

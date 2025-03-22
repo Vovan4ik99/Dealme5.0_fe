@@ -1,8 +1,13 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
-import { ICreateUserRequest, ICreateUserResponse, ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
+import {
+	ICreateUserRequest,
+	ICreateUserResponse,
+	UserRole
+} from "@shared/userTypes.ts";
 import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
 export const useAuthService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
@@ -28,7 +33,7 @@ export const useAuthService = () => {
 		});
 	}, [ sendRequest ]);
 
-	const fetchLoggedUserData = useCallback(async (role: string): Promise<ILoggedUserResponse> => {
+	const fetchLoggedUserData = useCallback(async (role: string): Promise<IFreelancerData> => {
 		const url = role === 'FREELANCER'
 			? API_ROUTES.USER.FREELANCER_PROFILE
 			: API_ROUTES.USER.INVESTOR_PROFILE;

@@ -19,15 +19,29 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesToolsStep from "./steps/10_SalesToolsStep/SalesToolsStep.tsx";
 import btn_back from '@icons/onboarding/btn_back_icon.svg';
 import { getCurrentStepByUserAbsentData } from "@utils/onboardingUtils.ts";
+import { useAuthService } from "@services/auth/authService.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
 const OnboardingSwitcher = () => {
 	const { user, getLoggedUserData, loadingStatus } = useContext(AuthContext);
-	const [ step, setStep ] = useState<number>(0);
+
+	const { fetchLoggedUserData } = useAuthService();
+
 	const navigate = useNavigate();
 
+	const [ step, setStep ] = useState<number>(0);
+	const [ userData, setUserData ] = useState<IFreelancerData | undefined>(undefined);
+
 	useEffect(() => {
-		setStep(getCurrentStepByUserAbsentData(user));
-	}, [ user ]);
+		if (!user) return;
+
+		fetchLoggedUserData(user.role)
+			.then(response => {
+				setUserData(response);
+				setStep(getCurrentStepByUserAbsentData(response));
+			})
+			.catch(console.error);
+	}, [ user, fetchLoggedUserData ]);
 
 	useEffect(() => {
 		if (step > 10) {
@@ -60,29 +74,31 @@ const OnboardingSwitcher = () => {
 	};
 
 	const renderStepComponent = () => {
-		switch (step) {
-			case 1:
-				return <ExperienceLevelStep selectedExperience={ user.experienceLevel } onNext={ incrementStep }/>;
-			case 2:
-				return <SpecializationStep userSpecialization={ user.specialization } onNext={ incrementStep }/>;
-			case 3:
-				return <WorkingDaysStep userWorkingDays={ user.workingDays } onNext={ incrementStep }/>;
-			case 4:
-				return <WorkingHoursStep userWorkingHours={ user.workingHours } onNext={ incrementStep }/>;
-			case 5:
-				return <IncomeGoalStep userGoal={ user.incomeGoal } onNext={ incrementStep }/>;
-			case 6:
-				return <IndustryStep userSubIndustries={ user.subIndustries } onNext={ incrementStep }/>;
-			case 7:
-				return <TypeOfSalesStep userTypeOfSales={ user.typeOfSales } onNext={ incrementStep }/>;
-			case 8:
-				return <SectorStep userSectors={ user.sectors } onNext={ incrementStep }/>;
-			case 9:
-				return <ActivitiesStep userActivities={ user.selectedActivities } onNext={ incrementStep }/>;
-			case 10:
-				return <SalesToolsStep onNext={ incrementStep }/>;
-			default:
-				return <LoadingSpinner/>;
+		if(userData) {
+			switch (step) {
+				case 1:
+					return <ExperienceLevelStep selectedExperience={ userData.experienceLevel } onNext={ incrementStep }/>;
+				case 2:
+					return <SpecializationStep userSpecialization={ userData.specialization } onNext={ incrementStep }/>;
+				case 3:
+					return <WorkingDaysStep userWorkingDays={ userData.workingDays } onNext={ incrementStep }/>;
+				case 4:
+					return <WorkingHoursStep userWorkingHours={ userData.workingHours } onNext={ incrementStep }/>;
+				case 5:
+					return <IncomeGoalStep userGoal={ userData.incomeGoal } onNext={ incrementStep }/>;
+				case 6:
+					return <IndustryStep userSubIndustries={ userData.subIndustries } onNext={ incrementStep }/>;
+				case 7:
+					return <TypeOfSalesStep userTypeOfSales={ userData.typeOfSales } onNext={ incrementStep }/>;
+				case 8:
+					return <SectorStep userSectors={ userData.sectors } onNext={ incrementStep }/>;
+				case 9:
+					return <ActivitiesStep userActivities={ userData.selectedActivities } onNext={ incrementStep }/>;
+				case 10:
+					return <SalesToolsStep onNext={ incrementStep }/>;
+				default:
+					return <LoadingSpinner/>;
+			}
 		}
 	};
 
@@ -90,8 +106,8 @@ const OnboardingSwitcher = () => {
 		return <LoadingSpinner/>;
 	}
 
-	if (step === 0) {
-		return <WelcomeStep onNext={ incrementStep } username={ user.firstName + " " + user.lastName }/>;
+	if (step === 0 && userData) {
+		return <WelcomeStep onNext={ incrementStep } username={ userData.firstName + " " + userData.lastName }/>;
 	}
 
 	return (

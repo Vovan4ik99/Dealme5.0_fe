@@ -8,33 +8,32 @@ import DragAndDropContainer
 import {useModal} from "@context/ModalContext/ModalContext.ts";
 import SalesToolModalItem from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
 import { getPictureForSalesTools , getToolKindNameByKind} from "@utils/salesToolsUtils.ts";
-import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
 import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import { ISalesToolsEditModalItemProps } from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItemTypes.ts";
 
-const SalesToolsEditModalItem: React.FC<ISalesToolsEditModalItemProps> = ({ registerOnSave, allSalesTools }) => {
+const SalesToolsEditModalItem: React.FC<ISalesToolsEditModalItemProps> = ({ registerOnSave, allSalesTools, onSave }) => {
 
-	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
+
 	const { openModal } = useModal();
-	const { patchSalesTools } = useFreelancerOnboardingService();
+
 	const { getFreelancerSalesTools }= useFreelancerProfileService();
 
-	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>(user?.salesTools || []);
+	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
+
+	const handleSave = useCallback(() => {
+		onSave(salesTools);
+	}, [ onSave, salesTools ]);
 
 	useEffect(() => {
 		if (!user) return;
+
 		getFreelancerSalesTools(user.id)
 			.then(setSalesTools)
 			.catch(console.error);
 	}, [ getFreelancerSalesTools, user ]);
-
-	const handleSave = useCallback(() => {
-		patchSalesTools(salesTools.map(tool => tool.id))
-			.then(() => getLoggedUserData(localStorage.getItem('token')!))
-			.catch(console.error);
-	}, [ getLoggedUserData, patchSalesTools, salesTools ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

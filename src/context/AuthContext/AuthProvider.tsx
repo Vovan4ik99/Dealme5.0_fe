@@ -3,7 +3,7 @@ import {useAuthService} from "@services/auth/authService.ts";
 import {authReducer} from "./authReducer.ts";
 import {AuthActionType} from "./authActions.ts";
 import {AuthContext, IAuthContextValue, InitialAuthState} from "./AuthContext.ts";
-import {ILoggedUserResponse, UserRole} from "@shared/userTypes.ts";
+import { ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
 import {jwtDecode} from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

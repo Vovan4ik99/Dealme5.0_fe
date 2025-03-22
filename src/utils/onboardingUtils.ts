@@ -1,6 +1,6 @@
-import {ILoggedUserData} from "@shared/userTypes.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
-export const getCurrentStepByUserAbsentData = (user: ILoggedUserData | null): number => {
+export const getCurrentStepByUserAbsentData = (user: IFreelancerData | null): number => {
 	const undefinedNumber = 11;
 	if (!user) {
 		return undefinedNumber;

@@ -1,7 +1,7 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { IFreelancerBarResponse, IFreelancerNameRequest } from "@shared/freelancer/common.ts";
+import { IFreelancerBarResponse, IFreelancerData, IFreelancerNameRequest } from "@shared/freelancer/common.ts";
 import {
 	IFreelancerCountry,
 	IFreelancerLocalization,
@@ -9,16 +9,9 @@ import {
 	IFreelancerWorkingArea
 } from "@shared/freelancer/localization.ts";
 import { IFreelancerLanguage, ILanguage } from "@shared/freelancer/language.ts";
-import { ILoggedUserResponse } from "@shared/userTypes.ts";
 
 export const useFreelancerProfileAsideInfoService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
-
-	const getFreelancerData = useCallback(async (freelancerId: number): Promise<ILoggedUserResponse> => {
-		return await sendRequest({
-			url: `${ API_ROUTES.USER.FREELANCER_PROFILE }/${ freelancerId }`,
-		})
-	}, [ sendRequest ]);
 
 	const getFreelancerBar = useCallback(async (freelancerId: number): Promise<IFreelancerBarResponse> => {
 		return await sendRequest({
@@ -87,7 +80,6 @@ export const useFreelancerProfileAsideInfoService = () => {
 	return {
 		loadingStatus,
 		errorMessage,
-		getFreelancerData,
 		getFreelancerBar,
 		patchFreelancerName,
 		patchFreelancerCompany,

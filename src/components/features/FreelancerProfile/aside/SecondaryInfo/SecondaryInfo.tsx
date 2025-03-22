@@ -9,16 +9,17 @@ import LocalizationItem
 	from "@components/features/FreelancerProfile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/FreelancerProfile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
-import { IFreelancerBarResponse } from "@shared/freelancer/common.ts";
+import { IFreelancerBarResponse, IFreelancerData } from "@shared/freelancer/common.ts";
 import { ISecondaryInfoProps } from "@components/features/FreelancerProfile/aside/SecondaryInfo/secondaryInfoTypes.ts";
-import { ILoggedUserResponse } from "@shared/userTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
-	const { getFreelancerBar, getFreelancerData } = useFreelancerProfileAsideInfoService();
+	const { getFreelancerBar } = useFreelancerProfileAsideInfoService();
+	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
 	const [ freelancerInfo, setFreelancerInfo ] = useState<IFreelancerBarResponse | null>(null);
-	const [ freelancerData, setFreelancerData ] = useState<ILoggedUserResponse | undefined>(undefined);
+	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>(undefined);
 
 	const fetchFreelancerBarInfo = useCallback(() => {
 		getFreelancerBar(freelancerId)
@@ -27,10 +28,10 @@ const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUs
 	}, [ freelancerId, getFreelancerBar ]);
 
 	const fetchFreelancerData = useCallback(() => {
-		getFreelancerData(freelancerId)
-			.then(response => setFreelancerData(response))
+		getFreelancerPrimaryInfo(freelancerId)
+			.then(setFreelancerData)
 			.catch(console.error);
-	}, [ freelancerId, getFreelancerData ]);
+	}, [ freelancerId, getFreelancerPrimaryInfo ]);
 
 	useEffect(() => {
 		fetchFreelancerBarInfo();

@@ -1,8 +1,3 @@
-import { IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry } from "./onboardingTypes.ts";
-import { EXPERIENCE_LEVELS } from "@constants/experienceLevel.ts";
-import { WorkingDayKey } from "@constants/workingDays.ts";
-import { IFreelancerWorkExperience } from "@shared/freelancer/work-experience.ts";
-
 export type UserRole = 'FREELANCER' | 'INVESTOR';
 
 export interface ICreateUserRequest {
@@ -25,19 +20,6 @@ export interface ILoggedUserResponse {
 	email: string;
 	firstName: string;
 	lastName: string;
-	experienceLevel: keyof typeof EXPERIENCE_LEVELS;
-	company: string;
-	specialization: ISpecialization,
-	workingDays: WorkingDayKey[];
-	workingHours: string;
-	incomeGoal: string;
-	subIndustries: ISubIndustry[],
-	typeOfSales: string;
-	sectors: ISector[];
-	selectedActivities: IFreelancerActivity[],
-	salesTools: ISalesTool[];
-	workExperiences: IFreelancerWorkExperience[];
-	isOnboardingPassed: boolean;
 }
 
 export interface IUserAvatarResponse {

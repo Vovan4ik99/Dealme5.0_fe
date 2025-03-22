@@ -16,7 +16,7 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		if (user) {
-			navigate("/profile")
+			 navigate(user.role === "FREELANCER" ? "/onboarding" : "/profile");
 		}
 	}, [ navigate, user ]);
 
