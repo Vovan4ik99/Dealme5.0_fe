@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import styles from './LoginForm.module.scss';
 import InputError from "@ui/InputError/InputError.tsx";
 import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
@@ -20,24 +20,19 @@ const LoginForm = () => {
 		}
 	}, [ navigate, user ]);
 
-	const [ formData, setFormData ] = useState<ILoginRequest>({
-		email: '',
-		password: '',
-	});
-
-	const { register, handleSubmit, formState: { errors } } = useForm<ILoginRequest>({
+	const { register, handleSubmit, reset, formState: { errors } } = useForm<ILoginRequest>({
 		shouldFocusError: false,
 		mode: 'onChange',
-		defaultValues: formData,
+		defaultValues: {
+			email: '',
+			password: '',
+		},
 	});
 
 	const loginUser = useCallback((token: string) => {
 		getLoggedUserData(token);
-		setFormData({
-			email: '',
-			password: '',
-		});
-	}, [ getLoggedUserData ]);
+		reset();
+	}, [ getLoggedUserData, reset ]);
 
 	const onSubmit = useCallback((request: ILoginRequest) => {
 		login(request)
@@ -46,10 +41,8 @@ const LoginForm = () => {
 				loginUser(response.token);
 			}).catch((error) => {
 				console.log(error);
-				setFormData(request);
 			}
 		);
-		setFormData(request);
 	}, [ login, loginUser ]);
 
 	return (

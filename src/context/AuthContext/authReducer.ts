@@ -28,6 +28,20 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				...state,
 				loadingStatus: action.payload,
 			};
+		case AuthActionType.SET_LOGGED_INVESTOR_MAIL:
+			return {
+				...state,
+				user: {
+					id: 0, //dummy value, will not be used until full login
+					email: action.payload,
+					role: 'INVESTOR',
+					firstName: '',
+					lastName: '',
+					isOnboardingPassed: undefined
+				},
+				loadingStatus: 'idle',
+				errorMessage: null
+			}
 		default:
 			return state;
 	}

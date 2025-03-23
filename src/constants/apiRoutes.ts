@@ -3,7 +3,8 @@ export const API_ROUTES = {
 		LOGIN: '/auth/login',
 		REGISTER: '/auth/register',
 		REGISTER_INVESTOR: '/auth/register/investor',
-		REGISTER_FREELANCER: '/auth/register/freelancer'
+		REGISTER_FREELANCER: '/auth/register/freelancer',
+		GET_INVESTOR_AUTH_TOKEN: '/auth/start',
 	},
 	TOKEN: {
 		PASSWORD_RESET: '/token-reset/send-email',

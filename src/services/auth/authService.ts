@@ -1,11 +1,7 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
-import {
-	ICreateUserRequest,
-	ICreateUserResponse,
-	UserRole
-} from "@shared/userTypes.ts";
-import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
+import { ICreateUserRequest, ICreateUserResponse, UserRole } from "@shared/userTypes.ts";
+import { IInvestorAuthTokenResponse, ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
 
@@ -48,8 +44,16 @@ export const useAuthService = () => {
 			method: "POST",
 			body: email,
 		})
-	}, [ sendRequest ])
+	}, [ sendRequest ]);
 
+	const getInvestorAuthToken = useCallback(
+		async (): Promise<IInvestorAuthTokenResponse> => {
+
+			return await sendRequest({
+				url: API_ROUTES.AUTH.GET_INVESTOR_AUTH_TOKEN,
+				method: "POST",
+			});
+		}, [ sendRequest ]);
 
 	return {
 		loadingStatus,
@@ -57,7 +61,8 @@ export const useAuthService = () => {
 		login,
 		createUser,
 		fetchLoggedUserData,
-		resetPassword
+		resetPassword,
+		getInvestorAuthToken,
 	};
 };
 

@@ -1,16 +1,13 @@
-import FreelancerOnboardingNavbar
-	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import styles from "./OnboardingPage.module.scss";
-import OnboardingSwitcher from "../../components/features/Onboarding/OnboardingSwitcher.tsx";
+import Footer from "@components/layout/Footer/Footer.tsx";
 
 const OnboardingPage = () => {
 
+
 	return (
-		<section className={styles['onboarding']}>
-			<FreelancerOnboardingNavbar/>
-			<OnboardingSwitcher/>
+		<section className={ styles['onboarding'] }>
+			<div></div>
+			<Footer isCentered={false} isHyphenated={false}/>
 		</section>
 	);
-};
-
-export default OnboardingPage;
+}

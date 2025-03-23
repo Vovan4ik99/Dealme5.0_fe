@@ -17,6 +17,7 @@ export interface IAuthInitialState {
 export interface IAuthContextValue extends IAuthInitialState {
 	logout: () => void;
 	getLoggedUserData: (token: string) => Promise<ILoggedUserData | void>;
+	loginInvestor: () => Promise<void>;
 }
 
 export const AuthContext = createContext<IAuthContextValue>({
@@ -25,4 +26,5 @@ export const AuthContext = createContext<IAuthContextValue>({
 	errorMessage: InitialAuthState.errorMessage,
 	logout: () => {},
 	getLoggedUserData: () => Promise.resolve(),
+	loginInvestor: () => Promise.resolve(),
 });

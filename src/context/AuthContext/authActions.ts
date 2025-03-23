@@ -6,6 +6,7 @@ export enum AuthActionType {
 	LOGOUT = 'LOGOUT',
 	SET_ERROR = 'SET_ERROR',
 	SET_LOADING_STATUS = 'SET_LOADING_STATUS',
+	SET_LOGGED_INVESTOR_MAIL = 'SET_LOGGED_INVESTOR_MAIL',
 }
 
 export interface IGetLoggedUser {
@@ -27,4 +28,10 @@ export interface ISetLoadingStatus {
 	payload: LoadingStatusOptions;
 }
 
-export type AuthAction = IGetLoggedUser | ILogoutAction | ISetErrorAction | ISetLoadingStatus;
+export interface ISetLoggedMockedInvestor {
+	type: AuthActionType.SET_LOGGED_INVESTOR_MAIL;
+	payload: string;
+}
+
+export type AuthAction = IGetLoggedUser | ILogoutAction | ISetErrorAction | ISetLoadingStatus
+	| ISetLoggedMockedInvestor;

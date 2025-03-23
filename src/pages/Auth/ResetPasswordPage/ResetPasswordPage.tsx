@@ -1,7 +1,7 @@
 import styles from "./ResetPasswordPage.module.scss"
 import Footer from "@components/layout/Footer/Footer.tsx";
 import React from "react";
-import ResetPasswordForm from "@components/features/Auth/ResetPasswordForm/ResetPasswordForm.tsx";
+import ResetPasswordForm from "@components/features/auth/ResetPasswordForm/ResetPasswordForm.tsx";
 import FreelancerOnboardingNavbar
     from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 

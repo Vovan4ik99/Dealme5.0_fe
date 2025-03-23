@@ -5,10 +5,10 @@ import facebook_login from "@icons/auth/facebook_login.svg";
 import React from "react";
 
 import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
-import LoginForm from "@components/features/Auth/LoginForm/LoginForm.tsx";
+import LoginForm from "@components/features/auth/LoginForm/LoginForm.tsx";
 import FreelancerOnboardingNavbar
 	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
-import RegistrationForm from "@components/features/Auth/RegistrationForm/RegistrationForm.tsx";
+import RegistrationForm from "@components/features/auth/RegistrationForm/RegistrationForm.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
 
 interface LoginPageProps {

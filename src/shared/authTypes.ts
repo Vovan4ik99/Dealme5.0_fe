@@ -6,3 +6,9 @@ export interface ILoginRequest {
 export interface ILoginResponse {
 	token: string;
 }
+
+export interface IInvestorAuthTokenResponse {
+	token: string,
+	sig: string,
+	email: string
+}

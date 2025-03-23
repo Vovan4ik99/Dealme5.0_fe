@@ -3,8 +3,7 @@ import { IOnboardingLayoutProps, IStepData } from "@components/layout/Onboarding
 import styles from "./OnboardingLayout.module.scss";
 import FreelancerOnboardingNavbar
 	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
-import InvestorOnboardingNavbar
-	from "@components/layout/OnboardingLayout/InvestorOnboardingNavbar/InvestorOnboardingNavbar.tsx";
+import InvestorOnboardingNavbar from "@components/layout/navbar/InvestorOnboardingNavbar/InvestorOnboardingNavbar.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
 import { ONBOARDING_STEPS_DATA } from "@components/layout/OnboardingLayout/onboardingStepsData.ts";
 import { ReactComponent as BackIcon } from "@icons/named_exported/onboarding/arrow_left.svg";
