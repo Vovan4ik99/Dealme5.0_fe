@@ -16,14 +16,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		dispatch({ type: AuthActionType.LOGOUT });
 	}, []);
 
-	const getLoggedUserData = useCallback((currentToken: string) => {
+	const getLoggedUserData = useCallback(async (currentToken: string) => {
 		dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'loading' });
 
 		const role = getUserRole(currentToken);
 
-		fetchLoggedUserData(role)
+		return fetchLoggedUserData(role)
 			.then((response: ILoggedUserResponse) => {
-				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: { role, ...response } });
+				const userData =  { role, ...response };
+				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
+				return userData;
 			})
 			.catch(e => {
 					dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });

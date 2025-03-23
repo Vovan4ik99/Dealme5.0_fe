@@ -112,16 +112,18 @@
       }
     }
 
-    &--active {
-      svg path {
+    &--arrow {
         transform: rotate(-180deg);
         transform-origin: center;
         transition: transform 0.5s;
-      }
     }
 
     &--pl43 {
       padding-left: 43px;
+    }
+
+    &--pl35 {
+      padding-left: 35px;
     }
   }
 

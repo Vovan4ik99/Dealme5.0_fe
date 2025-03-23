@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import WelcomeStep from "./steps/0_WelcomeStep/WelcomeStep.tsx";
 import { useNavigate } from "react-router-dom";
@@ -19,31 +19,46 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import SalesToolsStep from "./steps/10_SalesToolsStep/SalesToolsStep.tsx";
 import btn_back from '@icons/onboarding/btn_back_icon.svg';
 import { getCurrentStepByUserAbsentData } from "@utils/onboardingUtils.ts";
+import { useAuthService } from "@services/auth/authService.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
 const OnboardingSwitcher = () => {
-	const { user, getLoggedUserData, loadingStatus } = useContext(AuthContext);
-	const [ step, setStep ] = useState<number>(0);
+	const { user, loadingStatus } = useContext(AuthContext);
+
+	const { fetchLoggedUserData } = useAuthService();
+
 	const navigate = useNavigate();
 
+	const [ step, setStep ] = useState<number>(0);
+	const [ userData, setUserData ] = useState<IFreelancerData | undefined>(undefined);
+
+	const refreshUserData = useCallback(() => {
+		if (!user) return;
+
+		fetchLoggedUserData(user.role)
+			.then(response => {
+				setUserData(response);
+			})
+			.catch(console.error);
+	}, [ user, fetchLoggedUserData]);
+
+	useEffect(refreshUserData, [ refreshUserData ]);
+
 	useEffect(() => {
-		setStep(getCurrentStepByUserAbsentData(user));
-	}, [ user ]);
+		if (!userData) return;
+
+		setStep(getCurrentStepByUserAbsentData(userData));
+	}, [ userData ]);
 
 	useEffect(() => {
 		if (step > 10) {
 			navigate("/profile");
 		}
-	}, [ step, loadingStatus, navigate ]);
-
-	if (!user) {
-		return null;
-	}
+	}, [ step, navigate ]);
 
 	const incrementStep = () => {
-		const token = localStorage.getItem("token");
-		//We need this check to render 0 greeting step component
 		if (step !== 0) {
-			getLoggedUserData(token!);
+			refreshUserData();
 		}
 		setStep((step) => step + 1);
 	};
@@ -60,25 +75,27 @@ const OnboardingSwitcher = () => {
 	};
 
 	const renderStepComponent = () => {
+		if(!userData) return <LoadingSpinner/>;
+
 		switch (step) {
 			case 1:
-				return <ExperienceLevelStep selectedExperience={ user.experienceLevel } onNext={ incrementStep }/>;
+				return <ExperienceLevelStep selectedExperience={ userData.experienceLevel } onNext={ incrementStep }/>;
 			case 2:
-				return <SpecializationStep userSpecialization={ user.specialization } onNext={ incrementStep }/>;
+				return <SpecializationStep userSpecialization={ userData.specialization } onNext={ incrementStep }/>;
 			case 3:
-				return <WorkingDaysStep userWorkingDays={ user.workingDays } onNext={ incrementStep }/>;
+				return <WorkingDaysStep userWorkingDays={ userData.workingDays } onNext={ incrementStep }/>;
 			case 4:
-				return <WorkingHoursStep userWorkingHours={ user.workingHours } onNext={ incrementStep }/>;
+				return <WorkingHoursStep userWorkingHours={ userData.workingHours } onNext={ incrementStep }/>;
 			case 5:
-				return <IncomeGoalStep userGoal={ user.incomeGoal } onNext={ incrementStep }/>;
+				return <IncomeGoalStep userGoal={ userData.incomeGoal } onNext={ incrementStep }/>;
 			case 6:
-				return <IndustryStep userSubIndustries={ user.subIndustries } onNext={ incrementStep }/>;
+				return <IndustryStep userSubIndustries={ userData.subIndustries } onNext={ incrementStep }/>;
 			case 7:
-				return <TypeOfSalesStep userTypeOfSales={ user.typeOfSales } onNext={ incrementStep }/>;
+				return <TypeOfSalesStep userTypeOfSales={ userData.typeOfSales } onNext={ incrementStep }/>;
 			case 8:
-				return <SectorStep userSectors={ user.sectors } onNext={ incrementStep }/>;
+				return <SectorStep userSectors={ userData.sectors } onNext={ incrementStep }/>;
 			case 9:
-				return <ActivitiesStep userActivities={ user.selectedActivities } onNext={ incrementStep }/>;
+				return <ActivitiesStep userActivities={ userData.selectedActivities } onNext={ incrementStep }/>;
 			case 10:
 				return <SalesToolsStep onNext={ incrementStep }/>;
 			default:
@@ -90,8 +107,8 @@ const OnboardingSwitcher = () => {
 		return <LoadingSpinner/>;
 	}
 
-	if (step === 0) {
-		return <WelcomeStep onNext={ incrementStep } username={ user.firstName + " " + user.lastName }/>;
+	if (step === 0 && userData) {
+		return <WelcomeStep onNext={ incrementStep } username={ userData.firstName + " " + userData.lastName }/>;
 	}
 
 	return (

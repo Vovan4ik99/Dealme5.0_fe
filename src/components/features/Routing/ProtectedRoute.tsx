@@ -3,7 +3,8 @@ import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const ProtectedRoute = () => {
-	const { user, loadingStatus, getLoggedUserData } = useContext(AuthContext);
+	const { user, getLoggedUserData } = useContext(AuthContext);
+
 	const navigate = useNavigate();
 
 	const token = localStorage.getItem('token');
@@ -13,21 +14,24 @@ const ProtectedRoute = () => {
 			navigate("/login");
 			return;
 		}
-		if (!user && loadingStatus === 'idle') {
-			getLoggedUserData(token);
+		if (!user) {
+			getLoggedUserData(token)
+				.then(loggedUserData => {
+					if (!loggedUserData) {
+						navigate("/login");
+						return;
+					}
+					if (loggedUserData.role === "FREELANCER" && !loggedUserData.isOnboardingPassed) {
+						navigate("/onboarding");
+						return;
+					}
+					navigate("/profile");
+				});
 			return;
 		}
-		if (!user && loadingStatus === 'error') {
-			navigate("/login");
-		}
-		if (user && !user?.isOnboardingPassed) {
-			navigate("/onboarding");
-		}
-	}, [ getLoggedUserData, loadingStatus, navigate, token, user ]);
+	}, [ navigate, user, token, getLoggedUserData ]);
 
-	useEffect(() => {
-		getUserData();
-	}, [ getUserData, loadingStatus, navigate, user ]);
+	useEffect(getUserData, [ getUserData ]);
 
 	return <Outlet/>;
 };

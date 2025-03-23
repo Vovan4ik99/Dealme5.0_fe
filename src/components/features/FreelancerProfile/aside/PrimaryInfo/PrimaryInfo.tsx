@@ -8,15 +8,17 @@ import StatusItem from "@ui/StatusItem/StatusItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import PrimaryInfoModalItem
 	from "@components/features/EditModal/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
-import { ILoggedUserResponse } from "@shared/userTypes.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancer/freelancerProfileAsideInfoService.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
-	const [ freelancerData, setFreelancerData ] = useState<ILoggedUserResponse | undefined>();
+	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
 	const [ primaryInfo, setPrimaryInfo ] = useState<FreelancerPrimaryInfo | null>(null);
 	const { openModal } = useModal();
-	const { getFreelancerBar, getFreelancerData } = useFreelancerProfileAsideInfoService();
+	const { getFreelancerBar } = useFreelancerProfileAsideInfoService();
+	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
 	const fetchPrimaryInfo = useCallback(() => {
 		getFreelancerBar(freelancerId)
@@ -27,10 +29,10 @@ const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLo
 	}, [ freelancerId, getFreelancerBar ]);
 
 	const fetchFreelancerData = useCallback(() => {
-		getFreelancerData(freelancerId)
+		getFreelancerPrimaryInfo(freelancerId)
 			.then(setFreelancerData)
 			.catch(console.error);
-	}, [ freelancerId, getFreelancerData ]);
+	}, [ freelancerId, getFreelancerPrimaryInfo ]);
 
 	useEffect(() => {
 		fetchPrimaryInfo();

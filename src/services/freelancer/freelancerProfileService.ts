@@ -1,9 +1,8 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { IAboutMeInfo, IFreelancerBackgroundResponse } from "@shared/freelancer/common.ts";
+import { IAboutMeInfo, IFreelancerBackgroundResponse, IFreelancerData } from "@shared/freelancer/common.ts";
 import { IFreelancerReview } from "@shared/freelancer/review.ts";
-import { ILoggedUserResponse } from "@shared/userTypes.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
 import { IActivityRequest, IFreelancerActivity } from "@shared/onboardingTypes.ts";
 
@@ -61,7 +60,7 @@ export const useFreelancerProfileService = () => {
 			});
 		}, [ sendRequest ]);
 
-	const getFreelancerPrimaryInfo = useCallback(async (freelancerId: number): Promise<ILoggedUserResponse> => {
+	const getFreelancerPrimaryInfo = useCallback(async (freelancerId: number): Promise<IFreelancerData> => {
 		return await sendRequest({
 			url: `${ API_ROUTES.USER.FREELANCER_PROFILE }/${ freelancerId }`
 		});
