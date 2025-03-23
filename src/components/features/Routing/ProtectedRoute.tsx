@@ -1,48 +1,37 @@
-import {useContext, useEffect} from "react";
-import {AuthContext} from "@context/AuthContext/AuthContext.ts";
-import {Outlet, useNavigate} from "react-router-dom";
-import {ILoggedUserData} from "@shared/userTypes.ts";
+import { useCallback, useContext, useEffect } from "react";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const ProtectedRoute = () => {
-	const {user} = useContext(AuthContext);
+	const { user, getLoggedUserData } = useContext(AuthContext);
+
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!user) {
+	const token = localStorage.getItem('token');
+
+	const getUserData = useCallback(() => {
+		if (!token) {
 			navigate("/login");
 			return;
 		}
-		if (!isProfileCompleted(user)) {
-			navigate("/onboarding");
+		if (!user) {
+			getLoggedUserData(token)
+				.then(loggedUserData => {
+					if (!loggedUserData) {
+						navigate("/login");
+						return;
+					}
+					if (loggedUserData.role === "FREELANCER" && !loggedUserData.isOnboardingPassed) {
+						navigate("/onboarding");
+						return;
+					}
+					navigate("/profile");
+				});
+			return;
 		}
-	}, [navigate, user]);
+	}, [ navigate, user, token, getLoggedUserData ]);
 
-	const isProfileCompleted = (user: ILoggedUserData) => {
-		const requiredFields = [
-			"email",
-			"experienceLevel",
-			"firstName",
-			"id",
-			"lastName",
-			"role",
-			"incomeGoal",
-			"salesTools",
-			"sectors",
-			"selectedActivities",
-			"specialization",
-			"subIndustries",
-			"typeOfSales",
-			"workingDays",
-			"workingHours",
-		];
-		return !Object.entries(user)
-			.filter(([key]) => requiredFields.includes(key))
-			.map(([, value]) => value)
-			.some(
-				(value) =>
-					value === null || (Array.isArray(value) && value.length === 0)
-			);
-	};
+	useEffect(getUserData, [ getUserData ]);
 
 	return <Outlet/>;
 };

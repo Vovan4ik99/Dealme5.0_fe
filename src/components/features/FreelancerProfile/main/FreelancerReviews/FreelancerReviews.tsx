@@ -1,6 +1,6 @@
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
 import React, { useEffect, useState } from "react";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import styles from "./FreelancerReviews.module.scss";
 import FreelancerReview
 	from "@components/features/FreelancerProfile/main/FreelancerReviews/FreelancerReview/FreelancerReview.tsx";
@@ -10,8 +10,11 @@ import { REVIEW_CATEGORIES } from "@constants/reviewCategories.ts";
 import star from '@icons/freelancer_profile/primary_info/star.svg';
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import { IFreelancerReview } from "@shared/freelancer/review.ts";
+import {
+	IFreelancerReviewsProps
+} from "@components/features/FreelancerProfile/main/FreelancerReviews/freelancerReviewsTypes.ts";
 
-const FreelancerReviews = () => {
+const FreelancerReviews: React.FC<IFreelancerReviewsProps> = ({ isLoggedUserProfile, freelancerId }) => {
 
 	const SECTION_ID: NavbarSectionKey = "reviews";
 
@@ -21,10 +24,10 @@ const FreelancerReviews = () => {
 	const [ reviewsCount, setReviewsCount ] = useState<number>(3);
 
 	useEffect(() => {
-		getFreelancerReviews()
+		getFreelancerReviews(freelancerId)
 			.then(setReviews)
 			.catch(console.error);
-	}, [ getFreelancerReviews ]);
+	}, [ freelancerId, getFreelancerReviews ]);
 
 	const countScoresProcent = () => {
 		const totalReviews = reviews.length;
@@ -95,8 +98,9 @@ const FreelancerReviews = () => {
 	return (
 		<section className={ styles['reviews'] } id={ SECTION_ID }>
 			<h2 className={ 'title title--profile' }>{ NAVBAR_SECTIONS[SECTION_ID] }</h2>
-			{ reviews.length <= 0 ?
-				<AlertItem kind={ 'neutral' } text={ 'Nie posiadasz żadnych opinii' }/> :
+			{ reviews.length === 0 ?
+				<AlertItem kind={ 'neutral' }
+				           text={ isLoggedUserProfile ? 'Nie posiadasz żadnych opinii' : 'Brak opinii' }/> :
 				<div className={ styles['reviews__content'] }>
 					<div>
 						<h3 className={ styles['reviews__title'] }>Opinie</h3>

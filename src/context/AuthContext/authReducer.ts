@@ -23,19 +23,6 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				errorMessage: action.payload,
 				loadingStatus: 'error',
 			};
-		case AuthActionType.GET_AVATAR:
-			return {
-				...state,
-				userAvatar: action.payload,
-				loadingStatus: 'idle',
-				errorMessage: null,
-			};
-		case AuthActionType.DELETE_AVATAR:
-			return {
-				...state,
-				userAvatar: null,
-				loadingStatus: 'idle',
-			};
 		case AuthActionType.SET_LOADING_STATUS:
 			return {
 				...state,

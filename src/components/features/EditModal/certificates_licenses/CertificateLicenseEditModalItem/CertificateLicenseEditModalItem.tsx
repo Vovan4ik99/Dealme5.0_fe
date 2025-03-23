@@ -1,17 +1,19 @@
 import styles from './CertificateLicenseEditModalItem.module.scss';
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import CertificateItem
 	from "@components/features/FreelancerProfile/main/CertificatesAndLicenses/CertificateItem/CertificateItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import CertificateLicenseAddModalItem
 	from "@components/features/EditModal/certificates_licenses/CertificateLicenseAddModalItem/CertificateLicenseAddModalItem.tsx";
-import { useFreelancerCertificateService } from "@services/freelancerCertificateService.ts";
+import { useFreelancerCertificateService } from "@services/freelancer/freelancerCertificateService.ts";
 import { IFreelancerCertificate, IFreelancerCertificateRequest } from "@shared/freelancer/certificate.ts";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
 const CertificateLicenseEditModalItem = () => {
 
+	const { user } = useContext(AuthContext);
 	const [ certificates, setCertificates ] = useState<IFreelancerCertificate[]>([]);
 	const { openModal } = useModal();
 
@@ -24,10 +26,12 @@ const CertificateLicenseEditModalItem = () => {
 	} = useFreelancerCertificateService();
 
 	const fetchFreelancerCertificates = useCallback(() => {
-		getFreelancerCertificates()
+		if (!user) return;
+
+		getFreelancerCertificates(user.id)
 			.then(setCertificates)
 			.catch(console.error);
-	}, [ getFreelancerCertificates ]);
+	}, [ getFreelancerCertificates, user ]);
 
 	useEffect(() => {
 		fetchFreelancerCertificates();

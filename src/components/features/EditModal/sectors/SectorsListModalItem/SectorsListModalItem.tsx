@@ -3,7 +3,7 @@ import {
 	ISectorsListModalItemProps
 } from "@components/features/EditModal/sectors/SectorsListModalItem/sectorsListModalItemTypes.ts";
 import styles from "@components/features/EditModal/sectors/SectorsModalItem/SectorsModalItem.module.scss";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { ISector } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
@@ -13,27 +13,27 @@ import DraggableSectorItem from "@components/features/EditModal/sectors/Draggabl
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddSectorsModalItem from "@components/features/EditModal/sectors/AddSectorsModalItem/AddSectorsModalItem.tsx";
 
-const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerSectors, onSelect, onSectorsDrag}) => {
+const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({ freelancerSectors, onSelect, onSectorsDrag }) => {
 
-	const [allSectors, setAllSectors] = useState<ISector[]>([]);
+	const [ allSectors, setAllSectors ] = useState<ISector[]>([]);
 
-	const {getSectors, loadingStatus} = useOnboardingService();
-	const {openModal} = useModal();
+	const { getSectors, loadingStatus } = useFreelancerOnboardingService();
+	const { openModal } = useModal();
 
 	useEffect(() => {
 		getSectors()
 			.then(sectors => setAllSectors(sectors))
 			.catch(console.error);
-	}, [getSectors]);
+	}, [ getSectors ]);
 
 	const onSectorDelete = (draggableSector: ISector) => {
 		onSelect(draggableSector);
 	};
 
 	const renderSectorItems = (draggableSector: ISector) => {
-		return <DraggableSectorItem key={draggableSector.id}
-		                            name={draggableSector.name}
-		                            onDelete={() => onSectorDelete(draggableSector)}/>;
+		return <DraggableSectorItem key={ draggableSector.id }
+		                            name={ draggableSector.name }
+		                            onDelete={ () => onSectorDelete(draggableSector) }/>;
 	};
 
 	const onAddNewSectors = (sectors: ISector[]) => {
@@ -41,7 +41,7 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 	};
 
 	const getSectorsToChoose = () => {
-		return allSectors.filter(sector => !freelancerSectors.includes(sector));
+		return allSectors.filter(sector => !freelancerSectors.some(s => s.id === sector.id));
 	};
 
 	const handleAddSectors = () => {
@@ -52,7 +52,7 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 			btnText: 'Dodaj sektory',
 			shouldCloseOnSaving: true,
 			withSaveBtn: true,
-			child: <AddSectorsModalItem sectorsToChoose={getSectorsToChoose()} onSave={onAddNewSectors}/>
+			child: <AddSectorsModalItem sectorsToChoose={ getSectorsToChoose() } onSave={ onAddNewSectors }/>
 		});
 	};
 
@@ -62,13 +62,13 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({freelancerS
 
 	return (
 		<div>
-			<h3 className={styles['item__title']}>Do jakiego sektora kierowałeś swoje produkty/usługi?</h3>
-			<div className={`${styles['item__wrapper']} ${styles['item__wrapper--mb16']}`}>
-				<DragAndDropContainer items={freelancerSectors}
-				                      renderItem={renderSectorItems}
-				                      onItemsChange={onSectorsDrag}/>
+			<h3 className={ styles['item__title'] }>Do jakiego sektora kierowałeś swoje produkty/usługi?</h3>
+			<div className={ `${ styles['item__wrapper'] } ${ styles['item__wrapper--mb16'] }` }>
+				<DragAndDropContainer items={ freelancerSectors }
+				                      renderItem={ renderSectorItems }
+				                      onItemsChange={ onSectorsDrag }/>
 			</div>
-			<button onClick={handleAddSectors} className={'btn btn--modal'}>
+			<button onClick={ handleAddSectors } className={ 'btn btn--modal' }>
 				<AddIcon/>
 				<span>Dodaj kolejne sektory</span>
 			</button>

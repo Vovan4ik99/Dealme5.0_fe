@@ -1,6 +1,6 @@
 import styles from './EditWorkExperienceModalItem.module.scss';
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import { useFreelancerWorkExperienceService } from "@services/freelancerWorkExperienceService.ts";
+import { useFreelancerWorkExperienceService } from "@services/freelancer/freelancerWorkExperienceService.ts";
 import React, { useCallback, useEffect, useState } from "react";
 import WorkExperienceEducationItem
 	from "@components/features/FreelancerProfile/common/WorkExperienceEducationItem/WorkExperienceEducationItem.tsx";
@@ -84,13 +84,13 @@ const EditWorkExperienceModalItem: React.FC<IEditWorkExperienceModalItemProps> =
 	const renderItems = () => {
 		return workExperienceItems.map(item => {
 			return <WorkExperienceEducationItem key={ item.id }
-			                                    title={item.jobTitle}
-			                                    organization={item.companyName}
-			                                    itemType={'workExperience'}
-			                                    city={item.city}
-			                                    state={item.state}
-			                                    startDate={item.startDate}
-			                                    endDate={item.endDate ?? undefined}
+			                                    title={ item.jobTitle }
+			                                    organization={ item.companyName }
+			                                    itemType={ 'workExperience' }
+			                                    city={ item.city }
+			                                    state={ item.state }
+			                                    startDate={ item.startDate }
+			                                    endDate={ item.endDate ?? undefined }
 			                                    isModalItem={ true }
 			                                    states={ states }
 			                                    onEdit={ () => onWorkExperienceEdit(item.id, item) }

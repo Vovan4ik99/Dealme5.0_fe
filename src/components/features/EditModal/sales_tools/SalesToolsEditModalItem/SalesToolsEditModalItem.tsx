@@ -1,37 +1,39 @@
 import styles from './SalesToolsEditModalItem.module.scss';
-import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
+import {ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
-import { ISaveableChildProps, useModal } from "@context/ModalContext/ModalContext.ts";
+import {useModal} from "@context/ModalContext/ModalContext.ts";
 import SalesToolModalItem from "@components/features/EditModal/sales_tools/SalesToolModalItem/SalesToolModalItem.tsx";
-import { getPictureForSalesTools, getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { getPictureForSalesTools , getToolKindNameByKind} from "@utils/salesToolsUtils.ts";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import { ISalesToolsEditModalItemProps } from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItemTypes.ts";
 
-const SalesToolsEditModalItem: React.FC<ISaveableChildProps> = ({ registerOnSave }) => {
+const SalesToolsEditModalItem: React.FC<ISalesToolsEditModalItemProps> = ({ registerOnSave, allSalesTools, onSave }) => {
 
-	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
+
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useOnboardingService();
 
-	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
-	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>(user?.salesTools || []);
+	const { getFreelancerSalesTools }= useFreelancerProfileService();
 
-	useEffect(() => {
-		getSalesTools()
-			.then(setAllSalesTools)
-			.catch(console.error);
-	}, [ getSalesTools ]);
+	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
 
 	const handleSave = useCallback(() => {
-		patchSalesTools(salesTools.map(tool => tool.id))
-			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+		onSave(salesTools);
+	}, [ onSave, salesTools ]);
+
+	useEffect(() => {
+		if (!user) return;
+
+		getFreelancerSalesTools(user.id)
+			.then(setSalesTools)
 			.catch(console.error);
-	}, [ getLoggedUserData, patchSalesTools, salesTools ]);
+	}, [ getFreelancerSalesTools, user ]);
 
 	useEffect(() => {
 		registerOnSave!(handleSave);

@@ -1,6 +1,6 @@
 import styles from './LanguagesModalItem.module.scss';
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import LanguageModalItem from "@components/features/EditModal/language/LanguageModalItem/LanguageModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddLanguageModalItem
@@ -15,10 +15,13 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import {
 	ILanguagesModalItemProps
 } from "@components/features/EditModal/language/LanguagesModalItem/languagesModalItemTypes.ts";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancerProfileAsideInfoService.ts";
+import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import { IFreelancerLanguage, ILanguage } from "@shared/freelancer/language.ts";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
 const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave, onSave }) => {
+
+	const { user } = useContext(AuthContext);
 
 	const [ languages, setLanguages ] = useState<ILanguage[]>([]);
 	const [ freelancerLanguages, setFreelancerLanguages ] = useState<IFreelancerLanguage[]>([]);
@@ -39,10 +42,12 @@ const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave
 	}, [ getLanguages ]);
 
 	useEffect(() => {
-		getFreelancerBar()
+		if (!user) return;
+
+		getFreelancerBar(user.id)
 			.then(response => setFreelancerLanguages(response.languagesLevel))
 			.catch(console.error);
-	}, [ getFreelancerBar ]);
+	}, [ getFreelancerBar, user ]);
 
 	const getDraggableLanguages = useCallback(async () => {
 		return freelancerLanguages.map(language =>

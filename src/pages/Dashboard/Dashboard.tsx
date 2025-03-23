@@ -1,13 +1,14 @@
 import styles from "./Dashboard.module.scss";
-import Navbar from "../../components/layout/OnboardingNavbar/Navbar.tsx";
+import FreelancerOnboardingNavbar
+	from "@components/layout/OnboardingLayout/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import Footer from "../../components/layout/Footer/Footer.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
 
 	return (
 		<section className={styles['dashboard']}>
-			<Navbar/>
+			<FreelancerOnboardingNavbar/>
 			<Link to={"/profile"}>Profil</Link>
 			<h1 className={'title'}>Strona główna</h1>
 			<Footer isHyphenated={false} isCentered={true}/>

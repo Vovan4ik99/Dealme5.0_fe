@@ -1,9 +1,8 @@
 import styles from './FreelancerVideos.module.scss';
 import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNavbarSections.ts";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
-import { useVideoService } from "@services/videoService.ts";
+import { useFreelancerVideoService } from "@services/freelancer/freelancerVideoService.ts";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AlertItem from "@ui/AlertItem/AlertItem.tsx";
 import AddVideoModalItem from "@components/features/EditModal/video/AddVideoModalItem/AddVideoModalItem.tsx";
@@ -11,45 +10,31 @@ import VideoProfileItem
 	from "@components/features/FreelancerProfile/main/FreelancerVideos/VideoProfileItem/VideoProfileItem.tsx";
 import EditVideosModalItem from "@components/features/EditModal/video/EditVideosModalItem/EditVideosModalItem.tsx";
 import { IFreelancerVideo } from "@shared/freelancer/video.ts";
+import {
+	IFreelancerVideosProps
+} from "@components/features/FreelancerProfile/main/FreelancerVideos/freelancerVideosTypes.ts";
 
-const FreelancerVideos = () => {
+const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfile, freelancerId }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'videos';
 
-	const { user } = useContext(AuthContext);
-	const { getFreelancerVideos } = useVideoService();
+	const { getFreelancerVideos } = useFreelancerVideoService();
 	const { openModal } = useModal();
 
 	const [ videos, setVideos ] = useState<IFreelancerVideo[]>([]);
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 
-	const containerRef = useRef<HTMLDivElement>(null);
-	const itemRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+	const itemRefs = useRef<HTMLDivElement[]>([]);
 
 	const fetchVideos = useCallback(() => {
-		if (!user) return;
-		getFreelancerVideos(user.id)
+		getFreelancerVideos(freelancerId)
 			.then(setVideos)
 			.catch(console.error);
-	}, [ getFreelancerVideos, user ]);
-
-	const calculateVisibleCount = useCallback(() => {
-		if (!containerRef.current) return;
-
-		const containerWidth = containerRef.current.offsetWidth;
-		let totalWidth = 0;
-
-		itemRefs.current.forEach((item) => {
-			if (item && totalWidth + item.offsetWidth <= containerWidth) {
-				totalWidth += item.offsetWidth;
-			}
-		});
-	}, []);
+	}, [ freelancerId, getFreelancerVideos ]);
 
 	useEffect(() => {
 		fetchVideos();
-		calculateVisibleCount();
-	}, [ calculateVisibleCount, fetchVideos ]);
+	}, [ fetchVideos ]);
 
 	const handleNavigateClick = (direction: 'left' | 'right') => {
 		if (direction === 'left') {
@@ -107,19 +92,23 @@ const FreelancerVideos = () => {
 
 	const renderVideos = () => {
 		if (videos.length <= 0) {
-			return <AlertItem kind={ 'neutral' } text={ 'Nie dodałeś/aś żadnych wideo' }/>
+			const text = isLoggedUserProfile ?
+				'Nie dodałeś/aś żadnych wideo' :
+				'Nie dodano danych o wideo';
+			return <AlertItem kind={ 'neutral' } text={ text }/>
 		}
 
-		const videoItems = videos.map((video, index) => {
+		const videoItems = videos.map((video) => {
 			return <div key={ video.id }
 			            className={ styles['videos__item'] }
 			            ref={ (el) => {
-				            if (el) itemRefs.current.set(index, el);
+				            if (el) itemRefs.current.push(el);
 			            } }>
 				<VideoProfileItem key={ video.id }
 				                  id={ video.id }
 				                  videoUrl={ video.fileUrl }
 				                  title={ video.title }
+				                  isEditable={ isLoggedUserProfile }
 				                  onEdit={ () =>
 					                  handleEditVideo(video.id, video.fileUrl, video.title, video.fileName) }
 				                  date={ video.date }/>
@@ -128,7 +117,7 @@ const FreelancerVideos = () => {
 
 		return <div className={ styles['videos__inner'] }
 		            style={ {
-			            transform: `translateX(-${ itemRefs.current.get(currentIndex)?.offsetLeft ?? 0 }px)`
+			            transform: `translateX(-${ itemRefs.current[currentIndex]?.offsetLeft ?? 0 }px)`
 		            } }>
 			{ videoItems }
 		</div>
@@ -155,24 +144,25 @@ const FreelancerVideos = () => {
                                        onClick={ () => handleNavigateClick('right') }/>
                         </div>
 					}
-				</div> 
-				<div className={ styles['videos__buttons'] }>
-					<ActionBtn kind={ 'Add' }
-					           key={ 'Add' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ handleAddVideos }/>
-					{ videos.length > 0 &&
-                        <ActionBtn kind={ 'Edit' }
-                                   key={ 'Edit' }
+				</div>
+				{ isLoggedUserProfile &&
+                    <div className={ styles['videos__buttons'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   key={ 'Add' }
                                    withBorder={ true }
                                    backgroundColor={ 'white' }
-                                   onClick={ handleEditVideos }/>
-					}
-				</div>
+                                   onClick={ handleAddVideos }/>
+						{ videos.length > 0 &&
+                            <ActionBtn kind={ 'Edit' }
+                                       key={ 'Edit' }
+                                       withBorder={ true }
+                                       backgroundColor={ 'white' }
+                                       onClick={ handleEditVideos }/>
+						}
+                    </div>
+				}
 			</header>
-			<div className={ styles['videos__content'] }
-			     ref={ containerRef }>
+			<div className={ styles['videos__content'] }>
 				{ renderVideos() }
 			</div>
 		</section>

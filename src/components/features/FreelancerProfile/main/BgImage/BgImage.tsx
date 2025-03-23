@@ -1,23 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./BgImage.module.scss";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import BgEmptyState from "@components/features/FreelancerProfile/main/BgImage/BgEmptyState/BgEmptyState.tsx";
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
 import BgEmptyStateImgWrapper
 	from "@components/features/FreelancerProfile/main/BgImage/BgEmptyStateImgWrapper/BgEmptyStateImgWrapper.tsx";
 import ImageModalItem from "@components/features/EditModal/media/ImageModalItem/ImageModalItem.tsx";
+import { IBgImageProps } from "@components/features/FreelancerProfile/main/BgImage/bgImageTypes.ts";
 
-const BgImage = () => {
+const BgImage: React.FC<IBgImageProps> = ({ isLoggedUserProfile, freelancerId }) => {
 	const { openModal } = useModal();
 	const [ backgroundImage, setBackgroundImage ] = useState<string | null>(null);
 	const { patchBackgroundPicture, getBackgroundPicture, deleteBackgroundPicture } = useFreelancerProfileService();
 
 	const fetchBackgroundImage = useCallback(() => {
-		getBackgroundPicture()
+		getBackgroundPicture(freelancerId)
 			.then((response) => response && setBackgroundImage(response.pictureData))
 			.catch((error) => console.error(error));
-	}, [ getBackgroundPicture ]);
+	}, [ freelancerId, getBackgroundPicture ]);
 
 	useEffect(() => {
 		fetchBackgroundImage();
@@ -63,14 +64,14 @@ const BgImage = () => {
 			) : (
 				<BgEmptyState onEditClick={ openEditModal }/>
 			) }
-			<div className={ styles['bg-image__icon'] }>
-				<ActionBtn
-					onClick={ openEditModal }
-					kind={ 'Edit' }
-					backgroundColor={ backgroundImage ? 'lightgray' : 'transparent' }
-					withBorder={ true }
-				/>
-			</div>
+			{ isLoggedUserProfile && <div className={ styles['bg-image__icon'] }>
+                <ActionBtn
+                    onClick={ openEditModal }
+                    kind={ 'Edit' }
+                    backgroundColor={ backgroundImage ? 'lightgray' : 'transparent' }
+                    withBorder={ true }
+                />
+            </div> }
 		</section>
 	);
 };

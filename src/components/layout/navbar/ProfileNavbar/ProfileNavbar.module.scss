@@ -1,0 +1,134 @@
+@use "@styles/variables" as vars;
+
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  width: 100%;
+  font-size: 15px;
+  line-height: 100%;
+  color: vars.$color-black;
+  align-items: center;
+
+  & > a {
+    margin-bottom: 6px;
+  }
+
+  &__wrapper {
+    margin-left: 48px;
+    display: flex;
+    gap: 8px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 300ms ease-in-out;
+
+    svg path {
+      fill: vars.$color-black;
+    }
+
+    &:hover {
+      border: 1px solid vars.$color-black;
+    }
+
+    &-active {
+      color: vars.$primary-color;
+      background-color: vars.$color-primary-pastel;
+
+      svg path {
+        fill: vars.$primary-color;
+      }
+
+      &:hover {
+        border: 1px solid transparent;
+      }
+    }
+  }
+
+  &__add-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  &__avatar {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+
+    img {
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
+
+  &__btn {
+    background-color: transparent;
+    width: fit-content;
+    border: 1px solid vars.$color-black;
+    color: vars.$color-black;
+    margin-top: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+    &--avatar {
+      position: relative;
+      padding: 14px 16px;
+      background-color: vars.$color-gray-light;
+      color: vars.$color-gray;
+      border: 1px solid vars.$color-gray-border;
+
+      svg path {
+        transition: all 300ms ease-in-out;
+        fill: vars.$color-gray;
+      }
+    }
+
+    &--active, &:hover {
+      background-color: vars.$color-primary-pastel;
+      border-color: vars.$primary-color;
+      color: vars.$primary-color;
+
+      svg path {
+        fill: vars.$primary-color;
+      }
+    }
+
+    &--arrow {
+        transform: rotate(-180deg);
+        transform-origin: center;
+        transition: transform 0.5s;
+    }
+
+    &--pl43 {
+      padding-left: 43px;
+    }
+
+    &--pl35 {
+      padding-left: 35px;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+  }
+}

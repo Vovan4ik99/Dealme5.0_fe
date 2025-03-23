@@ -4,7 +4,7 @@ import WorkExperienceEducationItem
 	from "@components/features/FreelancerProfile/common/WorkExperienceEducationItem/WorkExperienceEducationItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import styles from "./EditEducationModalItem.module.scss";
-import { useFreelancerEducationService } from "@services/freelancerEducationService.ts";
+import { useFreelancerEducationService } from "@services/freelancer/freelancerEducationService.ts";
 import { IFreelancerEducation, IFreelancerEducationRequest } from "@shared/freelancer/education.ts";
 import { IEditEducationModalItemProps } from "./editEducationModalItemTypes.ts";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";

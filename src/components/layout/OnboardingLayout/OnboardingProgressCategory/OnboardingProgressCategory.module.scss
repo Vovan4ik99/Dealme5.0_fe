@@ -1,0 +1,63 @@
+@use "@styles/variables" as vars;
+
+.category {
+  display: flex;
+  color: vars.$color-black;
+  line-height: 120%;
+  gap: 8px;
+  font-size: 12px;
+  align-items: center;
+
+  &--main-active {
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  &--main-default {
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: vars.$color-gray;
+  }
+
+  &--sub-active {
+    gap: 12px;
+    font-size: 16px;
+  }
+
+  &--sub-default {
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    color: vars.$color-gray;
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    border: none;
+    background-color: white;
+
+    &--success  {
+      background-color: vars.$color-success-pastel;
+    }
+
+    &--checked {
+      border: 2px solid vars.$color-black;
+    }
+
+    &--gray {
+      border: 1px solid vars.$color-gray;
+    }
+  }
+
+  &__circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: vars.$color-black;
+  }
+}

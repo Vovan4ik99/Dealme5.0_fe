@@ -1,20 +1,23 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {IActivitiesStepProps} from "./activityStepTypes.ts";
-import {IActivity, IActivityRequest} from "@shared/onboardingTypes.ts";
-import {useOnboardingService} from "@services/onboardingService.ts";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { IActivitiesStepProps } from "./activityStepTypes.ts";
+import { IActivity, IActivityRequest } from "@shared/onboardingTypes.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import styles from "../../Onboarding.module.scss";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import ActivityItem from "../../items/ActivityItem/ActivityItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
-const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}) => {
+const ActivitiesStep: React.FC<IActivitiesStepProps> = ({ userActivities, onNext }) => {
 
-	const [filledInActivities, setFilledInActivities] = useState<Map<number, number>>(new Map());
-	const [activities, setActivities] = useState<IActivity[]>([]);
-	const [localError, setLocalError] = useState<string | null>(null);
+	const { user } = useContext(AuthContext);
 
-	const {loadingStatus, errorMessage, getActivities, patchActivities} = useOnboardingService();
+	const [ filledInActivities, setFilledInActivities ] = useState<Map<number, number>>(new Map());
+	const [ activities, setActivities ] = useState<IActivity[]>([]);
+	const [ localError, setLocalError ] = useState<string | null>(null);
+
+	const { loadingStatus, errorMessage, getActivities, patchActivities } = useFreelancerOnboardingService();
 
 	const onSelect = (activityId: number, level: number) => {
 		setFilledInActivities((prevState) => {
@@ -25,10 +28,11 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 	};
 
 	useEffect(() => {
+		if (!user) return;
 		getActivities()
 			.then(activities => setActivities(activities))
 			.catch(error => console.error(error));
-	}, [getActivities]);
+	}, [ getActivities, user ]);
 
 	useEffect(() => {
 		if (userActivities.length > 0) {
@@ -40,7 +44,7 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 				return updatedMap;
 			});
 		}
-	}, [userActivities]);
+	}, [ userActivities ]);
 
 	const onSubmit = () => {
 		if (filledInActivities.size < 1) {
@@ -48,7 +52,7 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 			return;
 		}
 		const activityArray: IActivityRequest[] = Array.from(filledInActivities,
-			([activityId, level]) => ({
+			([ activityId, level ]) => ({
 				activityId,
 				level,
 			}));
@@ -61,13 +65,13 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 	const renderActivities = useCallback(() => {
 		if (activities.length > 0) {
 			return activities.map(activity => {
-				return <ActivityItem key={activity.id}
-				                     {...activity}
-				                     level={filledInActivities.has(activity.id) ? filledInActivities.get(activity.id)! : 0}
-				                     onSelect={onSelect}/>;
+				return <ActivityItem key={ activity.id }
+				                     { ...activity }
+				                     level={ filledInActivities.has(activity.id) ? filledInActivities.get(activity.id)! : 0 }
+				                     onSelect={ onSelect }/>;
 			})
 		}
-	}, [activities, filledInActivities]);
+	}, [ activities, filledInActivities ]);
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;
@@ -75,15 +79,15 @@ const ActivitiesStep: React.FC<IActivitiesStepProps> = ({userActivities, onNext}
 
 	return (
 		<AnimatedStep>
-			<h1 className={'title title--fs40'}>Oceń swoje umiejętności</h1>
-			<div className={styles['onboarding-step__items']}>
-				{renderActivities()}
+			<h1 className={ 'title title--fs40' }>Oceń swoje umiejętności</h1>
+			<div className={ styles['onboarding-step__items'] }>
+				{ renderActivities() }
 			</div>
-			<button onClick={() => onSubmit()}
-			        className={'btn'}>Przejdż dalej
+			<button onClick={ () => onSubmit() }
+			        className={ 'btn' }>Przejdż dalej
 			</button>
-			{errorMessage && <InputError text={errorMessage}/>}
-			{localError && <InputError text={localError}/>}
+			{ errorMessage && <InputError text={ errorMessage }/> }
+			{ localError && <InputError text={ localError }/> }
 		</AnimatedStep>
 	);
 }

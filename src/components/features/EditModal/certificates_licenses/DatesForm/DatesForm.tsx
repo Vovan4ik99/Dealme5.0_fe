@@ -1,5 +1,5 @@
 import styles from "./DatesForm.module.scss";
-import SelectInput from "@ui/SelectInput/SelectInput.tsx";
+import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
 import React, { useEffect, useState } from "react";
 import { IDatesFormProps } from "@components/features/EditModal/certificates_licenses/DatesForm/datesFormTypes.ts";
 import CustomCheckbox from "@ui/CustomCheckbox/CustomCheckbox.tsx";
@@ -21,7 +21,7 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 		if (isOngoingChecked && (!formData.endMonth && !formData.endYear)) {
 			setIsOngoing(true);
 		}
-	}, [formData.endMonth, formData.endYear, isOngoingChecked]);
+	}, [ formData.endMonth, formData.endYear, isOngoingChecked ]);
 
 	useEffect(() => {
 		if (isOngoing) {
@@ -98,30 +98,30 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 		<div className={ styles['dates__content'] }>
 			<div className={ styles['dates__date'] }>
 				<span className={ styles['dates__text'] }>Początek</span>
-				<SelectInput key={ 'startMonth' }
-				             id={ 'startMonth' }
-				             trigger={ trigger }
-				             register={ register }
-				             selectItems={ generateMonthSelectItems() }
-				             text={ getMonthPolishName(formData.startMonth) }
-				             onValueChange={ selectStartMonth }
-				             validationRules={ {
-					             required: 'Wybierz miesiąc początkowy'
-				             } }
-				             error={ errors.startMonth ?? null }
-				             labelText={ 'Miesiąc' }/>
-				<SelectInput key={ 'startYear' }
-				             id={ 'startYear' }
-				             register={ register }
-				             trigger={ trigger }
-				             onValueChange={ selectStartYear }
-				             selectItems={ generateYearSelectItems() }
-				             validationRules={ {
-					             required: 'Wybierz końcowy rok'
-				             } }
-				             text={ formData.startYear ? `${ formData.startYear }` : null }
-				             error={ errors.startYear ?? null }
-				             labelText={ 'Rok' }/>
+				<SelectFormInput key={ 'startMonth' }
+				                 id={ 'startMonth' }
+				                 trigger={ trigger }
+				                 register={ register }
+				                 selectItems={ generateMonthSelectItems() }
+				                 text={ getMonthPolishName(formData.startMonth) }
+				                 onValueChange={ selectStartMonth }
+				                 validationRules={ {
+					                 required: 'Wybierz miesiąc początkowy'
+				                 } }
+				                 error={ errors.startMonth ?? null }
+				                 labelText={ 'Miesiąc' }/>
+				<SelectFormInput key={ 'startYear' }
+				                 id={ 'startYear' }
+				                 register={ register }
+				                 trigger={ trigger }
+				                 onValueChange={ selectStartYear }
+				                 selectItems={ generateYearSelectItems() }
+				                 validationRules={ {
+					                 required: 'Wybierz końcowy rok'
+				                 } }
+				                 text={ formData.startYear ? `${ formData.startYear }` : null }
+				                 error={ errors.startYear ?? null }
+				                 labelText={ 'Rok' }/>
 				<div className={ styles['dates__checkbox'] }>
 					<CustomCheckbox label={ checkboxLabel }
 					                id={ 'ongoing' }
@@ -131,24 +131,24 @@ const DatesForm: React.FC<IDatesFormProps> = ({
 			</div>
 			{ !isOngoing && <div className={ styles['dates__date'] }>
                 <span className={ styles['dates__text'] }>Koniec</span>
-                <SelectInput key={ 'endMonth' }
-                             id={ 'endMonth' }
-                             selectItems={ generateMonthSelectItems() }
-                             onValueChange={ selectEndMonth }
-                             text={ getMonthPolishName(formData.endMonth) }
-                             trigger={ trigger }
-                             register={ register }
-                             error={ errors.endMonth ?? null }
-                             labelText={ 'Miesiąc' }/>
-                <SelectInput id={ 'endYear' }
-                             key={ 'endYear' }
-                             selectItems={ generateYearSelectItems(formData.startYear ? formData.startYear + 1 : undefined) }
-                             onValueChange={ selectEndYear }
-                             text={ formData.endYear ? `${ formData.endYear }` : null }
-                             trigger={ trigger }
-                             register={ register }
-                             error={ errors.endYear ?? null }
-                             labelText={ 'Rok' }/>
+                <SelectFormInput key={ 'endMonth' }
+                                 id={ 'endMonth' }
+                                 selectItems={ generateMonthSelectItems() }
+                                 onValueChange={ selectEndMonth }
+                                 text={ getMonthPolishName(formData.endMonth) }
+                                 trigger={ trigger }
+                                 register={ register }
+                                 error={ errors.endMonth ?? null }
+                                 labelText={ 'Miesiąc' }/>
+                <SelectFormInput id={ 'endYear' }
+                                 key={ 'endYear' }
+                                 selectItems={ generateYearSelectItems(formData.startYear ? formData.startYear + 1 : undefined) }
+                                 onValueChange={ selectEndYear }
+                                 text={ formData.endYear ? `${ formData.endYear }` : null }
+                                 trigger={ trigger }
+                                 register={ register }
+                                 error={ errors.endYear ?? null }
+                                 labelText={ 'Rok' }/>
             </div> }
 		</div>
 	);

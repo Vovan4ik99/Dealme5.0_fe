@@ -1,10 +1,6 @@
-import {ILoggedUserData} from "@shared/userTypes.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
-export const getCurrentStepByUserAbsentData = (user: ILoggedUserData | null): number => {
-	const undefinedNumber = 11;
-	if (!user) {
-		return undefinedNumber;
-	}
+export const getCurrentStepByUserAbsentData = (user: IFreelancerData): number => {
 	if (user.experienceLevel === null) {
 		return 0;
 	}
@@ -35,5 +31,5 @@ export const getCurrentStepByUserAbsentData = (user: ILoggedUserData | null): nu
 	if (user.salesTools.length === 0) {
 		return 10;
 	}
-	return undefinedNumber;
+	return 11;
 };

@@ -1,0 +1,68 @@
+@use "@styles/variables" as vars;
+
+.textarea {
+  position: relative;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid vars.$color-gray-border;
+  border-radius: 12px;
+  background-color: white;
+
+  &--error {
+	border-color: vars.$color-danger;
+  }
+
+  &__label {
+	display: flex;
+	justify-content: space-between;
+	color: vars.$color-black;
+
+	span {
+	  font-size: 14px;
+	  line-height: 120%;
+	}
+	&--gray {
+	  color: vars.$color-gray;
+	}
+  }
+
+  &__input {
+	resize: none;
+	border: none;
+	color: vars.$color-black;
+	line-height: 120%;
+	overflow-y: hidden;
+
+	&:focus {
+	  outline: none;
+	}
+
+	&::placeholder {
+	  font-weight: 500;
+	  font-size: 18px;
+	  opacity: 0.5;
+	}
+  }
+
+  &__btn {
+	border: none;
+	position: absolute;
+	bottom: 6px;
+	right: 6px;
+	cursor: ns-resize;
+	background-color: transparent;
+	outline: none;
+	z-index: 1;
+  }
+
+  &:focus-within {
+	border-color: vars.$color-black;
+
+	.textarea__label {
+		color: vars.$color-gray;
+	}
+  }
+
+}

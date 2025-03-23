@@ -4,4 +4,5 @@ export interface IVideoProfileItemProps {
 	date: string;
 	title: string;
 	onEdit: () => void;
+	isEditable: boolean;
 }

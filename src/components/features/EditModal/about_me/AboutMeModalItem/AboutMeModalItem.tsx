@@ -1,11 +1,11 @@
 import styles from './AboutMeModalItem.module.scss';
-import AboutMeTextArea from "@components/features/EditModal/about_me/AboutMeTextArea/AboutMeTextArea.tsx";
+import CustomTextArea from "@ui/CustomTextArea/CustomTextArea.tsx";
 import React, { useCallback, useEffect } from "react";
 import {
 	IAboutMeForm,
 	IAboutMeModalItemProps
 } from "@components/features/EditModal/about_me/AboutMeModalItem/aboutMeModalItemTypes.ts";
-import { useFreelancerProfileService } from "@services/freelancerProfileService.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import VideoModalItem from "@components/features/EditModal/video/VideoModalItem/VideoModalItem.tsx";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
@@ -79,27 +79,29 @@ const AboutMeModalItem: React.FC<IAboutMeModalItemProps> = ({ aboutMeInfo, onSav
 
 	return (
 		<div className={ styles['item'] }>
-			<AboutMeTextArea label={ 'Główna zajawka' }
-			                 maxSymbols={ 500 }
-			                 placeholder={ 'Wpisz tutaj swoje zajawki..' }
-			                 value={ about }
-			                 error={ errors.about }
-			                 register={ register }
-			                 validation={ {
+			<CustomTextArea label={ 'Główna zajawka' }
+			                fontSize={ 18 }
+			                fontWeight={ 500 }
+			                maxSymbols={ 500 }
+			                placeholder={ 'Wpisz tutaj swoje zajawki..' }
+			                value={ about }
+			                error={ errors.about }
+			                register={ register }
+			                validation={ {
 				                 required: "Wpisz swoje zajawki",
 			                 } }
-			                 trigger={ trigger }
-			                 id={ 'about' }
-			                 onTextChange={ (newText: string) => setValue('about', newText) }/>
-			<AboutMeTextArea label={ 'Opis (opcjonalne)' }
-			                 maxSymbols={ 600 }
-			                 placeholder={ 'Wpisz tutaj opis..' }
-			                 fontWeight={ 400 }
-			                 value={ mainPassion }
-			                 id={ 'mainPassion' }
-			                 trigger={ trigger }
-			                 register={ register }
-			                 onTextChange={ (newText: string) => setValue('mainPassion', newText) }/>
+			                trigger={ trigger }
+			                id={ 'about' }
+			                onTextChange={ (newText: string) => setValue('about', newText) }/>
+			<CustomTextArea label={ 'Opis (opcjonalne)' }
+			                maxSymbols={ 600 }
+			                placeholder={ 'Wpisz tutaj opis..' }
+			                fontWeight={ 400 }
+			                value={ mainPassion }
+			                id={ 'mainPassion' }
+			                trigger={ trigger }
+			                register={ register }
+			                onTextChange={ (newText: string) => setValue('mainPassion', newText) }/>
 			<div>
 				<input type={ 'hidden' }
 				       id={ 'video' }

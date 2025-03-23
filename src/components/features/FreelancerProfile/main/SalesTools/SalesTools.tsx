@@ -8,22 +8,32 @@ import SalesToolProfileItem
 	from "@components/features/FreelancerProfile/main/SalesTools/SalesToolProfileItem/SalesToolProfileItem.tsx";
 import { getPictureForSalesTools } from "@utils/salesToolsUtils.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
-import { useOnboardingService } from "@services/onboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsEditModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItem.tsx";
 import SalesToolsAddModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/SalesToolsAddModalItem.tsx";
+import { ISalesToolsProps } from "@components/features/FreelancerProfile/main/SalesTools/salesToolsTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
-const SalesTools = () => {
+const SalesTools: React.FC<ISalesToolsProps> = ({ freelancerId, isLoggedUserProfile }) => {
 
 	const SECTION_ID: NavbarSectionKey = 'tools';
 
-	const { user, getLoggedUserData } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const { openModal } = useModal();
-	const { getSalesTools, patchSalesTools } = useOnboardingService();
+	const { patchSalesTools, getSalesTools } = useFreelancerOnboardingService();
+	const { getFreelancerSalesTools } = useFreelancerProfileService();
 
 	const [ currentIndex, setCurrentIndex ] = useState<number>(0);
 	const [ allSalesTools, setAllSalesTools ] = useState<ISalesTool[]>([]);
+	const [ selectedSalesTool, setSelectedSalesTool ] = useState<ISalesTool[]>([]);
+
+	useEffect(() => {
+		getFreelancerSalesTools(freelancerId)
+			.then(setSelectedSalesTool)
+			.catch(console.error);
+	}, [ freelancerId, getFreelancerSalesTools ]);
 
 	useEffect(() => {
 		getSalesTools()
@@ -44,12 +54,12 @@ const SalesTools = () => {
 	};
 
 	const getSalesToolsToAdd = () => {
-		return allSalesTools.filter(tool => !user.salesTools
+		return allSalesTools.filter(tool => !selectedSalesTool
 			.some(t => t.id === tool.id));
 	};
 
 	const renderSalesTools = () => {
-		return user.salesTools.map(tool => {
+		return selectedSalesTool.map(tool => {
 			return <SalesToolProfileItem key={ tool.id }
 			                             toolName={ tool.toolName }
 			                             categoryName={ tool.kind }
@@ -57,7 +67,7 @@ const SalesTools = () => {
 		});
 	};
 
-	const onSalesToolsEdit = () => {
+	const handleSalesToolsEdit = () => {
 		openModal({
 			id: 'SalesToolsEditModalItem',
 			title: 'Edytuj narzędzia sprzedażowe',
@@ -65,15 +75,25 @@ const SalesTools = () => {
 			btnText: 'Zapisz zmiany',
 			withSaveBtn: true,
 			btnWithIcon: false,
-			child: <SalesToolsEditModalItem/>
+			child: <SalesToolsEditModalItem
+						allSalesTools={ allSalesTools }
+						onSave={ onSalesToolsEdit }/>
 		});
 	};
 
 	const onSalesToolsAdd = (newTools: ISalesTool[]) => {
-		patchSalesTools(newTools.map(tool => tool.id))
-			.then(() => getLoggedUserData(localStorage.getItem('token')!))
+		const request = [ ...selectedSalesTool, ...newTools ];
+
+		patchSalesTools(request.map(tool => tool.id))
+			.then(() => setSelectedSalesTool(request))
 			.catch(console.error);
 	};
+
+	const onSalesToolsEdit = (salesTools: ISalesTool[]) => {
+		patchSalesTools(salesTools.map(tool => tool.id))
+			.then(() => setSelectedSalesTool(salesTools))
+			.catch(console.error);
+	}
 
 	const handleAddTools = () => {
 		openModal({
@@ -85,7 +105,7 @@ const SalesTools = () => {
 			withSaveBtn: true,
 			child: <SalesToolsAddModalItem
 				salesTools={ getSalesToolsToAdd() }
-				onSave={ onSalesToolsAdd }/>
+				onSave = { onSalesToolsAdd }/>
 		});
 	};
 
@@ -105,22 +125,24 @@ const SalesTools = () => {
 						           key={ 'Right Btn' }
 						           withBorder={ true }
 						           backgroundColor={ 'white' }
-						           disabled={ currentIndex + 5 >= user.salesTools.length }
+						           disabled={ currentIndex + 5 >= selectedSalesTool.length }
 						           onClick={ () => handleNavigateClick('right') }/>
 					</div>
 				</div>
-				<div className={ styles['tools__buttons'] }>
-					<ActionBtn kind={ 'Add' }
-					           key={ 'Add' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ handleAddTools }/>
-					<ActionBtn kind={ 'Edit' }
-					           key={ 'Edit' }
-					           withBorder={ true }
-					           backgroundColor={ 'white' }
-					           onClick={ onSalesToolsEdit }/>
-				</div>
+				{ isLoggedUserProfile &&
+                    <div className={ styles['tools__buttons'] }>
+                        <ActionBtn kind={ 'Add' }
+                                   key={ 'Add' }
+                                   withBorder={ true }
+                                   backgroundColor={ 'white' }
+                                   onClick={ handleAddTools }/>
+                        <ActionBtn kind={ 'Edit' }
+                                   key={ 'Edit' }
+                                   withBorder={ true }
+                                   backgroundColor={ 'white' }
+                                   onClick={ handleSalesToolsEdit }/>
+                    </div>
+				}
 			</div>
 			<div className={ styles['tools__content'] }>
 				<div

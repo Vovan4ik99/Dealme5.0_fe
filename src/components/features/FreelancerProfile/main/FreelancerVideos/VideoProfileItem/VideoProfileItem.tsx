@@ -5,12 +5,12 @@ import { IVideoProfileItemProps } from "./videoProfileItemTypes.ts";
 import calendar from "@icons/freelancer_profile/secondary_info/calendar.svg";
 import { transformVideoDate } from "@utils/dateUtils.ts";
 
-const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUrl, date, onEdit }) => {
+const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUrl, date, onEdit, isEditable }) => {
 
 	const videoRef = useRef<HTMLVideoElement>(null);
 
 	const [ isHovered, setIsHovered ] = useState<boolean>(false);
-	const [videoStyle, setVideoStyle] = useState<React.CSSProperties>({
+	const [ videoStyle, setVideoStyle ] = useState<React.CSSProperties>({
 		maxWidth: "281px",
 		maxHeight: "100%",
 	});
@@ -53,7 +53,7 @@ const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUr
 		return () => {
 			video?.removeEventListener("loadedmetadata", updateVideoStyle);
 		};
-	}, [videoRef]);
+	}, [ videoRef ]);
 
 	return (
 		<div role={ 'button' }
@@ -67,9 +67,9 @@ const VideoProfileItem: React.FC<IVideoProfileItemProps> = ({ id, title, videoUr
 			           style={ videoStyle }
 			           withCustomHover={ true }
 			           isHoveredByParentBlock={ isHovered }
-			           hasEditBtn={ true }
-			           playVideo={playVideo}
-			           onClick={onEdit}/>
+			           hasEditBtn={ isEditable || undefined }
+			           playVideo={ playVideo }
+			           onClick={ onEdit }/>
 			<div className={ `${ styles['item__info'] } ${ isHovered && styles['item__info--hovered'] }` }>
 				<p className={ styles['item__title'] }>{ title }</p>
 				<div className={ styles['item__date'] }>

@@ -1,5 +1,5 @@
 import styles from './EditVideosModalItem.module.scss';
-import { useVideoService } from "@services/videoService.ts";
+import { useFreelancerVideoService } from "@services/freelancer/freelancerVideoService.ts";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
@@ -11,22 +11,23 @@ import { IFreelancerVideo } from "@shared/freelancer/video.ts";
 
 const EditVideosModalItem = () => {
 
-	const {user} = useContext(AuthContext);
-	const {getFreelancerVideos, deleteFreelancerVideo, loadingStatus} = useVideoService();
-	const {openModal} =  useModal();
-	
-	const [videos, setVideos] = useState<IFreelancerVideo[]>([]);
+	const { user } = useContext(AuthContext);
+	const { getFreelancerVideos, deleteFreelancerVideo, loadingStatus } = useFreelancerVideoService();
+	const { openModal } = useModal();
+
+	const [ videos, setVideos ] = useState<IFreelancerVideo[]>([]);
 
 	const fetchVideos = useCallback(() => {
 		if (!user) return;
+
 		getFreelancerVideos(user.id)
 			.then(setVideos)
 			.catch(console.error);
-	}, [getFreelancerVideos, user]);
-	
+	}, [ getFreelancerVideos, user ]);
+
 	useEffect(() => {
 		fetchVideos();
-	}, [fetchVideos]);
+	}, [ fetchVideos ]);
 
 	const handleDeleteVideo = (id: number) => {
 		deleteFreelancerVideo(id)
@@ -70,12 +71,12 @@ const EditVideosModalItem = () => {
 
 	const renderVideos = () => {
 		return videos.map(video => {
-			return <VideoEditModalItem key={video.id}
-			                           videoUrl={video.fileUrl}
-			                           title={video.title}
-			                           dateOfObtaining={video.date}
-			                           onEdit={() => handleEditVideo(video)}
-			                           onDelete={() => handleDeleteVideo(video.id)}/>
+			return <VideoEditModalItem key={ video.id }
+			                           videoUrl={ video.fileUrl }
+			                           title={ video.title }
+			                           dateOfObtaining={ video.date }
+			                           onEdit={ () => handleEditVideo(video) }
+			                           onDelete={ () => handleDeleteVideo(video.id) }/>
 		});
 	};
 
@@ -84,11 +85,11 @@ const EditVideosModalItem = () => {
 	}
 
 	return (
-		<div className={styles['modal']}>
-			<div className={styles['modal__content']}>
-				{renderVideos()}
+		<div className={ styles['modal'] }>
+			<div className={ styles['modal__content'] }>
+				{ renderVideos() }
 			</div>
-			<button className={'btn btn--modal'} onClick={handleAddVideos}>
+			<button className={ 'btn btn--modal' } onClick={ handleAddVideos }>
 				<AddIcon/>
 				<span>Dodaj kolejne wideo</span>
 			</button>

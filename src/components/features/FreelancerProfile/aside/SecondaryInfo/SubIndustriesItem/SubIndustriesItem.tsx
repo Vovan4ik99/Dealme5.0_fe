@@ -8,7 +8,7 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import SubIndustriesModalItem
 	from "@components/features/EditModal/sub_industries/SubIndustriesModalItem/SubIndustriesModalItem.tsx";
 
-const SubIndustriesItem: React.FC<ISubIndustriesItemProps> = ({ userSubIndustries, onSave }) => {
+const SubIndustriesItem: React.FC<ISubIndustriesItemProps> = ({ userSubIndustries, onSave, isLoggedUserProfile }) => {
 
 	const { openModal } = useModal();
 
@@ -35,12 +35,14 @@ const SubIndustriesItem: React.FC<ISubIndustriesItemProps> = ({ userSubIndustrie
 				<img src={ cloud } alt="cloud"/>
 			</div>
 			<p>{ getSubIndustriesNames() }</p>
-			<div className={ styles['info__btn'] }>
-				<ActionBtn kind={ 'Edit' }
-				           withBorder={ false }
-				           backgroundColor={ 'transparent' }
-				           onClick={ editSubIndustries }/>
-			</div>
+			{ isLoggedUserProfile &&
+                <div className={ styles['info__btn'] }>
+                    <ActionBtn kind={ 'Edit' }
+                               withBorder={ false }
+                               backgroundColor={ 'transparent' }
+                               onClick={ editSubIndustries }/>
+                </div>
+			}
 		</>
 	);
 };
