@@ -3,7 +3,7 @@ import {useAuthService} from "@services/auth/authService.ts";
 import {authReducer} from "./authReducer.ts";
 import {AuthActionType} from "./authActions.ts";
 import {AuthContext, IAuthContextValue, InitialAuthState} from "./AuthContext.ts";
-import { ILoggedUserResponse, UserRole } from "@shared/userTypes.ts";
+import {ILoggedUserResponse, UserRole} from "@shared/userTypes.ts";
 import {jwtDecode} from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -16,14 +16,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		dispatch({ type: AuthActionType.LOGOUT });
 	}, []);
 
-	const getLoggedUserData = useCallback((currentToken: string) => {
+	const getLoggedUserData = useCallback(async (currentToken: string) => {
 		dispatch({ type: AuthActionType.SET_LOADING_STATUS, payload: 'loading' });
 
 		const role = getUserRole(currentToken);
 
-		fetchLoggedUserData(role)
+		return fetchLoggedUserData(role)
 			.then((response: ILoggedUserResponse) => {
-				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: { role, ...response } });
+				const userData =  { role, ...response };
+				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
+				return userData;
 			})
 			.catch(e => {
 					dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });

@@ -20,6 +20,7 @@ export interface ILoggedUserResponse {
 	email: string;
 	firstName: string;
 	lastName: string;
+	isOnboardingPassed: boolean | undefined;
 }
 
 export interface IUserAvatarResponse {
