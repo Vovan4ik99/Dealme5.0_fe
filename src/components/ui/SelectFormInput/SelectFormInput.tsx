@@ -71,7 +71,7 @@ const SelectFormInput = <T extends Record<string, any>>({
 			</button>
 			<DropDownModal isOpen={ isOpen }
 						   renderItems={ renderSelectItems() }
-						   isFitting={ true }/>
+						   width={ "Fitted" }/>
 			{ (error?.message && !isOpen) && <InputError text={ error.message }/> }
 		</div>
 
