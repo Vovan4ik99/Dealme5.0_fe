@@ -1,0 +1,21 @@
+@use "@styles/variables" as vars;
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  width: 100%;
+  background-color: vars.$color-white;
+  border: 1px solid vars.$color-gray-border;
+  border-radius: 12px;
+  height: 20px;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__arrow {
+    rotate: -90deg;
+  }
+}

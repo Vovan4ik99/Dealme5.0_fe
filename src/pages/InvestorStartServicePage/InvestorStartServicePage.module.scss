@@ -1,0 +1,8 @@
+.service {
+  margin: 48px auto;
+  max-width: 1098px;
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+}
