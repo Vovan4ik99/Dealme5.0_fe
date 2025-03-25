@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import styles from "./StartServiceSwitcher.module.scss"
+import styles from "./ServiceSwitcher.module.scss"
 import { ReactComponent as BackIcon } from "@icons/named_exported/onboarding/arrow_left.svg";
-import { START_SERVICE_STEPS } from "@components/features/StartService/startServiceSwitcherTypes.ts";
+import { START_SERVICE_STEPS } from "@components/features/StartService/ServiceSwitcherTypes.ts";
 
 
-const StartServiceSwitcher = () => {
+const ServiceSwitcher = () => {
     const [step, setStep] = useState<number>(0);
 
     const stepData = START_SERVICE_STEPS[step];
@@ -32,4 +32,4 @@ const StartServiceSwitcher = () => {
     );
 }
 
-export default StartServiceSwitcher;
+export default ServiceSwitcher;

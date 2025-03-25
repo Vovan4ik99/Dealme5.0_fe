@@ -3,19 +3,98 @@
 .tile {
   display: flex;
   flex-direction: column;
-  padding: 24px;
   width: 100%;
   background-color: vars.$color-white;
   border: 1px solid vars.$color-gray-border;
   border-radius: 12px;
-  height: 20px;
+  justify-content: center;
+  padding: 24px;
+
+  &:hover {
+
+    .tile__icon {
+      background-color: vars.$color-primary-pastel;
+
+      svg path {
+        fill: vars.$primary-color;
+      }
+    }
+  }
 
   &__header {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+
+    &--info {
+      display: flex;
+      cursor: pointer;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
   }
+
   &__arrow {
     rotate: -90deg;
+
+    &--active {
+      rotate: 0deg;
+    }
   }
+
+  &__icon {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    background-color: vars.$color-gray-light;
+    border-radius: 12px;
+    transition: background-color 0.6s ease, transform 0.6s ease;
+
+    svg path {
+      fill: vars.$color-gray;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+
+    &--title {
+      font-weight: 600;
+      line-height: 120%;
+      letter-spacing: 0;
+      color: vars.$color-black;
+      vertical-align: middle;
+    }
+
+    &--subtitle {
+      color: vars.$color-gray;
+      font-weight: 400;
+      line-height: 120%;
+      letter-spacing: 0;
+      vertical-align: middle;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: vars.$color-white;
+    border: 1px solid vars.$color-gray-border;
+    color: vars.$color-gray;
+    border-radius: 12px;
+    padding: 14px 16px;
+
+    svg {
+      fill: vars.$color-gray;
+      height: 8px;
+    }
+  }
+
 }

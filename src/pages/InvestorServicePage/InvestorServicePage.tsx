@@ -2,16 +2,16 @@ import React from 'react';
 import InvestorOnboardingNavbar
     from "@components/layout/OnboardingLayout/InvestorOnboardingNavbar/InvestorOnboardingNavbar.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
-import StartServiceSwitcher from "@components/features/StartService/StartServiceSwitcher.tsx";
-import styles from "./InvestorStartServicePage.module.scss";
-const InvestorStartServicePage = () => {
+import ServiceSwitcher from "@components/features/StartService/ServiceSwitcher.tsx";
+import styles from "./InvestorServicePage.module.scss";
+const InvestorServicePage = () => {
     return (
         <section className={styles["service"]}>
             <InvestorOnboardingNavbar />
-            <StartServiceSwitcher />
+            <ServiceSwitcher />
             <Footer isHyphenated={false} isCentered={false} />
         </section>
     );
 }
 
-export default InvestorStartServicePage;
+export default InvestorServicePage;
