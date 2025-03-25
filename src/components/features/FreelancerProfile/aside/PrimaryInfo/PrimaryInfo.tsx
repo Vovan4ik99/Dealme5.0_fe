@@ -52,8 +52,9 @@ const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLo
 	}
 
 	const handleSave = () => {
-		fetchFreelancerData();
-		getLoggedUserData(token!);
+		getLoggedUserData(token!)
+			.then(fetchFreelancerData)
+			.catch(console.error);
 	};
 
 	const onEdit = () => {

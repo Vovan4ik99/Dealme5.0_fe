@@ -21,7 +21,7 @@ const DropDownModal : React.FC<IDropdownModalProps> = ({ isOpen, renderItems, wi
         <div
             ref={ modalRef }
             className={ styles["dropdown"] }
-            style={ typeof width === "number" ? {  width: `${ width + 30 }px` } : { width: "100%" } }>
+            style={ typeof width === "number" ? {  width: `${ width + 30 }px` } : { width: width } }>
             { renderItems }
         </div>
     </CSSTransition>

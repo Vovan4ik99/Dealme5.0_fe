@@ -121,7 +121,7 @@ const ProfileNavbar = () => {
 					</button>
 					<DropDownModal isOpen={ isDropdownOpened }
 								   renderItems={ renderAvatarOptions() }
-					 			   width={ avatarButtonRef.current?.clientWidth ?? "Fitted" }/>
+					 			   width={ avatarButtonRef.current?.clientWidth ?? "100%" }/>
 				</div>
 			</div>
 		</nav>
