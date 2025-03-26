@@ -36,9 +36,7 @@ const OnboardingSwitcher = () => {
 		if (!user) return;
 
 		fetchLoggedUserData(user.role)
-			.then(response => {
-				setUserData(response);
-			})
+			.then(setUserData)
 			.catch(console.error);
 	}, [ user, fetchLoggedUserData]);
 

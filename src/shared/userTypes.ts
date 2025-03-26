@@ -25,7 +25,7 @@ export interface ILoggedUserResponse {
 
 export interface IUserAvatarResponse {
 	pictureId: number;
-	picture: string;
+	pictureData: string,
 }
 
 export interface ILoggedUserData extends ILoggedUserResponse {

@@ -34,7 +34,7 @@ const ImageModalItem: React.FC<IImageModalItemProps> = ({
 		getAvatar(user!.id)
 			.then(res => {
 				if (res) {
-					const parsedUserAvatar = parseBase64Image(res.picture, 'awatar');
+					const parsedUserAvatar = parseBase64Image(res.pictureData, 'awatar');
 					setImageBlob(parsedUserAvatar.blob);
 					setImageFileName(parsedUserAvatar.filename);
 				}

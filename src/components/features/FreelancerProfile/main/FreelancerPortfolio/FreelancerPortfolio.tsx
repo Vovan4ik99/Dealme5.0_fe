@@ -99,7 +99,7 @@ const FreelancerPortfolio: React.FC<IFreelancerPortfolioProps> = ({ freelancerId
 
 		portfolioItems.forEach((portfolioItem, index) => {
 			itemsToRender.push(
-				<PortfolioProfileItem key={ portfolioItem.id }
+				<PortfolioProfileItem key={ portfolioItem.pictureId }
 				                      picture={ portfolioItem.pictureData }
 				                      title={ portfolioItem.title }
 				                      comment={ portfolioItem.info }
