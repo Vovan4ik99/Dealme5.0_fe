@@ -91,6 +91,8 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 	};
 
 	const renderVideos = () => {
+		itemRefs.current = [];
+		
 		if (videos.length <= 0) {
 			const text = isLoggedUserProfile ?
 				'Nie dodałeś/aś żadnych wideo' :
