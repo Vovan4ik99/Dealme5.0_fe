@@ -1,8 +1,8 @@
 import styles from "../Entity.module.scss";
 import React from "react";
-import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
-import WorkingDayItem from "@components/features/Onboarding/items/WorkingDayItem/WorkingDayItem.tsx";
-import {IWorkingDaysListProps} from "@entities/WorkingDaysList/workingDaysListTypes.ts";
+import { WORKING_DAYS, WorkingDayKey } from "@constants/workingDays.ts";
+import WorkingDayItem from "@components/features/freelancer-onboarding/items/WorkingDayItem/WorkingDayItem.tsx";
+import { IWorkingDaysListProps } from "@entities/WorkingDaysList/workingDaysListTypes.ts";
 
 const WorkingDaysList: React.FC<IWorkingDaysListProps> = ({selectedWorkingDays, onChange}) => {
 

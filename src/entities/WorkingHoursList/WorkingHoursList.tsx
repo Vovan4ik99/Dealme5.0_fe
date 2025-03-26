@@ -1,4 +1,4 @@
-import WorkingHourItem from "@components/features/Onboarding/items/WorkingHourItem/WorkingHourItem.tsx";
+import WorkingHourItem from "@components/features/freelancer-onboarding/items/WorkingHourItem/WorkingHourItem.tsx";
 import React, { useEffect, useState } from "react";
 import { IWorkingHour } from "@shared/onboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ITypeOfSalesListProps } from "@entities/TypeOfSalesList/typeOfSalesListTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import TypeOfSalesItem from "@components/features/Onboarding/items/TypeOfSalesItem/TypeOfSalesItem.tsx";
+import TypeOfSalesItem from "@components/features/freelancer-onboarding/items/TypeOfSalesItem/TypeOfSalesItem.tsx";
 import { ITypeOfSale } from "@shared/onboardingTypes.ts";
 
 const TypeOfSalesList: React.FC<ITypeOfSalesListProps> = ({ selectedTypeOfSale, onSelect }) => {

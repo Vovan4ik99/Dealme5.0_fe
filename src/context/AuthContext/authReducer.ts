@@ -23,10 +23,10 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 				errorMessage: action.payload,
 				loadingStatus: 'error',
 			};
-		case AuthActionType.SET_LOADING_STATUS:
+		case AuthActionType.SET_LOADING:
 			return {
 				...state,
-				loadingStatus: action.payload,
+				loadingStatus: 'loading',
 			};
 		case AuthActionType.SET_LOGGED_INVESTOR_MAIL:
 			return {
@@ -37,7 +37,7 @@ export const authReducer = (state: IAuthInitialState, action: AuthAction): IAuth
 					role: 'INVESTOR',
 					firstName: '',
 					lastName: '',
-					isOnboardingPassed: undefined
+					isMock: true
 				},
 				loadingStatus: 'idle',
 				errorMessage: null

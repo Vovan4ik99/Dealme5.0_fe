@@ -34,6 +34,14 @@ export const API_ROUTES = {
 			SALES_TOOLS: '/tools',
 			FREELANCER_SALES_TOOLS: '/freelancer/tools',
 			ONBOARDING_STATUS: '/onboarding ',
+		},
+		INVESTOR: {
+			GET_ACTIVITIES: '/activity-destiny',
+			PATCH_ACTIVITIES: '/investor/me/activityDestiny',
+			GET_ORGANIZATION_STAGE: '/organization-stage',
+			PATCH_ORGANIZATION_STAGE: '/investor/me/organizationStage',
+			PATCH_SALES_DEPARTMENT: '/investor/me/salesDepartment',
+			PATCH_COMPANY_MAILS: '/investor/me/company-emails',
 		}
 	},
 	PROFILE: {
@@ -62,5 +70,5 @@ export const API_ROUTES = {
 			GET_ACTIVITIES: '/activities/freelancer',
 			PORTFOLIO: '/freelancer/portfolios',
 		}
-	}
+	},
 } as const;

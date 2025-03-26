@@ -5,7 +5,7 @@ import { EXPERIENCE_LEVELS } from "@constants/experienceLevel.ts";
 import { IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry } from "@shared/onboardingTypes.ts";
 import { WorkingDayKey } from "@constants/workingDays.ts";
 import { IFreelancerWorkExperience } from "@shared/freelancer/work-experience.ts";
-import { ILoggedUserResponse } from "@shared/userTypes.ts";
+import { IGetLoggedUserResponse } from "@shared/userTypes.ts";
 
 export interface IFreelancerBackgroundResponse {
 	pictureId: number;
@@ -37,7 +37,7 @@ export interface IAboutMeInfo {
 	mainPassion: string | null;
 }
 
-export interface IFreelancerData extends ILoggedUserResponse {
+export interface IFreelancerData extends IGetLoggedUserResponse {
 	experienceLevel: keyof typeof EXPERIENCE_LEVELS;
 	company: string;
 	specialization: ISpecialization,

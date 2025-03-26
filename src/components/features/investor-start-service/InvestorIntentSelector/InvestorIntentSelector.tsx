@@ -7,16 +7,21 @@ import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 
 const InvestorIntentSelector = () => {
 
-	const { loadingStatus, loginInvestor } = useContext(AuthContext);
+	const { loadingStatus, loginInvestor, user } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 
 	const redirectLoggedInUser = (to: 'service' | 'onboarding') => {
-		loginInvestor()
-			.then(() => {
-				const pathToNavigate = `/investor/${ to === 'service' ? 'service' : 'onboarding' }`;
-				navigate(pathToNavigate);
-			}).catch(console.error);
+		const pathToNavigate = `/investor/${ to === 'service' ? 'service' : 'onboarding' }`;
+
+		if (!user) {
+			loginInvestor()
+				.then(() => navigate(pathToNavigate))
+				.catch(console.error);
+			return;
+		}
+
+		navigate(pathToNavigate);
 	};
 
 	if (loadingStatus === 'loading') {

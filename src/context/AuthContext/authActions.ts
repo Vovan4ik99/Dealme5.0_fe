@@ -1,17 +1,16 @@
-import { ILoggedUserData } from "@shared/userTypes.ts";
-import { LoadingStatusOptions } from "@hooks/http.hook.ts";
+import { LoggedUserData } from "@shared/userTypes.ts";
 
 export enum AuthActionType {
 	GET_LOGGED_USER = 'GET_LOGGED_USER',
 	LOGOUT = 'LOGOUT',
 	SET_ERROR = 'SET_ERROR',
-	SET_LOADING_STATUS = 'SET_LOADING_STATUS',
+	SET_LOADING = 'SET_LOADING',
 	SET_LOGGED_INVESTOR_MAIL = 'SET_LOGGED_INVESTOR_MAIL',
 }
 
 export interface IGetLoggedUser {
 	type: AuthActionType.GET_LOGGED_USER;
-	payload: ILoggedUserData;
+	payload: LoggedUserData;
 }
 
 export interface ILogoutAction {
@@ -23,9 +22,8 @@ export interface ISetErrorAction {
 	payload: string;
 }
 
-export interface ISetLoadingStatus {
-	type: AuthActionType.SET_LOADING_STATUS;
-	payload: LoadingStatusOptions;
+export interface ISetLoading {
+	type: AuthActionType.SET_LOADING;
 }
 
 export interface ISetLoggedMockedInvestor {
@@ -33,5 +31,5 @@ export interface ISetLoggedMockedInvestor {
 	payload: string;
 }
 
-export type AuthAction = IGetLoggedUser | ILogoutAction | ISetErrorAction | ISetLoadingStatus
+export type AuthAction = IGetLoggedUser | ILogoutAction | ISetErrorAction | ISetLoading
 	| ISetLoggedMockedInvestor;
