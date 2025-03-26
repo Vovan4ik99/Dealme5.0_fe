@@ -85,11 +85,11 @@ const PortfolioEditModalItem: React.FC<IPortfolioEditModalItemProps> = ({ onClos
 
 	const renderPortfolioItems = () => {
 		return portfolioItems.map(item => {
-			return <PortfolioModalItem key={ item.id }
+			return <PortfolioModalItem key={ item.pictureId }
 			                           picture={ item.pictureData }
 			                           title={ item.title }
 			                           onEdit={ () => handlePortfolioItemPatch(item) }
-			                           onDelete={ () => onPortfolioItemDelete(item.id) }/>
+			                           onDelete={ () => onPortfolioItemDelete(item.pictureId) }/>
 		});
 	};
 
