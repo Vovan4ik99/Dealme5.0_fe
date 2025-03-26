@@ -43,7 +43,7 @@ const ProfileNavbar = () => {
 	const fetchAvatar = useCallback(() => {
 		if (!user) return;
 		getAvatar(user.id)
-			.then((res) => setAvatar(res ? res.picture : undefined))
+			.then((res) => setAvatar(res ? res.pictureData : undefined))
 			.catch(console.error);
 	}, [ getAvatar, user ]);
 

@@ -8,8 +8,7 @@ import { IFreelancerWorkExperience } from "@shared/freelancer/work-experience.ts
 import { ILoggedUserResponse } from "@shared/userTypes.ts";
 
 export interface IFreelancerBackgroundResponse {
-	id: number;
-	freelancerId: number;
+	pictureId: number;
 	pictureData: string;
 }
 

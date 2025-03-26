@@ -22,7 +22,7 @@ const Avatar: React.FC<IAvatarProps> = ({ freelancerId, isLoggedUserProfile }) =
 	const fetchAvatar = useCallback(() => {
 		getAvatar(freelancerId)
 			.then(res => {
-				setAvatar(res ? res.picture : null);
+				setAvatar(res ? res.pictureData : null);
 			})
 			.catch(console.error)
 	}, [ getAvatar, freelancerId ]);

@@ -82,7 +82,7 @@ const PortfolioAddModalItem: React.FC<IPortfolioAddModalItemProps> = ({
 		handleSubmit(data => {
 			if (isEdit) {
 				const request: IFreelancerPortfolioUpdateRequest = {
-					id: portfolio.id,
+					pictureId: portfolio.pictureId,
 					title: data.title,
 					info: data.info
 				};

@@ -1,5 +1,5 @@
 export interface IFreelancerPortfolio {
-	id: number;
+	pictureId: number;
 	title: string;
 	pictureData: string;
 	info: string;
