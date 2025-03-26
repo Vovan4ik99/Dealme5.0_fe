@@ -97,4 +97,37 @@
     }
   }
 
+  &__line {
+    margin-top: 24px;
+    border: 1px solid vars.$color-gray-border;
+  }
+
+  &__opened {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__description {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    width: 586px;
+
+    &--title {
+      font-weight: 500;
+      line-height: 120%;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: vars.$color-gray;
+      margin-bottom: 8px;
+    }
+
+    &--info {
+      color: vars.$color-black;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 130%;
+      letter-spacing: 0;
+    }
+  }
 }

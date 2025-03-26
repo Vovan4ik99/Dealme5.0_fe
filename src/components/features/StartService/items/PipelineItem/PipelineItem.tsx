@@ -24,7 +24,18 @@ const PipelineItem = () => {
                     <ArrowDown className={ styles["tile__arrow"] } />
                 </button>
             </div>
-            { isOpened && <p>lorem</p>}
+            { isOpened && (
+                <>
+                <div className={ styles["tile__line"] }/>
+                <div className={ styles["tile__opened"] }>
+                    <div className={ styles["tile__description"] }>
+                        <p className={ styles["tile__description--title"] }>CEL</p>
+                        <p className={ styles["tile__description--info"] }>Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia
+                            na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.</p>
+                    </div>
+                </div>
+                </>
+            )}
         </div>
     );
 };
