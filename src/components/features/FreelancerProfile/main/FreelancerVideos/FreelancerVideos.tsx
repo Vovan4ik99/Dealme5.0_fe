@@ -37,12 +37,15 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 	}, [ fetchVideos ]);
 
 	const handleNavigateClick = (direction: 'left' | 'right') => {
-		if (direction === 'left') {
-			setCurrentIndex((prev) => prev - 1);
-		} else {
-			setCurrentIndex((prev) => prev + 1);
-		}
+			setCurrentIndex((prev) => direction === "left" ? prev - 1 : prev + 1);
 	};
+
+	const handleElementMove = () => {
+		return Array.from(itemRefs.current?.values())
+			.map((el) => el.clientWidth + 16)
+			.slice(0, currentIndex)
+			.reduce((acc, width) => acc + width, 0);
+	}
 
 	const handleAddVideos = () => {
 		openModal({
@@ -91,7 +94,6 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 	};
 
 	const renderVideos = () => {
-		itemRefs.current = [];
 		
 		if (videos.length <= 0) {
 			const text = isLoggedUserProfile ?
@@ -103,9 +105,7 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 		const videoItems = videos.map((video) => {
 			return <div key={ video.id }
 			            className={ styles['videos__item'] }
-			            ref={ (el) => {
-				            if (el) itemRefs.current.push(el);
-			            } }>
+			            ref={ (el) => el && itemRefs.current.push(el) }>
 				<VideoProfileItem key={ video.id }
 				                  id={ video.id }
 				                  videoUrl={ video.fileUrl }
@@ -119,7 +119,7 @@ const FreelancerVideos: React.FC<IFreelancerVideosProps> = ({ isLoggedUserProfil
 
 		return <div className={ styles['videos__inner'] }
 		            style={ {
-			            transform: `translateX(-${ itemRefs.current[currentIndex]?.offsetLeft ?? 0 }px)`
+			            transform: `translateX(-${ handleElementMove() }px)`
 		            } }>
 			{ videoItems }
 		</div>
