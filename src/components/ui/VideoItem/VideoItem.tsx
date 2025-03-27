@@ -40,7 +40,7 @@ const VideoItem = React.forwardRef<HTMLVideoElement, IVideoItemProps>(({
 			<video style={ style }
 			       ref={ ref }
 			       controls
-				   onError={(e) => console.error(e) }
+				   onError={ console.error }
 				   preload={ "metadata" }
 			       onClick={playVideo}
 			       className={ styles['item__video'] }>
