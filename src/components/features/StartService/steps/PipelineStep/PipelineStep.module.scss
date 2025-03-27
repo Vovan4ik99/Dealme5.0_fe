@@ -1,5 +1,8 @@
 @use "@styles/variables" as vars;
 
 .list {
+  display: flex;
+  flex-direction: column;
   margin-top: 32px;
+  gap: 8px;
 }
