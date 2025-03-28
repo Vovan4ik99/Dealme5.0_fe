@@ -6,7 +6,8 @@ import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfil
 import ResetPasswordPage from "@pages/auth/ResetPasswordPage/ResetPasswordPage.tsx";
 import AuthPage from "@pages/auth/AuthPage/AuthPage.tsx";
 import InvestorStartPage from "@pages/InvestorStartPage/InvestorStartPage.tsx";
-import OnboardingPage from "@pages/OnboardingPage/OnboardingPage.tsx";
+import OnboardingPage from "@pages/onboarding/OnboardingPage/OnboardingPage.tsx";
+import OnboardingSummary from "@pages/onboarding/OnboardingSummary/OnboardingSummary.tsx";
 
 const AppRouter = () => {
 	return (
@@ -17,7 +18,8 @@ const AppRouter = () => {
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
 				<Route element={ <ProtectedRoute/> }>
-					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={'INVESTOR'}/> }/>
+					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
+					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
 					<Route path={ '/freelancer/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/onboarding' } element={ <FreelancerOnboardingPage/> }/>
 					<Route path={ '/profile' } element={ <FreelancerProfilePage/> }/>

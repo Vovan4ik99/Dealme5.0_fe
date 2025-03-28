@@ -19,8 +19,23 @@ export const getUserCurrentStep = (userData: OnboardingUserData, role: UserRole)
 		if (userData.salesDepartment === null) {
 			return 2;
 		}
-		return 3;
-	}
+		if (!userData.goToMarketStrategy) {
+			return 3;
+		}
+		if (!userData.businessType) {
+			return 4;
+		}
+		if (!userData.investorRole) {
+			return 5;
+		}
+		if (!userData.employeeCountRange) {
+			return 6;
+		}
+		if (!userData.companySiteUrl) {
+			return 7;
+		}
+		return 8;
+	};
 
 	if (role === 'FREELANCER') {
 		return getCurrentStepForFreelancer(userData as IFreelancerData);

@@ -26,14 +26,14 @@ const SalesDepartmentStep: React.FC<IStepComponentProps<IInvestorData>> = ({ use
 
 		patchSalesDepartment(hasDepartment)
 			.then(() => {
-				if (hasDepartment) {
+				if (hasDepartment && mails.length > 0) {
 					patchEmails();
 				} else {
 					onSubmit();
 				}
 			})
 			.catch(console.error);
-	}, [ hasDepartment, onSubmit, patchEmails, patchSalesDepartment ]);
+	}, [ hasDepartment, mails.length, onSubmit, patchEmails, patchSalesDepartment ]);
 
 
 	const renderContent = () => {
@@ -84,6 +84,7 @@ const SalesDepartmentStep: React.FC<IStepComponentProps<IInvestorData>> = ({ use
 			                 mails={ mails }
 			                 onChange={ setCompanyMailsByIndex }/>
 			<button className={ 'btn btn--mt0' }
+			        disabled={ hasDepartment === undefined }
 			        onClick={ handleSubmit }>
 				Przejdź dalej
 			</button>

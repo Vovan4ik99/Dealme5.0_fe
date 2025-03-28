@@ -1,7 +1,12 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { ICreateUserRequest, ICreateUserResponse, UserRole } from "@shared/userTypes.ts";
-import { IInvestorAuthTokenResponse, ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
+import {
+	IInvestorAuthTokenResponse,
+	ILoginRequest,
+	ILoginResponse,
+	IRegisterMockInvestorRequest
+} from "@shared/authTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
 import { IInvestorData } from "@shared/investor/common.ts";
@@ -60,6 +65,16 @@ export const useAuthService = () => {
 			});
 		}, [ sendRequest ]);
 
+	const registerMockedInvestor = useCallback(
+		async (request: IRegisterMockInvestorRequest): Promise<void> => {
+
+			return await sendRequest({
+				url: API_ROUTES.AUTH.REGISTER_MOCKED_INVESTOR,
+				method: "PATCH",
+				body: JSON.stringify(request),
+			});
+		}, [ sendRequest ]);
+
 	return {
 		loadingStatus,
 		errorMessage,
@@ -69,6 +84,7 @@ export const useAuthService = () => {
 		fetchInvestorData,
 		resetPassword,
 		getInvestorAuthToken,
+		registerMockedInvestor
 	};
 };
 

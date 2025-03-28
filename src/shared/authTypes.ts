@@ -12,3 +12,8 @@ export interface IInvestorAuthTokenResponse {
 	sig: string,
 	email: string
 }
+
+export interface IRegisterMockInvestorRequest {
+	email: string;
+	phone?: string;
+}

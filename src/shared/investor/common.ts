@@ -8,4 +8,10 @@ export interface IInvestorData extends ILoggedUserWithRole {
 	organizationStage: string;
 	salesDepartment: boolean | null;
 	companyEmails: string;
+	goToMarketStrategy: string;
+	businessType: string;
+	investorRole: string;
+	employeeCountRange: string;
+	companySiteUrl: string;
+	companyDescription: string;
 }

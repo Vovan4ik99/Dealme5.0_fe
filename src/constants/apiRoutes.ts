@@ -5,6 +5,7 @@ export const API_ROUTES = {
 		REGISTER_INVESTOR: '/auth/register/investor',
 		REGISTER_FREELANCER: '/auth/register/freelancer',
 		GET_INVESTOR_AUTH_TOKEN: '/auth/start',
+		REGISTER_MOCKED_INVESTOR: '/register/mock-investor',
 	},
 	TOKEN: {
 		PASSWORD_RESET: '/token-reset/send-email',
@@ -42,6 +43,16 @@ export const API_ROUTES = {
 			PATCH_ORGANIZATION_STAGE: '/investor/me/organizationStage',
 			PATCH_SALES_DEPARTMENT: '/investor/me/salesDepartment',
 			PATCH_COMPANY_MAILS: '/investor/me/company-emails',
+			PATCH_GO_TO_MARKET_STRATEGY: '/investor/me/goToMarketStrategy',
+			GET_GO_TO_MARKET_STRATEGY: '/strategies',
+			GET_BUSINESS_TYPES: '/business-type',
+			PATCH_BUSINESS_TYPE: '/investor/me/businessType',
+			GET_INVESTOR_ROLES: '/investor-role',
+			PATCH_INVESTOR_ROLE: '/investor/me/investorRole',
+			GET_EMPLOYEE_COUNT_RANGES: '/employee-count-range',
+			PATCH_EMPLOYEE_COUNT_RANGE: '/investor/me/employeeCountRange',
+			PATCH_COMPANY_URL: '/investor/me/companySiteUrl',
+			PATCH_COMPANY_DESCRIPTION: '/investor/me/companyDescription',
 		}
 	},
 	PROFILE: {

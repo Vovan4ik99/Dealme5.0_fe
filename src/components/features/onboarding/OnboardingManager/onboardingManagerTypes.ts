@@ -13,7 +13,7 @@ export interface IStepComponentProps<T extends OnboardingUserData> {
 export interface IOnboardingStep<T extends OnboardingUserData> {
 	title: string;
 	subtitle: string;
-	component: React.ComponentType<IStepComponentProps<T>> | undefined;
+	component: React.ComponentType<IStepComponentProps<T>>;
 }
 
 export interface IOnboardingManagerProps<T extends OnboardingUserData> {

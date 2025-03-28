@@ -10,12 +10,15 @@ import { useLoadingStatus } from "@hooks/loadingStatus.hook.ts";
 import { useInvestorOnboardingService } from "@services/onboarding/investorOnboardingService.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { getUserCurrentStep } from "@utils/onboardingUtils.ts";
+import { useNavigate } from "react-router-dom";
 
 const OnboardingManager = <T extends OnboardingUserData>({
 	                                                         userRole,
 	                                                         fetchData,
 	                                                         stepData
                                                          }: IOnboardingManagerProps<T>) => {
+
+	const navigate = useNavigate();
 
 	const isRequestLoading = useLoadingStatus(
 		useAuthService(),
@@ -38,16 +41,22 @@ const OnboardingManager = <T extends OnboardingUserData>({
 	useEffect(() => {
 		if (!onboardingUserData) return;
 
-		setCurrentStep(getUserCurrentStep(onboardingUserData, userRole));
+		const step = getUserCurrentStep(onboardingUserData, userRole);
+
+		setCurrentStep(step);
 		setIsComponentLoading(false);
-	}, [ onboardingUserData, userRole ]);
+	}, [ navigate, onboardingUserData, stepData.length, userRole ]);
+
+	useEffect(() => {
+		if (currentStep + 1 > stepData.length) {
+			navigate('/investor/onboarding/summary');
+		}
+	}, [ currentStep, navigate, stepData.length ]);
 
 	const getStepComponent = () => {
-		const Component = stepData[currentStep].component;
+		if (!onboardingUserData) return <></>;
 
-		if (!Component || !onboardingUserData) {
-			return <></>;
-		}
+		const Component = stepData[currentStep].component;
 
 		const onSubmit = () => {
 			getLoggedUserData();
@@ -57,7 +66,7 @@ const OnboardingManager = <T extends OnboardingUserData>({
 		return <Component userData={ onboardingUserData } onSubmit={ onSubmit }/>;
 	};
 
-	if (isRequestLoading || isComponentLoading) {
+	if (isRequestLoading || isComponentLoading || currentStep >= stepData.length) {
 		return <LoadingSpinner/>;
 	}
 
@@ -83,7 +92,7 @@ const OnboardingManager = <T extends OnboardingUserData>({
 			</div>
 			<OnboardingProgressTracker step={ currentStep }
 			                           userType={ userRole }
-			                           maxSteps={ 10 }/>
+			                           maxSteps={ stepData.length }/>
 		</div>
 	);
 };

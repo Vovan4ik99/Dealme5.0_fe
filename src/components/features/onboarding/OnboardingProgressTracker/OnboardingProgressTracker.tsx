@@ -73,7 +73,7 @@ const OnboardingProgressTracker: React.FC<IOnboardingProgressTrackerProps> = ({ 
 						                                   kind="subcategory"
 						                                   status={ status }
 						                                   title={ name }/>;
-					})}
+					}) }
 				</div>
 			}
 			return mappedCategory;
@@ -84,9 +84,9 @@ const OnboardingProgressTracker: React.FC<IOnboardingProgressTrackerProps> = ({ 
 		<div className={ styles['tracker'] }>
 			<div className={ styles['tracker__progress'] }>
 				<div className={ styles['tracker__line'] }>
-					<span style={ { width: `${ (step / maxSteps) * 100 }%` } }></span>
+					<span style={ { width: `${ Math.round((step / maxSteps) * 100) }%` } }></span>
 				</div>
-				<span>{ (step / maxSteps) * 100 } / 100%</span>
+				<span>{ Math.round((step / maxSteps) * 100) } / 100%</span>
 			</div>
 			<div className={ styles['tracker__categories'] }>
 				{ renderCategories() }

@@ -14,4 +14,5 @@ export const AUTH_PAGES : string[] = [
 export const MOCKED_INVESTOR_PERMITTED_PAGES = [
 	'/investor/service',
 	'/investor/onboarding',
+	'/investor/onboarding/summary'
 ];

@@ -3,4 +3,6 @@ export interface IOnboardingOptionProps {
 	description?: string;
 	onClick: () => void;
 	isActive?: boolean;
+	withTooltipIcon?: boolean;
+	tooltipText?: string;
 }
