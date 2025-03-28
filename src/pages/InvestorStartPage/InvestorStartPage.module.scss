@@ -1,0 +1,24 @@
+@use "@styles/variables" as vars;
+
+.start {
+  padding-top: 48px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  max-width: 1098px;
+
+  &__content {
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
+  }
+
+  &__title {
+	color: vars.$color-black;
+	font-size: 40px;
+	font-weight: 600;
+	line-height: 120%;
+  }
+}

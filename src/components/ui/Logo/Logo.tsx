@@ -1,13 +1,9 @@
-import styles from "@components/layout/navbar/ProfileNavbar/ProfileNavbar.module.scss";
-import { Link } from "react-router-dom";
 import logo from '@icons/app/logo.svg';
 
 const Logo = () => {
 
 	return (
-		<Link to={"/"} className={styles.logo}>
-			<img src={logo} alt="logo"/>
-		</Link>
+		<img src={logo} alt="logo"/>
 	);
 }
 

@@ -1,4 +1,47 @@
 import { IFreelancerData } from "@shared/freelancer/common.ts";
+import { OnboardingUserData } from "@components/features/onboarding/OnboardingManager/onboardingManagerTypes.ts";
+import { IInvestorData } from "@shared/investor/common.ts";
+import { UserRole } from "@shared/userTypes.ts";
+
+export const getUserCurrentStep = (userData: OnboardingUserData, role: UserRole) => {
+
+	const getCurrentStepForFreelancer = (userData: IFreelancerData) => {
+		return 0;
+	};
+
+	const getCurrentStepForInvestor = (userData: IInvestorData) => {
+		if (!userData.activityDestiny) {
+			return 0;
+		}
+		if (!userData.organizationStage) {
+			return 1;
+		}
+		if (userData.salesDepartment === null) {
+			return 2;
+		}
+		if (!userData.goToMarketStrategy) {
+			return 3;
+		}
+		if (!userData.businessType) {
+			return 4;
+		}
+		if (!userData.investorRole) {
+			return 5;
+		}
+		if (!userData.employeeCountRange) {
+			return 6;
+		}
+		if (!userData.companySiteUrl) {
+			return 7;
+		}
+		return 8;
+	};
+
+	if (role === 'FREELANCER') {
+		return getCurrentStepForFreelancer(userData as IFreelancerData);
+	}
+	return getCurrentStepForInvestor(userData as IInvestorData);
+};
 
 export const getCurrentStepByUserAbsentData = (user: IFreelancerData): number => {
 	if (user.experienceLevel === null) {

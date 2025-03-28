@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-	ISalesToolsListProps
-} from "@entities/SalesToolsList/salesToolsListTypes.ts";
+import { ISalesToolsListProps } from "@entities/SalesToolsList/salesToolsListTypes.ts";
 import OnboardingSearchBar
-	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
+	from "@components/features/freelancer-onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import SalesToolKindItem
-	from "@components/features/Onboarding/items/SalesToolKindItem/SalesToolKindItem.tsx";
+	from "@components/features/freelancer-onboarding/items/SalesToolKindItem/SalesToolKindItem.tsx";
 import { getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
 import { ISalesTool } from "@shared/onboardingTypes.ts";
 import styles from '../Entity.module.scss';

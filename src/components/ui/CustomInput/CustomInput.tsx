@@ -29,23 +29,60 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 		? register(id ?? '', validation ?? {}) || {}
 		: {};
 
+	const isPhoneInput = id === 'phone';
+
+	const formatPhone = (raw: string) => {
+		const digits = raw.replace(/\D/g, '').slice(2);
+		const parts = [];
+
+		for (let i = 0; i < digits.length && i < 9; i += 3) {
+			parts.push(digits.slice(i, i + 3));
+		}
+
+		return '+48 ' + parts.join('-');
+	};
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!onChange) {
+			console.log('onChange is not defined');
+			return;
+		}
+		const input = e.target.value;
+		const formatted = formatPhone(input);
+		onChange(formatted);
+	};
+
+	const handleFocus = () => {
+		if (!onChange) {
+			console.log('onChange is not defined');
+			return;
+		}
+		if (!existedValue || !existedValue.startsWith('+48')) {
+			onChange('+48 ');
+		}
+	};
+
 	return (
-		<div className={styles['item']}>
+		<div className={ styles['item'] }>
 			<input
-				className={`${styles['item__input']} ${errorMessage && styles['item__input--error']}`}
-				id={id}
-				type={type}
-				placeholder={placeholder}
-				autoComplete={autoComplete}
-				{...(isControlled
+				className={ `${ styles['item__input'] } ${ errorMessage && styles['item__input--error'] }` }
+				id={ id }
+				type={ type }
+				placeholder={ placeholder }
+				autoComplete={ autoComplete }
+				onFocus={ isPhoneInput ? handleFocus : undefined }
+				maxLength={ isPhoneInput ? 17 : undefined }
+				{ ...(isControlled
 					? {
 						value: existedValue,
-						onChange: (e) => onChange(e.target.value),
+						onChange: (e) => isPhoneInput
+							? handleChange(e)
+							: onChange(e.target.value)
 					}
-					: registerProps)}
+					: registerProps) }
 			/>
-			{errorMessage && <InputError text={errorMessage}/>}
-			<label className={styles['item__label']} htmlFor={id}>{labelText}</label>
+			{ errorMessage && <InputError text={ errorMessage }/> }
+			<label className={ styles['item__label'] } htmlFor={ id }>{ labelText }</label>
 		</div>
 	);
 }

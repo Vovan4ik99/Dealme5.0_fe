@@ -1,10 +1,10 @@
 import styles from '../SectorsModalItem/SectorsModalItem.module.scss';
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
 	IAddSectorsModalItemProps
 } from "@components/features/EditModal/sectors/AddSectorsModalItem/addSectorsModalItemTypes.ts";
-import {ISector} from "@shared/onboardingTypes.ts";
-import SectorItem from "@components/features/Onboarding/items/SectorItem/SectorItem.tsx";
+import { ISector } from "@shared/onboardingTypes.ts";
+import SectorItem from "@components/features/freelancer-onboarding/items/SectorItem/SectorItem.tsx";
 
 const AddSectorsModalItem: React.FC<IAddSectorsModalItemProps> = ({
 	                                                                  sectorsToChoose,
