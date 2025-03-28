@@ -36,7 +36,7 @@ const PipelineItem: React.FC<IPipelineStepProps> = ({   title,
     }
 
     return (
-        <div className={ `${ styles["tile"]} ${ isOpened && styles["tile--active"] }` }>
+        <div className={ `${ styles["tile"] } ${ isOpened && styles["tile--active"] }` }>
             <div className={ styles["tile__top-bar"] }>
                 <div className={ styles["tile__summary"] } onClick={ () => setIsOpened((prev) => !prev) }>
                     <ArrowDown className={ isOpened ? styles["tile__arrow--active"] : styles["tile__arrow"] } />

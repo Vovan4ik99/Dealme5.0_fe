@@ -16,7 +16,7 @@ const AppRouter = () => {
 				<Route path={ '/registration' } element={ <AuthPage isLogin={ false }/> }/>
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor' } element={ <OnboardingLayout userType={'INVESTOR'}/> }/>
-				<Route path={ '/investor/service'} element={ <InvestorServicePage />} />
+				<Route path={ '/investor/service' } element={ <InvestorServicePage />} />
 				<Route element={ <ProtectedRoute/> }>
 					<Route path={ '/freelancer/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/onboarding' } element={ <OnboardingPage/> }/>

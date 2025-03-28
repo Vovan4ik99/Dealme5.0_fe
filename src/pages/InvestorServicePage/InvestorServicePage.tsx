@@ -6,10 +6,10 @@ import ServiceSwitcher from "@components/features/StartService/ServiceSwitcher.t
 import styles from "./InvestorServicePage.module.scss";
 const InvestorServicePage = () => {
     return (
-        <section className={styles["service"]}>
+        <section className={ styles["service"] }>
             <InvestorOnboardingNavbar />
             <ServiceSwitcher />
-            <Footer isHyphenated={false} isCentered={false} />
+            <Footer isHyphenated={ false } isCentered={ false } />
         </section>
     );
 }
