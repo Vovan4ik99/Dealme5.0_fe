@@ -3,13 +3,13 @@ import {IStepData} from "@components/layout/OnboardingLayout/onboardingLayoutTyp
 
 export const START_SERVICE_STEPS: IStepData[] = [
     {
-        title: 'Na jakim etapie lejka sprzedażowego potrzebujesz wsparcia?',
         subtitle: 'Wiem jakiej usługi potrzebuję',
-        component: PipelineStep,
+        title: 'Na jakim etapie lejka sprzedażowego potrzebujesz wsparcia?',
+        component: PipelineStep
     },
     {
-        title: 'lorem',
-        subtitle: 'ipsu',
-        component: undefined,
+        subtitle: 'Przygotowanie do sprzedaży',
+        title: 'Jakich usług potrzebujesz?',
+        component: undefined
     },
 ] as const;

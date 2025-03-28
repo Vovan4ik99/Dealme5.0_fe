@@ -24,11 +24,10 @@ const ServiceSwitcher = () => {
     return (
         <div className={ styles["service"] }>
             <div className={ styles["service__content"] }>
-                <header className={ styles["service__header"] }>
-                    { step > 0 &&
+                <header className={ styles["service__head"] }>
                         <button className={ styles["service__icon"] } onClick={ handleDecrement } >
                             <BackIcon />
-                        </button> }
+                        </button>
                     <span className={ styles["service__subtitle"] }>{ stepData.subtitle }</span>
                 </header>
                 <h1 className={ styles["service__title"] }>{ stepData.title }</h1>

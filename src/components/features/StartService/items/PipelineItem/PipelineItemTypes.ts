@@ -1,7 +1,6 @@
 import React from "react";
 
 export interface IPipelineItem {
-    pipelineId: number;
     title: string;
     subtitle: string;
     destiny: string;

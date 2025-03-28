@@ -11,8 +11,7 @@
   padding: 24px;
 
   &:hover, &--active {
-
-    .tile__header--icon {
+    .tile__icon {
       background-color: vars.$color-primary-pastel;
 
       svg path {
@@ -21,33 +20,33 @@
     }
   }
 
-  &__header {
+  &__top-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 48px;
+  }
 
-    &--info {
-      display: flex;
-      cursor: pointer;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-    }
+  &__summary {
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
 
-    &--icon {
-      display: flex;
-      width: 48px;
-      height: 48px;
-      justify-content: center;
-      align-items: center;
-      background-color: vars.$color-gray-light;
-      border-radius: 12px;
-      transition: background-color 0.6s ease, transform 0.6s ease;
+  &__icon {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    background-color: vars.$color-gray-light;
+    border-radius: 12px;
+    transition: background-color 0.6s ease, transform 0.6s ease;
 
-      svg path {
-        fill: vars.$color-gray;
-      }
+    svg path {
+      fill: vars.$color-gray;
     }
   }
 
@@ -59,25 +58,25 @@
     }
   }
 
-  &__text {
+  &__info {
     display: flex;
     flex-direction: column;
+  }
 
-    &--title {
-      font-weight: 600;
-      line-height: 120%;
-      letter-spacing: 0;
-      color: vars.$color-black;
-      vertical-align: middle;
-    }
+  &__subtitle {
+    color: vars.$color-gray;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: 0;
+    vertical-align: middle;
+  }
 
-    &--subtitle {
-      color: vars.$color-gray;
-      font-weight: 400;
-      line-height: 120%;
-      letter-spacing: 0;
-      vertical-align: middle;
-    }
+  &__title {
+    font-weight: 600;
+    line-height: 120%;
+    letter-spacing: 0;
+    color: vars.$color-black;
+    vertical-align: middle;
   }
 
   &__btn {
@@ -104,56 +103,56 @@
     }
   }
 
-  &__line {
+  &__separator {
     margin-top: 24px;
     border: 1px solid vars.$color-gray-border;
   }
 
-  &__opened {
+  &__content {
     display: flex;
     flex-direction: row;
     gap: 64px;
   }
 
-  &__description {
+  &__section {
     margin-top: 32px;
     display: flex;
     flex-direction: column;
     width: 586px;
     gap: 8px;
 
-    &--title {
-      font-weight: 500;
-      line-height: 120%;
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: vars.$color-gray;
-    }
-
-    &--info {
-      color: vars.$color-black;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 130%;
-      letter-spacing: 0;
-    }
-
     &--w400 {
       width: 400px;
     }
+  }
 
-    &--tips {
-      padding: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: fit-content;
-      border-radius: 8px;
-      gap: 8px;
-      background-color: vars.$color-gray-light;
-      font-size: 12px;
-      color: vars.$color-gray;
-      line-height: 100%;
-    }
+  &__section-name {
+    font-weight: 500;
+    line-height: 120%;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: vars.$color-gray;
+  }
+
+  &__description {
+    color: vars.$color-black;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0;
+  }
+
+  &__tooltip {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    border-radius: 8px;
+    gap: 8px;
+    background-color: vars.$color-gray-light;
+    font-size: 12px;
+    color: vars.$color-gray;
+    line-height: 100%;
   }
 }

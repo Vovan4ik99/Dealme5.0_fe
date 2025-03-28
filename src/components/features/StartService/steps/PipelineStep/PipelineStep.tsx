@@ -9,29 +9,24 @@ import {ReactComponent as ProjectionScreen} from "@icons/named_exported/start-se
 const PipelineStep: React.FC<IStepComponentProps> = ({ onSubmit }) => {
 
     const pipelines: IPipelineItem[] = [
-        { pipelineId: 1,
-            title: 'Przygotowanie do sprzedaży',
+        {   title: 'Przygotowanie do sprzedaży',
             subtitle: 'lorem',
             destiny: 'Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.',
             icon: <ProjectionScreen/> },
 
-        {   pipelineId: 2,
-            title: 'Wsparcie IT dla sprzedaży',
+        {   title: 'Wsparcie IT dla sprzedaży',
             subtitle: 'lorem',
             destiny: 'Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.',
             icon:  <ProjectionScreen />},
-        {   pipelineId: 3,
-            title: 'Wsparcie sprzedaży: generowanie leadów i zainteresowania',
+        {   title: 'Wsparcie sprzedaży: generowanie leadów i zainteresowania',
             subtitle: 'lorem',
             destiny: 'Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.',
             icon: <ProjectionScreen /> },
-        {   pipelineId: 4,
-            title: 'Podgrzewanie i kwalifikacja leadów',
+        {   title: 'Podgrzewanie i kwalifikacja leadów',
             subtitle: 'lorem',
             destiny: 'Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.',
             icon:  <ProjectionScreen /> },
-        {   pipelineId: 5,
-            title: 'Prowadzenie procesu sprzedaży',
+        {   title: 'Prowadzenie procesu sprzedaży',
             subtitle: 'lorem',
             destiny: 'Stworzenie fundamentów sprzedaży poprzez opracowanie strategii wejścia na rynek, identyfikację kluczowych rynków docelowych oraz ustalenie spójnych procesów, które pozwolą na skuteczne docieranie do klientów.',
             icon:  <ProjectionScreen /> },
@@ -39,13 +34,12 @@ const PipelineStep: React.FC<IStepComponentProps> = ({ onSubmit }) => {
 
     const renderPipelineItem = () => {
         return pipelines.map(pipeline => (
-             <PipelineItem pipelineId={pipeline.pipelineId}
-                          title={ pipeline.title }
+             <PipelineItem title={ pipeline.title }
                           subtitle={ pipeline.subtitle }
                           destiny={ pipeline.destiny }
                           onSubmit={ onSubmit }
                           icon={ pipeline.icon }
-                          key={ pipeline.pipelineId } />))
+                          key={ pipeline.title } />))
     }
 
     return (
