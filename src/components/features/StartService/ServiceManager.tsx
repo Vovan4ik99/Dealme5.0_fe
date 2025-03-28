@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
-import styles from "./ServiceSwitcher.module.scss"
-import {ReactComponent as BackIcon} from "@icons/named_exported/onboarding/arrow_left.svg";
-import {START_SERVICE_STEPS} from "@components/features/StartService/ServiceSwitcherSteps.ts";
+import styles from "./ServiceManager.module.scss"
+import { ReactComponent as BackIcon } from "@icons/named_exported/onboarding/arrow_left.svg";
+import { START_SERVICE_STEPS } from "@components/features/StartService/ServiceStepsData.ts";
 
 
-const ServiceSwitcher = () => {
+const ServiceManager = () => {
 
     const [step, setStep] = useState<number>(0);
 
     const stepData = START_SERVICE_STEPS[step];
-
-    const handleDecrement = () => {
-        setStep((step) => step - 1);
-    }
 
     const renderComponent = () => {
         const Component = stepData.component;
@@ -25,7 +21,8 @@ const ServiceSwitcher = () => {
         <div className={ styles["service"] }>
             <div className={ styles["service__content"] }>
                 <header className={ styles["service__head"] }>
-                        <button className={ styles["service__icon"] } onClick={ handleDecrement } >
+                        <button className={ styles["service__icon"] }
+                                onClick={ () => setStep((step) => step - 1) } >
                             <BackIcon />
                         </button>
                     <span className={ styles["service__subtitle"] }>{ stepData.subtitle }</span>
@@ -37,4 +34,4 @@ const ServiceSwitcher = () => {
     );
 }
 
-export default ServiceSwitcher;
+export default ServiceManager;

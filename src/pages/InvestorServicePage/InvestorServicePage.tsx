@@ -2,13 +2,14 @@ import React from 'react';
 import InvestorOnboardingNavbar
     from "@components/layout/OnboardingLayout/InvestorOnboardingNavbar/InvestorOnboardingNavbar.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
-import ServiceSwitcher from "@components/features/StartService/ServiceSwitcher.tsx";
+import ServiceManager from "@components/features/StartService/ServiceManager.tsx";
 import styles from "./InvestorServicePage.module.scss";
+
 const InvestorServicePage = () => {
     return (
         <section className={ styles["service"] }>
             <InvestorOnboardingNavbar />
-            <ServiceSwitcher />
+            <ServiceManager />
             <Footer isHyphenated={ false } isCentered={ false } />
         </section>
     );
