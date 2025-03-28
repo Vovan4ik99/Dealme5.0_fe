@@ -19,6 +19,7 @@ jobs:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REMOTE_SERVER_IP: ${{ secrets.REMOTE_SERVER_IP }}
 
 
     steps:
@@ -60,3 +61,10 @@ jobs:
         run: |
           docker rmi $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-latest
           docker rmi $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_NAME-${{ env.TIMESTAMP }}
+
+      - name: Deploy to Remote Server
+        run: |
+          echo "${{ secrets.dealmekeys }}" > dealme.pem
+          chmod 600 dealme.pem
+          ssh -o StrictHostKeyChecking=no -i dealme.pem ec2-user@$REMOTE_SERVER_IP './redeploy-frontend.sh'
+        shell: bash
