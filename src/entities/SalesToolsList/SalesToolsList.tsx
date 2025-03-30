@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-	ISalesToolsListProps
-} from "@entities/SalesToolsList/salesToolsListTypes.ts";
-import OnboardingSearchBar
-	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
+import { ISalesToolsListProps } from "@entities/SalesToolsList/salesToolsListTypes.ts";
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import SalesToolKindItem
-	from "@components/features/Onboarding/items/SalesToolKindItem/SalesToolKindItem.tsx";
+	from "@components/features/freelancer-onboarding/items/SalesToolKindItem/SalesToolKindItem.tsx";
 import { getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import styles from '../Entity.module.scss';
 
 const SalesToolsList: React.FC<ISalesToolsListProps> = ({tools, selectedTools, onChange}) => {

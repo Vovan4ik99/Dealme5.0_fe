@@ -1,0 +1,45 @@
+@use "@styles/variables" as vars;
+
+.start {
+  margin-top: 48px;
+  min-height: 100vh;
+  width: 1098px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  &__content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	color: vars.$color-black;
+  }
+
+  &__title {
+	color: vars.$color-black;
+	text-align: center;
+	font-size: 50px;
+	font-weight: 700;
+	line-height: 120%; /* 60px */
+  }
+
+  &__text {
+	max-width: 700px;
+	text-align: center;
+	font-size: 20px;
+	line-height: 130%;
+	font-weight: 300;
+	color: vars.$color-black;
+  }
+
+  &__description {
+	text-align: center;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 120%;
+	color: vars.$color-gray;
+  }
+}

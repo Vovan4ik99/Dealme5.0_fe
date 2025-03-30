@@ -1,12 +1,12 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
-import { IUserAvatarResponse } from "@shared/userTypes.ts";
+import { IFreelancerAvatarResponse } from "@shared/userTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 
 export const useFreelancerAvatarService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
-	const getAvatar = useCallback(async (freelancerId: number): Promise<IUserAvatarResponse> => {
+	const getAvatar = useCallback(async (freelancerId: number): Promise<IFreelancerAvatarResponse> => {
 		return await sendRequest({
 			url: API_ROUTES.PROFILE.FREELANCER.AVATAR + `/${ freelancerId }`
 		});

@@ -1,9 +1,8 @@
-import OnboardingSearchBar
-	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import IndustryItem from "@components/features/Onboarding/items/IndustryItem/IndustryItem.tsx";
-import React, {useState} from "react";
-import {IIndustry, ISubIndustry} from "@shared/onboardingTypes.ts";
-import {IIndustryListProps} from "./industryListTypes.ts";
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
+import IndustryItem from "@components/features/freelancer-onboarding/items/IndustryItem/IndustryItem.tsx";
+import React, { useState } from "react";
+import { IIndustry, ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { IIndustryListProps } from "./industryListTypes.ts";
 import styles from '../Entity.module.scss';
 
 const IndustryList: React.FC<IIndustryListProps> = ({selectedSubIndustries, industries, onChange}) => {

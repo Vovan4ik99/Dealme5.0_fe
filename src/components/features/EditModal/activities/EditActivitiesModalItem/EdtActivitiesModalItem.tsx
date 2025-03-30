@@ -6,7 +6,7 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import AddActivityModalItem
 	from "@components/features/EditModal/activities/AddActivityModalItem/AddActivityModalItem.tsx";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { IActivity } from "@shared/onboardingTypes.ts";
+import { IActivity } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import {

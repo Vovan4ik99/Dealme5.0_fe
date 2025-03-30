@@ -4,7 +4,7 @@ import { ISubIndustriesModalItemProps } from "./subindustriesModalItemTypes.ts";
 import SubIndustryModalItem
 	from "@components/features/EditModal/sub_industries/SubIndustryModalItem/SubIndustryModalItem.tsx";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
-import { IIndustry, ISubIndustry } from "@shared/onboardingTypes.ts";
+import { IIndustry, ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";

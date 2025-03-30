@@ -7,7 +7,7 @@ import { useModal } from "@context/ModalContext/ModalContext.ts";
 import SalesToolProfileItem
 	from "@components/features/FreelancerProfile/main/SalesTools/SalesToolProfileItem/SalesToolProfileItem.tsx";
 import { getPictureForSalesTools } from "@utils/salesToolsUtils.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import SalesToolsEditModalItem
 	from "@components/features/EditModal/sales_tools/SalesToolsEditModalItem/SalesToolsEditModalItem.tsx";

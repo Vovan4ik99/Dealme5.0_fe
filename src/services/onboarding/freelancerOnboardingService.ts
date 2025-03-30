@@ -1,7 +1,7 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
-import { ExperienceLevelKey } from "@constants/experienceLevel.ts";
+import { ExperienceLevelKey } from "@constants/onboarding/experienceLevel.ts";
 import {
 	IActivity,
 	IActivityRequest,
@@ -12,19 +12,22 @@ import {
 	ISpecialization,
 	ITypeOfSale,
 	IWorkingHour
-} from "@shared/onboardingTypes.ts";
-import { WorkingDayKey } from "@constants/workingDays.ts";
+} from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 
 export const useFreelancerOnboardingService = () => {
+
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
 
-	const patchExperienceLevel = useCallback(async (experienceLevel: ExperienceLevelKey): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_EXPERIENCE_LEVEL,
-			method: 'PATCH',
-			body: experienceLevel,
-		});
-	}, [ sendRequest ]);
+	const patchExperienceLevel = useCallback(
+		async (experienceLevel: ExperienceLevelKey): Promise<void> => {
+
+			return await sendRequest({
+				url: API_ROUTES.ONBOARDING.FREELANCER.PATCH_EXPERIENCE_LEVEL,
+				method: 'PATCH',
+				body: experienceLevel,
+			});
+		}, [ sendRequest ]);
 
 	const getSpecializations = useCallback(async (): Promise<ISpecialization[]> => {
 		return await sendRequest({
@@ -32,21 +35,25 @@ export const useFreelancerOnboardingService = () => {
 		});
 	}, [ sendRequest ]);
 
-	const patchSpecialization = useCallback(async (freelancerId: number, specialization_id: number): Promise<void> => {
-		return await sendRequest({
-			url: `${ API_ROUTES.ONBOARDING.FREELANCER.PATCH_SPECIALIZATION }/${ freelancerId }`,
-			method: 'PATCH',
-			body: `${ specialization_id }`
-		})
-	}, [ sendRequest ]);
+	const patchSpecialization = useCallback(
+		async (freelancerId: number, specialization_id: number): Promise<void> => {
 
-	const patchWorkingDays = useCallback(async (request: WorkingDayKey[]): Promise<void> => {
-		return await sendRequest({
-			url: API_ROUTES.ONBOARDING.FREELANCER.PARCH_WORKING_DAYS,
-			method: 'PATCH',
-			body: JSON.stringify(request)
-		});
-	}, [ sendRequest ]);
+			return await sendRequest({
+				url: `${ API_ROUTES.ONBOARDING.FREELANCER.PATCH_SPECIALIZATION }/${ freelancerId }`,
+				method: 'PATCH',
+				body: `${ specialization_id }`
+			})
+		}, [ sendRequest ]);
+
+	const patchWorkingDays = useCallback(
+		async (request: WorkingDayKey[]): Promise<void> => {
+
+			return await sendRequest({
+				url: API_ROUTES.ONBOARDING.FREELANCER.PARCH_WORKING_DAYS,
+				method: 'PATCH',
+				body: JSON.stringify(request)
+			});
+		}, [ sendRequest ]);
 
 	const getWorkingHours = useCallback(async (): Promise<IWorkingHour[]> => {
 		return await sendRequest({

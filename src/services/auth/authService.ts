@@ -1,13 +1,15 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
+import { ICreateUserRequest, ICreateUserResponse, UserRole } from "@shared/userTypes.ts";
 import {
-	ICreateUserRequest,
-	ICreateUserResponse,
-	UserRole
-} from "@shared/userTypes.ts";
-import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
+	IInvestorAuthTokenResponse,
+	ILoginRequest,
+	ILoginResponse,
+	IRegisterMockInvestorRequest
+} from "@shared/authTypes.ts";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
+import { IInvestorData } from "@shared/investor/common.ts";
 
 export const useAuthService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();
@@ -21,24 +23,28 @@ export const useAuthService = () => {
 		});
 	}, [ sendRequest ]);
 
-	const createUser = useCallback(async (createUserRequest: ICreateUserRequest, role: UserRole): Promise<ICreateUserResponse> => {
+	const createUser = useCallback(
+		async (createUserRequest: ICreateUserRequest, role: UserRole): Promise<ICreateUserResponse> => {
 
-		const url = role === 'INVESTOR' ?
-			API_ROUTES.AUTH.REGISTER_INVESTOR : API_ROUTES.AUTH.REGISTER_FREELANCER;
+			const url = role === 'INVESTOR' ?
+				API_ROUTES.AUTH.REGISTER_INVESTOR : API_ROUTES.AUTH.REGISTER_FREELANCER;
 
+			return await sendRequest({
+				url,
+				method: 'POST',
+				body: JSON.stringify(createUserRequest),
+			});
+		}, [ sendRequest ]);
+
+	const fetchFreelancerData = useCallback(async (): Promise<IFreelancerData> => {
 		return await sendRequest({
-			url,
-			method: 'POST',
-			body: JSON.stringify(createUserRequest),
-		});
+			url: API_ROUTES.USER.FREELANCER_PROFILE,
+		})
 	}, [ sendRequest ]);
 
-	const fetchLoggedUserData = useCallback(async (role: string): Promise<IFreelancerData> => {
-		const url = role === 'FREELANCER'
-			? API_ROUTES.USER.FREELANCER_PROFILE
-			: API_ROUTES.USER.INVESTOR_PROFILE;
+	const fetchInvestorData = useCallback(async (): Promise<IInvestorData> => {
 		return await sendRequest({
-			url,
+			url: API_ROUTES.USER.INVESTOR_PROFILE,
 		})
 	}, [ sendRequest ]);
 
@@ -48,16 +54,37 @@ export const useAuthService = () => {
 			method: "POST",
 			body: email,
 		})
-	}, [ sendRequest ])
+	}, [ sendRequest ]);
 
+	const getInvestorAuthToken = useCallback(
+		async (): Promise<IInvestorAuthTokenResponse> => {
+
+			return await sendRequest({
+				url: API_ROUTES.AUTH.GET_INVESTOR_AUTH_TOKEN,
+				method: "POST",
+			});
+		}, [ sendRequest ]);
+
+	const registerMockedInvestor = useCallback(
+		async (request: IRegisterMockInvestorRequest): Promise<void> => {
+
+			return await sendRequest({
+				url: API_ROUTES.AUTH.REGISTER_MOCKED_INVESTOR,
+				method: "PATCH",
+				body: JSON.stringify(request),
+			});
+		}, [ sendRequest ]);
 
 	return {
 		loadingStatus,
 		errorMessage,
 		login,
 		createUser,
-		fetchLoggedUserData,
-		resetPassword
+		fetchFreelancerData,
+		fetchInvestorData,
+		resetPassword,
+		getInvestorAuthToken,
+		registerMockedInvestor
 	};
 };
 

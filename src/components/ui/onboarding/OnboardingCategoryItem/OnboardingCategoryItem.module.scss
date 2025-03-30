@@ -1,0 +1,52 @@
+@use "@styles/variables" as vars;
+
+.category {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  color: vars.$color-black;
+  font-size: 20px;
+  line-height: 120%; /* 24px */
+  transition: all 300ms ease-in-out;
+
+  &:hover {
+	color: vars.$color-black-hover;
+  }
+
+  &--active {
+	img {
+	  transform: rotate(90deg);
+	}
+  }
+
+  &__content {
+	margin-top: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+  }
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+  overflow: hidden;
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 300ms ease;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 300ms ease;
+}

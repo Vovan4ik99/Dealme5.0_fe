@@ -1,5 +1,5 @@
-import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
-import {EXPERIENCE_LEVELS} from "@constants/experienceLevel.ts";
+import { ISaveableChildProps } from "@context/ModalContext/ModalContext.ts";
+import { EXPERIENCE_LEVELS } from "@constants/onboarding/experienceLevel.ts";
 
 export interface IPrimaryInfoModalItemProps extends ISaveableChildProps, IPrimaryInfoEditFormData {
 	onSave: () => void;
