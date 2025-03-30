@@ -6,8 +6,8 @@ import CustomInput from "@ui/CustomInput/CustomInput.tsx";
 import { useForm, useWatch } from "react-hook-form";
 import SelectFormInput from "@ui/SelectFormInput/SelectFormInput.tsx";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
-import { IIncomeGoal, ISpecialization } from "@shared/onboardingTypes.ts";
-import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/experienceLevel.ts";
+import { IIncomeGoal, ISpecialization } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/onboarding/experienceLevel.ts";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
 import InputError from "@ui/InputError/InputError.tsx";
 

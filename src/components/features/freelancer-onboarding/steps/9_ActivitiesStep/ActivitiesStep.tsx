@@ -1,11 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IActivitiesStepProps } from "./activityStepTypes.ts";
-import { IActivity, IActivityRequest } from "@shared/onboardingTypes.ts";
+import { IActivity, IActivityRequest } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import styles from "../../Onboarding.module.scss";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
-import ActivityItem from "@components/features/freelancer-onboarding/items/ActivityItem/ActivityItem.tsx";
+import ActivityItem
+	from "@components/features/onboarding/components/freelancer/9_ActivitiesStep/ActivityItem/ActivityItem.tsx";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 

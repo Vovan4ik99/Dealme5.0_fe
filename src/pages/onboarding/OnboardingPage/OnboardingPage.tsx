@@ -7,10 +7,13 @@ import FreelancerOnboardingNavbar
 import InvestorOnboardingNavbar from "@components/layout/navbar/InvestorOnboardingNavbar/InvestorOnboardingNavbar.tsx";
 import OnboardingManager from "@components/features/onboarding/OnboardingManager/OnboardingManager.tsx";
 import { IInvestorData } from "@shared/investor/common.ts";
-import { INVESTOR_STEPS_DATA } from "@components/features/onboarding/onboardingStepsData.ts";
+import { FREELANCER_STEPS_DATA, INVESTOR_STEPS_DATA } from "@components/features/onboarding/onboardingStepsData.ts";
 import { useAuthService } from "@services/auth/authService.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
 const OnboardingPage: React.FC<IOnboardingPageProps> = ({ userRole }) => {
+
+	const { fetchFreelancerData, fetchInvestorData } = useAuthService();
 
 	const getNavbar = () => {
 		if (userRole === 'FREELANCER') {
@@ -19,13 +22,22 @@ const OnboardingPage: React.FC<IOnboardingPageProps> = ({ userRole }) => {
 		return <InvestorOnboardingNavbar/>;
 	};
 
+	const getOnboardingManagerByUserRole = () => {
+		if (userRole === 'FREELANCER') {
+			return <OnboardingManager<IFreelancerData> userRole={ userRole }
+			                                           fetchData={ fetchFreelancerData }
+			                                           stepData={ FREELANCER_STEPS_DATA }/>
+		}
+		return <OnboardingManager<IInvestorData> userRole={ userRole }
+		                                        fetchData={ fetchInvestorData }
+		                                        stepData={ INVESTOR_STEPS_DATA }/>;
+	}
+
 	return (
 		<section className={ styles['onboarding'] }>
 			<div className={ styles['onboarding__content'] }>
 				{ getNavbar() }
-				<OnboardingManager<IInvestorData> userRole={ userRole }
-				                                  stepData={ INVESTOR_STEPS_DATA }
-				                                  fetchData={ useAuthService().fetchInvestorData }/>
+				{ getOnboardingManagerByUserRole() }
 			</div>
 			<Footer isCentered={ false } isHyphenated={ false }/>
 		</section>

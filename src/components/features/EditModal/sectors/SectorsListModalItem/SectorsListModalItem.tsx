@@ -5,7 +5,7 @@ import {
 import styles from "@components/features/EditModal/sectors/SectorsModalItem/SectorsModalItem.module.scss";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import { ISector } from "@shared/onboardingTypes.ts";
+import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import DragAndDropContainer
 	from "@components/features/EditModal/dragging/DragAndDropContainer/DragAndDropContainer.tsx";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";

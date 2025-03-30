@@ -1,13 +1,15 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
-import {ISectorsModalItemProps} from "@components/features/EditModal/sectors/SectorsModalItem/sectorsModalItemTypes.ts";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import {
+	ISectorsModalItemProps
+} from "@components/features/EditModal/sectors/SectorsModalItem/sectorsModalItemTypes.ts";
 import styles from "./SectorsModalItem.module.scss";
-import {useFreelancerOnboardingService} from "@services/onboarding/freelancerOnboardingService.ts";
+import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
-import {AuthContext} from "@context/AuthContext/AuthContext.ts";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import TypeOfSalesList from "@entities/TypeOfSalesList/TypeOfSalesList.tsx";
 import SectorsListModalItem from "@components/features/EditModal/sectors/SectorsListModalItem/SectorsListModalItem.tsx";
-import {ISector} from "@shared/onboardingTypes.ts";
-import {useFreelancerProfileService} from "@services/freelancer/freelancerProfileService.ts";
+import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 
 const SectorsModalItem: React.FC<ISectorsModalItemProps> = ({ onSave, registerOnSave }) => {
 

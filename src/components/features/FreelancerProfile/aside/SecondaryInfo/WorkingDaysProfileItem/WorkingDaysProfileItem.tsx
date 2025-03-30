@@ -6,7 +6,7 @@ import {
 	IWorkingDaysProfileItemProps
 } from "@components/features/FreelancerProfile/aside/SecondaryInfo/WorkingDaysProfileItem/workingDaysProfileItemTypes.ts";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
-import { WORKING_DAYS, WorkingDayKey } from "@constants/workingDays.ts";
+import { WORKING_DAYS, WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import WorkingDaysModalItem
 	from "@components/features/EditModal/working_days/WorkingDaysModalItem/WorkingDaysModalItem.tsx";

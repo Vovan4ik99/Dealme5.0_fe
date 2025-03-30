@@ -1,9 +1,15 @@
 import { IFreelancerLocalization } from "@shared/freelancer/localization.ts";
 import { WORKING_AREAS } from "@constants/workingAreas.ts";
 import { IFreelancerLanguage } from "@shared/freelancer/language.ts";
-import { EXPERIENCE_LEVELS } from "@constants/experienceLevel.ts";
-import { IFreelancerActivity, ISalesTool, ISector, ISpecialization, ISubIndustry } from "@shared/onboardingTypes.ts";
-import { WorkingDayKey } from "@constants/workingDays.ts";
+import { EXPERIENCE_LEVELS } from "@constants/onboarding/experienceLevel.ts";
+import {
+	IFreelancerActivity,
+	ISalesTool,
+	ISector,
+	ISpecialization,
+	ISubIndustry
+} from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 import { IFreelancerWorkExperience } from "@shared/freelancer/work-experience.ts";
 import { IGetLoggedUserResponse } from "@shared/userTypes.ts";
 

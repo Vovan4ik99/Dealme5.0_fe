@@ -12,11 +12,6 @@
   align-items: center;
   justify-content: space-between;
 
-  &:hover {
-    outline: none;
-    background-color: vars.$color-gray-hover;
-  }
-
   &__wrapper {
     display: flex;
     gap: 8px;

@@ -1,4 +1,4 @@
-import {IIndustry} from "@shared/onboardingTypes.ts";
+import { IIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 export interface IIndustryListProps {
 	selectedSubIndustries: number[];

@@ -1,6 +1,6 @@
 import WorkingDaysList from "@entities/WorkingDaysList/WorkingDaysList.tsx";
 import React, { useCallback, useEffect, useState } from "react";
-import { WorkingDayKey } from "@constants/workingDays.ts";
+import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 import { IWorkingDaysModalItemProps } from "./workingDaysModalItemTypes.ts";
 
 const WorkingDaysModalItem: React.FC<IWorkingDaysModalItemProps> = ({ userWorkingDays, onSave, registerOnSave }) => {

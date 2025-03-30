@@ -1,4 +1,4 @@
-import { WorkingDayKey } from "@constants/workingDays.ts";
+import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 
 export interface IWorkingDaysProfileItemProps {
 	userWorkingDays: WorkingDayKey[];

@@ -1,4 +1,4 @@
-import {ISpecialization} from "@shared/onboardingTypes.ts";
+import { ISpecialization } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 export interface ISpecializationStepProps {
 	onNext: () => void;

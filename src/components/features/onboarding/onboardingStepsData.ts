@@ -16,6 +16,20 @@ import InvestorRoleStep
 import EmployeeCountStep
 	from "@components/features/onboarding/components/investor/7_EmployeeCountStep/EmployeeCountStep.tsx";
 import CompanyDataStep from "@components/features/onboarding/components/investor/8_CompanyDataStep/CompanyDataStep.tsx";
+import ExperienceStep from "@components/features/onboarding/components/freelancer/1_ExperienceStep/ExperienceStep.tsx";
+import SpecializationStep
+	from "@components/features/onboarding/components/freelancer/2_SpecializationStep/SpecializationStep.tsx";
+import WorkingDaysStep
+	from "@components/features/onboarding/components/freelancer/3_WorkingDaysStep/WorkingDaysStep.tsx";
+import WorkingHoursStep
+	from "@components/features/onboarding/components/freelancer/4_WorkingHoursStep/WorkingHoursStep.tsx";
+import IncomeGoalStep from "@components/features/onboarding/components/freelancer/5_IncomeGoalStep/IncomeGoalStep.tsx";
+import IndustryStep from "@components/features/onboarding/components/freelancer/6_IndustryStep/IndustryStep.tsx";
+import TypeOfSalesStep
+	from "@components/features/onboarding/components/freelancer/7_TypeOfSalesStep/TypeOfSalesStep.tsx";
+import SectorStep from "@components/features/onboarding/components/freelancer/8_SectoStep/SectorStep.tsx";
+import ActivitiesStep from "@components/features/onboarding/components/freelancer/9_ActivitiesStep/ActivitiesStep.tsx";
+import SalesToolsStep from "@components/features/onboarding/components/freelancer/10_SalesToolsStep/SalesToolsStep.tsx";
 
 export const INVESTOR_STEPS_DATA: IOnboardingStep<IInvestorData>[] = [
 	{
@@ -60,7 +74,58 @@ export const INVESTOR_STEPS_DATA: IOnboardingStep<IInvestorData>[] = [
 	}
 ] as const;
 
-export const FREELANCER_STEPS_DATA: IOnboardingStep<IFreelancerData>[] = [];
+export const FREELANCER_STEPS_DATA: IOnboardingStep<IFreelancerData>[] = [
+	{
+		title: 'Jakie jest Twoje doświadczenie w sprzedaży?',
+		subtitle: 'Doświadczenie i specjalizacja',
+		component: ExperienceStep
+	},
+	{
+		title: 'Jakbyś określił siebie jako sprzedawcę?',
+		subtitle: 'Doświadczenie i specjalizacja',
+		component: SpecializationStep
+	},
+	{
+		title: 'W jakie dni jesteś dostępny?',
+		subtitle: 'Dostępność i zarobki',
+		component: WorkingDaysStep
+	},
+	{
+		title: 'Ile godzin w tygodniu jesteś w stanie poświecić na Dealme?',
+		subtitle: 'Dostępność i zarobki',
+		component: WorkingHoursStep
+	},
+	{
+		title: 'Jakich tygodniowych zarobków oczekujesz od Dealme?',
+		subtitle: 'Dostępność i zarobki',
+		component: IncomeGoalStep
+	},
+	{
+		title: 'Z produktami/usługami jakiej branży pracowałeś?',
+		subtitle: 'Branża i sektor',
+		component: IndustryStep
+	},
+	{
+		title: 'Czy oferowałeś swoje produkty firmom czy osobom prywatnym?',
+		subtitle: 'Branża i sektor',
+		component: TypeOfSalesStep
+	},
+	{
+		title: 'Do jakiego sektora kierowałeś swoje produkty/usługi?',
+		subtitle: 'Branża i sektor',
+		component: SectorStep
+	},
+	{
+		title: 'Oceń swoje umiejętności',
+		subtitle: 'Umiejętności',
+		component: ActivitiesStep
+	},
+	{
+		title: 'Z jakich narzędzi sprzedażowych korzystałeś?',
+		subtitle: 'Umiejętności',
+		component: SalesToolsStep
+	},
+];
 
 
 

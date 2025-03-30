@@ -3,7 +3,7 @@ import { NAVBAR_SECTIONS, NavbarSectionKey } from "@constants/freelancerInnerNav
 import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { useModal } from "@context/ModalContext/ModalContext.ts";
-import { IActivity, IActivityRequest, IFreelancerActivity } from "@shared/onboardingTypes.ts";
+import { IActivity, IActivityRequest, IFreelancerActivity } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import FreelancerProfileActivity
 	from "@components/features/FreelancerProfile/main/FreelancerServices/FreelancerProfileActivity/FreelancerProfileActivity.tsx";
 import AddActivityModalItem

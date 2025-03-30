@@ -16,7 +16,7 @@ const LoginForm = () => {
 
 	useEffect(() => {
 		if (user) {
-			 navigate(user.role === "FREELANCER" ? "/profile" : "/investor/start");
+			 navigate(user.role === "FREELANCER" ? "/freelancer/profile" : "/investor/start");
 		}
 	}, [ navigate, user ]);
 

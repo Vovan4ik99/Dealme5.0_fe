@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
-import { WorkingDayKey } from "@constants/workingDays.ts";
+import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
 import { IWorkingDayProps } from "./workingDayStepTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import WorkingDaysList from "@entities/WorkingDaysList/WorkingDaysList.tsx";

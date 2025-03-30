@@ -1,4 +1,4 @@
-import { ISalesTool } from "@shared/onboardingTypes.ts";
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 export interface ISalesToolsListProps {
 	tools: ISalesTool[];

@@ -6,15 +6,22 @@
   gap: 12px;
   border-radius: 12px;
   border: 1px solid vars.$color-gray-border;
-  margin-bottom: 24px;
   background-color: #FFF;
+  align-items: center;
 
-  img {
+  svg path {
     opacity: 0.7;
+    fill: vars.$color-gray;
   }
 
   &:focus-within {
     border: 1px solid vars.$color-black;
+    color: vars.$color-black;
+
+    svg path {
+      opacity: 1;
+      fill: vars.$color-black;
+    }
   }
 
   input {
@@ -28,6 +35,10 @@
 
     &::placeholder {
       color: vars.$color-gray;
+    }
+
+    &:focus {
+      opacity: 1;
     }
   }
 }

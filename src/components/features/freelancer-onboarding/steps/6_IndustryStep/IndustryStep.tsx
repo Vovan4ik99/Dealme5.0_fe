@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IIndustry } from "@shared/onboardingTypes.ts";
+import { IIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
@@ -34,14 +34,13 @@ const IndustryStep: React.FC<IIndustryStepProps> = ({ onNext, userSubIndustries 
 		});
 	};
 
-
 	const onSubmit = () => {
 		if (selectedSubIndustries.length > 0) {
 			patchSubIndustries(selectedSubIndustries)
 				.then(() => onNext())
 				.catch(e => console.error(e));
 		}
-	}
+	};
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IOnboardingManagerProps, OnboardingUserData } from "./onboardingManagerTypes.ts";
 import styles from "./OnboardingManager.module.scss";
 import { ReactComponent as BackIcon } from "@icons/named_exported/onboarding/arrow_left.svg";
@@ -11,6 +11,7 @@ import { useInvestorOnboardingService } from "@services/onboarding/investorOnboa
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { getUserCurrentStep } from "@utils/onboardingUtils.ts";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 
 const OnboardingManager = <T extends OnboardingUserData>({
 	                                                         userRole,
@@ -23,7 +24,8 @@ const OnboardingManager = <T extends OnboardingUserData>({
 	const isRequestLoading = useLoadingStatus(
 		useAuthService(),
 		useInvestorOnboardingService(),
-		useFreelancerOnboardingService()
+		useFreelancerOnboardingService(),
+		useContext(AuthContext)
 	);
 
 	const [ currentStep, setCurrentStep ] = useState<number>(0);
@@ -47,16 +49,26 @@ const OnboardingManager = <T extends OnboardingUserData>({
 		setIsComponentLoading(false);
 	}, [ navigate, onboardingUserData, stepData.length, userRole ]);
 
+	const handleFinishOnboarding = useCallback(() => {
+		if (userRole === 'INVESTOR') {
+			navigate('/investor/onboarding/summary');
+			return;
+		}
+		navigate('/freelancer/profile');
+	}, [ navigate, userRole ]);
+
 	useEffect(() => {
 		if (currentStep + 1 > stepData.length) {
-			navigate('/investor/onboarding/summary');
+			handleFinishOnboarding();
 		}
-	}, [ currentStep, navigate, stepData.length ]);
+	}, [ currentStep, handleFinishOnboarding, navigate, stepData.length ]);
 
 	const getStepComponent = () => {
 		if (!onboardingUserData) return <></>;
 
 		const Component = stepData[currentStep].component;
+
+		if (!Component) return <></>;
 
 		const onSubmit = () => {
 			getLoggedUserData();

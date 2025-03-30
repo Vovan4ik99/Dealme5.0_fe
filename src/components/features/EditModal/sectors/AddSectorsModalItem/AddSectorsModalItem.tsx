@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
 	IAddSectorsModalItemProps
 } from "@components/features/EditModal/sectors/AddSectorsModalItem/addSectorsModalItemTypes.ts";
-import { ISector } from "@shared/onboardingTypes.ts";
+import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import SectorItem from "@components/features/freelancer-onboarding/items/SectorItem/SectorItem.tsx";
 
 const AddSectorsModalItem: React.FC<IAddSectorsModalItemProps> = ({

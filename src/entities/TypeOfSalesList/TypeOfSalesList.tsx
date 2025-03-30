@@ -3,7 +3,7 @@ import { ITypeOfSalesListProps } from "@entities/TypeOfSalesList/typeOfSalesList
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import TypeOfSalesItem from "@components/features/freelancer-onboarding/items/TypeOfSalesItem/TypeOfSalesItem.tsx";
-import { ITypeOfSale } from "@shared/onboardingTypes.ts";
+import { ITypeOfSale } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 const TypeOfSalesList: React.FC<ITypeOfSalesListProps> = ({ selectedTypeOfSale, onSelect }) => {
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IIncomeGoalStepProps } from "./incomeGoalStepTypes.ts";
-import { IIncomeGoal } from "@shared/onboardingTypes.ts";
+import { IIncomeGoal } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import styles from "../../Onboarding.module.scss";

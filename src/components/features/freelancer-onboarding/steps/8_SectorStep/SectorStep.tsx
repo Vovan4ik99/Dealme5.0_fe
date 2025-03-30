@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ISectorStepProps } from "./sectorStepTypes.ts";
-import { ISector } from "@shared/onboardingTypes.ts";
+import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import styles from "../../Onboarding.module.scss";
-import OnboardingSearchBar
-	from "@components/features/freelancer-onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import SectorItem from "@components/features/freelancer-onboarding/items/SectorItem/SectorItem.tsx";

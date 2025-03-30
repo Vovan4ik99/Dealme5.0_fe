@@ -1,14 +1,20 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ISalesToolsStepProps } from "./salesToolsTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import SalesToolsList from "@entities/SalesToolsList/SalesToolsList.tsx";
 
 const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ onNext }) => {
-	const { errorMessage, loadingStatus, getSalesTools, patchSalesTools, updateOnboardingStatus } = useFreelancerOnboardingService();
+	const {
+		errorMessage,
+		loadingStatus,
+		getSalesTools,
+		patchSalesTools,
+		updateOnboardingStatus
+	} = useFreelancerOnboardingService();
 
 	const [ salesTools, setSalesTools ] = useState<ISalesTool[]>([]);
 	const [ selectedSalesTools, setSelectedSalesTools ] = useState<number[]>([]);
@@ -39,7 +45,7 @@ const SalesToolsStep: React.FC<ISalesToolsStepProps> = ({ onNext }) => {
 		updateOnboardingStatus()
 			.then(onNext)
 			.catch(console.error);
-	}, [ updateOnboardingStatus ]);
+	}, [ onNext, updateOnboardingStatus ]);
 
 	if (loadingStatus === 'loading') {
 		return <LoadingSpinner/>;

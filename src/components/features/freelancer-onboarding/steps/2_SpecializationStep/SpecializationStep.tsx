@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from '../../Onboarding.module.scss';
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
-import OnboardingSearchBar
-	from "@components/features/freelancer-onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import InputError from "@ui/InputError/InputError.tsx";
-import { ISpecialization } from "@shared/onboardingTypes.ts";
+import { ISpecialization } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import SpecializationItem
 	from "@components/features/freelancer-onboarding/items/SpecializationItem/SpecializationItem.tsx";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";

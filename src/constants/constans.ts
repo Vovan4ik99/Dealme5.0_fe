@@ -16,3 +16,7 @@ export const MOCKED_INVESTOR_PERMITTED_PAGES = [
 	'/investor/onboarding',
 	'/investor/onboarding/summary'
 ];
+
+export const FREELANCER_PERMITTED_PAGES = [
+	'/freelancer/onboarding',
+]

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
 	ISalesToolsAddModalItemProps
 } from "@components/features/EditModal/sales_tools/SalesToolsAddModalItem/salesToolsAddModalItemTypes.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 const SalesToolsAddModalItem: React.FC<ISalesToolsAddModalItemProps> = ({
 	                                                                        salesTools,

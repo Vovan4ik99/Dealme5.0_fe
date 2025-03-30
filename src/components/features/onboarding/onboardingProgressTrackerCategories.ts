@@ -12,5 +12,22 @@ export const ONBOARDING_PROGRESS_TRACKER_CATEGORIES: Record<UserRole, IOnboardin
 			subcategories: [ 'Rodzaj biznesu', 'Twoja rola', 'Liczba pracowników', 'Szczegóły' ],
 		},
 	],
-	FREELANCER: []
+	FREELANCER: [
+		{
+			category: 'Doświadczenie i specjalizacja',
+			subcategories: ['Doświadczenie w sprzedaży', 'Specjalizacja handlowa']
+		},
+		{
+			category: 'Dostępność i zarobki',
+			subcategories: ['Dni dostępności', 'Dostępność godzinowa', 'Oczekiwane zarobki']
+		},
+		{
+			category: 'Branża i sektor',
+			subcategories: ['Branża', 'Rodzaj sprzedaży', 'Sektor']
+		},
+		{
+			category: 'Umiejętności',
+			subcategories: ['Umiejętności', 'Narzędzia Sprzedażowe']
+		}
+	]
 } as const;

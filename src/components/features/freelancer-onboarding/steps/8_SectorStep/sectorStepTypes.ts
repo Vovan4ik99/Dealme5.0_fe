@@ -1,4 +1,4 @@
-import {ISector} from "@shared/onboardingTypes.ts";
+import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 export interface ISectorStepProps {
 	userSectors: ISector[];

@@ -3,7 +3,7 @@ import styles from '../../Onboarding.module.scss';
 import ExperienceLevelItem
 	from "@components/features/freelancer-onboarding/items/ExperienceLeveIItem/ExperienceLevelItem.tsx";
 import InputError from "@ui/InputError/InputError.tsx";
-import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/experienceLevel.ts";
+import { EXPERIENCE_LEVELS, ExperienceLevelKey } from "@constants/onboarding/experienceLevel.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import AnimatedStep from "../AnimatedStep/AnimatedStep.tsx";
 import { IExperienceLevelProps } from "./experienceLevelStepTypes.ts";

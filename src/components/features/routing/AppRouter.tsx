@@ -8,6 +8,8 @@ import AuthPage from "@pages/auth/AuthPage/AuthPage.tsx";
 import InvestorStartPage from "@pages/InvestorStartPage/InvestorStartPage.tsx";
 import OnboardingPage from "@pages/onboarding/OnboardingPage/OnboardingPage.tsx";
 import OnboardingSummary from "@pages/onboarding/OnboardingSummary/OnboardingSummary.tsx";
+import FreelancerOnboardingStartPage
+	from "@pages/onboarding/FreelancerOnboardingStartPage/FreelancerOnboardingStartPage.tsx";
 
 const AppRouter = () => {
 	return (
@@ -19,10 +21,12 @@ const AppRouter = () => {
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
 				<Route element={ <ProtectedRoute/> }>
 					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
+					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
 					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
-					<Route path={ '/freelancer/:id' } element={ <FreelancerProfilePage/> }/>
+					<Route path={ '/freelancer/onboarding/start' } element={ <FreelancerOnboardingStartPage/> }/>
+					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/onboarding' } element={ <FreelancerOnboardingPage/> }/>
-					<Route path={ '/profile' } element={ <FreelancerProfilePage/> }/>
+					<Route path={ '/freelancer/profile' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/' } element={ <Dashboard/> }/>
 				</Route>
 			</Routes>

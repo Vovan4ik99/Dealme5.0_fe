@@ -1,6 +1,6 @@
 import WorkingHourItem from "@components/features/freelancer-onboarding/items/WorkingHourItem/WorkingHourItem.tsx";
 import React, { useEffect, useState } from "react";
-import { IWorkingHour } from "@shared/onboardingTypes.ts";
+import { IWorkingHour } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";
 import { IWorkingHoursListProps } from "@entities/WorkingHoursList/workingHoursListTypes.ts";
 import styles from "../Entity.module.scss";
