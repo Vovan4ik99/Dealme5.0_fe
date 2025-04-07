@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.tsx";
-import FreelancerOnboardingPage from "@pages/FreelancerOnboardingPage/FreelancerOnboardingPage.tsx";
-import Dashboard from "@pages/Dashboard/Dashboard.tsx";
 import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
 import ResetPasswordPage from "@pages/auth/ResetPasswordPage/ResetPasswordPage.tsx";
 import AuthPage from "@pages/auth/AuthPage/AuthPage.tsx";
@@ -20,14 +18,15 @@ const AppRouter = () => {
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
 				<Route element={ <ProtectedRoute/> }>
+					{/*Investor Paths*/}
 					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
-					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
 					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
+
+					{/*Freelancer Paths*/}
 					<Route path={ '/freelancer/onboarding/start' } element={ <FreelancerOnboardingStartPage/> }/>
+					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
 					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
-					<Route path={ '/onboarding' } element={ <FreelancerOnboardingPage/> }/>
 					<Route path={ '/freelancer/profile' } element={ <FreelancerProfilePage/> }/>
-					<Route path={ '/' } element={ <Dashboard/> }/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

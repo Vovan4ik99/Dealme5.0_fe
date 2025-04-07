@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from './FreelancerOnboardingNavbar.module.scss'
 import { useCallback, useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import Logo from "@ui/Logo/Logo.tsx";
+import Logo from "@ui/common/Logo/Logo.tsx";
 
 const FreelancerOnboardingNavbar = () => {
 

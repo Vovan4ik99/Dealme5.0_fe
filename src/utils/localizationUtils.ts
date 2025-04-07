@@ -1,4 +1,4 @@
-import { ISelectItem } from "@ui/SelectFormInput/selectFormInputTypes.ts";
+import { ISelectItem } from "@ui/select/SelectFormInput/selectFormInputTypes.ts";
 import { PRIORITY_COUNTRY_KEY } from "@constants/constans.ts";
 import { IFreelancerCountry, IFreelancerState } from "@shared/freelancer/localization.ts";
 

@@ -2,7 +2,7 @@ import styles from "./InnerNavbar.module.scss";
 import { NAVBAR_SECTIONS } from "@constants/freelancerInnerNavbarSections.ts";
 import { Link } from "react-scroll";
 import React, { useEffect, useRef, useState } from "react";
-import ActionBtn from "@ui/ActionBtn/ActionBtn.tsx";
+import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
 
 const InnerNavbar = () => {
 	/**

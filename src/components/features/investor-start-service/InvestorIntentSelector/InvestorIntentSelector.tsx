@@ -3,7 +3,7 @@ import { ReactComponent as ArrowRight } from "@icons/named_exported/arrow_right.
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
 const InvestorIntentSelector = () => {
 

@@ -4,7 +4,7 @@ import Footer from "@components/layout/Footer/Footer.tsx";
 import OnboardingRegistrationForm
 	from "@components/features/onboarding/OnboardingRegistrationForm/OnboardingRegistrationForm.tsx";
 import { useAuthService } from "@services/auth/authService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
 const OnboardingSummary = () => {
 

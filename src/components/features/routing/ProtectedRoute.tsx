@@ -3,7 +3,7 @@ import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { Outlet, useNavigate } from "react-router-dom";
 import { FREELANCER_PERMITTED_PAGES, MOCKED_INVESTOR_PERMITTED_PAGES } from "@constants/constans.ts";
 import { ILoggedFreelancerData, ILoggedInvestorData } from "@shared/userTypes.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
 const ProtectedRoute = () => {
 

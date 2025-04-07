@@ -2,9 +2,9 @@ import { useAuthService } from "@services/auth/authService.ts";
 import { useForm, useWatch } from "react-hook-form";
 import { IOnboardingRegistrationForm } from "./onboardingRegistrationFormTypes.ts";
 import styles from './OnboardingRegistrationForm.module.scss';
-import CustomInput from "@ui/CustomInput/CustomInput.tsx";
+import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
 import { IRegisterMockInvestorRequest } from "@shared/authTypes.ts";
-import CustomCheckbox from "@ui/CustomCheckbox/CustomCheckbox.tsx";
+import CustomCheckbox from "@ui/form/CustomCheckbox/CustomCheckbox.tsx";
 
 const OnboardingRegistrationForm = () => {
 

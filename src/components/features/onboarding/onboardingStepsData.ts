@@ -1,35 +1,40 @@
 import { IOnboardingStep } from "@components/features/onboarding/OnboardingManager/onboardingManagerTypes.ts";
 import ActivityDestinyStep
-	from "@components/features/onboarding/components/investor/1_ActivityDestinyStep/ActivityDestinyStep.tsx";
+	from "@components/features/onboarding/step-components/investor/1_ActivityDestinyStep/ActivityDestinyStep.tsx";
 import OrganizationStageStep
-	from "@components/features/onboarding/components/investor/2_OrganizationStageStep/OrganizationStageStep.tsx";
+	from "@components/features/onboarding/step-components/investor/2_OrganizationStageStep/OrganizationStageStep.tsx";
 import SalesDepartmentStep
-	from "@components/features/onboarding/components/investor/3_SalesDepartmentStep/SalesDepartmentStep.tsx";
+	from "@components/features/onboarding/step-components/investor/3_SalesDepartmentStep/SalesDepartmentStep.tsx";
 import { IInvestorData } from "@shared/investor/common.ts";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
 import GoToMarketStrategyStep
-	from "@components/features/onboarding/components/investor/4_GoToMarketStrategyStep/GoToMarketStrategyStep.tsx";
+	from "@components/features/onboarding/step-components/investor/4_GoToMarketStrategyStep/GoToMarketStrategyStep.tsx";
 import BusinessTypeStep
-	from "@components/features/onboarding/components/investor/5_BusinessTypeStep/BusinessTypeStep.tsx";
+	from "@components/features/onboarding/step-components/investor/5_BusinessTypeStep/BusinessTypeStep.tsx";
 import InvestorRoleStep
-	from "@components/features/onboarding/components/investor/6_InvestorRoleStep/InvestorRoleStep.tsx";
+	from "@components/features/onboarding/step-components/investor/6_InvestorRoleStep/InvestorRoleStep.tsx";
 import EmployeeCountStep
-	from "@components/features/onboarding/components/investor/7_EmployeeCountStep/EmployeeCountStep.tsx";
-import CompanyDataStep from "@components/features/onboarding/components/investor/8_CompanyDataStep/CompanyDataStep.tsx";
-import ExperienceStep from "@components/features/onboarding/components/freelancer/1_ExperienceStep/ExperienceStep.tsx";
+	from "@components/features/onboarding/step-components/investor/7_EmployeeCountStep/EmployeeCountStep.tsx";
+import CompanyDataStep
+	from "@components/features/onboarding/step-components/investor/8_CompanyDataStep/CompanyDataStep.tsx";
+import ExperienceStep
+	from "@components/features/onboarding/step-components/freelancer/1_ExperienceStep/ExperienceStep.tsx";
 import SpecializationStep
-	from "@components/features/onboarding/components/freelancer/2_SpecializationStep/SpecializationStep.tsx";
+	from "@components/features/onboarding/step-components/freelancer/2_SpecializationStep/SpecializationStep.tsx";
 import WorkingDaysStep
-	from "@components/features/onboarding/components/freelancer/3_WorkingDaysStep/WorkingDaysStep.tsx";
+	from "@components/features/onboarding/step-components/freelancer/3_WorkingDaysStep/WorkingDaysStep.tsx";
 import WorkingHoursStep
-	from "@components/features/onboarding/components/freelancer/4_WorkingHoursStep/WorkingHoursStep.tsx";
-import IncomeGoalStep from "@components/features/onboarding/components/freelancer/5_IncomeGoalStep/IncomeGoalStep.tsx";
-import IndustryStep from "@components/features/onboarding/components/freelancer/6_IndustryStep/IndustryStep.tsx";
+	from "@components/features/onboarding/step-components/freelancer/4_WorkingHoursStep/WorkingHoursStep.tsx";
+import IncomeGoalStep
+	from "@components/features/onboarding/step-components/freelancer/5_IncomeGoalStep/IncomeGoalStep.tsx";
+import IndustryStep from "@components/features/onboarding/step-components/freelancer/6_IndustryStep/IndustryStep.tsx";
 import TypeOfSalesStep
-	from "@components/features/onboarding/components/freelancer/7_TypeOfSalesStep/TypeOfSalesStep.tsx";
-import SectorStep from "@components/features/onboarding/components/freelancer/8_SectoStep/SectorStep.tsx";
-import ActivitiesStep from "@components/features/onboarding/components/freelancer/9_ActivitiesStep/ActivitiesStep.tsx";
-import SalesToolsStep from "@components/features/onboarding/components/freelancer/10_SalesToolsStep/SalesToolsStep.tsx";
+	from "@components/features/onboarding/step-components/freelancer/7_TypeOfSalesStep/TypeOfSalesStep.tsx";
+import SectorStep from "@components/features/onboarding/step-components/freelancer/8_SectoStep/SectorStep.tsx";
+import ActivitiesStep
+	from "@components/features/onboarding/step-components/freelancer/9_ActivitiesStep/ActivitiesStep.tsx";
+import SalesToolsStep
+	from "@components/features/onboarding/step-components/freelancer/10_SalesToolsStep/SalesToolsStep.tsx";
 
 export const INVESTOR_STEPS_DATA: IOnboardingStep<IInvestorData>[] = [
 	{

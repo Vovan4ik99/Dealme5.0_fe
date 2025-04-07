@@ -1,7 +1,8 @@
-import { IIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { IIndustry, ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import React from "react";
 
 export interface IIndustryListProps {
-	selectedSubIndustries: number[];
+	selectedSubIndustries: ISubIndustry[];
 	industries: IIndustry[];
-	onChange: (newSubIndustry: number) => void;
+	setSelectedSubIndustries: (value: React.SetStateAction<ISubIndustry[]>) => void;
 }

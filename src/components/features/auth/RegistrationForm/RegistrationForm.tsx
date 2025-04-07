@@ -7,10 +7,10 @@ import { useAuthService } from "@services/auth/authService.ts";
 import { ICreateUserRequest, UserRole } from "@shared/userTypes.ts";
 import { ReactComponent as FreelancerIcon } from "@icons/named_exported/freelancer_registration.svg";
 import { ReactComponent as InvestorIcon } from "@icons/named_exported/investor_registration.svg";
-import AlertItem from "@ui/AlertItem/AlertItem.tsx";
-import CustomInput from "@ui/CustomInput/CustomInput.tsx";
-import SwitchBtn from "@ui/SwitchBtn/SwitchBtn.tsx";
-import CustomCheckbox from "@ui/CustomCheckbox/CustomCheckbox.tsx";
+import AlertItem from "@ui/common/AlertItem/AlertItem.tsx";
+import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
+import SwitchBtn from "@ui/button/SwitchBtn/SwitchBtn.tsx";
+import CustomCheckbox from "@ui/form/CustomCheckbox/CustomCheckbox.tsx";
 
 const RegistrationForm = () => {
 

@@ -4,7 +4,7 @@ import google_icon from "@icons/auth/google_login.svg";
 import facebook_login from "@icons/auth/facebook_login.svg";
 import React from "react";
 
-import CustomDivider from "@ui/CustomDivider/CustomDivider.tsx";
+import CustomDivider from "@ui/common/CustomDivider/CustomDivider.tsx";
 import LoginForm from "@components/features/auth/LoginForm/LoginForm.tsx";
 import FreelancerOnboardingNavbar
 	from "@components/layout/navbar/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";

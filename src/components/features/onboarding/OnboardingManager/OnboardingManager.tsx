@@ -5,7 +5,7 @@ import { ReactComponent as BackIcon } from "@icons/named_exported/onboarding/arr
 import OnboardingProgressTracker
 	from "@components/features/onboarding/OnboardingProgressTracker/OnboardingProgressTracker.tsx";
 import { useAuthService } from "@services/auth/authService.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 import { useLoadingStatus } from "@hooks/loadingStatus.hook.ts";
 import { useInvestorOnboardingService } from "@services/onboarding/investorOnboardingService.ts";
 import { useFreelancerOnboardingService } from "@services/onboarding/freelancerOnboardingService.ts";

@@ -1,5 +1,5 @@
 import styles from "./InvestorOnboardingNavbar.module.scss";
-import Logo from "@ui/Logo/Logo.tsx";
+import Logo from "@ui/common/Logo/Logo.tsx";
 import { Link } from "react-router-dom";
 import question_icon from '@icons/onboarding/question_icon.svg';
 

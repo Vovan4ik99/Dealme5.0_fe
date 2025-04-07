@@ -1,6 +1,7 @@
 import { WorkingDayKey } from "@constants/onboarding/workingDays.ts";
+import React from "react";
 
 export interface IWorkingDaysListProps {
-	selectedWorkingDays: WorkingDayKey[];
-	onChange: (key: WorkingDayKey) => void;
+	selectedDays: WorkingDayKey[];
+	setSelectedDays: React.Dispatch<React.SetStateAction<WorkingDayKey[]>>
 }

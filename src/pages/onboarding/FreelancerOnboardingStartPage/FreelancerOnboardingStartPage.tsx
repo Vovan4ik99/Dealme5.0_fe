@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 import styles from "./FreelancerOnboardingStartPage.module.scss";
 import { ReactComponent as FreelancerIcon } from '@icons/named_exported/freelancer_registration.svg';
 import { useNavigate } from "react-router-dom";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IOnboardingOptionProps } from "@ui/onboarding/OnboardingOption/onboardingOptionTypes.ts";
 import styles from './OnboardingOption.module.scss';
-import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
+import TooltipIcon from "@ui/common/TooltipIcon/TooltipIcon.tsx";
 import checked_icon from "@icons/auth/checkbox_checked.svg"
 
 const OnboardingOption: React.FC<IOnboardingOptionProps> = ({
