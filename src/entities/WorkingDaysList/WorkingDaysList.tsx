@@ -6,11 +6,11 @@ import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.t
 const WorkingDaysList: React.FC<IWorkingDaysListProps> = ({ selectedDays, setSelectedDays }) => {
 
 	const selectDay = (day: WorkingDayKey) => {
-		if (selectedDays.includes(day)) {
-			setSelectedDays(selectedDays.filter(d => d !== day));
-		} else {
-			setSelectedDays([ ...selectedDays, day ]);
-		}
+		setSelectedDays(
+			selectedDays.includes(day)
+				? selectedDays.filter(d => d !== day)
+				: [...selectedDays, day]
+		);
 	};
 
 	const renderDays = () => {

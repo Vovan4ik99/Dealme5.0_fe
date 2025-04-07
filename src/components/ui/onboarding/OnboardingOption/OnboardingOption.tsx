@@ -51,7 +51,7 @@ const OnboardingOption: React.FC<IOnboardingOptionProps> = ({
 							</span>
 						}
 					</p>
-					{ description !== undefined &&
+					{ description &&
                         <p className={ styles['option__description'] }>{ description }</p>
 					}
 				</div>
