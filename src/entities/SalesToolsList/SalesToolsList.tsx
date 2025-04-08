@@ -1,75 +1,70 @@
-import React, { useEffect, useState } from "react";
-import {
-	ISalesToolsListProps
-} from "@entities/SalesToolsList/salesToolsListTypes.ts";
-import OnboardingSearchBar
-	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import SalesToolKindItem
-	from "@components/features/Onboarding/items/SalesToolKindItem/SalesToolKindItem.tsx";
+import React, { useState } from "react";
+import { ISalesToolsListProps } from "@entities/SalesToolsList/salesToolsListTypes.ts";
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import { getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
-import styles from '../Entity.module.scss';
+import { ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
+import { getPictureForSalesTools } from "@utils/onboardingUtils.ts";
+import OnboardingCategoryItem from "@ui/onboarding/OnboardingCategoryItem/OnboardingCategoryItem.tsx";
 
-const SalesToolsList: React.FC<ISalesToolsListProps> = ({tools, selectedTools, onChange}) => {
+const SalesToolsList: React.FC<ISalesToolsListProps> = ({ tools, selectedTools, setSelectedTools }) => {
 
-	const [kindSalesToolsMap, setKindSalesToolsMap] = useState<Map<string, ISalesTool[]>>(new Map());
-	const [filteredSalesTools, setFilteredSalesTools] = useState<ISalesTool[] | null>(null);
+	const [ filteredTools, setFilteredTools ] = useState<ISalesTool[]>(tools);
 
-	useEffect(() => {
-		setKindSalesToolsMap(groupByKind(tools));
-	}, [tools]);
-
-	const groupByKind = (tools: ISalesTool[]) => {
-		return tools.reduce<Map<string, ISalesTool[]>>((map, tool) => {
-			if (!map.has(tool.kind)) {
-				map.set(tool.kind, []);
+	const handleToolClick = (tool: ISalesTool) => {
+		setSelectedTools(prevState => {
+			if (prevState.map(tool => tool.id).includes(tool.id)) {
+				return prevState.filter(item => item.id !== tool.id);
 			}
-			map.get(tool.kind)?.push(tool);
-			return map;
-		}, new Map());
+			return [ ...prevState, tool ];
+		});
 	};
 
-	const getFilteredSalesTools = (kind: string) => {
-		if (filteredSalesTools === null) {
-			return kindSalesToolsMap.get(kind) || [];
-		}
-		return kindSalesToolsMap.get(kind)?.filter(tool => filteredSalesTools.includes(tool)) || [];
-	};
+	const renderContent = () => {
+		return Array.from(
+			new Set(filteredTools.map(tool => tool.kind))
+		).map(category => {
+				const toolsInCategory = filteredTools
+					.filter(tool => tool.kind === category);
 
-	const isKindInSearchRange = (kind: string) => {
-		if (filteredSalesTools === null) {
-			return false;
-		}
-		return filteredSalesTools.some(filteredTool => kindSalesToolsMap.get(kind)?.includes(filteredTool));
-	};
+				const categoryContent = toolsInCategory.map(tool => {
+					const isActive = selectedTools.map(item => item.id).includes(tool.id);
+					return <OnboardingOption key={ tool.id }
+					                         title={ tool.toolName }
+					                         titleFontSize={ 16 }
+					                         isActive={ isActive }
+					                         withCheckboxInput
+					                         image={ getPictureForSalesTools(tool.toolName) }
+					                         onClick={ () => handleToolClick(tool) }/>
+				});
 
-	const renderKinds = () => {
-		return Array.from(kindSalesToolsMap.keys()).map(kind => {
-			return <SalesToolKindItem key={kind}
-			                          text={getToolKindNameByKind(kind)}
-			                          salesTools={getFilteredSalesTools(kind)}
-			                          selectedSalesTools={selectedTools ?? []}
-			                          onChange={onChange}
-			                          isSearchActive={filteredSalesTools !== null}
-			                          isInSearchRange={isKindInSearchRange(kind)}/>
-		})
+				const isActive = categoryContent.some(content => content.props.isActive);
+
+				return <OnboardingCategoryItem key={ category }
+				                               text={ getToolKindNameByKind(category) }
+				                               isActive={ isActive }
+				                               categoryContent={ categoryContent }/>
+			}
+		);
 	};
 
 	const onSearch = (searchStr: string) => {
-		if (searchStr === '') {
-			return setFilteredSalesTools(null);
+		if (searchStr.length === 0) {
+			setFilteredTools(tools);
+			return;
 		}
-		const salesTools = Array.from(kindSalesToolsMap.values()).flatMap(tool => tool);
-		setFilteredSalesTools(() => salesTools.filter(tool => {
-			return tool.toolName.toLowerCase().includes(searchStr.toLowerCase());
-		}));
+
+		const filtered = tools
+			.filter(item => item.toolName.toLowerCase().includes(searchStr.toLowerCase()));
+
+		setFilteredTools(filtered);
 	};
 
 	return (
-		<div className={styles['list']}>
-			<OnboardingSearchBar onSearch={onSearch}/>
-			{renderKinds()}
-		</div>
+		<>
+			<OnboardingSearchBar onSearch={ onSearch }/>
+			{ renderContent() }
+		</>
 	)
 }
 

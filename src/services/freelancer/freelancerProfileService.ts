@@ -3,8 +3,7 @@ import { useCallback } from "react";
 import { API_ROUTES } from "@constants/apiRoutes.ts";
 import { IAboutMeInfo, IFreelancerBackgroundResponse, IFreelancerData } from "@shared/freelancer/common.ts";
 import { IFreelancerReview } from "@shared/freelancer/review.ts";
-import { ISalesTool } from "@shared/onboardingTypes.ts";
-import { IActivityRequest, IFreelancerActivity } from "@shared/onboardingTypes.ts";
+import { IActivityRequest, IFreelancerActivity, ISalesTool } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 
 export const useFreelancerProfileService = () => {
 	const { sendRequest, loadingStatus, errorMessage } = useHttp();

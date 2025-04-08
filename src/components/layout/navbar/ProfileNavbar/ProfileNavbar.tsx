@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
-import Logo from "@ui/Logo/Logo.tsx";
+import Logo from "@ui/common/Logo/Logo.tsx";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 import { ReactComponent as PulpitIcon } from "@icons/named_exported/profile-navbar/desktop.svg";
 import { ReactComponent as OrdersIcon } from "@icons/named_exported/profile-navbar/orders.svg";
 import { ReactComponent as ProductsIcon } from "@icons/named_exported/profile-navbar/products.svg";
@@ -17,8 +17,8 @@ import { ReactComponent as GearIcon } from "@icons/named_exported/profile-navbar
 import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
 import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook.ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
-import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
-import SelectOption from "@ui/SelectOption/SelectOption.tsx";
+import DropDownModal from "@ui/select/DropdownModal/DropdownModal.tsx";
+import SelectOption from "@ui/select/SelectOption/SelectOption.tsx";
 import { ILoggedUserOption } from "@components/layout/navbar/ProfileNavbar/ProfileNavbarTypes.ts";
 
 const ProfileNavbar = () => {
