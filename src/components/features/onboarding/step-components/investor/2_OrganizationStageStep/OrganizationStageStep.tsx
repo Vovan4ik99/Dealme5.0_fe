@@ -4,8 +4,9 @@ import styles from "./OrganizationStageStep.module.scss";
 import { useInvestorOnboardingService } from "@services/onboarding/investorOnboardingService.ts";
 import { IOrganizationStage } from "@shared/onboarding/investorOnboardingTypes.ts";
 import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
+import { IInvestorData } from "@shared/investor/common.ts";
 
-const OrganizationStageStep: React.FC<IStepComponentProps> = ({ userData, onSubmit }) => {
+const OrganizationStageStep: React.FC<IStepComponentProps<IInvestorData>> = ({ userData, onSubmit }) => {
 
 	const { getOrganizationStages, patchOrganizationStage } = useInvestorOnboardingService();
 
