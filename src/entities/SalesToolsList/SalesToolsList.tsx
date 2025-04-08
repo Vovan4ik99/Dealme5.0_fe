@@ -21,12 +21,9 @@ const SalesToolsList: React.FC<ISalesToolsListProps> = ({ tools, selectedTools, 
 	};
 
 	const renderContent = () => {
-
-		const uniqueCategories = Array.from(
+		return Array.from(
 			new Set(filteredTools.map(tool => tool.kind))
-		);
-
-		return uniqueCategories.map(category => {
+		).map(category => {
 				const toolsInCategory = filteredTools
 					.filter(tool => tool.kind === category);
 

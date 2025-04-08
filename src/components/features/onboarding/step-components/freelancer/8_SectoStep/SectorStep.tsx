@@ -44,7 +44,8 @@ const SectorStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userData, 
 
 	const handleSectorClick = (sector: ISector) => {
 		setSelectedSectors(prevState => {
-			if (prevState.map(sector => sector.id).includes(sector.id)) {
+			const alreadySelected = prevState.map(item => item.id).includes(sector.id);
+			if (alreadySelected) {
 				return prevState.filter(item => item.id !== sector.id);
 			}
 			return [ ...prevState, sector ];

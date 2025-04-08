@@ -25,7 +25,7 @@ const AddCompanyMails: React.FC<IAddCompanyMailsProps> = ({ mails, onChange, isO
 				             existedValue={ mails[i] ?? '' }
 				             onChange={ (value: string) => onChange(value, i) }
 				             placeholder={ 'np. sprzedaz@przyklad.pl' }/>
-			)
+			);
 		}
 		return inputs;
 	};
