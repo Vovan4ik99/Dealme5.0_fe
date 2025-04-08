@@ -1,0 +1,11 @@
+.company {
+  margin-top: 40px;
+
+  &__content {
+	width: 600px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 32px;
+  }
+}
