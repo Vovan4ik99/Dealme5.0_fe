@@ -16,13 +16,12 @@ const RegistrationForm = () => {
 
 	const navigate = useNavigate();
 
-	const [ isFreelancer, setIsFreelancer ] = useState<boolean>(true);
 	const [ isUserCreated, setIsUserCreated ] = useState<boolean>(false);
 
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleRoleSelect = () => {
-		setIsFreelancer((prev) => !prev);
+		navigate('/investor/start');
 	};
 
 	const { createUser, loadingStatus, errorMessage } = useAuthService();
@@ -42,7 +41,7 @@ const RegistrationForm = () => {
 		value === password || 'Podane hasła nie są zgodne';
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
-		const role: UserRole = isFreelancer ? 'FREELANCER' : 'INVESTOR';
+		const role: UserRole = 'FREELANCER';
 		const createUserData: ICreateUserRequest = { ...formData };
 
 		createUser(createUserData, role)
@@ -60,7 +59,7 @@ const RegistrationForm = () => {
 				clearTimeout(timeoutRef.current);
 			}
 		};
-	}, [ createUser, isFreelancer, navigate, reset ]);
+	}, [ createUser, navigate, reset ]);
 
 	return (
 		<form name={ 'registration-form' } className={ styles['registration-form'] }
@@ -68,7 +67,7 @@ const RegistrationForm = () => {
 			<div>
 				<p className={ styles['registration-form__text'] }>Wybierz rodzaj konta</p>
 				<SwitchBtn onClick={ handleRoleSelect }
-				           isActive={ isFreelancer }
+				           isActive={ true }
 				           leftContent={
 					           <>
 						           <FreelancerIcon/>
@@ -99,9 +98,6 @@ const RegistrationForm = () => {
 			<CustomInput key={ 'company' }
 			             preset={ 'company' }
 			             errorMessage={ errors.company?.message }
-			             validation={ {
-				             required: !isFreelancer ? 'Podaj firmę' : false,
-			             } }
 			             register={ register }/>
 			<div className={ styles['registration-form__item'] }>
 				<CustomInput key={ 'password' }
@@ -140,7 +136,7 @@ const RegistrationForm = () => {
 			{ isUserCreated && <AlertItem kind={ 'success' }
                                           text={
 				                              'Użytkownik został zarejestrowany. ' +
-	                                          'Za chwilę przekierujemy Ci na stronę logowania.'
+				                              'Za chwilę przekierujemy Ci na stronę logowania.'
 			                              }/> }
 			<button className={ 'btn btn--mt0' } type="submit" disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto' }
