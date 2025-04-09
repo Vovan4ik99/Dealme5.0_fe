@@ -1,0 +1,35 @@
+@use '@styles/variables' as vars;
+
+.data-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid vars.$color-gray-border;
+  border-radius: 12px;
+  padding: 16px;
+  height: 75px;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: 0;
+    color: vars.$color-gray;
+    margin-bottom: 4px;
+  }
+
+  &__value {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: 0;
+    color: vars.$color-black
+  }
+}

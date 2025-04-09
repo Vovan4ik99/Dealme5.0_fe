@@ -1,0 +1,27 @@
+@use "@styles/variables" as vars;
+
+.step {
+  &__head {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: 0;
+    color: vars.$color-black;
+    margin-top: 24px;
+
+  }
+
+  &__tip {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    color: vars.$color-gray;
+  }
+}

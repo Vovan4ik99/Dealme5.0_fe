@@ -1,12 +1,15 @@
 import { ReactNode } from "react";
+import {IMainTask} from "@shared/investor/pipeline.ts";
 
 export interface IPipelineItem {
+    id: number;
     title: string;
     subtitle: string;
     destiny: string;
     icon: ReactNode;
+    mainTasks: IMainTask[];
 }
 
 export interface IPipelineStepProps extends IPipelineItem {
-    onSubmit: () => void;
+    onSubmit: (pipelineId: number) => void;
 }

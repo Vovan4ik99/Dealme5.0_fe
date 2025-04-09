@@ -2,31 +2,32 @@ import React, {useRef, useState} from 'react';
 import styles from './PipelineItem.module.scss';
 import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow-down.svg";
 import TooltipIcon from "@ui/TooltipIconBtn/TooltipIcon.tsx";
-import { IPipelineStepProps } from "@components/features/StartService/items/PipelineItem/PipelineItemTypes.ts";
-import { MAIN_TASK } from "@components/features/StartService/items/PipelineItem/PipelineMainTaskFakeData.ts";
+import { IPipelineStepProps } from "@components/features/StartService/items/pipelineItem/PipelineItemTypes.ts";
 import { CSSTransition } from "react-transition-group";
 
 const PipelineItem: React.FC<IPipelineStepProps> = ({   title,
+                                                        id,
                                                         icon,
                                                         destiny,
                                                         subtitle,
+                                                        mainTasks,
                                                         onSubmit }) => {
 
-    const [ isOpened, setIsOpened ] = useState<boolean>(false);
+const [ isOpened, setIsOpened ] = useState<boolean>(false);
     const [ isHovered, setIsHovered ] = useState<number | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const renderTasks = () => {
-        return MAIN_TASK.map((item, i) => {
-            return <div key={ i }
+        return mainTasks.map((item) => {
+            return <div key={ item.id }
                         className={ styles["tile__tooltip"] }
-                        onMouseEnter={ () => setIsHovered(i) }
+                        onMouseEnter={ () => setIsHovered(item.id) }
                         onMouseLeave={ () => setIsHovered(null)} >
-                <p>{item.task}</p>
-                <TooltipIcon text={ item.value }
+                <p>{item.name}</p>
+                <TooltipIcon text={ item.description }
                              isIconTop={ false }
                              isLeft={ true }
-                             isActive={ isHovered === i }/>
+                             isActive={ isHovered === item.id }/>
             </div>
         })
     }
@@ -45,7 +46,7 @@ const PipelineItem: React.FC<IPipelineStepProps> = ({   title,
                     </div>
                 </div>
                 <button className={ styles["tile__btn"] }
-                        onClick={ onSubmit } >
+                        onClick={ () => onSubmit(id) } >
                     Wybierz i przejdź dalej
                     <ArrowDown className={ styles["tile__arrow"] } />
                 </button>
