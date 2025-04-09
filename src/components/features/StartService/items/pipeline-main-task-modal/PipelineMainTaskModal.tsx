@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useRef, useState} from 'react';
 import {
     IPipelineMainTaskItem,
     IPipelineModalProps
@@ -11,34 +11,58 @@ import AddPipelineMainTask
 import {
     IMainTaskBaseInfo
 } from "@components/features/StartService/items/pipeline-main-task-modal/addPipelineMainTask/AddPipelineMainTaskTypes.ts";
+import PipelineMainTaskDetails
+    from "@components/features/StartService/items/pipeline-main-task-modal/pipelineMainTaskDetails/PipelineMainTaskDetails.tsx";
+import {
+    IPipelineMainTaskDetailsForm, IPipelineMainTaskDetailsRef
+} from "@components/features/StartService/items/pipeline-main-task-modal/pipelineMainTaskDetails/PipelineMainTaskDetailsTypes.ts";
+import {ModalContext} from "@context/ModalContext/ModalContext.ts";
+import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 
 const PipelineMainTaskModal: FC<IPipelineModalProps> = ({ selectedMainTask, mode, onSubmit, currentOrder }) => {
-    const [ currentStep, setCurrentStep ] = useState<number>(1);
-    const [ order, setOrder ] = useState<IPipelineMainTaskItem>(currentOrder || orderRequestStartState);
-    console.log(order);
+    const { closeModals } = useContext(ModalContext);
 
-    const handleOrderSave = (form: IPipelineMainTaskItem ) => {
+    const formRef = useRef<IPipelineMainTaskDetailsRef | null>(null);
+
+    const [ order, setOrder ] = useState<IPipelineMainTaskItem>(currentOrder || orderRequestStartState);
+    const [ currentStep, setCurrentStep ] = useState<number>(1);
+
+    const handleOrderSave = (form: IPipelineMainTaskDetailsForm ) => {
+        const request = { ...form, mainTask: order.mainTask };
+        closeModals(1);
+
         if (mode === "add") {
-            onSubmit(form);
+            onSubmit(request);
             return;
         }
 
-        onSubmit(form, currentOrder.id!);
+        onSubmit(request, currentOrder.id!);
+    }
+
+    const handleFormSubmit = () => {
+        formRef.current?.submitForm();
+    };
+
+    const handleMainTaskEdit = (form: IPipelineMainTaskDetailsForm) => {
+        setOrder(prev => {
+            return { ...prev, ...form };
+        });
+        setCurrentStep(prev => --prev);
     }
 
     const handleMainTaskSelect = (mainTask: IMainTaskBaseInfo) => {
-        setCurrentStep(prev => prev + 1);
         setOrder(prev => {
             return { ...prev, mainTask: mainTask };
         });
+        setCurrentStep(prev => ++prev);
     }
 
     const renderSteps = () => {
         return orderSteps.map(step => (
-            <div className={`${styles["modal__section"]} 
-                              ${step.index === currentStep && styles["modal__section--active"]}`}
+            <div className={`${styles["modal__tab"]} 
+                              ${step.index === currentStep && styles["modal__tab--active"]}`}
                   key={step.index}>
-                <div className={` ${ step.index < currentStep && styles["modal__section-info"] } `}>
+                <div className={` ${ step.index < currentStep && styles["modal__tab-info"] } `}>
                     { step.index < currentStep &&  <SuccessIcon /> }
                     { `0${step.index}. ${step.title}` }
                 </div>
@@ -48,14 +72,26 @@ const PipelineMainTaskModal: FC<IPipelineModalProps> = ({ selectedMainTask, mode
 
     return (
         <div className={styles["modal"]}>
-            <div className={ styles["modal__stepper"] }>
+            <div className={ styles["modal__head"] }>
                 { renderSteps() }
             </div>
-            { currentStep === 1 ?
-                <AddPipelineMainTask currentMainTaskId={ order?.mainTask?.id }
+            { currentStep === 1
+                ? <AddPipelineMainTask currentMainTaskId={ order?.mainTask?.id }
                                      selectedMainTaskId={ selectedMainTask }
-                                     handleMainTaskSelect={ handleMainTaskSelect }/> : null
-            }
+                                     handleMainTaskSelect={ handleMainTaskSelect }/>
+                :
+                <>
+                    <PipelineMainTaskDetails orderDetails={ order }
+                                             ref={ formRef }
+                                             mainTaskName={ order.mainTask.name! }
+                                             onSave={ handleOrderSave }
+                                             onEdit={ handleMainTaskEdit }/>
+
+                    <button className={`btn btn--withIcon ${styles["modal__btn"]}`} onClick={ handleFormSubmit }>
+                        <AddIcon fill={'#fffff'}/>
+                        <span>Dodaj usługę</span>
+                    </button>
+                </> }
         </div>
     );
 };

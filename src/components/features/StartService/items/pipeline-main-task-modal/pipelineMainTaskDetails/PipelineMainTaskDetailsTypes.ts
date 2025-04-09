@@ -1,19 +1,18 @@
-import {ISaveableChildProps} from "@context/ModalContext/ModalContext.ts";
-
-export interface IPipelineMainTaskDetails {
+export interface IPipelineMainTaskDetailsForm {
     amount?: number;
     startDate?: Date;
     period?: number;
     description?: string;
 }
 
-export interface IPipelineMainTaskDetailsForm extends IPipelineMainTaskDetails {
+export interface IPipelineMainTaskDetailsProps {
+    orderDetails: IPipelineMainTaskDetailsForm;
     mainTaskName: string;
-}
-
-export interface IPipelineMainTaskDetailsProps extends ISaveableChildProps {
-    orderItem: IPipelineMainTaskDetailsForm;
     onSave: (order: IPipelineMainTaskDetailsForm) => void;
     onEdit: (order: IPipelineMainTaskDetailsForm) => void;
+}
+
+export interface IPipelineMainTaskDetailsRef {
+    submitForm: () => void;
 }
 

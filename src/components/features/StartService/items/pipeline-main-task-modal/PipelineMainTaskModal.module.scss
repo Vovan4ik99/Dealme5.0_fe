@@ -6,7 +6,7 @@
   align-items: start;
   justify-content: center;
 
-  &__stepper {
+  &__head {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -14,7 +14,7 @@
     margin-bottom: 32px
   }
 
-  &__section {
+  &__tab {
     width: 252px;
     height: 48px;
     gap: 8px;
@@ -34,7 +34,7 @@
     }
   }
 
-  &__section-info {
+  &__tab-info {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -42,5 +42,8 @@
       svg path {
         fill: vars.$color-gray;
       }
+  }
+  &__btn {
+    margin-top: 90px;
   }
 }

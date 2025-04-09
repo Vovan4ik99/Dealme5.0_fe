@@ -24,7 +24,6 @@ const PipelineMainTaskStep: React.FC<IStepComponentProps> = ({ onSubmit }) => {
     const { addInvestorPipelineMainTask } = useInvestorStartService();
 
     const [ pipeLineMainTask, setPipeLineMainTask ] = useState<IPipelineMainTaskItem[]>([]);
-
     const { openModal } = useModal();
 
     const handleSubmit = () => {
@@ -51,12 +50,12 @@ const PipelineMainTaskStep: React.FC<IStepComponentProps> = ({ onSubmit }) => {
         openModal({
             id: 'AddPipelineMainTask',
             title: (
-                <StartServiceModalHead title={"Dodaj usługę"}/>
+                <StartServiceModalHead title={"Edytuj usługę"}/>
             ),
             child: <PipelineMainTaskModal mode={ 'edit' }
-                                        onSubmit={ handleOrderEdit }
-                                        currentOrder={ item }
-                                        selectedMainTask={ pipeLineMainTask.map(item => item.mainTask.id!) }/>,
+                                          onSubmit={ handleOrderEdit }
+                                          currentOrder={ item }
+                                          selectedMainTask={ pipeLineMainTask.map(item => item.mainTask.id!) }/>
         });
     }
 
@@ -97,7 +96,7 @@ const PipelineMainTaskStep: React.FC<IStepComponentProps> = ({ onSubmit }) => {
                     </p>
                 </div>
             </div>
-            <StartServiceItemList items={ renderPipelineMainTaskItems() } // todo StartServiceItemList
+            <StartServiceItemList items={ renderPipelineMainTaskItems() }
                                   isLastPage={ false }
                                   addingMoreBtn={ "Dodaj kolejną usługę" }
                                   boldEmptyInfo={ "Nie masz jeszcze dodanych usług." }

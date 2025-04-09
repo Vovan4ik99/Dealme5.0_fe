@@ -31,31 +31,6 @@ const AddPipelineMainTask: FC<IAddPipelineMainTaskProps> = ({ currentMainTaskId,
             )
     }
 
-    // const handleActivitySelect = (mainTask: IMainTask) => {
-    //     const orderItem: IPipelineMainTaskForm = {
-    //         ...order,
-    //         mainTask: {
-    //             ...mainTask
-    //         }
-    //     }
-    //
-    //     openModal({
-    //         id: 'AddDetails',
-    //         title: (
-    //             <StartServiceModalHead title={"Dodaj usługę"}
-    //                                    currentStep={ 2 }
-    //                                    steps={ orderSteps }/>
-    //         ),
-    //         child: <PipelineMainTaskDetails orderItem={ orderItem }
-    //                                         onEdit={ handleActivityEdit }
-    //                                         onSave={ handleOrderSave }/>,
-    //         withSaveBtn: true,
-    //         btnText:"Dodaj usługę",
-    //         btnWithIcon: true,
-    //         shouldCloseOnSaving: false,
-    //     });
-    // }
-
     return (
         <>
            { renderActivity() }

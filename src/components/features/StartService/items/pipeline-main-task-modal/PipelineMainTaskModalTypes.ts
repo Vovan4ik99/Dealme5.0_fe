@@ -1,5 +1,5 @@
 import {
-    IPipelineMainTaskDetails
+    IPipelineMainTaskDetailsForm
 } from "@components/features/StartService/items/pipeline-main-task-modal/pipelineMainTaskDetails/PipelineMainTaskDetailsTypes.ts";
 
 interface BaseProps {
@@ -11,7 +11,7 @@ interface IMainTaskInfo {
     name?: string;
 }
 
-export interface IPipelineMainTaskItem extends IPipelineMainTaskDetails {
+export interface IPipelineMainTaskItem extends IPipelineMainTaskDetailsForm {
     id?: number;
     mainTask: IMainTaskInfo;
 }
@@ -19,7 +19,7 @@ export interface IPipelineMainTaskItem extends IPipelineMainTaskDetails {
 interface AddModeProps extends BaseProps {
     mode: 'add';
     onSubmit: (orderDetails: IPipelineMainTaskItem) => void;
-    currentOrder?: never;
+    currentOrder?: undefined;
 }
 
 interface EditModeProps extends BaseProps {
