@@ -1,0 +1,44 @@
+@use "@styles/variables" as vars;
+
+.searchbar {
+  display: flex;
+  padding: 16px;
+  gap: 12px;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+  background-color: #FFF;
+  align-items: center;
+
+  svg path {
+    opacity: 0.7;
+    fill: vars.$color-gray;
+  }
+
+  &:focus-within {
+    border: 1px solid vars.$color-black;
+    color: vars.$color-black;
+
+    svg path {
+      opacity: 1;
+      fill: vars.$color-black;
+    }
+  }
+
+  input {
+    outline: none;
+    opacity: 0.7;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 120%;
+    color: vars.$color-black;
+
+    &::placeholder {
+      color: vars.$color-gray;
+    }
+
+    &:focus {
+      opacity: 1;
+    }
+  }
+}

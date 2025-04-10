@@ -15,19 +15,32 @@ export interface ICreateUserResponse {
 	company: string;
 }
 
-export interface ILoggedUserResponse {
+export interface IGetLoggedUserResponse {
 	id: number;
 	email: string;
 	firstName: string;
 	lastName: string;
-	isOnboardingPassed: boolean | undefined;
 }
 
-export interface IUserAvatarResponse {
+export interface IFreelancerAvatarResponse {
 	pictureId: number;
-	picture: string;
+	pictureData: string,
 }
 
-export interface ILoggedUserData extends ILoggedUserResponse {
+export interface ILoggedUserWithRole extends IGetLoggedUserResponse {
 	role: UserRole;
 }
+
+export interface ILoggedFreelancerData extends ILoggedUserWithRole {
+	role: 'FREELANCER';
+	isOnboardingPassed: boolean | undefined;
+	isMock?: never;
+}
+
+export interface ILoggedInvestorData extends ILoggedUserWithRole {
+	role: 'INVESTOR';
+	isMock: boolean;
+	isOnboardingPassed?: never;
+}
+
+export type LoggedUserData = ILoggedFreelancerData | ILoggedInvestorData;

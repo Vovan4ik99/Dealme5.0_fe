@@ -1,0 +1,26 @@
+@use "@styles/variables" as vars;
+
+.department {
+  margin-top: 16px;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: vars.$color-gray;
+
+    span {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 130%;
+    }
+  }
+
+  &__content {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+}

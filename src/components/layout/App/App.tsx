@@ -1,8 +1,8 @@
 import styles from './App.module.scss'
 import AppRouter from "@components/features/routing/AppRouter.tsx";
-import {AuthProvider} from "@context/AuthContext/AuthProvider.tsx";
+import { AuthProvider } from "@context/AuthContext/AuthProvider.tsx";
 import bg_icon from '@icons/app/bg_icon.svg';
-import {ModalProvider} from "@context/ModalContext/ModalProvider.tsx";
+import { ModalProvider } from "@context/ModalContext/ModalProvider.tsx";
 
 function App() {
 

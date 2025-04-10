@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
-import Logo from "@ui/Logo/Logo.tsx";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import LoadingSpinner from "@ui/LoadingSpinner/LoadingSpinner.tsx";
+import Logo from "@ui/common/Logo/Logo.tsx";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 import { ReactComponent as PulpitIcon } from "@icons/named_exported/profile-navbar/desktop.svg";
 import { ReactComponent as OrdersIcon } from "@icons/named_exported/profile-navbar/orders.svg";
 import { ReactComponent as ProductsIcon } from "@icons/named_exported/profile-navbar/products.svg";
@@ -17,8 +17,8 @@ import { ReactComponent as GearIcon } from "@icons/named_exported/profile-navbar
 import { ReactComponent as EditIcon } from "@icons/named_exported/edit_icon.svg";
 import { EMITTER_EVENTS, useEventEmitter } from "@hooks/emitter.hook.ts";
 import { useFreelancerAvatarService } from "@services/freelancer/freelancerAvatarService.ts";
-import DropDownModal from "@ui/DropdownModal/DropdownModal.tsx";
-import SelectOption from "@ui/SelectOption/SelectOption.tsx";
+import DropDownModal from "@ui/select/DropdownModal/DropdownModal.tsx";
+import SelectOption from "@ui/select/SelectOption/SelectOption.tsx";
 import { ILoggedUserOption } from "@components/layout/navbar/ProfileNavbar/ProfileNavbarTypes.ts";
 
 const ProfileNavbar = () => {
@@ -35,13 +35,15 @@ const ProfileNavbar = () => {
 
 	const { getAvatar } = useFreelancerAvatarService();
 
+	const avatarButtonRef = useRef<HTMLButtonElement | null>(null);
+
 	const [ avatar, setAvatar ] = useState<string | undefined>();
 	const [ isDropdownOpened, setIsDropdownOpened ] = useState<boolean>(false);
 
 	const fetchAvatar = useCallback(() => {
 		if (!user) return;
 		getAvatar(user.id)
-			.then((res) => setAvatar(res ? res.picture : undefined))
+			.then((res) => setAvatar(res ? res.pictureData : undefined))
 			.catch(console.error);
 	}, [ getAvatar, user ]);
 
@@ -98,7 +100,7 @@ const ProfileNavbar = () => {
 			<div className={ styles["navbar__add-wrapper"] }>
 				<button className={ `btn btn--more 
 									${ styles["navbar__btn"] } 
-									${ styles["navbar__btn--avatar"] }` }>
+									${ styles["navbar__btn--order"] }` }>
 					<AddIcon/>
 					Przyjmij zlecenie
 				</button>
@@ -109,7 +111,8 @@ const ProfileNavbar = () => {
 									 ${ styles["navbar__btn--avatar"] }
 					 				 ${ avatar ? styles["navbar__btn--pl43"] : styles["navbar__btn--pl35"] } 
 					 				 ${ isDropdownOpened && styles["navbar__btn--active"] }`}
-						onClick={ () => setIsDropdownOpened(!isDropdownOpened) }>
+						onClick={ () => setIsDropdownOpened(!isDropdownOpened) }
+						ref={ avatarButtonRef }>
 						<div className={ `${ styles["navbar__avatar"] }`}>
 							{ avatar ? <img src={ avatar } alt="avatar"/> : <GuardianIcon/> }
 						</div>
@@ -118,7 +121,7 @@ const ProfileNavbar = () => {
 					</button>
 					<DropDownModal isOpen={ isDropdownOpened }
 								   renderItems={ renderAvatarOptions() }
-								   isFitting={ false }/>
+					 			   width={ avatarButtonRef.current?.clientWidth ?? "100%" }/>
 				</div>
 			</div>
 		</nav>

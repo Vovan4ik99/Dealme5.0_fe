@@ -1,0 +1,23 @@
+@use "@styles/variables" as vars;
+
+.activities {
+
+  &__info {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-top: 16px;
+	color: vars.$color-gray;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 100%; /* 14px */
+  }
+
+  &__content {
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 32px;
+  }
+}

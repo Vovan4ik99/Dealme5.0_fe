@@ -1,52 +1,88 @@
-import OnboardingSearchBar
-	from "@components/features/Onboarding/items/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import IndustryItem from "@components/features/Onboarding/items/IndustryItem/IndustryItem.tsx";
-import React, {useState} from "react";
-import {IIndustry, ISubIndustry} from "@shared/onboardingTypes.ts";
-import {IIndustryListProps} from "./industryListTypes.ts";
-import styles from '../Entity.module.scss';
+import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
+import React, { useState } from "react";
+import { ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import { IIndustryListProps } from "./industryListTypes.ts";
+import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
+import OnboardingCategoryItem from "@ui/onboarding/OnboardingCategoryItem/OnboardingCategoryItem.tsx";
 
-const IndustryList: React.FC<IIndustryListProps> = ({selectedSubIndustries, industries, onChange}) => {
-	const [filteredSubIndustries, setFilteredSubIndustries] = useState<ISubIndustry[] | null>(null);
+const IndustryList: React.FC<IIndustryListProps> = ({
+	                                                    selectedSubIndustries,
+	                                                    industries,
+	                                                    setSelectedSubIndustries
+                                                    }) => {
+
+	const [ filteredSubIndustries, setFilteredSubIndustries ] = useState<ISubIndustry[]>(
+		industries.flatMap(industry => industry.subIndustries)
+	);
 
 	const onSearch = (searchStr: string) => {
-		if (searchStr === '') {
-			return setFilteredSubIndustries(null);
+		const allSubIndustries = industries.flatMap(industry => industry.subIndustries);
+
+		if (searchStr.length === 0) {
+			setFilteredSubIndustries(allSubIndustries);
+			return;
 		}
-		const subIndustries = industries.flatMap(industry => industry.subIndustries);
-		setFilteredSubIndustries(() => subIndustries.filter(item => {
-			return item.name.toLowerCase().includes(searchStr.toLowerCase());
-		}));
+
+		const filtered = allSubIndustries.filter(item =>
+			item.name.toLowerCase().includes(searchStr.toLowerCase())
+		);
+
+		setFilteredSubIndustries(filtered);
 	};
 
-	const isIndustryInSearchRange = (industry: IIndustry) => {
-		if (filteredSubIndustries === null) {
-			return false;
-		}
-		return filteredSubIndustries.some(subIndustry => industry.subIndustries.includes(subIndustry));
+	const handleSubIndustryClick = (subIndustry: ISubIndustry) => {
+		setSelectedSubIndustries(prev => {
+			if (prev.map(subIndustry => subIndustry.id).includes(subIndustry.id)) {
+				return prev.filter(item => item.id !== subIndustry.id);
+			}
+			return [ ...prev, subIndustry ];
+		});
 	};
 
-	const getFilteredSubIndustries = (industry: IIndustry) => {
-		if (filteredSubIndustries === null) {
-			return industry.subIndustries;
-		}
-		return industry.subIndustries.filter(subIndustry => filteredSubIndustries.includes(subIndustry));
+	const renderContent = () => {
+
+		const getIsSubIndustryActive = (subIndustry: ISubIndustry) => {
+			return selectedSubIndustries.map(item => item.id).includes(subIndustry.id);
+		};
+
+		return industries
+			.filter(industry =>
+				industry.subIndustries.length > 0 &&
+				industry.subIndustries.some(subIndustry =>
+					filteredSubIndustries
+						.map(filteredSubIndustry => filteredSubIndustry.id)
+						.includes(subIndustry.id)
+				)
+			)
+			.map(industry => {
+				const content = industry.subIndustries.map(
+					subIndustry => {
+						const isActive = getIsSubIndustryActive((subIndustry));
+						return <OnboardingOption key={ subIndustry.id }
+						                         title={ subIndustry.name }
+						                         withTooltipIcon={ true }
+						                         tooltipText={ subIndustry.info }
+						                         onClick={ () => handleSubIndustryClick(subIndustry) }
+						                         titleFontSize={ 16 }
+						                         withCheckboxInput
+						                         isActive={ isActive }/>
+					});
+				return <OnboardingCategoryItem key={ industry.id }
+				                               text={ industry.name }
+				                               isActive={
+					                               industry.subIndustries.some(subIndustry =>
+						                               getIsSubIndustryActive((subIndustry))
+					                               )
+				                               }
+				                               categoryContent={ content }/>
+			});
 	};
 
 	return (
-		<div className={styles['list']}>
-			<OnboardingSearchBar onSearch={onSearch}/>
-			{industries.map(industry => {
-				return <IndustryItem key={industry.id}
-				                     text={industry.name}
-				                     subIndustries={getFilteredSubIndustries(industry)}
-				                     selectedSubIndustries={selectedSubIndustries}
-				                     onChange={onChange}
-				                     isSearchActive={filteredSubIndustries !== null}
-				                     isInSearchRange={isIndustryInSearchRange(industry)}
-				/>
-			})}
-		</div>
+		<>
+			<OnboardingSearchBar onSearch={ onSearch }/>
+			{ renderContent() }
+		</>
 	)
 }
 

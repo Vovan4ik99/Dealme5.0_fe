@@ -1,30 +1,36 @@
-import styles from "../Entity.module.scss";
 import React from "react";
-import {WORKING_DAYS, WorkingDayKey} from "@constants/workingDays.ts";
-import WorkingDayItem from "@components/features/Onboarding/items/WorkingDayItem/WorkingDayItem.tsx";
-import {IWorkingDaysListProps} from "@entities/WorkingDaysList/workingDaysListTypes.ts";
+import { WORKING_DAYS, WorkingDayKey } from "@constants/onboarding/workingDays.ts";
+import { IWorkingDaysListProps } from "@entities/WorkingDaysList/workingDaysListTypes.ts";
+import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
 
-const WorkingDaysList: React.FC<IWorkingDaysListProps> = ({selectedWorkingDays, onChange}) => {
+const WorkingDaysList: React.FC<IWorkingDaysListProps> = ({ selectedDays, setSelectedDays }) => {
+
+	const selectDay = (day: WorkingDayKey) => {
+		setSelectedDays(
+			selectedDays.includes(day)
+				? selectedDays.filter(d => d !== day)
+				: [...selectedDays, day]
+		);
+	};
 
 	const renderDays = () => {
-		return Object.entries(WORKING_DAYS).map(([key, entry]) => {
-			const isSelected = selectedWorkingDays.includes(key as WorkingDayKey);
+		return Object.entries(WORKING_DAYS).map(([ key, entry ]) => {
+			const isActive = selectedDays.includes(key as WorkingDayKey);
 			return (
-				<WorkingDayItem
-					key={key}
-					text={entry}
-					isSelected={isSelected}
-					onChange={onChange}
-					workDayKey={key as WorkingDayKey}
-				/>
+				<OnboardingOption key={ key }
+				                  title={ entry }
+				                  onClick={ () => selectDay(key as WorkingDayKey) }
+				                  withCheckboxInput
+				                  titleFontSize={ 16 }
+				                  isActive={ isActive }/>
 			);
 		});
 	};
 
 	return (
-		<div className={styles['item']}>
-			{renderDays()}
-		</div>
+		<>
+			{ renderDays() }
+		</>
 	);
 }
 
