@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext } from "react";
 import styles from './LoginForm.module.scss';
 import InputError from "@ui/form/InputError/InputError.tsx";
 import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
@@ -12,13 +12,7 @@ const LoginForm = () => {
 
 	const navigate = useNavigate();
 	const { login, errorMessage, loadingStatus } = useAuthService();
-	const { getLoggedUserData, user } = useContext(AuthContext);
-
-	useEffect(() => {
-		if (user) {
-			 navigate(user.role === "FREELANCER" ? "/freelancer/profile" : "/investor/start");
-		}
-	}, [ navigate, user ]);
+	const { getLoggedUserData } = useContext(AuthContext);
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<ILoginRequest>({
 		shouldFocusError: false,
@@ -30,11 +24,18 @@ const LoginForm = () => {
 	});
 
 	const loginUser = useCallback((token: string) => {
-		getLoggedUserData(token);
+		getLoggedUserData(token)
+			.then(loggedUser => {
+				if (loggedUser) {
+					navigate(loggedUser.role === "FREELANCER" ? "/freelancer/profile" : "/investor/start");
+				}
+			})
+			.catch(error => console.log(error));
 		reset();
-	}, [ getLoggedUserData, reset ]);
+	}, [ getLoggedUserData, navigate, reset ]);
 
 	const onSubmit = useCallback((request: ILoginRequest) => {
+		localStorage.removeItem('token');
 		login(request)
 			.then((response: ILoginResponse) => {
 				localStorage.setItem('token', response.token);
