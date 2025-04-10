@@ -1,5 +1,5 @@
 import styles from './App.module.scss'
-import AppRouter from "../../features/Routing/AppRouter.tsx";
+import AppRouter from "@components/features/routing/AppRouter.tsx";
 import {AuthProvider} from "@context/AuthContext/AuthProvider.tsx";
 import bg_icon from '@icons/app/bg_icon.svg';
 import {ModalProvider} from "@context/ModalContext/ModalProvider.tsx";
