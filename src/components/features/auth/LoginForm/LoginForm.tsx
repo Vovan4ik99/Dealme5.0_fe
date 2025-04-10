@@ -27,7 +27,13 @@ const LoginForm = () => {
 		getLoggedUserData(token)
 			.then(loggedUser => {
 				if (loggedUser) {
-					navigate(loggedUser.role === "FREELANCER" ? "/freelancer/profile" : "/investor/start");
+					if (loggedUser.role === "FREELANCER") {
+						navigate('/freelancer/profile');
+					} else if (loggedUser.role === "INVESTOR") {
+						navigate('/investor/start');
+					} else if (loggedUser.role === "ADMIN") {
+						navigate('/admin');
+					}
 				}
 			})
 			.catch(error => console.log(error));

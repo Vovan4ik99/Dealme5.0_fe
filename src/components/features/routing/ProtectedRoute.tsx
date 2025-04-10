@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { Outlet, useNavigate } from "react-router-dom";
 import { FREELANCER_PERMITTED_PAGES, MOCKED_INVESTOR_PERMITTED_PAGES } from "@constants/constans.ts";
-import { ILoggedFreelancerData, ILoggedInvestorData } from "@shared/userTypes.ts";
+import { ILoggedFreelancerData, ILoggedInvestorData, LoggedUserData } from "@shared/userTypes.ts";
 import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
 const ProtectedRoute = () => {
@@ -31,6 +31,19 @@ const ProtectedRoute = () => {
 			}
 		}, [ currentPath, navigate ]);
 
+	const handleLoggedUserData = useCallback(
+		(loggedUserData: LoggedUserData) => {
+
+			if (loggedUserData?.role === "FREELANCER") {
+				handleLoggedFreelancer(loggedUserData);
+				return;
+			}
+			if (loggedUserData?.role === "INVESTOR") {
+				handleLoggedInvestor(loggedUserData);
+				return;
+			}
+		}, [ handleLoggedFreelancer, handleLoggedInvestor ]);
+
 	const getUserData = useCallback(() => {
 		if (!token) {
 			navigate("/login");
@@ -39,25 +52,17 @@ const ProtectedRoute = () => {
 		if (!user) {
 			getLoggedUserData(token)
 				.then(loggedUserData => {
-					if (loggedUserData?.role === "FREELANCER") {
-						handleLoggedFreelancer(loggedUserData)
-						return;
+					if (loggedUserData) {
+						handleLoggedUserData(loggedUserData);
 					}
 				})
 				.catch(() => {
 					navigate("/login");
-					return;
 				})
-		}
-		if (user?.role === 'FREELANCER') {
-			handleLoggedFreelancer(user);
 			return;
 		}
-		if (user?.role === "INVESTOR") {
-			handleLoggedInvestor(user);
-			return;
-		}
-	}, [ token, user, navigate, getLoggedUserData, handleLoggedFreelancer, handleLoggedInvestor ]);
+		handleLoggedUserData(user);
+	}, [ token, user, handleLoggedUserData, navigate, getLoggedUserData ]);
 
 	useEffect(getUserData, [ getUserData ]);
 

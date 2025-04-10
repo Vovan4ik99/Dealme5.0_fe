@@ -1,6 +1,6 @@
 import { useHttp } from "@hooks/http.hook.ts";
 import { useCallback } from "react";
-import { ICreateUserRequest, ICreateUserResponse, UserRole } from "@shared/userTypes.ts";
+import { ICreateUserRequest, ICreateUserResponse, IGetLoggedUserResponse, UserRole } from "@shared/userTypes.ts";
 import {
 	IInvestorAuthTokenResponse,
 	ILoginRequest,
@@ -48,6 +48,12 @@ export const useAuthService = () => {
 		})
 	}, [ sendRequest ]);
 
+	const fetchAdminData = useCallback(async (): Promise<IGetLoggedUserResponse> => {
+		return await sendRequest({
+			url: API_ROUTES.USER.ADMIN_PROFILE,
+		});
+	}, [ sendRequest ]);
+
 	const resetPassword = useCallback(async (email: string): Promise<void> => {
 		return await sendRequest({
 			url: API_ROUTES.TOKEN.PASSWORD_RESET,
@@ -82,6 +88,7 @@ export const useAuthService = () => {
 		createUser,
 		fetchFreelancerData,
 		fetchInvestorData,
+		fetchAdminData,
 		resetPassword,
 		getInvestorAuthToken,
 		registerMockedInvestor

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ISalesToolsListProps } from "@entities/SalesToolsList/salesToolsListTypes.ts";
 import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
 import { getToolKindNameByKind } from "@utils/salesToolsUtils.ts";
@@ -9,7 +9,11 @@ import OnboardingCategoryItem from "@ui/onboarding/OnboardingCategoryItem/Onboar
 
 const SalesToolsList: React.FC<ISalesToolsListProps> = ({ tools, selectedTools, setSelectedTools }) => {
 
-	const [ filteredTools, setFilteredTools ] = useState<ISalesTool[]>(tools);
+	const [ filteredTools, setFilteredTools ] = useState<ISalesTool[]>([]);
+
+	useEffect(() => {
+		setFilteredTools(tools);
+	}, [ tools ]);
 
 	const handleToolClick = (tool: ISalesTool) => {
 		setSelectedTools(prevState => {

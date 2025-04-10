@@ -1,5 +1,5 @@
 import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { IIndustryListProps } from "./industryListTypes.ts";
 import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
@@ -11,9 +11,11 @@ const IndustryList: React.FC<IIndustryListProps> = ({
 	                                                    setSelectedSubIndustries
                                                     }) => {
 
-	const [ filteredSubIndustries, setFilteredSubIndustries ] = useState<ISubIndustry[]>(
-		industries.flatMap(industry => industry.subIndustries)
-	);
+	const [ filteredSubIndustries, setFilteredSubIndustries ] = useState<ISubIndustry[]>([]);
+
+	useEffect(() => {
+		setFilteredSubIndustries(industries.flatMap(industry => industry.subIndustries));
+	}, [ industries ]);
 
 	const onSearch = (searchStr: string) => {
 		const allSubIndustries = industries.flatMap(industry => industry.subIndustries);

@@ -7,7 +7,14 @@ import { UserRole } from "@shared/userTypes.ts";
 import { jwtDecode } from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const { errorMessage, fetchInvestorData, fetchFreelancerData, getInvestorAuthToken } = useAuthService();
+
+	const {
+		errorMessage,
+		fetchInvestorData,
+		fetchFreelancerData,
+		getInvestorAuthToken,
+		fetchAdminData
+	} = useAuthService();
 
 	const [ state, dispatch ] = useReducer(authReducer, InitialAuthState);
 
@@ -36,14 +43,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				})
 				.catch(handleError);
 		}
-		return fetchInvestorData()
+		if (role === 'INVESTOR') {
+			return fetchInvestorData()
+				.then(response => {
+					const userData = { ...response, role };
+					dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
+					return userData;
+				})
+				.catch(handleError);
+		}
+		return fetchAdminData()
 			.then(response => {
 				const userData = { ...response, role };
 				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
 				return userData;
 			})
 			.catch(handleError);
-	}, [ errorMessage, fetchFreelancerData, fetchInvestorData ]);
+	}, [ errorMessage, fetchAdminData, fetchFreelancerData, fetchInvestorData ]);
 
 	const loginInvestor = useCallback(async () => {
 		dispatch({ type: AuthActionType.SET_LOADING });

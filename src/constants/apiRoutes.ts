@@ -12,7 +12,8 @@ export const API_ROUTES = {
 	},
 	USER: {
 		FREELANCER_PROFILE: '/freelancer/me',
-		INVESTOR_PROFILE: '/investor/me'
+		INVESTOR_PROFILE: '/investor/me',
+		ADMIN_PROFILE: '/admin/me',
 	},
 	ONBOARDING: {
 		FREELANCER: {
