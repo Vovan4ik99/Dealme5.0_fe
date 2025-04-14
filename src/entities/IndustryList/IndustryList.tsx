@@ -1,6 +1,6 @@
 import OnboardingSearchBar from "@components/features/onboarding/OnboardingSearchBar/OnboardingSearchBar.tsx";
-import React, { useState } from "react";
-import { ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import React, { useEffect, useState } from "react";
+import { IIndustry, ISubIndustry } from "@shared/onboarding/freelancerOnboardingTypes.ts";
 import { IIndustryListProps } from "./industryListTypes.ts";
 import OnboardingOption from "@ui/onboarding/OnboardingOption/OnboardingOption.tsx";
 import OnboardingCategoryItem from "@ui/onboarding/OnboardingCategoryItem/OnboardingCategoryItem.tsx";
@@ -11,9 +11,11 @@ const IndustryList: React.FC<IIndustryListProps> = ({
 	                                                    setSelectedSubIndustries
                                                     }) => {
 
-	const [ filteredSubIndustries, setFilteredSubIndustries ] = useState<ISubIndustry[]>(
-		industries.flatMap(industry => industry.subIndustries)
-	);
+	const [ filteredSubIndustries, setFilteredSubIndustries ] = useState<ISubIndustry[]>([]);
+
+	useEffect(() => {
+		setFilteredSubIndustries(industries.flatMap(industry => industry.subIndustries));
+	}, [ industries ]);
 
 	const onSearch = (searchStr: string) => {
 		const allSubIndustries = industries.flatMap(industry => industry.subIndustries);
@@ -39,43 +41,46 @@ const IndustryList: React.FC<IIndustryListProps> = ({
 		});
 	};
 
+	const getIsSubIndustryActive = (
+		subIndustriesToSearch: ISubIndustry[],
+		subIndustry: ISubIndustry
+	) => {
+		return subIndustriesToSearch.map(item => item.id).includes(subIndustry.id);
+	};
+
+	const renderIndustry = (industry: IIndustry) => {
+
+		const content = industry.subIndustries.map(
+			subIndustry => {
+				const isActive = getIsSubIndustryActive(selectedSubIndustries, subIndustry);
+				return <OnboardingOption key={ subIndustry.id }
+				                         title={ subIndustry.name }
+				                         withTooltipIcon={ true }
+				                         tooltipText={ subIndustry.info }
+				                         onClick={ () => handleSubIndustryClick(subIndustry) }
+				                         titleFontSize={ 16 }
+				                         withCheckboxInput
+				                         isActive={ isActive }/>
+			});
+		return <OnboardingCategoryItem key={ industry.id }
+		                               text={ industry.name }
+		                               isActive={
+			                               industry.subIndustries.some(subIndustry =>
+				                               getIsSubIndustryActive(selectedSubIndustries, subIndustry)
+			                               )
+		                               }
+		                               categoryContent={ content }/>
+	};
+
 	const renderContent = () => {
-
-		const getIsSubIndustryActive = (subIndustry: ISubIndustry) => {
-			return selectedSubIndustries.map(item => item.id).includes(subIndustry.id);
-		};
-
 		return industries
 			.filter(industry =>
 				industry.subIndustries.length > 0 &&
 				industry.subIndustries.some(subIndustry =>
-					filteredSubIndustries
-						.map(filteredSubIndustry => filteredSubIndustry.id)
-						.includes(subIndustry.id)
+					getIsSubIndustryActive(filteredSubIndustries, subIndustry)
 				)
 			)
-			.map(industry => {
-				const content = industry.subIndustries.map(
-					subIndustry => {
-						const isActive = getIsSubIndustryActive((subIndustry));
-						return <OnboardingOption key={ subIndustry.id }
-						                         title={ subIndustry.name }
-						                         withTooltipIcon={ true }
-						                         tooltipText={ subIndustry.info }
-						                         onClick={ () => handleSubIndustryClick(subIndustry) }
-						                         titleFontSize={ 16 }
-						                         withCheckboxInput
-						                         isActive={ isActive }/>
-					});
-				return <OnboardingCategoryItem key={ industry.id }
-				                               text={ industry.name }
-				                               isActive={
-					                               industry.subIndustries.some(subIndustry =>
-						                               getIsSubIndustryActive((subIndustry))
-					                               )
-				                               }
-				                               categoryContent={ content }/>
-			});
+			.map(industry => renderIndustry(industry));
 	};
 
 	return (
