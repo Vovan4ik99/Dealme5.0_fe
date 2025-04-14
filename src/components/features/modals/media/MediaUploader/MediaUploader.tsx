@@ -29,7 +29,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 	const [ error, setError ] = useState<string | null>(null);
 
 	const MAX_IMAGE_SIZE = 3 * 1024 * 1024;
-	const MAX_VIDEO_SIZE = 10 * 1024 * 1024;
+	const MAX_VIDEO_SIZE = 50 * 1024 * 1024;
 	const ACCEPTED_FORMATS = {
 		image: {
 			'image/jpeg': [ '.jpg', '.jpeg' ],
@@ -129,7 +129,7 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 		}
 
 		if (isVideo && file.size > MAX_VIDEO_SIZE) {
-			setError('Maksymalny rozmiar wideo to 10MB');
+			setError('Maksymalny rozmiar wideo to 50MB');
 			return;
 		}
 

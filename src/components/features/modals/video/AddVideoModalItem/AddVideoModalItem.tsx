@@ -55,7 +55,7 @@ const AddVideoModalItem: React.FC<IAddVideoModalItemProps> = ({
 				<MediaUploader
 					mediaType={ 'video' }
 					onVideoAdd={ onVideoAdd }
-					text={ 'Akceptowalne formaty: MP4, MOV, AVI, rozmiar: do 10MB' }
+					text={ 'Akceptowalne formaty: MP4, MOV, AVI, rozmiar: do 50MB' }
 				/>
 			),
 		});
