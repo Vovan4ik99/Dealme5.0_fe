@@ -21,8 +21,8 @@ const RegistrationForm = () => {
 
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	const handleRoleSelect = (index: number) => {
-		setCurrentRole(index === 0 ? "FREELANCER" : "INVESTOR");
+	const handleRoleSelect = () => {
+		navigate('/investor/start');
 	};
 
 	const { createUser, loadingStatus, errorMessage } = useAuthService();
@@ -59,7 +59,7 @@ const RegistrationForm = () => {
 				clearTimeout(timeoutRef.current);
 			}
 		};
-	}, [ createUser, currentRole, navigate, reset ]);
+	}, [ createUser, navigate, reset ]);
 
 	return (
 		<form name={ 'registration-form' } className={ styles['registration-form'] }
@@ -137,7 +137,7 @@ const RegistrationForm = () => {
 			{ isUserCreated && <AlertItem kind={ 'success' }
                                           text={
 				                              'Użytkownik został zarejestrowany. ' +
-	                                          'Za chwilę przekierujemy Ci na stronę logowania.'
+				                              'Za chwilę przekierujemy Ci na stronę logowania.'
 			                              }/> }
 			<button className={ 'btn btn--mt0' } type="submit" disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto' }
