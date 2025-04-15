@@ -111,7 +111,7 @@ const ProductStep: FC<IStartServiceComponentProps> = ({onSubmit, userData}) => {
                                   emptyInfo={ "Dodaj produkty aby przejdź dalej" }
                                   onEmptyImg={ addProductImage }
                                   onAdd={ onProductAdd }
-                                  onSubmit={ () => onSubmit() }/>
+                                  onSubmit={ onSubmit }/>
         </main>
     );
 };

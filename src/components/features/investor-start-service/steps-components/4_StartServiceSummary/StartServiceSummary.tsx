@@ -10,7 +10,7 @@ import {
 import {useAuthService} from "@services/auth/authService.ts";
 import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
-const StartServiceSummary: FC<IStartServiceComponentProps> = ({ userData, navigate, onSubmit }) => {
+const StartServiceSummary: FC<IStartServiceComponentProps> = ({ userData, navigate }) => {
     const { loadingStatus } = useAuthService();
 
     if(loadingStatus === "loading"){

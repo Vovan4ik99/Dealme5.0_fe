@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ReactComponent as InfoIcon} from '@icons/named_exported/info_icon.svg';
 import styles from './MainTaskActivityStep.module.scss';
 import pipeLineImageAdd from "@icons/start_service/adding_order_img.svg"
@@ -28,9 +28,23 @@ const MainTaskActivityStep: React.FC<IStartServiceComponentProps> = ({ onSubmit,
     const [ pipeLineMainTask, setPipeLineMainTask ] = useState<IPipelineMainTaskItem[]>(userData.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS ?? []);
     const { openModal } = useModal();
 
-    const handleSubmit = () => {
-        const request: IMainTaskActivityRequest[] = createPipelineMainTaskRequest(pipeLineMainTask);
+    useEffect(() => {
+        if (userData?.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS) {
+            setPipeLineMainTask(userData.pipelineSupportStage.pipelineSupportMainTaskActivityDTOS);
+        }
+    }, [userData]);
 
+    const handleSubmit = () => {
+        const data: IMainTaskActivityRequest[] = createPipelineMainTaskRequest(pipeLineMainTask);
+
+        const existingIds = userData?.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS
+                                               .map((item) => item.pipelineMainTaskDTO.id) ?? [];
+        const request = data.filter(act => !existingIds.includes(act.pipelineMainTaskId));
+
+        if (request.length === 0) {
+            onSubmit();
+            return;
+        }
         addInvestorMainTaskActivity(request)
                 .then(onSubmit)
                 .catch(console.error);

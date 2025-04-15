@@ -24,16 +24,18 @@ const ServiceManager = () => {
 
     const getInvestorData = useCallback(() => {
         fetchInvestorData()
-            .then((res) => {
-                setUserData(res);
-
-                const step = getStartServiceStep(res);
-                setCurrentStep(step);
-            })
+            .then(setUserData)
             .catch(console.error);
     }, [ fetchInvestorData ]);
 
-    useEffect( getInvestorData, [ ]);
+    useEffect( getInvestorData, [ getInvestorData ]);
+
+    useEffect(() =>{
+        if (!userData) return;
+
+        const step = getStartServiceStep(userData);
+        setCurrentStep(step);
+    },[ userData ])
 
     const decrement = () => {
         if (currentStep === 0) {
@@ -41,6 +43,12 @@ const ServiceManager = () => {
             return;
         }
         setCurrentStep((step) => --step);
+    }
+
+    const increment = () => {
+        getInvestorData();
+
+        setCurrentStep((step) => ++step);
     }
 
     const renderComponent = () => {
@@ -51,13 +59,13 @@ const ServiceManager = () => {
         if (!Component) return <LoadingSpinner/>;
 
         if (currentStep < 3) {
-            return <Component userData={ userData } onSubmit={ getInvestorData } />;
+            return <Component userData={ userData } onSubmit={ increment } />;
         }
 
-        return <Component userData={ userData } onSubmit={ getInvestorData } navigate={ (index) => setCurrentStep(index) } />
+        return <Component userData={ userData } onSubmit={ increment } navigate={ (index) => setCurrentStep(index) } />
     }
 
-    if (isLoading) {
+    if (isLoading)  {
         return <LoadingSpinner />
     }
 

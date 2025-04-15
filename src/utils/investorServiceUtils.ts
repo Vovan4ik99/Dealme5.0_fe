@@ -15,8 +15,6 @@ import {
 } from "@components/features/investor-start-service/steps-components/3_ProductStep/product-modal/ProductModalTypes.ts";
 
 export const getStartServiceStep = (userData: IInvestorData): number=> {
-    console.log(userData?.pipelineSupportStage?.pipelineDTO);
-    console.log(userData);
         if (userData?.pipelineSupportStage?.pipelineDTO == null) {
             return 0
         }

@@ -17,7 +17,8 @@ const ServiceSummaryPanel: FC<IServiceSummaryPanelProps> = ({ navigate, userData
             const description = [ `${ order.amount }szt`, createDescriptionDate(order.startDate!, getLabelFromMonths(order.period!))];
 
             return (
-                <div className={ styles["panel__list-item"] }>
+                <div className={ styles["panel__list-item"] }
+                     key={ order.pipelineMainTaskDTO.id }>
                     <p className={ styles["panel__section-text"] }>
                         { order.pipelineMainTaskDTO.name }
                     </p>
@@ -28,13 +29,14 @@ const ServiceSummaryPanel: FC<IServiceSummaryPanelProps> = ({ navigate, userData
     }
 
     const renderProducts = () => {
-        return userData.products.map(product => {
+        return userData?.products?.map(product => {
             let area = product.country || product.city || product.state;
             if (area === "POLAND") {
                 area = "Polska";
             }
            return (
-               <div className={styles["panel__product"]}>
+               <div className={styles["panel__product"]}
+                    key={ product.id }>
                    <p className={styles["panel__section-text"]}>
                        { product.name }
                    </p>
