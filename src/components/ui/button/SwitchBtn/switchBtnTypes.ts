@@ -1,8 +1,7 @@
-import React from "react";
+import {ReactNode} from "react";
 
 export interface ISwitchBtnProps {
-	onClick: () => void;
-	isActive: boolean;
-	leftContent: React.ReactNode;
-	rightContent: React.ReactNode;
+	onClick: (value: number) => void;
+	currentIndex: number;
+	items: ReactNode[];
 }

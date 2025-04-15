@@ -20,6 +20,7 @@ const SelectOption: React.FC<ISelectOptionProps> = ({ value, info, onClick, icon
 				{ icon }
 				{ value }
 			</div>
+			<div className={styles["option__icon"]} />
 			{ info && <TooltipIcon text={ info } isLeft={ false } isActive={ isHover }/> }
 		</div>
 	);

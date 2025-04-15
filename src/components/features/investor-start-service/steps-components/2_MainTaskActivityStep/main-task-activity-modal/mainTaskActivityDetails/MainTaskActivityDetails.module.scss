@@ -1,0 +1,50 @@
+@use "@styles/variables" as vars;
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+
+  &__edit-btn {
+    display: flex;
+    flex-direction: row;
+    background-color: vars.$color-gray-light;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    padding: 16px;
+    color: vars.$color-gray;
+  }
+
+  &__btn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: 0;
+  }
+
+  &__value {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: 0;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    height: 100%;
+    > * {
+      width: 50%;
+    }
+  }
+}

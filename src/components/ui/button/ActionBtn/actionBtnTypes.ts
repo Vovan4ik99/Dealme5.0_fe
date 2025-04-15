@@ -7,4 +7,4 @@ export interface IActionBtnProps {
 	isHovered?: boolean;
 }
 
-type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left' | 'Preview';
+type BtnKind = 'Edit' | 'Add' | 'Delete' | 'Close' | 'Navigate Right' | 'Navigate Left' | 'Preview' | 'Minus' | 'Calendar';

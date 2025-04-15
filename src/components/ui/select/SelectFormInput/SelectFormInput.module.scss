@@ -36,14 +36,24 @@
 	}
   }
 
+  &__head {
+	  display: flex;
+	  width: 100%;
+	  flex-direction: row;
+	  align-items: center;
+	  justify-content: space-between;
+  }
+
   &__text {
 	display: flex;
+	width: 100%;
 	align-items: flex-start;
 	flex-direction: column;
 	gap: 4px;
 	color: vars.$color-black;
 	line-height: 120%;
 	font-size: 18px;
+	text-align: start;
 
 	&-add {
 	  font-weight: 400;

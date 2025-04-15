@@ -84,10 +84,9 @@ const CertificateLicenseAddModalItem: React.FC<ICertificateLicenseAddModalItemPr
 					<InfoIcon width={ 14 } height={ 14 }/>
 				</div>
 			</div>
-			<SwitchBtn isActive={ certificateType === 'CERTIFICATE' }
+			<SwitchBtn currentIndex={ certificateType === "CERTIFICATE" ? 0 : 1 }
 			           onClick={ onTypeChange }
-			           leftContent={ 'Certyfikat' }
-			           rightContent={ 'Licencja' }/>
+					   items={ ['Certyfikat', 'Licencja']}/>
 			<div className={ styles['item__inputs'] }>
 				<CustomInput preset={ 'certificateName' }
 				             register={ register }

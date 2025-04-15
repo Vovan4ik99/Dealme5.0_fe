@@ -1,0 +1,10 @@
+@use "@styles/variables" as vars;
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: space-between;
+  margin-top: 40px;
+
+}

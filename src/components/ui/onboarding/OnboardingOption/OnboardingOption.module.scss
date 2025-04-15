@@ -102,4 +102,9 @@
 	background: white;
 	transition: all 300ms ease-in-out;
   }
+	&__info {
+		display: flex;
+		flex-direction: row;
+		gap: 4px;
+	}
 }

@@ -50,5 +50,10 @@
 		color: vars.$color-gray;
 	  }
 	}
+	&::-webkit-calendar-picker-indicator {
+		border: 1px solid vars.$color-gray;
+		border-radius: 50px;
+		padding: 5px;
+	}
   }
 }

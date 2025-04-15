@@ -5,10 +5,14 @@ import styles from './OnboardingRegistrationForm.module.scss';
 import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
 import { IRegisterMockInvestorRequest } from "@shared/authTypes.ts";
 import CustomCheckbox from "@ui/form/CustomCheckbox/CustomCheckbox.tsx";
+import AlertItem from "@ui/common/AlertItem/AlertItem.tsx";
+import {useState} from "react";
 
 const OnboardingRegistrationForm = () => {
 
-	const { registerMockedInvestor } = useAuthService();
+	const { registerMockedInvestor, loadingStatus } = useAuthService();
+
+	const [ isSent, setIsSent ] = useState<boolean>(false);
 
 	const { handleSubmit, formState: { errors }, register, control, setValue } = useForm<IOnboardingRegistrationForm>({
 		shouldFocusError: false,
@@ -37,17 +41,23 @@ const OnboardingRegistrationForm = () => {
 				.then(() => {
 					console.log(request);
 					console.log('success');
+					setIsSent(true);
 				})
 				.catch(console.error);
 		})();
 	};
 
 	return (
+	<div className={styles["onboarding-registration-form"]}>
 		<div className={ styles['form'] }>
 			<h2 className={ styles['form__title'] }>
 				<span>Mamy dla Ciebie specjalistę!</span><br/>
 				<span className={ styles['form__title--gray'] }>Załóż konto aby poznać szczegóły</span>
 			</h2>
+			{ isSent && <AlertItem kind={"success"}
+								   text={"Rejestracja zakończona sukcesem.\n" +
+									   "Wkrótce otrzymasz e-mail z dalszymi krokami."}
+								   hasMarginTop={false}/> }
 			<div className={ styles['form__inputs'] }>
 				<div className={ styles['form__name'] }>
 					<CustomInput key={ 'firstName' }
@@ -108,10 +118,12 @@ const OnboardingRegistrationForm = () => {
 				                }) }/>
 			</div>
 			<button className={ 'btn btn--mt0' }
+					disabled={ (loadingStatus === "loading" || isSent) && true}
 			        onClick={ handleSubmitForm }>
-				Załóż konto
+				{ loadingStatus === "loading" ? "Wysyłanie" : "Załóż konto"}
 			</button>
 		</div>
+	</div>
 	);
 };
 

@@ -164,14 +164,12 @@ const LocalizationModalItem: React.FC<ILocalizationModalItemProps> = ({
 					isCityRequired={ false }/>
 			</div>
 			<p className={ styles['item__title'] }>Określ obszar świadczenia usług</p>
-			<SwitchBtn isActive={ workingArea === "COUNTRY" }
+			<SwitchBtn currentIndex={ workingArea === "COUNTRY" ? 0 : 1 }
 			           onClick={ chooseWorkingArea }
-			           leftContent={
-				           <p className={ styles['item__text'] }>{ WORKING_AREAS.COUNTRY }</p>
-			           }
-			           rightContent={
-				           <p>{ WORKING_AREAS.STATE }</p>
-			           }/>
+			           items={[
+						   <p className={styles['item__text']}>{WORKING_AREAS.COUNTRY}</p>,
+						   <p>{ WORKING_AREAS.STATE }</p>
+					   ]}/>
 			<div className={ styles['item__footer'] }>
 				<div className={ styles['item__icon'] }>
 					<InfoIcon width={ 14 } height={ 14 }/>

@@ -81,5 +81,13 @@ export const CUSTOM_INPUT_PRESETS: Record<PresetType, Partial<CustomInputProps>>
 		autoComplete: '',
 		labelText: 'Nazwa firmy',
 		validation: CUSTOM_INPUT_VALIDATION_RULES.workExperienceCompany
+	},
+	city: {
+		id: 'city',
+		type: 'text',
+		placeholder: 'Wpisz',
+		autoComplete: '',
+		labelText: 'Nazwa miasta',
+		validation: CUSTOM_INPUT_VALIDATION_RULES.city
 	}
 } as const;
