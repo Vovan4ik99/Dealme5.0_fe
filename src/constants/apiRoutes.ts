@@ -19,6 +19,9 @@ export const API_ROUTES = {
 			PIPELINE: '/pipeline',
 			PIPELINE_SUPPORT_STEP: '/investor/pipeline-support-stage',
 			ORDER_ACTIVITY: '/orders-activity',
+			COMPANY_SIZE: '/company-size',
+			BUYER_PERSON: '/buyer-person',
+			PRODUCTS: '/products',
 		}
 	},
 	ONBOARDING: {

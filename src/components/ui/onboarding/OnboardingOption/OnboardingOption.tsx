@@ -11,6 +11,7 @@ const OnboardingOption: React.FC<IOnboardingOptionProps> = ({
 	                                                            isActive = false,
 	                                                            withTooltipIcon = false,
 	                                                            tooltipText,
+																hasHiddenDescription,
 	                                                            withCheckboxInput = false,
 	                                                            titleAddText = undefined,
 	                                                            titleFontSize = 18,
@@ -51,8 +52,16 @@ const OnboardingOption: React.FC<IOnboardingOptionProps> = ({
 							</span>
 						}
 					</p>
-					{ description &&
+					{ description && !hasHiddenDescription &&
                         <p className={ styles['option__description'] }>{ description }</p>
+					}
+					{ hasHiddenDescription &&
+						<div className={ styles['option__info'] }>
+							<TooltipIcon text={ description ?? 'Brak' }
+										 isActive={ isHovered }
+										 isIconTop={ true }/>
+							<p className={ styles['option__description'] }>Co otrzymam?</p>
+						</div>
 					}
 				</div>
 			</div>

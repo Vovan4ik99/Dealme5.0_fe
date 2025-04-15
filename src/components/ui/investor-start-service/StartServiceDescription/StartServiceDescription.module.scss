@@ -1,0 +1,41 @@
+@use "@styles/variables" as vars;
+
+.description {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0;
+  color: vars.$color-gray;
+
+  &--wrap {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 8px;
+    align-self: stretch;
+    flex-wrap: wrap;
+  }
+
+  &__stack {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__box {
+    display: flex;
+    justify-content: center;
+    width: 27px;
+    height: 28px;
+    align-items: center;
+    margin-left: 4px;
+    background-color: vars.$color-gray-light;
+    padding: 8px;
+    border-radius: 8px;
+  }
+}

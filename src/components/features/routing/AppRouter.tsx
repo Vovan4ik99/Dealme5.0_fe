@@ -8,6 +8,7 @@ import OnboardingPage from "@pages/onboarding/OnboardingPage/OnboardingPage.tsx"
 import OnboardingSummary from "@pages/onboarding/OnboardingSummary/OnboardingSummary.tsx";
 import FreelancerOnboardingStartPage
 	from "@pages/onboarding/FreelancerOnboardingStartPage/FreelancerOnboardingStartPage.tsx";
+import ServicePage from "@pages/ServicePage/ServicePage.tsx";
 
 const AppRouter = () => {
 	return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
 				<Route element={ <ProtectedRoute/> }>
 					{/*Investor Paths*/}
+					<Route path={ '/investor/service'} element={ <ServicePage/> }/>
 					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
 					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
 

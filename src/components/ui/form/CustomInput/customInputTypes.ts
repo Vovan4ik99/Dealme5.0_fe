@@ -1,8 +1,8 @@
 import React from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
-import {inputPreset} from "@ui/CustomInput/inputPreset.ts";
 
-export type PresetType = typeof inputPreset[number];
+export type PresetType = 'email' | 'password' | 'firstName' | 'lastName' | 'company' | 'certificateName'
+| 'certificateOrganization' | 'videoTitle' | 'jobTitle' | 'workExperienceCompany' | 'city';
 
 interface IBaseInputProps {
 	errorMessage?: string;

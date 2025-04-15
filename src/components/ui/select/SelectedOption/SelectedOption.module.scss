@@ -1,0 +1,35 @@
+@use "@styles/variables" as vars;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 8px;
+
+  &__option {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: vars.$color-gray-light;
+    color: vars.$color-black;
+    border-radius: 8px;
+    padding: 8px 12px;
+
+    svg {
+      transform: none;
+    }
+  }
+
+  &__text {
+    overflow-wrap: break-word;
+    max-width: 290px;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+}

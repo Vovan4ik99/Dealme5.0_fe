@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
-import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 import styles from "./FreelancerOnboardingStartPage.module.scss";
 import { ReactComponent as FreelancerIcon } from '@icons/named_exported/freelancer_registration.svg';
 import { useNavigate } from "react-router-dom";
 import FreelancerOnboardingNavbar
 	from "@components/layout/navbar/FreelancerOnboardingNavbar/FreelancerOnboardingNavbar.tsx";
 import Footer from "@components/layout/Footer/Footer.tsx";
+import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
 
 const FreelancerOnboardingStartPage = () => {
 
