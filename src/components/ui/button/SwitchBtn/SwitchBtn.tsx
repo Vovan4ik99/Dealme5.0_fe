@@ -23,6 +23,7 @@ const SwitchBtn: React.FC<ISwitchBtnProps> = ({onClick, items, currentIndex}) =>
 
 	return (
 		<button className={ styles['btn'] }
+				type="button"
 				style={{gridTemplateColumns: `${grid}`}}>
 			{ handleSwitch() }
 		</button>

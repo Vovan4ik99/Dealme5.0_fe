@@ -5,4 +5,5 @@ export interface IListItemProps {
     onEdit: (order?: IPipelineMainTaskDetailsForm) => void;
     onDelete: () => void;
     title: string;
+    isEditDisabled?: boolean;
 }

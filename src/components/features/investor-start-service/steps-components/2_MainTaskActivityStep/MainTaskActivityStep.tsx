@@ -25,7 +25,7 @@ import {
 const MainTaskActivityStep: React.FC<IStartServiceComponentProps> = ({ onSubmit, userData }) => {
     const { addInvestorMainTaskActivity, loadingStatus } = useInvestorStartService();
 
-    const [ pipeLineMainTask, setPipeLineMainTask ] = useState<IPipelineMainTaskItem[]>(userData.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS ?? []);
+    const [ pipeLineMainTask, setPipeLineMainTask ] = useState<IPipelineMainTaskItem[]>([]);
     const { openModal } = useModal();
 
     useEffect(() => {

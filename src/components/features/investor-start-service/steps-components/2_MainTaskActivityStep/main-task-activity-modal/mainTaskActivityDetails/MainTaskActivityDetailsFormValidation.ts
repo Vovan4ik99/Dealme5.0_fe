@@ -18,10 +18,6 @@ export const PipelineFormValidation = {
         valueAsDate: true
     },
     description: {
-        required: " Podaj dodatkowe informacje ",
-        max: {
-            value: 1000,
-            message: 'Maksymalnie 1000 znaków'
-        }
+        required: " Podaj dodatkowe informacje "
     }
 }

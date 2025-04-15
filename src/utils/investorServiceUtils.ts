@@ -138,7 +138,6 @@ export const areaKeyToFormKey = (key: AreaKeys) => {
 }
 
 export const currentAreaSwitch = (currentProduct?: IProductItem): AreaKeys => {
-    console.log( currentProduct );
     if (currentProduct?.city) {
         return "Miasto"
     }

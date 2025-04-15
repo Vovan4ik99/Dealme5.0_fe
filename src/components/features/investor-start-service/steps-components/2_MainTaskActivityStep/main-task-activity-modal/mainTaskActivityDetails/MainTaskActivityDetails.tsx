@@ -84,7 +84,7 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
             <div className={styles["details__edit-btn"]}>
                 <div className={styles["details__btn-text"]}>
                     <p className={styles["details__label"]}>Wybrana usługa</p>
-                    <p className={styles["details__value"]}>{mainTaskName}</p>
+                    <p className={styles["details__value"]}>{ mainTaskName }</p>
                 </div>
                 <ActionBtn onClick={handleMainTaskEdit}
                            withBorder={true}
@@ -112,7 +112,7 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
             {/* todo finish DatePicker and replace it */}
             <CustomInput id={'startDate'}
                          type={"date"}
-                         existedValue={formValue.startDate ? format(formValue.startDate, "yyyy-MM-dd") : ""}
+                         existedValue={ formValue?.startDate ? format(formValue.startDate, "yyyy-MM-dd") : ""}
                          onChange={setStartDate}
                          placeholder={"Wybierz date"}
                          labelText={"Od"}
@@ -120,7 +120,7 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
                          register={register}
                          errorMessage={errors.startDate?.message}/>
             <CustomTextArea label={ 'Dodatkowe informacje' }
-                            maxSymbols={ 1000 }
+                            maxSymbols={ 250 }
                             placeholder={'Wpisz tutaj dodatkowe informacje..'}
                             fontWeight={400}
                             value={ formValue.description }

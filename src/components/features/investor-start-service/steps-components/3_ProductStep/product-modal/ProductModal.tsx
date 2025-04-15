@@ -42,7 +42,7 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
         shouldFocusError: false,
         mode: 'onTouched',
         defaultValues: {
-            name: currentProduct?.name,
+            name: currentProduct?.name ?? '',
             subIndustry: currentProduct?.subIndustry ,
             description: currentProduct?.description ,
             sector: currentProduct?.sector,
@@ -200,7 +200,7 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
                                      error={ errors.subIndustry ?? null }
                                      onValueChange={ (value) => setValue("subIndustry" ,value) }/>
                     <CustomTextArea label={ 'Opis produktu (opcjonalne)' }
-                                    maxSymbols={ 1000 }
+                                    maxSymbols={ 250 }
                                     minHeight={ 150 }
                                     placeholder={ 'Wpisz tutaj opis..' }
                                     fontWeight={ 400 }
@@ -251,7 +251,7 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
                                      error={ errors.buyerPerson as FieldError ?? null }
                                      onValueChange={(data) => setData(data, formValue?.buyerPerson, 'buyerPerson') }/>
                     <CustomTextArea label={ 'Opis buyer persony (opcjonalne)' }
-                                    maxSymbols={ 1000 }
+                                    maxSymbols={ 250 }
                                     minHeight={ 150 }
                                     placeholder={ 'Wpisz tutaj opis..' }
                                     fontWeight={ 400 }

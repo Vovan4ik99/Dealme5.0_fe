@@ -4,7 +4,7 @@ import {IListItemProps} from "@ui/investor-start-service/StartServiceItem/StartS
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
 import StartServiceDescription from "@ui/investor-start-service/StartServiceDescription/StartServiceDescription.tsx";
 
-const StartServiceItem: FC<IListItemProps> = ({ onEdit, onDelete, description, title }) => {
+const StartServiceItem: FC<IListItemProps> = ({ onEdit, onDelete, description, title, isEditDisabled }) => {
 
 
     return (
@@ -16,6 +16,7 @@ const StartServiceItem: FC<IListItemProps> = ({ onEdit, onDelete, description, t
             <div className={ styles["item__icons"] }>
                 <ActionBtn onClick={ onEdit }
                            withBorder={ true }
+                           disabled={ isEditDisabled }
                            backgroundColor={ "white" }
                            kind={ "Edit" }/>
                 <ActionBtn onClick={ onDelete }
