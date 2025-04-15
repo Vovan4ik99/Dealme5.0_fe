@@ -5,6 +5,7 @@ export interface IOnboardingOptionProps {
 	isActive?: boolean;
 	withTooltipIcon?: boolean;
 	tooltipText?: string;
+	hasHiddenDescription?: boolean;
 	withCheckboxInput?: boolean;
 	titleAddText?: string;
 	titleFontSize?: number;

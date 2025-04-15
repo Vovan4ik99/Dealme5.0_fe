@@ -1,4 +1,4 @@
-import { createContext, ReactElement, useContext } from "react";
+import {createContext, ReactElement, ReactNode, useContext} from "react";
 
 export type OnSaveCallback = () => void;
 
@@ -11,7 +11,7 @@ export interface ISaveableChildProps {
 
 interface IBaseModalBase {
 	id: string;
-	title: string;
+	title: string | ReactNode;
 	child: ReactElement<ISaveableChildProps>;
 	onClose?: () => void;
 }

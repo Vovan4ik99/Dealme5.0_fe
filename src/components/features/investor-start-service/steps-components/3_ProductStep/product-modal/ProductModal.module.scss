@@ -1,0 +1,21 @@
+@use "@styles/variables" as vars;
+
+.modal {
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  &__section-name{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: 0;
+    color: vars.$color-black;
+    margin-bottom: 24px;
+  }
+}

@@ -1,0 +1,96 @@
+@use "@styles/variables" as vars;
+
+.input {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border-radius: 12px;
+  border: 1px solid vars.$color-gray-border;
+  padding: 16px 16px 0 16px;
+  height: 78px;
+
+  &--error {
+      border: 1px solid vars.$color-danger;
+
+      &__label {
+        color: vars.$color-gray;
+      }
+    }
+
+  &:has(&__value:not(:placeholder-shown)) {
+    .input__label {
+      color: vars.$color-gray;
+    }
+  }
+
+  &:has(&__value:focus-within) {
+    border-color: vars.$color-black;
+
+    .input__label {
+    color: vars.$color-gray;
+    }
+  }
+
+ &__content {
+   display: flex;
+   align-items: start;
+   justify-content: start;
+   flex-direction: column;
+   gap: 4px;
+  }
+
+  &__value {
+    background: none;
+    border: none;
+    font-size: 18px;
+    line-height: 120%;
+    color: vars.$color-black;
+    width: 100px;
+
+    &:focus {
+      outline: none;
+    }
+
+
+    &::placeholder {
+      font-weight: 500;
+      color: vars.$color-black;
+      font-size: 18px;
+      line-height: 120%;
+      letter-spacing: 0;
+      opacity: 0.4;
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: vars.$color-black;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button, {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  &__label {
+    position: relative;
+    font-size: 14px;
+    line-height: 120%;
+    width: fit-content;
+    color: vars.$color-black;
+  }
+
+}
+
+.container {
+  height: 100%;
+}

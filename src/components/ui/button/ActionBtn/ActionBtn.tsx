@@ -8,6 +8,8 @@ import { ReactComponent as DeleteIcon } from "@icons/named_exported/delete_icon.
 import { ReactComponent as ArrowLeft } from "@icons/named_exported/onboarding/arrow_left.svg";
 import { ReactComponent as ArrowRight } from "@icons/named_exported/arrow_right.svg";
 import { ReactComponent as PreviewIcon } from "@icons/named_exported/preview_icon.svg";
+import { ReactComponent as Minus } from "@icons/named_exported/minus.svg";
+import { ReactComponent as Calendar } from "@icons/named_exported/start-service/calendar.svg";
 
 const ActionBtn: React.FC<IActionBtnProps> = ({
 	                                              onClick,
@@ -38,6 +40,12 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 			case 'Navigate Right':
 				return <ArrowRight
 					className={ `${ styles['action__icon'] } ${ styles['icon--navigate'] }` }/>;
+			case 'Minus':
+				return <Minus
+					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
+			case 'Calendar':
+				return <Calendar
+					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
 			case 'Preview':
 				return <PreviewIcon className={
 					`${ styles['action__icon'] } 

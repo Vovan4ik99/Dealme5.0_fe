@@ -16,6 +16,7 @@ const RegistrationForm = () => {
 
 	const navigate = useNavigate();
 
+	const [ currentRole, setCurrentRole ] = useState<UserRole>("FREELANCER");
 	const [ isUserCreated, setIsUserCreated ] = useState<boolean>(false);
 
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -41,10 +42,9 @@ const RegistrationForm = () => {
 		value === password || 'Podane hasła nie są zgodne';
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
-		const role: UserRole = 'FREELANCER';
 		const createUserData: ICreateUserRequest = { ...formData };
 
-		createUser(createUserData, role)
+		createUser(createUserData, currentRole)
 			.then(() => {
 				setIsUserCreated(true);
 				reset();
@@ -67,19 +67,17 @@ const RegistrationForm = () => {
 			<div>
 				<p className={ styles['registration-form__text'] }>Wybierz rodzaj konta</p>
 				<SwitchBtn onClick={ handleRoleSelect }
-				           isActive={ true }
-				           leftContent={
-					           <>
-						           <FreelancerIcon/>
-						           <p>Freelancer</p>
-					           </>
-				           }
-				           rightContent={
-					           <>
-						           <InvestorIcon/>
-						           <p>Inwestor</p>
-					           </>
-				           }/>
+				           currentIndex={ currentRole === "FREELANCER" ? 0 : 1 }
+				           items={[
+							   <>
+								   <FreelancerIcon/>
+								   <p>Freelancer</p>
+							   </>,
+							   <>
+								   <InvestorIcon/>
+								   <p>Inwestor</p>
+							   </>
+						   ]} />
 			</div>
 			<div className={ styles['registration-form__item'] }>
 				<CustomInput key={ 'firstName' }
@@ -98,6 +96,9 @@ const RegistrationForm = () => {
 			<CustomInput key={ 'company' }
 			             preset={ 'company' }
 			             errorMessage={ errors.company?.message }
+			             validation={ {
+				             required: !currentRole ? 'Podaj firmę' : false,
+			             } }
 			             register={ register }/>
 			<div className={ styles['registration-form__item'] }>
 				<CustomInput key={ 'password' }

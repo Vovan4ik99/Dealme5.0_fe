@@ -1,4 +1,7 @@
 import { ILoggedUserWithRole } from "@shared/userTypes.ts";
+import {
+	IInvestorPipelineSupportStageResponse, IProductResponse
+} from "@shared/start-service/investorStartServiceTypes.ts";
 
 export interface IInvestorData extends ILoggedUserWithRole {
 	phone: string;
@@ -14,4 +17,6 @@ export interface IInvestorData extends ILoggedUserWithRole {
 	employeeCountRange: string;
 	companySiteUrl: string;
 	companyDescription: string;
+	products: IProductResponse[];
+	pipelineSupportStage: IInvestorPipelineSupportStageResponse;
 }

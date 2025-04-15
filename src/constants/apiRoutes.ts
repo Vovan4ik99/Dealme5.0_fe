@@ -14,6 +14,16 @@ export const API_ROUTES = {
 		FREELANCER_PROFILE: '/freelancer/me',
 		INVESTOR_PROFILE: '/investor/me'
 	},
+	START_SERVICE: {
+		INVESTOR: {
+			PIPELINE: '/pipeline',
+			PIPELINE_SUPPORT_STEP: '/investor/pipeline-support-stage',
+			ORDER_ACTIVITY: '/orders-activity',
+			COMPANY_SIZE: '/company-size',
+			BUYER_PERSON: '/buyer-person',
+			PRODUCTS: '/products',
+		}
+	},
 	ONBOARDING: {
 		FREELANCER: {
 			PATCH_EXPERIENCE_LEVEL: '/freelancer/me/experienceLevel',

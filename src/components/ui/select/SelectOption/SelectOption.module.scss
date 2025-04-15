@@ -27,7 +27,12 @@
       fill: vars.$primary-color;
     }
   }
-
+  &__icon {
+    svg path {
+      fill: #00C3DF;
+    }
+    margin-right: 4px;
+  }
 }
 
 .label {

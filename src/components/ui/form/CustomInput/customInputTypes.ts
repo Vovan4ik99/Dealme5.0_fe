@@ -2,7 +2,7 @@ import React from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 export type PresetType = 'email' | 'password' | 'firstName' | 'lastName' | 'company' | 'certificateName'
-	| 'certificateOrganization' | 'videoTitle' | 'jobTitle' | 'workExperienceCompany';
+| 'certificateOrganization' | 'videoTitle' | 'jobTitle' | 'workExperienceCompany' | 'city';
 
 interface IBaseInputProps {
 	errorMessage?: string;

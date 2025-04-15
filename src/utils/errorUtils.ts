@@ -1,4 +1,4 @@
-import {ErrorMessages} from "@shared/errorMessages.ts";
+import { ErrorMessages } from "@shared/errorMessages.ts";
 
 export type ErrorHandler = (status: number, message?: string) => ErrorMessages;
 
@@ -13,6 +13,7 @@ export const getErrorMessage: ErrorHandler = (status, message = '') => {
 			}
 			return ErrorMessages.INVALID_CREDENTIALS;
 		case 403:
+			localStorage.removeItem('token');
 			return ErrorMessages.TOKEN_EXPIRED_OR_INVALID;
 		case 409:
 			return ErrorMessages.USER_ALREADY_EXISTS;
