@@ -17,7 +17,7 @@ const RegistrationForm = () => {
 
 	const navigate = useNavigate();
 
-	const { logout }= useContext(AuthContext);
+	const { logout } = useContext(AuthContext);
 
 	const [ currentRole, setCurrentRole ] = useState<UserRole>("FREELANCER");
 	const [ isUserCreated, setIsUserCreated ] = useState<boolean>(false);

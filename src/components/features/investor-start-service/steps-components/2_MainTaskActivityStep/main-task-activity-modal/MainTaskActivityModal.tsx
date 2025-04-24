@@ -64,7 +64,6 @@ const MainTaskActivityModal: FC<IPipelineModalProps> = ({ selectedMainTask,
         setCurrentStep(prev => ++prev);
     }
 
-
     const renderSteps = () => {
         return orderSteps.map(step => (
             <div className={`${styles["modal__tab"]} 

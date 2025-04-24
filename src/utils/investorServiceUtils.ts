@@ -34,7 +34,7 @@ export const formatDateToDDMMYYYY = (raw: Date) => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
 
-    return `${day}.${month}.${year}`;
+    return `${ day }.${ month }.${ year }`;
 };
 
 export const createDescriptionDate = (start: Date, period: string) => {
@@ -44,7 +44,7 @@ export const createDescriptionDate = (start: Date, period: string) => {
     const end = new Date(start);
     end.setMonth(end.getMonth() + months);
 
-    return `${months} ${pluralizeMonth(months)} (${formatDateToDDMMYYYY(start)}–${formatDateToDDMMYYYY(end)})`;
+    return `${ months } ${ pluralizeMonth(months) } (${ formatDateToDDMMYYYY(start) }–${ formatDateToDDMMYYYY(end) })`;
 };
 
 const pluralizeMonth = (count: number) => {

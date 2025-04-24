@@ -78,30 +78,30 @@ const ServiceManager = () => {
                             <BackIcon />
                         </button>
                     { currentStep < 2 &&
-                             <span className={styles["service__subtitle"]}>
+                             <span className={ styles["service__subtitle"] }>
                                 { INVESTOR_START_SERVICE_STEPS[currentStep].subtitle }
                              </span> }
                     { currentStep === 2 &&
                         <>
-                           <span className={styles["service__subtitle"]}>
-                               {userData?.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS[0]?.pipelineMainTaskDTO?.name}
+                           <span className={ styles["service__subtitle"] }>
+                               { pipelineSupportMainTaskAlias![0]?.pipelineMainTaskDTO?.name }
                            </span>
                         { pipelineSupportMainTaskAlias?.length !== 1 &&
-                            <span className={styles["service__subtitle"]}>
-                                   {pipelineSupportMainTaskAlias &&
-                                       userData?.pipelineSupportStage?.pipelineSupportMainTaskActivityDTOS.length - 1}
+                            <span className={ styles["service__subtitle"] }>
+                                   { pipelineSupportMainTaskAlias &&
+                                       pipelineSupportMainTaskAlias.length - 1 }
                                 </span> }
                         </> }
                 </header>
                 { currentStep !==3
-                    ? <h1 className={styles["service__title"]}>{ INVESTOR_START_SERVICE_STEPS[currentStep].title }</h1>
+                    ? <h1 className={ styles["service__title"] }>{ INVESTOR_START_SERVICE_STEPS[currentStep].title }</h1>
                     : currentStep === 3 &&
                     <>
-                        <h1 className={` ${styles["service__title"]} 
+                        <h1 className={` ${ styles["service__title"] } 
                                          ${ styles["service__title--cg"] }`}>
                             { INVESTOR_START_SERVICE_STEPS[currentStep].subtitle }
                         </h1>
-                        <h1 className={styles["service__title"]}>{ INVESTOR_START_SERVICE_STEPS[currentStep].title }</h1>
+                        <h1 className={ styles["service__title"] }>{ INVESTOR_START_SERVICE_STEPS[currentStep].title }</h1>
                     </> }
                 { renderComponent() }
             </div>
