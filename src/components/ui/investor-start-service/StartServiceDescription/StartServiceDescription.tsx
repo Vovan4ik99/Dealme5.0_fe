@@ -16,7 +16,7 @@ const StartServiceDescription: FC<IStartServiceDescriptionProps> = ({ descriptio
                     return (
                         <span className={ styles["description__stack"] } key={ index }>
                             { item[0] }
-                            <span className={ styles["description__box"] }> { item.length - 1 } </span>
+                            <span className={ styles["description__box"] }> { item.length } </span>
                         </span>
                     )
                 }).reduce((acc: ReactNode[], curr, i) => {

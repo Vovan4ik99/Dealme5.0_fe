@@ -1,0 +1,157 @@
+@use '@styles/variables' as vars;
+
+.calendar {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 40px 116px -8px vars.$shadow-color;
+  background-color: vars.$color-white;
+  z-index: 2;
+
+  &--enter {
+    opacity: 0;
+    transform: translateY(-20px);
+    scale: 0.98;
+  }
+
+  &--enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+    transition: opacity 400ms ease-out,
+    transform 500ms cubic-bezier(0.22, 1.2, 0.36, 1),
+    scale 500ms ease-out;
+  }
+
+  &--exit {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+  }
+
+  &--exit-active {
+    opacity: 0;
+    transform: translateY(-8px);
+    scale: 0.98;
+    transition: opacity 300ms ease-in,
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    scale 300ms ease-in;
+  }
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    line-height: 120%;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0;
+    color: vars.$color-black;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 4px
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 6px;
+    padding: 8px 11px;
+
+    &--active {
+      background-color: vars.$color-gray-light;
+      border-radius: 8px;
+
+      svg path {
+        fill: vars.$color-black;
+        rotate: 180deg;
+        transform-origin: center;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: vars.$color-gray-light;
+      border-radius: 8px;
+
+      svg path {
+        fill: vars.$color-black;
+      }
+    }
+  }
+
+  &__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    &--empty {
+      height: 2.5rem;
+    }
+  }
+
+  &__arrow {
+    width: 8px;
+    color: vars.$color-gray;
+  }
+
+  &__weeks {
+    color: vars.$color-gray;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__selection {
+    position: absolute;
+    bottom: -15%;
+    left: 39%;
+    display: flex;
+    width: 14px;
+    height: 14px;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    border-radius: 100%;
+    background-color: white;
+  }
+  &__dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+    border: 2px solid vars.$color-gray;
+    &--bc {
+      border-color: vars.$color-black;
+    }
+  }
+
+  &__tile {
+    position: relative;
+    text-align: center;
+    color: vars.$color-gray;
+    padding: 13px 8px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+
+    &--active {
+      background: vars.$color-primary-pastel;
+      color: vars.$primary-color;
+      border: 2px solid vars.$primary-color;
+      border-radius: 8px;
+    }
+
+    &:hover {
+      background-color: vars.$color-gray-light;
+      border-radius: 8px;
+    }
+  }
+}

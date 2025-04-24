@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useRef} from 'react';
 import style from './NumberInput.module.scss';
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
 import InputError from "@ui/form/InputError/InputError.tsx";
@@ -12,16 +12,19 @@ const NumberInput: FC<INumberInputProps> = ({   id,
                                                 placeholder,
                                                 onChange,
                                                 existedValue}) => {
+    const ref = useRef<HTMLDivElement>(null);
 
     const isNumberFalsy =  existedValue !== undefined && !Number.isNaN(existedValue);
     const isNumberPositive = isNumberFalsy && existedValue >= 0;
 
 
     const increment = () => {
-        onChange(isNumberPositive ? existedValue + 1 : 0);
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        onChange(isNumberPositive ? existedValue + 1 : 1);
     };
 
     const decrement = () => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         onChange(isNumberPositive && existedValue !== 0 ? existedValue - 1 : 0);
     };
 
@@ -31,12 +34,14 @@ const NumberInput: FC<INumberInputProps> = ({   id,
     };
 
     return (
-        <div className={ style["container"] }>
+        <div className={ style["container"] }
+             ref={ ref }>
             <div className={ `${style["input"]} ${ errorMessage && style["input--error"] }` }>
                 <div className={ style["input__content"] }>
                     <label className={style['input__label']} htmlFor={id}>{labelText}</label>
                     <input type={"number"}
                            id={ id }
+                           onFocus={ () => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
                            placeholder={placeholder ?? "Podaj ilość"}
                            { ...register(id,{
                                ...validation,

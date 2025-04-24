@@ -67,7 +67,7 @@ const BaseEditModal: React.FC<IBaseEditModalProps> = ({
 				<h2 className={'title title--modal'}>{title}</h2>
 				<div className={styles['modal__body']}>{renderChild(child)}</div>
 			</div>
-			{withSaveBtn &&
+			{ withSaveBtn &&
                 <footer>
                     <div className={styles['modal__divider']}></div>
                     <div className={styles['modal__btn-wrapper']}>

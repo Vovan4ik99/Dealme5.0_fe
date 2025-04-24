@@ -23,6 +23,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 	const [ height, setHeight ] = useState(minHeight);
 
 	const isResizing = useRef(false);
+	const inputBtnRef = useRef<HTMLDivElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	const calculateMaxHeight = useCallback(() => {
@@ -112,7 +113,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 	};
 
 	return (
-		<div>
+		<div ref={ inputBtnRef }>
 			<div className={ `${ styles['textarea'] } ${ error?.message && styles['textarea--error'] }` }
 			     style={ { height: `${ height }px` } }>
 				<div className={ styles["textarea__label"] }>
@@ -126,6 +127,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = ({
 					          onChange: (e) => handleChange(e),
 				          }) }
 				          ref={ textareaRef }
+						  onFocus={ () => inputBtnRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
 				          maxLength={ maxSymbols }
 				          placeholder={ placeholder }
 				          style={ { fontSize: `${ fontSize }px`, fontWeight: fontWeight } }/>

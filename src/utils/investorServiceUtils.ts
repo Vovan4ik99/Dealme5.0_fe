@@ -27,7 +27,7 @@ export const getStartServiceStep = (userData: IInvestorData): number=> {
         return 3;
 }
 
-const formatDateToDDMMYYYY = (raw: Date) => {
+export const formatDateToDDMMYYYY = (raw: Date) => {
     const cleaned = `${raw}`
     const date = new Date(cleaned);
     const day = String(date.getDate()).padStart(2, '0');

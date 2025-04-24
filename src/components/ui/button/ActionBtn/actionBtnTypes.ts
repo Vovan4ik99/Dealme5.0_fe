@@ -4,6 +4,7 @@ export interface IActionBtnProps {
 	withBorder: boolean;
 	backgroundColor?: 'transparent' | 'lightgray' | 'white';
 	disabled?: boolean;
+	isActive?: boolean;
 	isHovered?: boolean;
 }
 

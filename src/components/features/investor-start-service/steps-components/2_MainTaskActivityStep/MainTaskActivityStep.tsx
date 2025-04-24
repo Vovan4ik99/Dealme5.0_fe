@@ -45,7 +45,7 @@ const MainTaskActivityStep: React.FC<IStartServiceComponentProps> = ({ onSubmit,
             onSubmit();
             return;
         }
-        addInvestorMainTaskActivity(request)
+        addInvestorMainTaskActivity(data)
                 .then(onSubmit)
                 .catch(console.error);
     }

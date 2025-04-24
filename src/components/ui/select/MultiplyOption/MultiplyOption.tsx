@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {ISelectedOptionProps} from "@ui/select/SelectedOption/SelectedOptionTypes.ts";
-import styles from './SelectedOption.module.scss';
+import {IMultiplyOptionProps} from "@ui/select/MultiplyOption/MultiplyOptionTypes.ts";
+import styles from './MultiplyOption.module.scss';
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
 
-const MyComponent: FC<ISelectedOptionProps> = ({ text, onDelete }) => {
+const MultiplyOption: FC<IMultiplyOptionProps> = ({ text, onDelete }) => {
 
     const renderTiles = () => {
         return text.map((option, index) => (
@@ -24,4 +24,4 @@ const MyComponent: FC<ISelectedOptionProps> = ({ text, onDelete }) => {
     );
 };
 
-export default MyComponent;
+export default MultiplyOption;

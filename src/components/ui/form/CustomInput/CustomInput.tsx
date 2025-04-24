@@ -1,5 +1,5 @@
 import styles from './CustomInput.module.scss';
-import React from "react";
+import React, {useRef} from "react";
 import { CustomInputProps } from "@ui/form/CustomInput/customInputTypes.ts";
 import InputError from "@ui/form/InputError/InputError.tsx";
 import { CUSTOM_INPUT_PRESETS } from "@ui/form/CustomInput/customInputPresets.ts";
@@ -22,6 +22,8 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 		onChange,
 		existedValue
 	} = combinedProps;
+
+	const ref = useRef<HTMLDivElement>(null);
 
 	const isControlled = existedValue !== undefined && onChange !== undefined;
 
@@ -53,6 +55,7 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 	};
 
 	const handleFocus = () => {
+		ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		if (!onChange) {
 			console.log('onChange is not defined');
 			return;
@@ -63,14 +66,17 @@ const CustomInput: React.FC<CustomInputProps> = (props) => {
 	};
 
 	return (
-		<div className={ styles['item'] }>
+		<div className={ styles['item'] }
+			 ref={ ref }>
 			<input
 				className={ `${ styles['item__input'] } ${ errorMessage && styles['item__input--error'] }` }
 				id={ id }
 				type={ type }
 				placeholder={ placeholder }
 				autoComplete={ autoComplete }
-				onFocus={ isPhoneInput ? handleFocus : undefined }
+				onFocus={ isPhoneInput
+							? handleFocus
+							: () => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
 				maxLength={ isPhoneInput ? 17 : undefined }
 				{ ...(isControlled
 					? {

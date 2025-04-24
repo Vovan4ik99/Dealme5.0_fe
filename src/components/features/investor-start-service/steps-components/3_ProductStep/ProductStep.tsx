@@ -85,7 +85,6 @@ const ProductStep: FC<IStartServiceComponentProps> = ({onSubmit, userData}) => {
                                                 item.sector,
                                                 item.buyerPerson,
                                                 area!]}
-                                  isEditDisabled={true}
                                   onDelete={() => handleDelete(item) }
                                   onEdit={ () => onProductEdit(item) }
                                   key={item.id}/> )

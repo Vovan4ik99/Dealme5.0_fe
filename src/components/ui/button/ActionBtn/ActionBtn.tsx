@@ -15,6 +15,7 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 	                                              onClick,
 	                                              kind,
 	                                              withBorder,
+												  isActive,
 	                                              backgroundColor = 'transparent',
 	                                              disabled = false,
 	                                              isHovered
@@ -24,33 +25,41 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 		switch (kind) {
 			case 'Edit':
 				return <EditIcon
-					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--edit'] }` }/>;
 			case 'Add':
 				return <AddIcon
-					className={ `${ styles['action__icon'] } ${ styles['icon--add'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--add'] }` }/>;
 			case 'Close':
 				return <CloseIcon
-					className={ `${ styles['action__icon'] } ${ styles['icon--close'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--close'] }` }/>;
 			case 'Delete':
 				return <DeleteIcon
-					className={ `${ styles['action__icon'] } ${ styles['icon--delete'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+							     ${ styles['icon--delete'] }` }/>;
 			case 'Navigate Left':
 				return <ArrowLeft
-					className={ `${ styles['action__icon'] } ${ styles['icon--navigate'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--navigate'] }` }/>;
 			case 'Navigate Right':
 				return <ArrowRight
-					className={ `${ styles['action__icon'] } ${ styles['icon--navigate'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--navigate'] }` }/>;
 			case 'Minus':
 				return <Minus
-					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--edit'] }` }/>;
 			case 'Calendar':
 				return <Calendar
-					className={ `${ styles['action__icon'] } ${ styles['icon--edit'] }` }/>;
+					className={ `${ styles['action__icon'] } 
+								 ${ styles['icon--edit'] }` }/>;
 			case 'Preview':
 				return <PreviewIcon className={
 					`${ styles['action__icon'] } 
-					${ styles['icon--preview'] } 
-					${ isHovered && styles['icon--hovered'] }`
+					 ${ styles['icon--preview'] } 
+					 ${ isHovered && styles['icon--hovered'] }`
 				}/>
 			default:
 				return <></>;
@@ -88,9 +97,10 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 		        disabled={ disabled }
 		        className={
 			        `${ styles['action'] } 
-		            ${ withBorder && styles['action--wb'] } 
-		            ${ isHovered && styles['action--active'] }
-		            ${ disabled && styles['action--disabled'] }`
+		             ${ withBorder && styles['action--wb'] } 
+		             ${ isHovered && styles['action--active'] }
+		             ${ (isActive && backgroundColor === 'white') && styles['action--active-white'] }
+		             ${ disabled && styles['action--disabled'] }`
 		        }>
 			{ getBtnSvg() }
 		</button>

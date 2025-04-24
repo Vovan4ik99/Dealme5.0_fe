@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 
-export interface IActionListProps {
+export interface IStartServiceItemListProps {
     items: ReactNode[];
     isLastPage: boolean;
     addingMoreBtn: string;
