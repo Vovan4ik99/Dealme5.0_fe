@@ -90,7 +90,7 @@ const ServiceManager = () => {
                             <span className={ styles["service__subtitle"] }>
                                    { pipelineSupportMainTaskAlias &&
                                        pipelineSupportMainTaskAlias.length - 1 }
-                                </span> }
+                             </span> }
                         </> }
                 </header>
                 { currentStep !==3
