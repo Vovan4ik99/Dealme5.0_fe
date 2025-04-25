@@ -6,10 +6,10 @@ import {ModalProvider} from "@context/ModalContext/ModalProvider.tsx";
 import {useState} from "react";
 
 function App() {
-	const [ isExisting, setIsExisitng] = useState<boolean>(true);
+	const [ isCentered, setIsCentered] = useState<boolean>(false);
 
-	const isExistningRoute = (isValid: boolean) => {
-		setIsExisitng(isValid);
+	const handleLogoPositionSet = (isLogoCentered: boolean) => {
+		setIsCentered(isLogoCentered);
 	}
 
 	return (
@@ -17,10 +17,10 @@ function App() {
 			<ModalProvider>
 				<div className={ styles["app"] }>
 					<div className={ styles["app__bg"] }></div>
-					<div className={ `${ styles["app__icon"] } ${ !isExisting && styles["app__icon--centered"]}` }>
+					<div className={ `${ styles["app__icon"] } ${ isCentered && styles["app__icon--centered"]}` }>
 						<img src={ bg_icon } alt="background"/>
 					</div>
-					<AppRouter setPageIsPageValid={ isExistningRoute }/>
+					<AppRouter isLogoCentered={ handleLogoPositionSet }/>
 				</div>
 			</ModalProvider>
 		</AuthProvider>

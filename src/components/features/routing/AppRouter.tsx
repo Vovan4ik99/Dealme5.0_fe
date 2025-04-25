@@ -13,7 +13,7 @@ import NotFoundPage from "@pages/NotFoundPage/NotFoundPage.tsx";
 import {FC} from "react";
 import {IAppRouterProps} from "@components/features/routing/AppRouterTypes.ts";
 
-const AppRouter: FC<IAppRouterProps> = ({ setPageIsPageValid }) => {
+const AppRouter: FC<IAppRouterProps> = ({ isLogoCentered }) => {
 
 	return (
 		<BrowserRouter future={ { v7_startTransition: true, v7_relativeSplatPath: true } }>
@@ -22,7 +22,7 @@ const AppRouter: FC<IAppRouterProps> = ({ setPageIsPageValid }) => {
 				<Route path={ '/registration' } element={ <AuthPage isLogin={ false }/> }/>
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
-				<Route path={ '*'} element={ <NotFoundPage setIsPageValid={ setPageIsPageValid }/> } />
+				<Route path={ '*'} element={ <NotFoundPage setIsLogoCentered={ isLogoCentered }/> } />
 				<Route element={ <ProtectedRoute/> }>
 					{ /*Investor Paths*/ }
 					<Route path={ '/investor/service'} element={ <ServicePage/> }/>

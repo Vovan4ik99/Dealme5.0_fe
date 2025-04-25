@@ -1,3 +1,3 @@
 export interface IAppRouterProps {
-    setPageIsPageValid: (isExisitng: boolean) => void;
+    isLogoCentered: (isCentered: boolean) => void;
 }

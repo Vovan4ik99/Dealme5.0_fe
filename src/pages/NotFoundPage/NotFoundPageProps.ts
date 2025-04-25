@@ -1,3 +1,3 @@
 export interface INotFoundPageProps {
-    setIsPageValid: (isValid: boolean) => void;
+    setIsLogoCentered: (isCentered: boolean) => void;
 }

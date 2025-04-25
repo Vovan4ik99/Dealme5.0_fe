@@ -5,14 +5,14 @@ import { ReactComponent as NotFound } from '@icons/named_exported/404/not_found.
 import { useNavigate } from "react-router-dom";
 import {INotFoundPageProps} from "@pages/NotFoundPage/NotFoundPageProps.ts";
 
-const NotFoundPage: FC<INotFoundPageProps> = ({ setIsPageValid }) => {
+const NotFoundPage: FC<INotFoundPageProps> = ({ setIsLogoCentered }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setIsPageValid(false);
+        setIsLogoCentered(true);
 
         return () => {
-            setIsPageValid(true);
+            setIsLogoCentered(false);
         };
     }, [ ]);
 
