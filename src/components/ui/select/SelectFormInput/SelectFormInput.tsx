@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {ISelectFormInputProps} from "@ui/select/SelectFormInput/selectFormInputTypes.ts";
 import styles from './SelectFormInput.module.scss';
-import { ReactComponent as ArrowIcon } from "@icons/named_exported/arrow-down.svg";
+import { ReactComponent as ArrowIcon } from "@icons/named_exported/arrow_down.svg";
 import SelectOption from "@ui/select/SelectOption/SelectOption.tsx";
 import InputError from "@ui/form/InputError/InputError.tsx";
 import DropDownModal from "@ui/select/DropdownModal/DropdownModal.tsx";

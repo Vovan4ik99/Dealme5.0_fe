@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
 import ResetPasswordPage from "@pages/auth/ResetPasswordPage/ResetPasswordPage.tsx";
@@ -9,8 +9,12 @@ import OnboardingSummary from "@pages/onboarding/OnboardingSummary/OnboardingSum
 import FreelancerOnboardingStartPage
 	from "@pages/onboarding/FreelancerOnboardingStartPage/FreelancerOnboardingStartPage.tsx";
 import ServicePage from "@pages/ServicePage/ServicePage.tsx";
+import NotFoundPage from "@pages/NotFoundPage/NotFoundPage.tsx";
+import {FC} from "react";
+import {IAppRouterProps} from "@components/features/routing/AppRouterTypes.ts";
 
-const AppRouter = () => {
+const AppRouter: FC<IAppRouterProps> = ({ setPageIsPageValid }) => {
+
 	return (
 		<BrowserRouter future={ { v7_startTransition: true, v7_relativeSplatPath: true } }>
 			<Routes>
@@ -18,13 +22,14 @@ const AppRouter = () => {
 				<Route path={ '/registration' } element={ <AuthPage isLogin={ false }/> }/>
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
+				<Route path={ '*'} element={ <NotFoundPage setIsPageValid={ setPageIsPageValid }/> } />
 				<Route element={ <ProtectedRoute/> }>
-					{/*Investor Paths*/}
+					{ /*Investor Paths*/ }
 					<Route path={ '/investor/service'} element={ <ServicePage/> }/>
 					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
 					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
 
-					{/*Freelancer Paths*/}
+					{ /*Freelancer Paths*/ }
 					<Route path={ '/freelancer/onboarding/start' } element={ <FreelancerOnboardingStartPage/> }/>
 					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
 					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
