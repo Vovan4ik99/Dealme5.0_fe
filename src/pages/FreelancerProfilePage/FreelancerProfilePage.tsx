@@ -11,7 +11,7 @@ import ProgressBar from "@components/features/freelancer-profile/main/ProgressBa
 import AboutMe from "@components/features/freelancer-profile/main/AboutMe/AboutMe.tsx";
 import CertificatesAndLicenses
 	from "@components/features/freelancer-profile/main/CertificatesAndLicenses/CertificatesAndLicenses.tsx";
-import {useCallback, useContext, useEffect, useState} from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
 import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
@@ -30,12 +30,12 @@ import { useFreelancerWorkExperienceService } from "@services/freelancer/freelan
 import FreelancerEducation
 	from "@components/features/freelancer-profile/main/FreelancerEducation/FreelancerEducation.tsx";
 import { useFreelancerEducationService } from "@services/freelancer/freelancerEducationService.ts";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FreelancerPortfolio
 	from "@components/features/freelancer-profile/main/FreelancerPortfolio/FreelancerPortfolio.tsx";
 import { useFreelancerPortfolioService } from "@services/freelancer/freelancerPortfolioService.ts";
-import {ErrorMessages} from "@shared/errorMessages.ts";
-import {IFreelancerData} from "@shared/freelancer/common.ts";
+import { ErrorMessages } from "@shared/errorMessages.ts";
+import { IFreelancerData } from "@shared/freelancer/common.ts";
 
 const FreelancerProfilePage = () => {
 
@@ -52,104 +52,98 @@ const FreelancerProfilePage = () => {
 	);
 
 	const { id } = useParams();
-
 	const { user } = useContext(AuthContext);
-
-	const navigate = useNavigate();
-
 	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
+	const navigate = useNavigate();
 
 	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
 
 	const isLoggedUserProfile = id === undefined;
-	const isValidPath = id && isNaN(parseInt(id));
+	const isValidPath = id && !isNaN(parseInt(id));
 	const freelancerId = isLoggedUserProfile ? user?.id : parseInt(id);
 
 	const fetchFreelancerData = useCallback(() => {
 		if (!freelancerId) return;
 
 		getFreelancerPrimaryInfo(freelancerId)
-			.then((response) => {
+			.then(response => {
 				const isProfileCompleted = !response.isOnboardingPassed && !isLoggedUserProfile;
 
-				if(isProfileCompleted) {
+				if (isProfileCompleted) {
 					navigate("/404");
 					return;
 				}
 				setFreelancerData(response)
 			})
 			.catch(error => {
-				if(error === ErrorMessages.USER_NOT_FOUND){
+				if (error === ErrorMessages.USER_NOT_FOUND) {
 					navigate("/404");
 					return;
 				}
-				console.error(error)
+				console.error(error);
 			});
-	}, [ freelancerId, getFreelancerPrimaryInfo, navigate ]);
+	}, [ freelancerId, getFreelancerPrimaryInfo, isLoggedUserProfile, navigate ]);
 
 	useEffect(() => {
-		if (isValidPath) {
+		if (!isValidPath || user?.role !== 'ADMIN') {
 			navigate("/404");
 			return;
 		}
 		fetchFreelancerData();
-	}, [ fetchFreelancerData ]);
+	}, [ fetchFreelancerData, isValidPath, navigate, user?.role ]);
 
 	if (!freelancerId || !freelancerData) {
 		return <LoadingSpinner/>;
 	}
 
+	if (isLoading) {
+		return <div className={ styles['profile__loading'] }>
+			<LoadingSpinner/>
+		</div>
+	}
+
 	return (
 		<div className={ styles['profile'] }>
-			{ isLoading  &&
-                <div className={ styles['profile__loading'] }>
-                    <LoadingSpinner/>
-                </div>
-			}
-			{ !isLoading &&
-                <>
-                    <ProfileNavbar/>
-                    <BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
-                    <aside className={ styles["profile__aside"] }>
-                        <Avatar freelancerId={ freelancerId }
-								isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <PrimaryInfo onSubmit={ fetchFreelancerData }
-									 freelancerData={ freelancerData }
-									 freelancerId={ freelancerId }
-									 isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <SecondaryInfo freelancerData={ freelancerData }
-									   onSubmit={ fetchFreelancerData }
-									   freelancerId={ freelancerId }
-									   isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <SectorsInfo isLoggedUserProfile={ isLoggedUserProfile }
-									 onSubmit={ fetchFreelancerData }
-									 freelancerSectors={ freelancerData?.sectors ?? []} />
-                    </aside>
-                    <div className={ styles["profile__content"] }>
-                        <InnerNavbar/>
-						{ isLoggedUserProfile && <ProgressBar/> }
-                        <AboutMe freelancerId={ freelancerId }
-								 isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <CertificatesAndLicenses freelancerId={ freelancerId }
-                                                 isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <SalesTools freelancerId={ freelancerId }
-									isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <FreelancerVideos freelancerId={ freelancerId }
-										  isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <FreelancerServices freelancerId={ freelancerId }
-											isLoggedUserProfile={ isLoggedUserProfile }/>
-	                    <FreelancerPortfolio freelancerId={ freelancerId }
-											 isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <FreelancerReviews freelancerId={ freelancerId }
-										   isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <FreelancerWorkExperience freelancerId={ freelancerId }
-                                                  isLoggedUserProfile={ isLoggedUserProfile }/>
-                        <FreelancerEducation freelancerId={ freelancerId }
-											 isLoggedUserProfile={ isLoggedUserProfile }/>
-                    </div>
-                    <Footer isHyphenated={ false } isCentered={ false }/>
-                </>
-			}
+			<ProfileNavbar/>
+			<BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
+			<aside className={ styles["profile__aside"] }>
+				<Avatar freelancerId={ freelancerId }
+				        isLoggedUserProfile={ isLoggedUserProfile }/>
+				<PrimaryInfo onSubmit={ fetchFreelancerData }
+				             freelancerData={ freelancerData }
+				             freelancerId={ freelancerId }
+				             isLoggedUserProfile={ isLoggedUserProfile }/>
+				<SecondaryInfo freelancerData={ freelancerData }
+				               onSubmit={ fetchFreelancerData }
+				               freelancerId={ freelancerId }
+				               isLoggedUserProfile={ isLoggedUserProfile }/>
+				<SectorsInfo isLoggedUserProfile={ isLoggedUserProfile }
+				             onSubmit={ fetchFreelancerData }
+				             freelancerSectors={ freelancerData?.sectors ?? [] }/>
+			</aside>
+			<div className={ styles["profile__content"] }>
+				<InnerNavbar/>
+				{ isLoggedUserProfile && <ProgressBar/> }
+				<AboutMe freelancerId={ freelancerId }
+				         isLoggedUserProfile={ isLoggedUserProfile }/>
+				<CertificatesAndLicenses freelancerId={ freelancerId }
+				                         isLoggedUserProfile={ isLoggedUserProfile }/>
+				<SalesTools freelancerId={ freelancerId }
+				            isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerVideos freelancerId={ freelancerId }
+				                  isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerServices freelancerId={ freelancerId }
+				                    isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerPortfolio freelancerId={ freelancerId }
+				                     isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerReviews freelancerId={ freelancerId }
+				                   isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerWorkExperience freelancerId={ freelancerId }
+				                          isLoggedUserProfile={ isLoggedUserProfile }/>
+				<FreelancerEducation freelancerId={ freelancerId }
+				                     isLoggedUserProfile={ isLoggedUserProfile }/>
+			</div>
+			<Footer isHyphenated={ false } isCentered={ false }/>
 		</div>
 
 	)

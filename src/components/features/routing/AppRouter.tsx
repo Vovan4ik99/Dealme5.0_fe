@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import FreelancerProfilePage from "@pages/FreelancerProfilePage/FreelancerProfilePage.tsx"
 import ResetPasswordPage from "@pages/auth/ResetPasswordPage/ResetPasswordPage.tsx";
@@ -31,8 +31,10 @@ const AppRouter = () => {
 					{ /*Freelancer Paths*/ }
 					<Route path={ '/freelancer/onboarding/start' } element={ <FreelancerOnboardingStartPage/> }/>
 					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
-					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/freelancer/profile' } element={ <FreelancerProfilePage/> }/>
+
+					{ /*Admin Paths*/ }
+					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

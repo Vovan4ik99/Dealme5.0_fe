@@ -1,4 +1,4 @@
-export type UserRole = 'FREELANCER' | 'INVESTOR';
+export type UserRole = 'FREELANCER' | 'INVESTOR' | 'ADMIN';
 
 export interface ICreateUserRequest {
 	firstName: string;
@@ -43,4 +43,10 @@ export interface ILoggedInvestorData extends ILoggedUserWithRole {
 	isOnboardingPassed?: never;
 }
 
-export type LoggedUserData = ILoggedFreelancerData | ILoggedInvestorData;
+export interface ILoggedAdminData extends ILoggedUserWithRole {
+	role: 'ADMIN';
+	isMock?: never;
+	isOnboardingPassed?: never;
+}
+
+export type LoggedUserData = ILoggedFreelancerData | ILoggedInvestorData | ILoggedAdminData;
