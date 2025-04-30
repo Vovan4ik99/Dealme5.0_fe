@@ -95,7 +95,7 @@ const FreelancerProfilePage = () => {
 		fetchFreelancerData();
 	}, [ fetchFreelancerData, isPathInvalid, navigate, user?.role ]);
 
-	const renderNavbar = () => {
+	const getPageNavbar = () => {
 		if (user?.role === "ADMIN") {
 			return (
 				<AdminPanelNavbar ordersCount={ 0 }
@@ -118,7 +118,7 @@ const FreelancerProfilePage = () => {
 
 	return (
 		<div className={ styles['profile'] }>
-			{ renderNavbar() }
+			{ getPageNavbar() }
 			<BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
 			<aside className={ styles["profile__aside"] }>
 				<Avatar freelancerId={ freelancerId }
