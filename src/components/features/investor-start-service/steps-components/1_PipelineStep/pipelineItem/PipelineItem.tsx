@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import styles from './PipelineItem.module.scss';
-import {ReactComponent as ArrowDown} from "@icons/named_exported/arrow_down.svg";
+import { ReactComponent as ArrowDown } from "@icons/named_exported/arrow_down.svg";
 import TooltipIcon from "@ui/common/TooltipIcon/TooltipIcon.tsx";
 import { IPipelineStepProps } from "@components/features/investor-start-service/steps-components/1_PipelineStep/pipelineItem/PipelineItemTypes.ts";
 import { CSSTransition } from "react-transition-group";

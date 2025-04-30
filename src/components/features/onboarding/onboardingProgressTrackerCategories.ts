@@ -29,5 +29,8 @@ export const ONBOARDING_PROGRESS_TRACKER_CATEGORIES: Record<UserRole, IOnboardin
 			category: 'Umiejętności',
 			subcategories: ['Umiejętności', 'Narzędzia Sprzedażowe']
 		}
+	],
+	ADMIN: [
+
 	]
 } as const;

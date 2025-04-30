@@ -36,6 +36,7 @@ import FreelancerPortfolio
 import { useFreelancerPortfolioService } from "@services/freelancer/freelancerPortfolioService.ts";
 import { ErrorMessages } from "@shared/errorMessages.ts";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
+import AdminPanelNavbar from "@components/layout/navbar/AdminPanelNavbar/AdminPanelNavbar.tsx";
 
 const FreelancerProfilePage = () => {
 
@@ -59,17 +60,18 @@ const FreelancerProfilePage = () => {
 	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
 
 	const isLoggedUserProfile = id === undefined;
-	const isValidPath = id && !isNaN(parseInt(id));
+	const isPathInvalid = id && isNaN(parseInt(id));
 	const freelancerId = isLoggedUserProfile ? user?.id : parseInt(id);
 
 	const fetchFreelancerData = useCallback(() => {
-		if (!freelancerId) return;
+		if (!freelancerId || !user?.role) return;
 
 		getFreelancerPrimaryInfo(freelancerId)
 			.then(response => {
-				const isProfileCompleted = !response.isOnboardingPassed && !isLoggedUserProfile;
+				const canEnterProfile = response.isOnboardingPassed
+				const isAdmin = user.role === 'ADMIN';
 
-				if (isProfileCompleted) {
+				if (!canEnterProfile || !(isAdmin || isLoggedUserProfile)) {
 					navigate("/404");
 					return;
 				}
@@ -82,15 +84,27 @@ const FreelancerProfilePage = () => {
 				}
 				console.error(error);
 			});
-	}, [ freelancerId, getFreelancerPrimaryInfo, isLoggedUserProfile, navigate ]);
+	}, [ freelancerId, getFreelancerPrimaryInfo, isLoggedUserProfile, navigate, user?.role ]);
 
 	useEffect(() => {
-		if (!isValidPath || user?.role !== 'ADMIN') {
+		if (isPathInvalid) {
 			navigate("/404");
 			return;
 		}
+
 		fetchFreelancerData();
-	}, [ fetchFreelancerData, isValidPath, navigate, user?.role ]);
+	}, [ fetchFreelancerData, isPathInvalid, navigate, user?.role ]);
+
+	const renderNavbar = () => {
+		if (user?.role === "ADMIN") {
+			return (
+				<AdminPanelNavbar ordersCount={ 0 }
+									 freelancersCount={ 0 }
+									 investorsCount={ 0 }
+									 hasMarginBottom={ true }/>
+		)}
+		return <ProfileNavbar/>;
+	}
 
 	if (!freelancerId || !freelancerData) {
 		return <LoadingSpinner/>;
@@ -104,7 +118,7 @@ const FreelancerProfilePage = () => {
 
 	return (
 		<div className={ styles['profile'] }>
-			<ProfileNavbar/>
+			{ renderNavbar() }
 			<BgImage freelancerId={ freelancerId } isLoggedUserProfile={ isLoggedUserProfile }/>
 			<aside className={ styles["profile__aside"] }>
 				<Avatar freelancerId={ freelancerId }

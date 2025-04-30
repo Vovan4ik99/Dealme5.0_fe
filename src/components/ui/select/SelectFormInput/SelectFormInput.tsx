@@ -77,7 +77,7 @@ const SelectFormInput = <T extends Record<string, any>>({
 							: !Array.isArray(text)
 								? text
 								: <SelectedOption text={ text }
-												  onDelete={(value) => onDelete!(value)} /> }
+												  onDelete={ (value) => onDelete!(value) } /> }
 					</div>
 					{ additionalText && <span className={ styles['input__text-add'] }> ({ additionalText }) </span> }
 				</div>
