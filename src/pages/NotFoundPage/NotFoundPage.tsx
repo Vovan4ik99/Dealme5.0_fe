@@ -19,7 +19,8 @@ const NotFoundPage= () => {
                 <Logo/>
             </div>
             <div className={ styles['page__content'] }>
-                <NotFoundImage width={ 541.94 } height={ 336.65 }/>
+                <NotFoundImage width={ 541.94 }
+                               height={ 336.65 }/>
                 <h1 className={ styles["page__title"] }>
                     Strona nie została<br/> znaleziona
                 </h1>
@@ -28,8 +29,8 @@ const NotFoundPage= () => {
                     zbędne znaki.
                 </p>
                 <button className={ `btn ${ styles["page__btn"] }` }
-                        onClick={ () => navigate('/login') }>
-                    Wróć na stronę główną
+                        onClick={ () => navigate(-2) }>
+                    Wróć
                 </button>
             </div>
         </div>

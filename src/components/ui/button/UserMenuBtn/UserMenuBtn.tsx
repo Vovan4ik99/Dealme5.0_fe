@@ -60,7 +60,7 @@ const UserMenuBtn: React.FC<IUserMenuBtnProps> = ({
                     <span className={ styles['menu__name'] }>{ userFirstName } { userLastName }</span>
                     { isAdmin && <span className={ styles['menu__role'] }>Admin</span> }
                 </div>
-                <ArrowDown className={ `${ isDropdownOpened && styles["menu__arrow"] }` }/>
+                <ArrowDown className={ ` ${ styles["menu__arrow"] } ${ isDropdownOpened && styles["menu__arrow--active"] }` }/>
             </button>
             <DropDownModal isOpen={ isDropdownOpened }
                            renderItems={ renderMenuOptions() }

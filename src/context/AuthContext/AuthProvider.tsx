@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo, useReducer } from "react";
-import { useAuthService } from "@services/auth/authService.ts";
-import { authReducer } from "./authReducer.ts";
-import { AuthActionType } from "./authActions.ts";
-import { AuthContext, IAuthContextValue, InitialAuthState } from "./AuthContext.ts";
-import { UserRole } from "@shared/userTypes.ts";
-import { jwtDecode } from "jwt-decode";
+import React, {useCallback, useMemo, useReducer} from "react";
+import {useAuthService} from "@services/auth/authService.ts";
+import {authReducer} from "./authReducer.ts";
+import {AuthActionType} from "./authActions.ts";
+import {AuthContext, IAuthContextValue, InitialAuthState} from "./AuthContext.ts";
+import {fetchResponse, LoggedUserData, UserRole} from "@shared/userTypes.ts";
+import {jwtDecode} from "jwt-decode";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const { errorMessage,
@@ -20,43 +20,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		dispatch({ type: AuthActionType.LOGOUT });
 	}, []);
 
-	const getLoggedUserData = useCallback(async (currentToken: string) => {
-		dispatch({ type: AuthActionType.SET_LOADING });
-
-		const role = jwtDecode<{ roles: UserRole[] }>(currentToken).roles[0];
-
+	const handleDataSetup =  useCallback( async (fetch: Promise<fetchResponse>,
+							  												  		 role: UserRole) => {
 		const handleError = (e: any) => {
 			dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });
 			localStorage.removeItem('token');
 			console.log(e);
 		};
 
-		if (role === 'FREELANCER') {
-			return fetchFreelancerData()
-				.then(response => {
-					const userData = { ...response, role };
-					dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
-					return userData;
-				})
-				.catch(handleError);
+		return await fetch
+						.then(response => {
+							const userData = { ...response, role } as LoggedUserData;
+							dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
+							return userData;
+						})
+						.catch(handleError)
+	}, [ errorMessage ])
+
+	const getLoggedUserData = useCallback(async (currentToken: string) => {
+		dispatch({ type: AuthActionType.SET_LOADING });
+
+		const role = jwtDecode<{ roles: UserRole[] }>(currentToken).roles[0];
+
+		switch (role) {
+			case "FREELANCER":
+				return handleDataSetup(fetchFreelancerData(), role);
+			case "INVESTOR":
+				return handleDataSetup(fetchInvestorData(), role);
+			default:
+				return handleDataSetup(fetchAdminData(), role);
 		}
-		if (role === 'INVESTOR') {
-			return fetchInvestorData()
-				.then(response => {
-					const userData = { ...response, role };
-					dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
-					return userData;
-				})
-				.catch(handleError);
-		}
-		return fetchAdminData()
-			.then(response => {
-				const userData = { ...response, role };
-				dispatch({ type: AuthActionType.GET_LOGGED_USER, payload: userData });
-				return userData;
-			})
-			.catch(handleError);
-	}, [ errorMessage, fetchAdminData, fetchFreelancerData, fetchInvestorData ]);
+	}, [ fetchAdminData, fetchFreelancerData, fetchInvestorData, handleDataSetup ]);
 
 	const loginInvestor = useCallback(async () => {
 		dispatch({ type: AuthActionType.SET_LOADING });
