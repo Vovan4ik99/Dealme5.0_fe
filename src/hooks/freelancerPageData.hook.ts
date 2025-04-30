@@ -26,7 +26,7 @@ export const useFreelancerPageData = () => {
                 const isOnboardingPassed = response.isOnboardingPassed;
                 const isAdmin = user.role === "ADMIN";
 
-                if ((!isOnboardingPassed && !isLoggedUserProfile) || !(isAdmin || isLoggedUserProfile)) {
+                if (!isLoggedUserProfile && (!isOnboardingPassed || !isAdmin)) {
                     navigate("/404");
                     return;
                 }
