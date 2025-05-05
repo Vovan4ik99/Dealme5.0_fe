@@ -8,7 +8,10 @@ import {
     IFreelancerAsideProps
 } from "@components/features/freelancer-profile/aside/FreelancerAside/FreelancerAsideTypes.ts";
 
-const FreelancerAside: FC<IFreelancerAsideProps> = ({ freelancerId, isLoggedUserProfile, fetchFreelancerData, freelancerData }) => {
+const FreelancerAside: FC<IFreelancerAsideProps> = ({ freelancerId,
+                                                      isLoggedUserProfile,
+                                                      fetchFreelancerData,
+                                                      freelancerData }) => {
 
     return (
         <aside className={ styles["aside"] }>

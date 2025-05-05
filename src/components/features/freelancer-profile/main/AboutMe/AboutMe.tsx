@@ -55,11 +55,14 @@ const AboutMe: React.FC<IAboutMeProps> = ({ freelancerId, isLoggedUserProfile })
 		}
 		if (aboutMeInfo?.video === null) {
 			return isLoggedUserProfile ?
-				<button className={ `${ styles['about__video'] } ${ styles['about__video--empty'] }` }
+				<button className={ `${ styles['about__video'] } 
+									 ${ styles['about__video--empty'] }` }
 				        onClick={ handleAboutMeInfoEdit }>
 					<VideoEmptyState text={ 'Nagraj krótkie video o sobie' }/>
 				</button> :
-				<button className={ `${ styles['about__video'] } ${ styles['about__video--empty'] } ${ styles["about__video--preview"]}` }>
+				<button className={ `${ styles['about__video'] } 
+									 ${ styles['about__video--empty'] } 
+									 ${ styles["about__video--preview"]}` }>
 					<VideoEmptyState text={ 'Brak video' }/>
 				</button>;
 		}
