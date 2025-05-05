@@ -7,6 +7,8 @@ import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
 import { useAuthService } from '@services/auth/authService.ts';
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
+import BasicBtn from "@ui/button/BasicBtn/BasicBtn.tsx";
+import { ReactComponent as Icon } from "@icons/named_exported/add_icon.svg";
 
 const LoginForm = () => {
 
@@ -65,6 +67,9 @@ const LoginForm = () => {
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Zaloguj się' }
 			</button>
 			{ errorMessage && <InputError text={ errorMessage }/> }
+			<BasicBtn text={(<><Icon/> <p>Lorem ipsum.</p> </>)}
+					  handleClick={() => console.log("lorem")}
+					  colors={"secondary"} />
 		</form>
 	)
 }

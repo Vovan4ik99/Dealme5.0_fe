@@ -28,6 +28,49 @@
 	background-color: vars.$color-black;
   }
 
+  &--main {
+	background-color: vars.$color-black;
+	color: vars.$color-white;
+
+	svg path {
+		fill: vars.$color-white;
+	}
+
+	  &:hover {
+		background-color: vars.$color-black-hover;
+	  }
+
+	  &:active {
+		  background-color: vars.$color-black;
+	  }
+
+	  &:disabled {
+		  opacity: 0.5;
+		  background-color: vars.$color-black;
+	  }
+  }
+
+  &--secondary {
+	  background-color: vars.$color-white;
+	  border: 1px solid vars.$color-black;
+	  color: vars.$color-black;
+
+	  svg path {
+		  fill: vars.$color-black;
+	  }
+
+	  &:hover,
+	  &:disabled,
+	  &:active {
+		  background-color: vars.$color-black;
+		  color: vars.$color-white;
+
+		  svg path {
+			  fill: vars.$color-white;
+		  }
+	  }
+  }
+
   &--mw134 {
 	max-width: 134px;
   }
