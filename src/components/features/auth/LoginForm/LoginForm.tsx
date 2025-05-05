@@ -67,9 +67,6 @@ const LoginForm = () => {
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Zaloguj się' }
 			</button>
 			{ errorMessage && <InputError text={ errorMessage }/> }
-			<BasicBtn text={(<><Icon/> <p>Lorem ipsum.</p> </>)}
-					  handleClick={() => console.log("lorem")}
-					  colors={"secondary"} />
 		</form>
 	)
 }
