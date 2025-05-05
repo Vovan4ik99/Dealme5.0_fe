@@ -1,17 +1,31 @@
-import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import styles from "./NotFoundPage.module.scss";
 import Logo from "@ui/common/Logo/Logo.tsx";
 import { ReactComponent as NotFoundImage } from '@icons/named_exported/404/not_found.svg';
+import { useNavigate } from "react-router-dom";
 
 const NotFoundPage= () => {
     const navigate = useNavigate();
 
     useEffect(() => {
         if (window.location.pathname !== '/404') {
-            window.history.pushState({ page: 404 }, '', '/404');
+            navigate("/404", { replace: true });
         }
-    }, [ ]);
+    }, [ navigate ]);
+
+    const goBackUntilNot404 = () => {
+        if (window.location.pathname === "/404") {
+            window.history.back();
+            return;
+        }
+
+        window.removeEventListener("popstate", goBackUntilNot404);
+    };
+
+    const handleBack = () => {
+        window.addEventListener("popstate", goBackUntilNot404);
+        window.history.back();
+    }
 
     return (
         <div className={ styles['page'] }>
@@ -25,11 +39,11 @@ const NotFoundPage= () => {
                     Strona nie została<br/> znaleziona
                 </h1>
                 <p className={ styles["page__info"] }>
-                    Możliwe, że podana strona nigdy nie istniała lub została <br/> usunięta. Sprawdź URL, może zawiera
-                    zbędne znaki.
+                    Możliwe, że podana strona nigdy nie istniała lub została <br/>
+                    usunięta. Sprawdź URL, może zawiera zbędne znaki.
                 </p>
                 <button className={ `btn ${ styles["page__btn"] }` }
-                        onClick={ () => navigate(-2) }>
+                        onClick={ handleBack }>
                     Wróć
                 </button>
             </div>
