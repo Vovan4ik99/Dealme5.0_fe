@@ -10,6 +10,7 @@ export interface IPipelineMainTaskDetailsProps {
     mainTaskName: string;
     onSave: (order: IPipelineMainTaskDetailsForm) => void;
     onEdit: (order: IPipelineMainTaskDetailsForm) => void;
+    isDisabled: (isValid: boolean) => void;
 }
 
 export interface IPipelineMainTaskDetailsRef {

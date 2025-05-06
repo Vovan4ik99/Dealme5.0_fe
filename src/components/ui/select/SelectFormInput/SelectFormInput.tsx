@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ISelectFormInputProps} from "@ui/select/SelectFormInput/selectFormInputTypes.ts";
 import styles from './SelectFormInput.module.scss';
 import { ReactComponent as ArrowIcon } from "@icons/named_exported/arrow_down.svg";
 import SelectOption from "@ui/select/SelectOption/SelectOption.tsx";
 import InputError from "@ui/form/InputError/InputError.tsx";
 import DropDownModal from "@ui/select/DropdownModal/DropdownModal.tsx";
-import SelectedOption from "@ui/select/SelectedOption/SelectedOption.tsx";
+import SelectedOption from "@ui/select/MultiplyOption/MultiplyOption.tsx";
+import useInputClose from "@hooks/closeInput.hook.ts";
 
 const SelectFormInput = <T extends Record<string, any>>({
 	                                                        text,
@@ -20,14 +21,18 @@ const SelectFormInput = <T extends Record<string, any>>({
 															onDelete,
 	                                                        onValueChange
                                                         }: ISelectFormInputProps<T>) => {
+	const ref = useRef<HTMLDivElement | null>(null);
 
 	const [ isOpen, setIsOpen ] = useState<boolean>(false);
+
+	useInputClose(ref, setIsOpen);
 
 	const isTextValid = !text || text.length === 0;
 
 	const toggleSelect = (e: React.MouseEvent) => {
 		e.preventDefault();
 		e.stopPropagation();
+		ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		setIsOpen((prevState) => (!prevState));
 	};
 
@@ -63,7 +68,8 @@ const SelectFormInput = <T extends Record<string, any>>({
 					`${ styles['input__btn'] }
 					 ${ isOpen && styles['input__btn--open'] }
 					 ${ error && styles['input__btn--error'] }` }
-				onClick={ toggleSelect }>
+				onClick={ toggleSelect }
+				ref={ ref }>
 				<div className={ styles['input__text'] }>
 					<div className={ styles['input__head'] }>
 						<span className={ `${ !isTextValid && styles['input__text--filled'] }` }>

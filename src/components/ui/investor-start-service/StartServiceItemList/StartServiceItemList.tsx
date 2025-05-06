@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import styles from "./StartServiceItemList.module.scss";
-import {IActionListProps} from "@ui/investor-start-service/StartServiceItemList/StartServiceItemListTypes.ts";
+import {IStartServiceItemListProps} from "@ui/investor-start-service/StartServiceItemList/StartServiceItemListTypes.ts";
 import {ReactComponent as AddIcon} from "@icons/named_exported/add_icon.svg";
 import {ReactComponent as RightArrow} from "@icons/named_exported/arrow_right.svg";
 
-const StartServiceItemList: FC<IActionListProps> = ({ items,
+const StartServiceItemList: FC<IStartServiceItemListProps> = ({ items,
                                                  addingMoreBtn,
                                                  boldEmptyInfo,
                                                  btnText,

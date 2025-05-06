@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, {useCallback, useContext, useRef, useState} from "react";
 import { RegisterOptions, useForm, useWatch } from "react-hook-form";
 import styles from "./RegistrationForm.module.scss";
 import { RegistrationFormData } from "./registrationFormTypes.ts";
@@ -11,10 +11,13 @@ import AlertItem from "@ui/common/AlertItem/AlertItem.tsx";
 import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
 import SwitchBtn from "@ui/button/SwitchBtn/SwitchBtn.tsx";
 import CustomCheckbox from "@ui/form/CustomCheckbox/CustomCheckbox.tsx";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const RegistrationForm = () => {
 
 	const navigate = useNavigate();
+
+	const { logout } = useContext(AuthContext);
 
 	const [ currentRole, setCurrentRole ] = useState<UserRole>("FREELANCER");
 	const [ isUserCreated, setIsUserCreated ] = useState<boolean>(false);
@@ -43,6 +46,10 @@ const RegistrationForm = () => {
 
 	const onSubmit = useCallback((formData: RegistrationFormData) => {
 		const createUserData: ICreateUserRequest = { ...formData };
+
+		if(localStorage.getItem('token')){
+			logout();
+		}
 
 		createUser(createUserData, currentRole)
 			.then(() => {

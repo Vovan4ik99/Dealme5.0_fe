@@ -6,13 +6,16 @@ import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
 import { IRegisterMockInvestorRequest } from "@shared/authTypes.ts";
 import CustomCheckbox from "@ui/form/CustomCheckbox/CustomCheckbox.tsx";
 import AlertItem from "@ui/common/AlertItem/AlertItem.tsx";
-import {useState} from "react";
+import {useContext, useRef, useState} from "react";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
 const OnboardingRegistrationForm = () => {
+	const { logout } = useContext(AuthContext);
 
 	const { registerMockedInvestor, loadingStatus } = useAuthService();
 
 	const [ isSent, setIsSent ] = useState<boolean>(false);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const { handleSubmit, formState: { errors }, register, control, setValue } = useForm<IOnboardingRegistrationForm>({
 		shouldFocusError: false,
@@ -39,9 +42,10 @@ const OnboardingRegistrationForm = () => {
 
 			registerMockedInvestor(request)
 				.then(() => {
-					console.log(request);
-					console.log('success');
 					setIsSent(true);
+					timeoutRef.current = setTimeout(() => {
+						logout();
+					}, 1000 )
 				})
 				.catch(console.error);
 		})();

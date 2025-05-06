@@ -1,9 +1,11 @@
-@use 'variables' as vars;
+@use '@styles/variables' as vars;
 
 .data-picker {
   display: flex;
+  cursor: default;
   flex-direction: column;
   gap: 10px;
+  position: relative;
 
   &__btn {
   display: flex;
@@ -14,6 +16,14 @@
   border-radius: 12px;
   padding: 16px;
   height: 75px;
+
+  &--open {
+    border-color: vars.$color-black;
+  }
+
+  &--error {
+    border-color: vars.$color-danger;
+  }
   }
 
   &__title {
@@ -23,6 +33,10 @@
     letter-spacing: 0;
     color: vars.$color-gray;
     margin-bottom: 4px;
+
+    &--placeholder {
+     color: vars.$color-black;
+    }
   }
 
   &__value {
@@ -30,6 +44,10 @@
     font-size: 18px;
     line-height: 120%;
     letter-spacing: 0;
-    color: vars.$color-black
+    color: vars.$color-black;
+
+    &--placeholder {
+      color: vars.$color-gray;
+    }
   }
 }

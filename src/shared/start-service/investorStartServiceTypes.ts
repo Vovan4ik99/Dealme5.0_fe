@@ -50,7 +50,7 @@ export interface IBuyerPersonResponse {
     groupName: string;
 }
 
-export interface IProductRequest {
+export interface IProductCreateRequest {
     name: string;
     subIndustryId: number;
     description?: string;
@@ -62,6 +62,20 @@ export interface IProductRequest {
     state: string;
     city: string;
 }
+
+export interface IProductPatchRequest {
+    name?: string;
+    subIndustryId?: number;
+    description?: string;
+    sectorIds?: number[];
+    companySize?: string[];
+    buyerPersonIds?: number[];
+    additionalNotes?: string;
+    country?: string;
+    state?: string;
+    city?: string;
+}
+
 
 export interface IProductResponse {
     id: number;

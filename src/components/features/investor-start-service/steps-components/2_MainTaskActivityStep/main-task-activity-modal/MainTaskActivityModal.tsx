@@ -19,13 +19,18 @@ import {
 import {ModalContext} from "@context/ModalContext/ModalContext.ts";
 import { ReactComponent as AddIcon } from "@icons/named_exported/add_icon.svg";
 
-const MainTaskActivityModal: FC<IPipelineModalProps> = ({ selectedMainTask, mode, onSubmit, currentOrder, selectedPipeline }) => {
+const MainTaskActivityModal: FC<IPipelineModalProps> = ({ selectedMainTask,
+                                                          mode,
+                                                          onSubmit,
+                                                          currentOrder,
+                                                          selectedPipeline }) => {
     const { closeModals } = useContext(ModalContext);
 
     const formRef = useRef<IPipelineMainTaskDetailsRef | null>(null);
 
     const [ order, setOrder ] = useState<IPipelineMainTaskItem>(currentOrder || orderRequestStartState);
     const [ currentStep, setCurrentStep ] = useState<number>(1);
+    const [ isDisabled, setIsDisabled ] = useState<boolean>(true);
 
     const handleOrderSave = (form: IPipelineMainTaskDetailsForm ) => {
         const request = { ...form, pipelineMainTaskDTO: order.pipelineMainTaskDTO };
@@ -88,9 +93,12 @@ const MainTaskActivityModal: FC<IPipelineModalProps> = ({ selectedMainTask, mode
                                              ref={ formRef }
                                              mainTaskName={ order.pipelineMainTaskDTO.name! }
                                              onSave={ handleOrderSave }
+                                             isDisabled={ (value) => setIsDisabled(value) }
                                              onEdit={ handleMainTaskEdit }/>
 
-                    <button className={`btn btn--withIcon ${styles["modal__btn"]}`}
+                    <button className={ `btn btn--withIcon 
+                                        ${styles["modal__btn"]}` }
+                            disabled={ isDisabled }
                             onClick={ handleFormSubmit }>
                         <AddIcon fill={'#fffff'}/>
                         <span>{mode === 'add' ? "Dodaj usługę" : "Edytuj usługę"}</span>

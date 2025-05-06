@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle} from 'react';
+import React, {forwardRef, useEffect, useImperativeHandle} from 'react';
 import styles from './MainTaskActivityDetails.module.scss';
 import {
     IPipelineMainTaskDetailsForm,
@@ -12,7 +12,6 @@ import {
     getMonthsFromLabel,
     mainTaskActivityPeriodData
 } from "@components/features/investor-start-service/steps-components/2_MainTaskActivityStep/main-task-activity-modal/mainTaskActivityDetails/MainTaskActivityPeriodData.ts";
-import {format, isValid, parse} from "date-fns";
 import {
     PipelineFormValidation
 } from "@components/features/investor-start-service/steps-components/2_MainTaskActivityStep/main-task-activity-modal/mainTaskActivityDetails/MainTaskActivityDetailsFormValidation.ts";
@@ -20,10 +19,14 @@ import CustomTextArea from "@ui/form/CustomTextArea/CustomTextArea.tsx";
 import {ISelectItem} from "@ui/select/SelectFormInput/selectFormInputTypes.ts";
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
 import SelectFormInput from "@ui/select/SelectFormInput/SelectFormInput.tsx";
-import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
+import DatePicker from "@ui/select/DatePicker/DatePicker.tsx";
 
 const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipelineMainTaskDetailsProps>(
-    ({ orderDetails, mainTaskName, onSave, onEdit }, ref) => {
+    ({ orderDetails,
+       mainTaskName,
+       isDisabled,
+       onSave,
+       onEdit }, ref) => {
 
     const {
         register,
@@ -37,14 +40,14 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
         shouldFocusError: false,
         mode: 'onTouched',
         defaultValues: {
-            startDate: orderDetails?.startDate,
+            startDate: orderDetails?.startDate ? new Date(orderDetails.startDate) : undefined,
             period: orderDetails?.period,
             description: orderDetails?.description,
             amount: orderDetails?.amount,
         }
     });
 
-    const formValue = useWatch({control});
+    const formValue = useWatch({ control });
 
     const handleMainTaskEdit = () => {
         onEdit(formValue)
@@ -61,16 +64,13 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
 
     const getPeriodOptions = (): ISelectItem[] => {
         return mainTaskActivityPeriodData.map((period) => {
-            return {text: period, info: null};
+            return { text: period, info: null };
         })
     }
 
-    const setStartDate = (startDate: string) => {
-        const parsed = parse(startDate, "yyyy-MM-dd", new Date());
-        if (isValid(parsed)) {
+    const setStartDate = (startDate: Date) => {
             clearErrors('startDate');
-            return setValue("startDate", parsed);
-        }
+            setValue("startDate", startDate);
     }
 
     const setAmount = (amount: number) => {
@@ -78,6 +78,8 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
         setValue('amount', amount);
         trigger('amount');
     }
+
+    useEffect(() => isDisabled(!isFormValid), [ isFormValid, trigger, isDisabled ]);
 
     return (
         <div className={styles["details"]}>
@@ -92,13 +94,13 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
                            kind={"Edit"}/>
             </div>
             <div className={styles["details__row"]}>
-                <NumberInput id={"amount"}
-                             register={register}
-                             existedValue={formValue.amount}
-                             onChange={(amount) => setAmount(amount)}
-                             errorMessage={errors.amount?.message}
-                             validation={PipelineFormValidation.amount}
-                             labelText={"Ilość"}/>
+                <NumberInput id={ "amount" }
+                             register={ register }
+                             existedValue={ formValue.amount }
+                             onChange={ (amount) => setAmount(amount) }
+                             errorMessage={ errors.amount?.message }
+                             validation={ PipelineFormValidation.amount }
+                             labelText={ "Ilość" }/>
                 <SelectFormInput text={formValue.period ? getLabelFromMonths(formValue.period) : 'Okres'}
                                  id={'period'}
                                  labelText={'Okres'}
@@ -109,20 +111,18 @@ const MainTaskActivityDetails  = forwardRef< IPipelineMainTaskDetailsRef, IPipel
                                  error={errors.period ?? null}
                                  onValueChange={ (period) => setValue("period", getMonthsFromLabel(period)) }/>
             </div>
-            {/* todo finish DatePicker and replace it */}
-            <CustomInput id={'startDate'}
-                         type={"date"}
-                         existedValue={ formValue?.startDate ? format(formValue.startDate, "yyyy-MM-dd") : ""}
-                         onChange={setStartDate}
-                         placeholder={"Wybierz date"}
-                         labelText={"Od"}
-                         validation={ PipelineFormValidation.startDate }
-                         register={register}
-                         errorMessage={errors.startDate?.message}/>
+            <DatePicker labelText={ "Od" }
+                        id={ "startDate" }
+                        value={ formValue?.startDate }
+                        onValueChange={ (startDate) => setStartDate(startDate) }
+                        register={ register }
+                        error={ errors.startDate ?? null }
+                        validationRules={ PipelineFormValidation.startDate }
+                        trigger={ trigger } />
             <CustomTextArea label={ 'Dodatkowe informacje' }
                             maxSymbols={ 250 }
-                            placeholder={'Wpisz tutaj dodatkowe informacje..'}
-                            fontWeight={400}
+                            placeholder={ 'Wpisz tutaj dodatkowe informacje..' }
+                            fontWeight={ 400 }
                             value={ formValue.description }
                             id={ 'description' }
                             validation={ PipelineFormValidation.description }

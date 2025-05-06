@@ -23,13 +23,18 @@ import CustomTextArea from "@ui/form/CustomTextArea/CustomTextArea.tsx";
 import {useFreelancerOnboardingService} from "@services/onboarding/freelancerOnboardingService.ts";
 import {useInvestorStartService} from "@services/start/useInvestorStartService.ts";
 import LoadingSpinner from "@ui/common/LoadingSpinner/LoadingSpinner.tsx";
-import {IBuyerPersonResponse, IProductItem, IProductRequest} from "@shared/start-service/investorStartServiceTypes.ts";
+import {
+    IBuyerPersonResponse,
+    IProductItem,
+    IProductCreateRequest,
+    IProductPatchRequest
+} from "@shared/start-service/investorStartServiceTypes.ts";
 
 const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handleClose, currentProduct, mode }) => {
     const { getStates } = useFreelancerProfileAsideInfoService();
     const { getIndustries }= useFreelancerOnboardingService();
     const { getSectors } = useFreelancerOnboardingService();
-    const { getCompanySize, loadingStatus, getBuyerPerson, createProduct } = useInvestorStartService();
+    const { getCompanySize, loadingStatus, getBuyerPerson, createProduct, updateProduct } = useInvestorStartService();
 
     const [ sectors, setSectors ] = useState<ISectorItem[]>([]);
     const [buyerPersons, setBuyerPersons] = useState<IBuyerPersonResponse[]>([]);
@@ -57,29 +62,85 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
 
     const formValue = useWatch({ control });
 
+    const prepareDataToCreate= (data: IProductItem) => {
+        const sectorsIds = sectors.filter(sec => data.sector.includes(sec.name))
+            .map(sec => sec.id);
+        const subIndustryId = subIndustries!.find(sub => sub.name === data.subIndustry)!.id
+        const buyerPersonIds = buyerPersons.filter(buy => data.buyerPerson.includes(buy.name))
+            .map(buy => buy.id);
+        const companySize = companySizes.filter(buy => data.companySize.includes(buy.description))
+            .map(buy => buy.name);
+        const country = data.country === "Polska" ? "POLAND" : undefined ;
+
+        return {
+            name: data.name,
+            subIndustryId: subIndustryId,
+            description: data.description,
+            sectorIds: sectorsIds,
+            companySize: companySize,
+            buyerPersonIds: buyerPersonIds,
+            additionalNotes: data.additionalNotes,
+            country: country,
+            state: data.state,
+            city: data.city
+        } as IProductCreateRequest;
+    }
+
+    const prepareDataToEdit = (data: IProductItem) => {
+        const sectorsIds = sectors?.filter(sec => data.sector!.includes(sec.name))
+            .map(sec => sec.id);
+
+        const subIndustryId = subIndustries?.find(sub => sub.name === data?.subIndustry)?.id;
+
+        const buyerPersonIds = buyerPersons?.filter(buy => data?.buyerPerson.includes(buy.name))
+            .map(buy => buy.id);
+
+
+        const companySize = companySizes?.filter(buy => data?.companySize.includes(buy.description))
+            .map(buy => buy.name);
+
+
+        const country = data?.country === "Polska" ? "POLAND" : undefined ;
+
+        return  {
+            name: data?.name,
+            subIndustryId: subIndustryId,
+            description: data?.description,
+            sectorIds: sectorsIds.length !== 0 ? sectorsIds : undefined,
+            companySize: companySize.length !== 0 ? companySize : undefined,
+            buyerPersonIds: buyerPersonIds.length !== 0 ? buyerPersonIds : undefined,
+            additionalNotes: data?.additionalNotes,
+            country: country,
+            state: data?.state,
+            city: data?.city
+        } as IProductPatchRequest;
+
+    }
+
     const submitForm = useCallback(() => {
         handleSubmit((data) => {
-            handleClose!();
-
             if (mode === "edit") {
+                if (!currentProduct?.id ) return;
+
+                const request = prepareDataToEdit(data);
+
+                updateProduct(request, currentProduct.id)
+                    .then( () => handleClose!())
+                    .catch(console.error);
+
                 onSubmit(data, currentProduct.id!);
                 return;
             }
-
-            const request = prepareData(data);
+            const request = prepareDataToCreate(data);
 
             createProduct(request)
                 .then((res) => {
                     onSubmit({ id: res.id, ...data});
+                    handleClose!();
                 })
                 .catch(console.error);
         })();
-    }, [ handleSubmit, onSubmit, handleClose, isValid, createProduct ]);
-
-
-    useEffect(() => {
-        registerOnSave!(submitForm);
-    });
+    }, [ handleSubmit, onSubmit, handleClose, isValid, createProduct, updateProduct, prepareDataToCreate, prepareDataToEdit ]);
 
     useEffect(() => {
         getSectors()
@@ -113,6 +174,10 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
             .catch(console.error)
     }, [ getStates ]);
 
+    useEffect(() => {
+        registerOnSave!(submitForm);
+    }, [ registerOnSave, submitForm ]);
+
     const setData = (data: string, currentState: string[] | undefined, key: FormKeys) => {
         const current = currentState ?? [];
 
@@ -139,29 +204,6 @@ const ProductModal: FC<IProductModalProps> = ({ onSubmit, registerOnSave, handle
         clearErrors('name');
         setValue('name', value);
         trigger("name");
-    }
-
-    const prepareData= (data: IProductItem) => {
-        const sectorsIds = sectors.filter(sec => data.sector.includes(sec.name))
-                                            .map(sec => sec.id);
-        const subIndustryId = subIndustries!.find(sub => sub.name === data.subIndustry)!.id
-        const buyerPersonIds = buyerPersons.filter(buy => data.buyerPerson.includes(buy.name))
-                                                  .map(buy => buy.id);
-        const companySize = companySizes.filter(buy => data.companySize.includes(buy.description))
-                                               .map(buy => buy.name);
-        const country = data.country === "Polska" ? "POLAND" : undefined ;
-        return {
-            name: data.name,
-            subIndustryId: subIndustryId,
-            description: data.description,
-            sectorIds: sectorsIds,
-            companySize: companySize,
-            buyerPersonIds: buyerPersonIds,
-            additionalNotes: data.additionalNotes,
-            country: country,
-            state: data.state,
-            city: data.city
-        } as IProductRequest;
     }
 
     if (loadingStatus === 'loading') {

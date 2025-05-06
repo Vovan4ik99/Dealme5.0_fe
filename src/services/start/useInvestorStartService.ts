@@ -7,7 +7,9 @@ import {
     IMainTask,
     IMainTaskActivityRequest,
     IPipelineResponse,
-    IProductRequest, IProductResponse
+    IProductCreateRequest,
+    IProductPatchRequest,
+    IProductResponse
 } from "@shared/start-service/investorStartServiceTypes.ts";
 
 
@@ -61,7 +63,7 @@ export const useInvestorStartService = () => {
         })
     }, [ sendRequest ]);
 
-    const createProduct = useCallback(async (body: IProductRequest): Promise<IProductResponse> => {
+    const createProduct = useCallback(async (body: IProductCreateRequest): Promise<IProductResponse> => {
         return sendRequest({
             url: API_ROUTES.START_SERVICE.INVESTOR.PRODUCTS,
             method: "POST",
@@ -76,8 +78,16 @@ export const useInvestorStartService = () => {
         })
     }, [ sendRequest ]);
 
+    const updateProduct = useCallback(async (body: IProductPatchRequest , id: number): Promise<void> => {
+        return sendRequest({
+            url: `${API_ROUTES.START_SERVICE.INVESTOR.PRODUCTS}/${id}`,
+            method: "PATCH",
+            body: JSON.stringify(body)
+        })
+    }, [ sendRequest ]);
+
     return {
         loadingStatus, errorMessage, addOrderActivity, getAllPipelines, getPipelineMainTasks, addInvestorMainTaskActivity, addInvestorPipelineStep,
-        getCompanySize, getBuyerPerson, createProduct, deleteProduct
+        getCompanySize, getBuyerPerson, createProduct, deleteProduct, updateProduct
     }
 }
