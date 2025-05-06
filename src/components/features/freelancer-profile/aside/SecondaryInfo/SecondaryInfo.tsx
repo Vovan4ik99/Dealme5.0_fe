@@ -1,5 +1,5 @@
 import styles from './SecondaryInfo.module.scss';
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import SubIndustriesItem from "./SubIndustriesItem/SubIndustriesItem.tsx";
 import WorkingDaysProfileItem
 	from "@components/features/freelancer-profile/aside/SecondaryInfo/WorkingDaysProfileItem/WorkingDaysProfileItem.tsx";
@@ -8,18 +8,15 @@ import WorkingHoursProfileItem
 import LocalizationItem
 	from "@components/features/freelancer-profile/aside/SecondaryInfo/LocalizationItem/LocalizationItem.tsx";
 import LanguagesItem from "@components/features/freelancer-profile/aside/SecondaryInfo/LanguagesItem/LanguagesItem.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
-import { IFreelancerBarResponse, IFreelancerData } from "@shared/freelancer/common.ts";
-import { ISecondaryInfoProps } from "@components/features/freelancer-profile/aside/SecondaryInfo/secondaryInfoTypes.ts";
-import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancer/freelancerProfileAsideInfoService.ts";
+import {IFreelancerBarResponse} from "@shared/freelancer/common.ts";
+import {ISecondaryInfoProps} from "@components/features/freelancer-profile/aside/SecondaryInfo/secondaryInfoTypes.ts";
 
-const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
+const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUserProfile, freelancerData, onSubmit }) => {
 
 	const { getFreelancerBar } = useFreelancerProfileAsideInfoService();
-	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
 	const [ freelancerInfo, setFreelancerInfo ] = useState<IFreelancerBarResponse | null>(null);
-	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>(undefined);
 
 	const fetchFreelancerBarInfo = useCallback(() => {
 		getFreelancerBar(freelancerId)
@@ -27,21 +24,14 @@ const SecondaryInfo: React.FC<ISecondaryInfoProps> = ({ freelancerId, isLoggedUs
 			.catch(console.error);
 	}, [ freelancerId, getFreelancerBar ]);
 
-	const fetchFreelancerData = useCallback(() => {
-		getFreelancerPrimaryInfo(freelancerId)
-			.then(setFreelancerData)
-			.catch(console.error);
-	}, [ freelancerId, getFreelancerPrimaryInfo ]);
-
 	useEffect(() => {
 		fetchFreelancerBarInfo();
-		fetchFreelancerData();
-	}, [ fetchFreelancerBarInfo, fetchFreelancerData ]);
+	}, [ fetchFreelancerBarInfo ]);
 
 	if (!freelancerData || !freelancerInfo) return;
 
 	const handleSave = () => {
-		fetchFreelancerData();
+		onSubmit();
 	};
 
 	const handleAddDataSave = () => {

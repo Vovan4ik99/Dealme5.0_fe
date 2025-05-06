@@ -1,0 +1,85 @@
+@use "@styles/variables" as vars;
+
+.menu {
+  position: relative;
+
+  &__btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    position: relative;
+    padding: 6px 16px 6px 6px;
+    background-color: vars.$color-gray-light;
+    color: vars.$color-gray;
+    border: 1px solid vars.$color-gray-light;
+    transition: all 300ms ease-in-out;
+
+    &--active, &:hover {
+      background-color: vars.$color-primary-pastel;
+      border: 1px solid vars.$primary-color;
+
+      .menu__name,
+      .menu__info,
+      .menu__role,
+      .menu__arrow {
+        color: vars.$primary-color;
+      }
+
+      .menu__avatar {
+        svg path {
+          fill: vars.$primary-color;
+        }
+      }
+    }
+  }
+
+  &__avatar {
+    transition: all 300ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+
+    svg path {
+      fill: vars.$color-gray;
+    }
+
+    img {
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    margin-right: 16px;
+  }
+
+  &__name {
+    height: 14px;
+    color: vars.$color-black;
+    font-size: 14px;
+    line-height: 100%; /* 14px */
+  }
+
+  &__role {
+    color: vars.$color-gray;
+    font-size: 12px;
+    line-height: 100%; /* 12px */
+  }
+
+  &__arrow {
+    &--active {
+      transform: rotate(-180deg);
+      transform-origin: center;
+      transition: transform 0.5s;
+    }
+  }
+}

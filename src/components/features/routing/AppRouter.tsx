@@ -9,8 +9,10 @@ import OnboardingSummary from "@pages/onboarding/OnboardingSummary/OnboardingSum
 import FreelancerOnboardingStartPage
 	from "@pages/onboarding/FreelancerOnboardingStartPage/FreelancerOnboardingStartPage.tsx";
 import ServicePage from "@pages/ServicePage/ServicePage.tsx";
+import NotFoundPage from "@pages/NotFoundPage/NotFoundPage.tsx";
 
 const AppRouter = () => {
+
 	return (
 		<BrowserRouter future={ { v7_startTransition: true, v7_relativeSplatPath: true } }>
 			<Routes>
@@ -18,17 +20,21 @@ const AppRouter = () => {
 				<Route path={ '/registration' } element={ <AuthPage isLogin={ false }/> }/>
 				<Route path={ '/reset-password' } element={ <ResetPasswordPage/> }/>
 				<Route path={ '/investor/start' } element={ <InvestorStartPage/> }/>
+				<Route path={ '/404' } element={ <NotFoundPage/> } />
+				<Route path={ '*' } element={ <NotFoundPage/> } />
 				<Route element={ <ProtectedRoute/> }>
-					{/*Investor Paths*/}
+					{ /*Investor Paths*/ }
 					<Route path={ '/investor/service'} element={ <ServicePage/> }/>
 					<Route path={ '/investor/onboarding' } element={ <OnboardingPage userRole={ 'INVESTOR' }/> }/>
 					<Route path={ '/investor/onboarding/summary' } element={ <OnboardingSummary/> }/>
 
-					{/*Freelancer Paths*/}
+					{ /*Freelancer Paths*/ }
 					<Route path={ '/freelancer/onboarding/start' } element={ <FreelancerOnboardingStartPage/> }/>
 					<Route path={ '/freelancer/onboarding' } element={ <OnboardingPage userRole={ 'FREELANCER' }/> }/>
-					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
 					<Route path={ '/freelancer/profile' } element={ <FreelancerProfilePage/> }/>
+
+					{ /*Admin Paths*/ }
+					<Route path={ '/freelancer/profile/:id' } element={ <FreelancerProfilePage/> }/>
 				</Route>
 			</Routes>
 		</BrowserRouter>
