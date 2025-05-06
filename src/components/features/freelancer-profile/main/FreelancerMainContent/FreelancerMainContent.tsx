@@ -15,7 +15,9 @@ import FreelancerWorkExperience
 import FreelancerEducation
     from "@components/features/freelancer-profile/main/FreelancerEducation/FreelancerEducation.tsx";
 import styles from "./FreelancerMainContent.module.scss"
-import { IFreelancerMainContentProps } from './FreelancerMainContentTypes';
+import {
+    IFreelancerMainContentProps
+} from "@components/features/freelancer-profile/main/FreelancerMainContent/freelancerMainContentTypes.ts";
 
 const FreelancerMainContent: FC<IFreelancerMainContentProps> = ({ freelancerId, isLoggedUserProfile}) => {
 

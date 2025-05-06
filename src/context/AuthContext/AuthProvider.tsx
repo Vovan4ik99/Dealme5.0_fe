@@ -20,13 +20,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		dispatch({ type: AuthActionType.LOGOUT });
 	}, []);
 
+	const handleError = useCallback((e: any) => {
+		dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });
+		localStorage.removeItem('token');
+		console.log(e);
+	}, [ errorMessage ]);
+
 	const handleDataSetup =  useCallback( async (fetch: Promise<fetchResponse>,
 							  												  		 role: UserRole) => {
-		const handleError = (e: any) => {
-			dispatch({ type: AuthActionType.SET_ERROR, payload: errorMessage ?? e });
-			localStorage.removeItem('token');
-			console.log(e);
-		};
 
 		return await fetch
 						.then(response => {
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 							return userData;
 						})
 						.catch(handleError)
-	}, [ errorMessage ])
+	}, [ handleError ])
 
 	const getLoggedUserData = useCallback(async (currentToken: string) => {
 		dispatch({ type: AuthActionType.SET_LOADING });
@@ -47,10 +48,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				return handleDataSetup(fetchFreelancerData(), role);
 			case "INVESTOR":
 				return handleDataSetup(fetchInvestorData(), role);
-			default:
+			case "ADMIN":
 				return handleDataSetup(fetchAdminData(), role);
+			default:
+				handleError("Invalid role");
 		}
-	}, [ fetchAdminData, fetchFreelancerData, fetchInvestorData, handleDataSetup ]);
+	}, [ fetchAdminData, fetchFreelancerData, fetchInvestorData, handleDataSetup, handleError ]);
 
 	const loginInvestor = useCallback(async () => {
 		dispatch({ type: AuthActionType.SET_LOADING });

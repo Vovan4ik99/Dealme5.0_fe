@@ -1,7 +1,7 @@
-import { UserRole } from "@shared/userTypes.ts";
 import {
 	CategoryStatus
 } from "@components/features/onboarding/OnboardingProgressCategory/onboardingProgressCategoryTypes.ts";
+import {OnboardingUser} from "@pages/onboarding/OnboardingPage/onboardingPageTypes.ts";
 
 export interface IOnboardingProgressTrackerCategory {
 	category: string;
@@ -11,7 +11,7 @@ export interface IOnboardingProgressTrackerCategory {
 export interface IOnboardingProgressTrackerProps {
 	step: number;
 	maxSteps: number;
-	userType: UserRole;
+	userType: OnboardingUser;
 }
 
 export interface ICategoryWithStatus {

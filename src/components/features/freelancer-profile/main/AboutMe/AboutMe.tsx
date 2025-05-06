@@ -60,11 +60,11 @@ const AboutMe: React.FC<IAboutMeProps> = ({ freelancerId, isLoggedUserProfile })
 				        onClick={ handleAboutMeInfoEdit }>
 					<VideoEmptyState text={ 'Nagraj krótkie video o sobie' }/>
 				</button> :
-				<button className={ `${ styles['about__video'] } 
-									 ${ styles['about__video--empty'] } 
-									 ${ styles["about__video--preview"]}` }>
+				<div className={ `${ styles['about__video'] } 
+								  ${ styles['about__video--empty'] } 
+								  ${ styles["about__video--preview"]}` }>
 					<VideoEmptyState text={ 'Brak video' }/>
-				</button>;
+				</div>;
 		}
 		return <div className={ styles['about__video'] }>
 			<VideoItem key={ aboutMeInfo.video }

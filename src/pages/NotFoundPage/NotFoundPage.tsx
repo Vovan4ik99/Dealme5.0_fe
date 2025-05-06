@@ -1,31 +1,21 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styles from "./NotFoundPage.module.scss";
 import Logo from "@ui/common/Logo/Logo.tsx";
 import { ReactComponent as NotFoundImage } from '@icons/named_exported/404/not_found.svg';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NotFoundPage= () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    useEffect(() => {
-        if (window.location.pathname !== '/404') {
-            navigate("/404", { replace: true });
-        }
-    }, [ navigate ]);
-
-    const goBackUntilNot404 = () => {
-        if (window.location.pathname === "/404") {
-            window.history.back();
+    const handleBack = () => {
+        if (location.key === 'default') {
+            navigate(-1);
             return;
         }
 
-        window.removeEventListener("popstate", goBackUntilNot404);
+        navigate("/login", { replace: true });
     };
-
-    const handleBack = () => {
-        window.addEventListener("popstate", goBackUntilNot404);
-        window.history.back();
-    }
 
     return (
         <div className={ styles['page'] }>

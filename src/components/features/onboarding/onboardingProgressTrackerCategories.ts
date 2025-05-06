@@ -1,7 +1,9 @@
-import { UserRole } from "@shared/userTypes.ts";
-import { IOnboardingProgressTrackerCategory } from "./OnboardingProgressTracker/onboardingProgressTrackerTypes.ts";
+import {
+	IOnboardingProgressTrackerCategory
+} from "./OnboardingProgressTracker/onboardingProgressTrackerTypes.ts";
+import {OnboardingUser} from "@pages/onboarding/OnboardingPage/onboardingPageTypes.ts";
 
-export const ONBOARDING_PROGRESS_TRACKER_CATEGORIES: Record<UserRole, IOnboardingProgressTrackerCategory[]> = {
+export const ONBOARDING_PROGRESS_TRACKER_CATEGORIES: Record<OnboardingUser, IOnboardingProgressTrackerCategory[]> = {
 	INVESTOR: [
 		{
 			category: 'Potrzeby sprzedażowe',
@@ -29,8 +31,5 @@ export const ONBOARDING_PROGRESS_TRACKER_CATEGORIES: Record<UserRole, IOnboardin
 			category: 'Umiejętności',
 			subcategories: ['Umiejętności', 'Narzędzia Sprzedażowe']
 		}
-	],
-	ADMIN: [
-
 	]
 } as const;

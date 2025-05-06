@@ -19,6 +19,7 @@ import FreelancerAside from "@components/features/freelancer-profile/aside/Freel
 import FreelancerMainContent
 	from "@components/features/freelancer-profile/main/FreelancerMainContent/FreelancerMainContent.tsx";
 import { useFreelancerPageData } from "@hooks/freelancerPageData.hook.ts";
+import NotFoundPage from "@pages/NotFoundPage/NotFoundPage.tsx";
 
 const FreelancerProfilePage = () => {
 
@@ -38,7 +39,8 @@ const FreelancerProfilePage = () => {
 			freelancerData,
 			isLoggedUserProfile,
 			user,
-			fetchFreelancerData } = useFreelancerPageData();
+			fetchFreelancerData,
+			notFound } = useFreelancerPageData();
 
 	const getPageNavbar = () => {
 		if (user?.role === "ADMIN") {
@@ -49,6 +51,10 @@ const FreelancerProfilePage = () => {
 								  hasMarginBottom={ true }/>
 		)}
 		return <ProfileNavbar/>;
+	}
+
+	if (notFound) {
+		return <NotFoundPage/>
 	}
 
 	if (!freelancerId || !freelancerData) {

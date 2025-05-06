@@ -13,6 +13,7 @@ export const useFreelancerPageData = () => {
     const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
     const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
+    const [ notFound, setNotFound ] = useState<boolean>(false);
 
     const isLoggedUserProfile = id === undefined;
     const freelancerId = isLoggedUserProfile ? user?.id : parseInt(id);
@@ -27,28 +28,28 @@ export const useFreelancerPageData = () => {
                 const isAdmin = user.role === "ADMIN";
 
                 if (!isLoggedUserProfile && (!isOnboardingPassed || !isAdmin)) {
-                    navigate("/404");
+                    setNotFound(true);
                     return;
                 }
                 setFreelancerData(response);
             })
             .catch(error => {
                 if (error === ErrorMessages.USER_NOT_FOUND) {
-                    navigate("/404");
+                    setNotFound(true);
                 }
 
                 console.error(error);
             });
-    }, [ freelancerId, getFreelancerPrimaryInfo, isLoggedUserProfile, navigate, user?.role ] )
+    }, [ freelancerId, user?.role, getFreelancerPrimaryInfo, isLoggedUserProfile ] )
 
     useEffect(() => {
         if (isPathInvalid) {
-            navigate("/404");
+            setNotFound(true);
             return;
         }
 
         fetchFreelancerData();
     }, [ isPathInvalid, fetchFreelancerData, navigate ]);
 
-    return { freelancerData, freelancerId, isLoggedUserProfile, user, fetchFreelancerData };
+    return { freelancerData, freelancerId, isLoggedUserProfile, user, fetchFreelancerData, notFound };
 }

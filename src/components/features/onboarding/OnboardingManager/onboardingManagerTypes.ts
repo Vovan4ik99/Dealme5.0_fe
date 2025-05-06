@@ -1,7 +1,7 @@
-import { UserRole } from "@shared/userTypes.ts";
 import React from "react";
 import { IFreelancerData } from "@shared/freelancer/common.ts";
 import { IInvestorData } from "@shared/investor/common.ts";
+import { OnboardingUser } from "@pages/onboarding/OnboardingPage/onboardingPageTypes";
 
 export type OnboardingUserData = IFreelancerData | IInvestorData;
 
@@ -17,7 +17,7 @@ export interface IOnboardingStep<T extends OnboardingUserData> {
 }
 
 export interface IOnboardingManagerProps<T extends OnboardingUserData> {
-	userRole: UserRole;
+	userRole: OnboardingUser;
 	fetchData: () => Promise<T>;
 	stepData: IOnboardingStep<T>[];
 }

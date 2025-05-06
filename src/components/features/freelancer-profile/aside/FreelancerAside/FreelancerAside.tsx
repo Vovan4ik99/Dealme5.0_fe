@@ -6,7 +6,7 @@ import SecondaryInfo from "@components/features/freelancer-profile/aside/Seconda
 import SectorsInfo from "@components/features/freelancer-profile/aside/SectorsInfo/SectorsInfo.tsx";
 import {
     IFreelancerAsideProps
-} from "@components/features/freelancer-profile/aside/FreelancerAside/FreelancerAsideTypes.ts";
+} from "@components/features/freelancer-profile/aside/FreelancerAside/freelancerAsideTypes.ts";
 
 const FreelancerAside: FC<IFreelancerAsideProps> = ({ freelancerId,
                                                       isLoggedUserProfile,
