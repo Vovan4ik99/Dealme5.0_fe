@@ -1,28 +1,13 @@
 import styles from "./SectorsInfo.module.scss";
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
-import { useModal } from "@context/ModalContext/ModalContext.ts";
-import React, { useCallback, useEffect, useState } from "react";
-import { ISector } from "@shared/onboarding/freelancerOnboardingTypes.ts";
+import {useModal} from "@context/ModalContext/ModalContext.ts";
+import React from "react";
 import SectorsModalItem from "@components/features/modals/sectors/SectorsModalItem/SectorsModalItem.tsx";
-import { ISectorsInfoProps } from "@components/features/freelancer-profile/aside/SectorsInfo/sectorsInfoTypes.ts";
-import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
+import {ISectorsInfoProps} from "@components/features/freelancer-profile/aside/SectorsInfo/sectorsInfoTypes.ts";
 
-const SectorsInfo: React.FC<ISectorsInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
+const SectorsInfo: React.FC<ISectorsInfoProps> = ({ isLoggedUserProfile, freelancerSectors, onSubmit }) => {
 
 	const { openModal } = useModal();
-	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
-
-	const [ freelancerSectors, setFreelancerSectors ] = useState<ISector[]>([]);
-
-	const fetchFreelancerSectors = useCallback(() => {
-		getFreelancerPrimaryInfo(freelancerId)
-			.then(data => setFreelancerSectors(data.sectors ?? []))
-			.catch(console.error);
-	}, [ freelancerId, getFreelancerPrimaryInfo ]);
-
-	useEffect(() => {
-		fetchFreelancerSectors();
-	}, [ fetchFreelancerSectors ]);
 
 	const onEdit = () => {
 		openModal({
@@ -45,7 +30,7 @@ const SectorsInfo: React.FC<ISectorsInfoProps> = ({ freelancerId, isLoggedUserPr
 	};
 
 	const handleSave = () => {
-		fetchFreelancerSectors();
+		onSubmit();
 	};
 
 	return (

@@ -1,0 +1,8 @@
+@use '@styles/variables' as vars;
+
+.aside {
+    position: absolute;
+    left: 24px;
+    top: 204px;
+    z-index: 1;
+}

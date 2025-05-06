@@ -1,28 +1,24 @@
 import styles from './PrimaryInfo.module.scss';
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import ActionBtn from "@ui/button/ActionBtn/ActionBtn.tsx";
-import { FreelancerPrimaryInfo, IFreelancerPrimaryInfoProps } from "./primaryInfoTypes.ts";
-import { ReactComponent as LogoIcon } from "@icons/named_exported/logo_icon.svg";
+import {FreelancerPrimaryInfo, IFreelancerPrimaryInfoProps} from "./primaryInfoTypes.ts";
+import {ReactComponent as LogoIcon} from "@icons/named_exported/logo_icon.svg";
 import star from "@icons/freelancer_profile/primary_info/star.svg";
 import StatusItem from "@ui/freelancer-profile/StatusItem/StatusItem.tsx";
-import { useModal } from "@context/ModalContext/ModalContext.ts";
+import {useModal} from "@context/ModalContext/ModalContext.ts";
 import PrimaryInfoModalItem
 	from "@components/features/modals/primary_info/PrimaryInfoModalItem/PrimaryInfoModalItem.tsx";
-import { useFreelancerProfileAsideInfoService } from "@services/freelancer/freelancerProfileAsideInfoService.ts";
-import { IFreelancerData } from "@shared/freelancer/common.ts";
-import { useFreelancerProfileService } from "@services/freelancer/freelancerProfileService.ts";
-import { AuthContext } from "@context/AuthContext/AuthContext.ts";
+import {useFreelancerProfileAsideInfoService} from "@services/freelancer/freelancerProfileAsideInfoService.ts";
+import {AuthContext} from "@context/AuthContext/AuthContext.ts";
 
-const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLoggedUserProfile }) => {
+const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLoggedUserProfile, freelancerData, onSubmit }) => {
 
 	const { getLoggedUserData } = useContext(AuthContext);
 
 	const { openModal } = useModal();
 
 	const { getFreelancerBar } = useFreelancerProfileAsideInfoService();
-	const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
-	const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
 	const [ primaryInfo, setPrimaryInfo ] = useState<FreelancerPrimaryInfo | null>(null);
 
 	const token = localStorage.getItem("token");
@@ -36,16 +32,9 @@ const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLo
 			.catch(error => console.error(error));
 	}, [ freelancerId, getFreelancerBar ]);
 
-	const fetchFreelancerData = useCallback(() => {
-		getFreelancerPrimaryInfo(freelancerId)
-			.then(setFreelancerData)
-			.catch(console.error);
-	}, [ freelancerId, getFreelancerPrimaryInfo ]);
-
 	useEffect(() => {
 		fetchPrimaryInfo();
-		fetchFreelancerData();
-	}, [ fetchFreelancerData, fetchPrimaryInfo ]);
+	}, [ fetchPrimaryInfo ]);
 
 	if (!freelancerData) {
 		return null;
@@ -53,7 +42,7 @@ const PrimaryInfo: React.FC<IFreelancerPrimaryInfoProps> = ({ freelancerId, isLo
 
 	const handleSave = () => {
 		getLoggedUserData(token!)
-			.then(fetchFreelancerData)
+			.then(onSubmit)
 			.catch(console.error);
 	};
 

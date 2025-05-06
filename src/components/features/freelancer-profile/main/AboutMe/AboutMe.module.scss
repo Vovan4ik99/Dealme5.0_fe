@@ -35,6 +35,9 @@
   }
 
   &__video {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
 	border: none;
 	background-color: white;
@@ -45,6 +48,10 @@
 	  width: 100%;
 	  border: 1px dashed #E3E5FA;
 	  height: 350px;
+	}
+
+	&--preview {
+		cursor: auto;
 	}
   }
 }
