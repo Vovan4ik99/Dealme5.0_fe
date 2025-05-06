@@ -13,7 +13,7 @@ export const useFreelancerPageData = () => {
     const { getFreelancerPrimaryInfo } = useFreelancerProfileService();
 
     const [ freelancerData, setFreelancerData ] = useState<IFreelancerData | undefined>();
-    const [ notFound, setNotFound ] = useState<boolean>(false);
+    const [ canViewProfile, setCanViewProfile ] = useState<boolean>(true);
 
     const isLoggedUserProfile = id === undefined;
     const freelancerId = isLoggedUserProfile ? user?.id : parseInt(id);
@@ -28,14 +28,14 @@ export const useFreelancerPageData = () => {
                 const isAdmin = user.role === "ADMIN";
 
                 if (!isLoggedUserProfile && (!isOnboardingPassed || !isAdmin)) {
-                    setNotFound(true);
+                    setCanViewProfile(false);
                     return;
                 }
                 setFreelancerData(response);
             })
             .catch(error => {
                 if (error === ErrorMessages.USER_NOT_FOUND) {
-                    setNotFound(true);
+                    setCanViewProfile(false);
                 }
 
                 console.error(error);
@@ -44,12 +44,12 @@ export const useFreelancerPageData = () => {
 
     useEffect(() => {
         if (isPathInvalid) {
-            setNotFound(true);
+            setCanViewProfile(false);
             return;
         }
 
         fetchFreelancerData();
     }, [ isPathInvalid, fetchFreelancerData, navigate ]);
 
-    return { freelancerData, freelancerId, isLoggedUserProfile, user, fetchFreelancerData, notFound };
+    return { freelancerData, freelancerId, isLoggedUserProfile, user, fetchFreelancerData, canViewProfile };
 }

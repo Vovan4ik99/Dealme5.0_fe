@@ -40,7 +40,7 @@ const FreelancerProfilePage = () => {
 			isLoggedUserProfile,
 			user,
 			fetchFreelancerData,
-			notFound } = useFreelancerPageData();
+			canViewProfile } = useFreelancerPageData();
 
 	const getPageNavbar = () => {
 		if (user?.role === "ADMIN") {
@@ -53,7 +53,7 @@ const FreelancerProfilePage = () => {
 		return <ProfileNavbar/>;
 	}
 
-	if (notFound) {
+	if (!canViewProfile) {
 		return <NotFoundPage/>
 	}
 
