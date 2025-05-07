@@ -32,7 +32,7 @@ const NotFoundPage= () => {
                     Możliwe, że podana strona nigdy nie istniała lub została <br/>
                     usunięta. Sprawdź URL, może zawiera zbędne znaki.
                 </p>
-                <button className={ `btn ${ styles["page__btn"] }` }
+                <button className={ styles["page__btn"] }
                         onClick={ handleBack }>
                     Wróć
                 </button>

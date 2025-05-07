@@ -21,11 +21,33 @@
   }
 
   &__btn {
+    background-color: vars.$color-black;
+    padding: 16px;
     width: 198px;
     height: 51px;
     gap: 12px;
     border-radius: 12px;
-    padding: 16px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    line-height: 120%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    border: none;
+
+    &:hover {
+      background-color: vars.$color-black-hover;
+    }
+
+    &:active {
+      background-color: vars.$color-black;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: vars.$color-black;
+    }
   }
 
   &__title {
