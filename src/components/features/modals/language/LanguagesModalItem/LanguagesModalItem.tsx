@@ -129,7 +129,7 @@ const LanguagesModalItem: React.FC<ILanguagesModalItemProps> = ({ registerOnSave
 				                      onItemsChange={ handleItemsChange }
 				                      renderItem={ renderLanguageItem }/>
 			</div>
-			<button className={ 'btn btn--modal' } onClick={ addLanguage }>
+			<button className={ styles["item__btn"] } onClick={ addLanguage }>
 				<AddIcon/>
 				<span>Dodaj kolejny język</span>
 			</button>

@@ -50,7 +50,7 @@ const EmployeeCountStep: React.FC<IStepComponentProps<IInvestorData>> = ({ userD
 			<div className={ styles['count__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles['count__btn'] }
 			        disabled={ !selectedRange }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

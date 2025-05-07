@@ -38,7 +38,7 @@ const ExperienceStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userDa
 			<div className={ styles['experience__content'] }>
 				{ renderExperienceLevels() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles["experience__btn"] }
 			        disabled={ !selectedLevel }
 			        onClick={ handleSubmit } >
 				Przejdż dalej

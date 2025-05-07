@@ -83,7 +83,7 @@ const SalesDepartmentStep: React.FC<IStepComponentProps<IInvestorData>> = ({ use
 			<AddCompanyMails isOpened={ hasDepartment ?? false }
 			                 mails={ mails }
 			                 onChange={ setCompanyMailsByIndex }/>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles['department__btn'] }
 			        disabled={ hasDepartment === undefined }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

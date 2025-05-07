@@ -108,7 +108,7 @@ const FreelancerReviews: React.FC<IFreelancerReviewsProps> = ({ isLoggedUserProf
 							{ renderReviews(reviews.slice(0, reviewsCount)) }
 						</div>
 						{ reviews.length > reviewsCount &&
-                            <button onClick={ () => setReviewsCount(reviews.length) } className={ 'btn btn--more' }>
+                            <button onClick={ () => setReviewsCount(reviews.length) } className={ styles["reviews__btn"] }>
 								{ `Rozwiń wszystkie +${ reviews.length - reviewsCount }` }
                             </button>
 						}

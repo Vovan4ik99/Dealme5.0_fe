@@ -106,7 +106,7 @@ const CertificateLicenseEditModalItem = () => {
 			<div className={ styles['modal__wrapper'] }>
 				{ renderCertificates() }
 			</div>
-			<button className={ 'btn btn--modal' } onClick={ onAddCertificate }>
+			<button className={ styles["modal__btn"] } onClick={ onAddCertificate }>
 				<AddIcon/>
 				<span>Dodaj licencje lub certyfikat</span>
 			</button>

@@ -7,7 +7,6 @@ import { ILoginRequest, ILoginResponse } from "@shared/authTypes.ts";
 import { useAuthService } from '@services/auth/authService.ts';
 import { AuthContext } from "@context/AuthContext/AuthContext.ts";
 import CustomInput from "@ui/form/CustomInput/CustomInput.tsx";
-import { ReactComponent as Icon } from "@icons/named_exported/add_icon.svg";
 
 const LoginForm = () => {
 
@@ -62,8 +61,9 @@ const LoginForm = () => {
 				<Link className={ styles['login-form__link'] } to={ '/reset-password' }>Zapomniałeś hasło?</Link>
 			</div>
 
-			<button className={ 'btn btn--medium' } type="submit" disabled={ loadingStatus === 'loading' }>
-				<Icon/>
+			<button className={ styles["login-form__btn"] }
+					type={ "submit" }
+					disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Zaloguj się' }
 			</button>
 			{ errorMessage && <InputError text={ errorMessage }/> }

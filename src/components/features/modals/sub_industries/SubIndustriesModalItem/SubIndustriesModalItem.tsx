@@ -96,7 +96,7 @@ const SubIndustriesModalItem: React.FC<ISubIndustriesModalItemProps> = ({
 					                      label={ findIndustryNameBySubIndustryId(subIndustry.id) ?? 'Brak' }
 				                      />
 			                      ) }/>
-			<button onClick={ handleAddItem } className={ 'btn btn--modal' }>
+			<button onClick={ handleAddItem } className={ styles["item__btn"] }>
 				<AddIcon width={ 12 } height={ 12 }/>
 				Dodaj kolejne branże
 			</button>

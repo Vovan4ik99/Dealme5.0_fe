@@ -12,7 +12,7 @@ const SelectOption: React.FC<ISelectOptionProps> = ({ value, info, onClick, icon
 			onMouseEnter={ () => setIsHover(true) }
 			onFocus={ () => setIsHover(true) }
 			onMouseLeave={ () => setIsHover(false) }
-			className={ `btn btn--more ${ styles["option"] }` }
+			className={ styles["option"] }
 			role="button"
 			onClick={ onClick }
 		>

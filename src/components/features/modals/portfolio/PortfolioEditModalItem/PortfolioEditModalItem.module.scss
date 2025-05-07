@@ -1,3 +1,5 @@
+@use "@styles/variables" as vars;
+
 .item {
   display: flex;
   flex-direction: column;
@@ -7,5 +9,43 @@
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+  }
+
+  &__btn {
+    width: 100%;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    gap: 8px;
+    color: vars.$color-gray;
+    border: 1px solid vars.$color-gray-border;
+    background-color: transparent;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 100%;
+
+    &:hover {
+      background-color: vars.$color-gray-hover;
+    }
+
+    &:active {
+      background-color: vars.$color-black;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: vars.$color-black;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 }

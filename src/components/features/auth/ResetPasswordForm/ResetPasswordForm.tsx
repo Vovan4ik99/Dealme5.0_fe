@@ -52,7 +52,7 @@ const ResetPasswordForm = () => {
                         register={register}
                     />
                     <button
-                        className={'btn'}
+                        className={ styles["form__btn"] }
                         disabled={loadingStatus === 'loading'}
                         type={'submit'}>
                         {loadingStatus === 'loading' ? 'Ładowanie' : 'Zresetuj hasło'}

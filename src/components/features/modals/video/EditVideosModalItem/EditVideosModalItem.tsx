@@ -89,7 +89,7 @@ const EditVideosModalItem = () => {
 			<div className={ styles['modal__content'] }>
 				{ renderVideos() }
 			</div>
-			<button className={ 'btn btn--modal' } onClick={ handleAddVideos }>
+			<button className={ styles["modal__btn"] } onClick={ handleAddVideos }>
 				<AddIcon/>
 				<span>Dodaj kolejne wideo</span>
 			</button>

@@ -90,7 +90,7 @@ const MainTaskActivityModal: FC<IPipelineModalProps> = ({ selectedMainTask, mode
                                              onSave={ handleOrderSave }
                                              onEdit={ handleMainTaskEdit }/>
 
-                    <button className={`btn btn--withIcon ${styles["modal__btn"]}`}
+                    <button className={ styles["modal__btn"] }
                             onClick={ handleFormSubmit }>
                         <AddIcon fill={'#fffff'}/>
                         <span>{mode === 'add' ? "Dodaj usługę" : "Edytuj usługę"}</span>

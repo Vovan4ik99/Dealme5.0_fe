@@ -77,4 +77,33 @@
     display: flex;
     gap: 16px;
   }
+
+  &__btn {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    margin-top: 0;
+    border-radius: 8px;
+    border: 1px solid vars.$color-black;
+    color: vars.$color-black;
+    width: fit-content;
+    background-color: #ffffff;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 100%;
+
+    &:active {
+      background-color: vars.$color-black;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: vars.$color-black;
+    }
+
+    &:hover {
+      background-color: vars.$color-gray-hover;
+    }
+  }
 }

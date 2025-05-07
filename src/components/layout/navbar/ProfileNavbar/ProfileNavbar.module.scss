@@ -78,6 +78,13 @@
   }
 
   &__btn {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 100%;
     background-color: transparent;
     width: fit-content;
     border: 1px solid vars.$color-black;

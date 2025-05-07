@@ -139,7 +139,9 @@ const RegistrationForm = () => {
 				                              'Użytkownik został zarejestrowany. ' +
 				                              'Za chwilę przekierujemy Ci na stronę logowania.'
 			                              }/> }
-			<button className={ 'btn btn--mt0' } type="submit" disabled={ loadingStatus === 'loading' }>
+			<button className={ styles["registration-form__btn"] }
+					type="submit"
+					disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto' }
 			</button>
 			{ errorMessage && <AlertItem kind={ 'error' } text={ errorMessage } hasMarginTop={ true }/> }

@@ -52,7 +52,7 @@ const TypeOfSalesStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userD
 			<div className={ styles['sales__content'] }>
 				{ renderTypesOfSales() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles["sales__btn"] }
 			        disabled={ !selectedTypeOfSale }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

@@ -8,10 +8,10 @@ import FreelancerOnboardingNavbar
 
 const ResetPasswordPage = () => {
     return (
-        <section className={styles['reset-page']}>
+        <section className={ styles['reset-page'] }>
             <FreelancerOnboardingNavbar/>
             <ResetPasswordForm/>
-            <Footer isHyphenated={true} isCentered={true}/>
+            <Footer isHyphenated={ true } isCentered={ true }/>
         </section>
     )
 }

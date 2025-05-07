@@ -32,7 +32,7 @@ const IndustryStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userData
 			<IndustryList industries={ industries }
 			              selectedSubIndustries={ selectedSubIndustries }
 			              setSelectedSubIndustries={ setSelectedSubIndustries }/>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles["industry__btn"] }
 			        onClick={ handleSubmit }
 			        disabled={ selectedSubIndustries.length === 0 }>
 				Przejdź dalej

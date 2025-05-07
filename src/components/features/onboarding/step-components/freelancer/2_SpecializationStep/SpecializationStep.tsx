@@ -77,7 +77,7 @@ const SpecializationStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ us
 			</div>
 			<button disabled={ selectedSpecialization === null }
 			        onClick={ handleSubmit }
-			        className={ 'btn btn--mt0' }>
+			        className={ styles["specialization__btn"] }>
 				Przejdż dalej
 			</button>
 		</div>

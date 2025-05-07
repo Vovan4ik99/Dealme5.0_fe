@@ -87,7 +87,7 @@ const SalesToolsEditModalItem: React.FC<ISalesToolsEditModalItemProps> = ({ regi
 				                      onItemsChange={ handleToolsChange }
 				                      renderItem={ renderSalesToolItem }/>
 			</div>
-			<button className={ 'btn btn--modal' } onClick={ handleAddTools }>
+			<button className={ styles["modal__btn"] } onClick={ handleAddTools }>
 				<AddIcon/>
 				<span>Dodaj kolejne narzędzie</span>
 			</button>

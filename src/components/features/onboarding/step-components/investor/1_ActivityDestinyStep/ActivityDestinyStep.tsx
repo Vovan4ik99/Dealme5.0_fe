@@ -52,7 +52,7 @@ const ActivityDestinyStep: React.FC<IStepComponentProps<IInvestorData>> = ({ onS
 			<div className={ styles['activities__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles['activities__btn'] }
 			        disabled={ !selectedActivity }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

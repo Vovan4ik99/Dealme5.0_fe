@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./ProfileNavbar.module.scss";
 import Logo from "@ui/common/Logo/Logo.tsx";
 import React, {useCallback, useContext, useEffect, useState} from "react";
@@ -69,9 +69,8 @@ const ProfileNavbar = () => {
 				</NavLink>
 			</div>
 			<div className={ styles["navbar__add-wrapper"] }>
-				<button className={ `btn btn--more 
-									${ styles["navbar__btn"] } 
-									${ styles["navbar__btn--order"] }` }>
+				<button className={ `${ styles["navbar__btn"] } 
+									 ${ styles["navbar__btn--order"] }` }>
 					<AddIcon/>
 					Przyjmij zlecenie
 				</button>

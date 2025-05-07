@@ -68,7 +68,8 @@ const SectorsListModalItem: React.FC<ISectorsListModalItemProps> = ({ freelancer
 				                      renderItem={ renderSectorItems }
 				                      onItemsChange={ onSectorsDrag }/>
 			</div>
-			<button onClick={ handleAddSectors } className={ 'btn btn--modal' }>
+			<button onClick={ handleAddSectors }
+					className={ styles['item__btn'] }>
 				<AddIcon/>
 				<span>Dodaj kolejne sektory</span>
 			</button>

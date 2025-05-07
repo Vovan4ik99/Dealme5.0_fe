@@ -1,13 +1,16 @@
 @use './variables' as vars;
 
 .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 8px;
-  width: 100%;
+  width: fit-content;
   border-radius: 12px;
-  background-color: vars.$color-black;
+  //background-color: vars.$color-black;
   padding: 16px;
   text-align: center;
-  color: white;
+  //color: white;
   font-size: 16px;
   line-height: 120%;
   letter-spacing: 0;
@@ -34,7 +37,7 @@
 	color: vars.$color-white;
 
 	svg path {
-		fill: vars.$color-white;
+	 fill: vars.$color-white;
 	}
 
 	  &:hover,
@@ -43,8 +46,8 @@
 	  }
 
 	  &:disabled {
-		  opacity: 0.5;
-		  background-color: vars.$color-black;
+		opacity: 0.5;
+		background-color: vars.$color-black;
 	  }
    }
 
@@ -99,7 +102,6 @@
   }
 
   &--tertiary {
-	  background-color: vars.$color-white;
 	  border: 1px solid vars.$color-gray-border;
 	  color: vars.$color-gray;
 
@@ -110,6 +112,7 @@
 	  &:hover,
 	  &:active {
 		  color: vars.$color-black;
+		  background-color: vars.$color-white;
 		  border-color: vars.$color-black;
 
 		  svg path {
@@ -212,8 +215,6 @@
   }
 
   &--large {
-	  width: 145px;
-	  height: 51px;
 	  gap: 8px;
 	  border-radius: 12px;
 	  padding: 16px;
@@ -230,12 +231,9 @@
   }
 
   &--medium {
-	  width: 132px;
-	  height: 42px;
 	  gap: 8px;
 	  border-radius: 8px;
-	  border-width: 1px;
-	  padding: 14px 16px;
+	  padding: 16px 14px;
 	  font-weight: 500;
 	  font-size: 14px;
 	  line-height: 100%;
@@ -271,6 +269,10 @@
 
   &--mt0 {
 	margin-top: 0;
+  }
+
+  &--w100 {
+	  width: 100%;
   }
 
   &--back {

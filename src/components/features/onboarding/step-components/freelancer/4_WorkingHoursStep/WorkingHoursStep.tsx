@@ -52,7 +52,7 @@ const WorkingHoursStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ user
 			<div className={ styles['hours__content'] }>
 				{ renderHours() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles["hours__btn"] }
 			        disabled={ !selectedHour }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

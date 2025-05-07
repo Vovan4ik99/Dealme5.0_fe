@@ -51,7 +51,7 @@ const InvestorRoleStep: React.FC<IStepComponentProps<IInvestorData>> = ({ userDa
 			<div className={ styles['role__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles['role__btn'] }
 			        disabled={ !selectedRole }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

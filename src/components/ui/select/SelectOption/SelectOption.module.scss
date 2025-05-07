@@ -1,9 +1,15 @@
 @use "@styles/variables" as vars;
 
 .option {
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  font-size: 14px;
+  line-height: 100%;
   margin-top: 0;
-  padding-left: 0;
-  padding-right: 10px;
+  padding: 14.5px 8px;
   display: flex;
   align-items: center;
   justify-content: flex-start;

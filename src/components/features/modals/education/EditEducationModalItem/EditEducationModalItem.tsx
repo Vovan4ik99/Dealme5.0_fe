@@ -105,7 +105,7 @@ const EditEducationModalItem: React.FC<IEditEducationModalItemProps> = ({ freela
 			<div className={ styles['modal'] }>
 				{ renderItems() }
 			</div>
-			<button className={ 'btn btn--modal' } onClick={ onEducationAdd }>
+			<button className={ styles["modal__btn"] } onClick={ onEducationAdd }>
 				<AddIcon/>
 				<span>Dodaj doświadczenie</span>
 			</button>

@@ -68,4 +68,33 @@
     font-size: 14px;
     line-height: 100%;
   }
+
+  &__btn {
+    margin-top: 8px;
+    width: 100%;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    border: 1px solid vars.$color-gray-border;
+    background-color: #ffffff;
+    padding: 14px 16px;
+    color: vars.$color-gray;
+    font-size: 14px;
+    line-height: 100%;
+
+    &:hover {
+      background-color: vars.$color-gray-hover;
+    }
+
+    &:active {
+      background-color: vars.$color-black;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: vars.$color-black;
+    }
+  }
 }

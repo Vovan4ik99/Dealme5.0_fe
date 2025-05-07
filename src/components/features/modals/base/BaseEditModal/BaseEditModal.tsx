@@ -72,7 +72,7 @@ const BaseEditModal: React.FC<IBaseEditModalProps> = ({
                     <div className={styles['modal__divider']}></div>
                     <div className={styles['modal__btn-wrapper']}>
 
-                        <button className={'btn btn--withIcon'} onClick={handleSave}>
+                        <button className={ styles["modal__btn"] } onClick={handleSave}>
 							{btnWithIcon && <AddIcon fill={'#fffff'}/>}
                             <span>{btnText}</span>
                         </button>

@@ -50,7 +50,7 @@ const GoToMarketStrategyStep: React.FC<IStepComponentProps<IInvestorData>> = ({ 
 			<div className={ styles['strategy__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ 'btn btn--mt0' }
+			<button className={ styles["strategy__btn"] }
 			        disabled={ !selectedStrategy }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

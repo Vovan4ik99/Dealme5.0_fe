@@ -25,8 +25,7 @@ const StartServiceItemList: FC<IActionListProps> = ({ items,
                         <AddIcon/>
                         { addingMoreBtn }
                     </div>
-                    <button className={ `btn 
-                                         ${styles["list__btn"]} 
+                    <button className={ `${styles["list__btn"]} 
                                          ${styles["list__btn--primary"]}` }
                             onClick={ onSubmit }>
                         { isLastPage ? "Przejdź do podsumowania" : "Przejdź dalej" }
@@ -39,7 +38,7 @@ const StartServiceItemList: FC<IActionListProps> = ({ items,
                         <div>
                             <p className={ styles["list__description"] } >{ emptyInfo }</p>
                             <p className={ `${ styles["list__description"] } ${ styles["list__description--bold"] }` } >{ boldEmptyInfo }</p>
-                            <button className={ `btn ${ styles["list__btn"] }` }>
+                            <button className={ styles["list__btn"] }>
                                 <AddIcon />
                                 { btnText }
                             </button>
