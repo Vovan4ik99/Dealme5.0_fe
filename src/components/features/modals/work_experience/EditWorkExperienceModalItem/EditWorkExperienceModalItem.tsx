@@ -107,7 +107,10 @@ const EditWorkExperienceModalItem: React.FC<IEditWorkExperienceModalItemProps> =
 			<div className={ styles['modal'] }>
 				{ renderItems() }
 			</div>
-			<button className={ styles["modal__btn"] } onClick={ onWorkExperienceAdd }>
+			<button className={ `btn 
+								 btn--tertiary 
+								 ${ styles["modal__btn"] }` }
+					onClick={ onWorkExperienceAdd }>
 				<AddIcon/>
 				<span>Dodaj doświadczenie</span>
 			</button>

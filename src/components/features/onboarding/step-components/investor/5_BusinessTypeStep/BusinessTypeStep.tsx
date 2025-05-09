@@ -52,7 +52,9 @@ const BusinessTypeStep: React.FC<IStepComponentProps<IInvestorData>> = ({ userDa
 			<div className={ styles['type__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ styles["type__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['type__btn'] }` }
 			        disabled={ !selectedType }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

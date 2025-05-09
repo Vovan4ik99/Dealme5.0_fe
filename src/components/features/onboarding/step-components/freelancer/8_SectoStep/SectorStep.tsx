@@ -78,7 +78,9 @@ const SectorStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userData, 
                                        itemsCount={ filteredSectors.length - visibleItemsCount }/>
 				}
 			</div>
-			<button className={ styles["sector__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['sector__btn'] }` }
 			        disabled={ false }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

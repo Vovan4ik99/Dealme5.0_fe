@@ -22,7 +22,9 @@ const OnboardingOption: React.FC<IOnboardingOptionProps> = ({
 	const [ isHovered, setIsHovered ] = useState<boolean>(false);
 
 	return (
-		<button className={ `${ styles['option'] } ${ isActive && styles['option--active'] }` }
+		<button className={ ` btn 
+							  tab--primary
+							  ${ styles['option'] }  ` }
 		        onClick={ onClick }
 		        onMouseEnter={ () => setIsHovered(true) }
 		        onMouseLeave={ () => setIsHovered(false) }>

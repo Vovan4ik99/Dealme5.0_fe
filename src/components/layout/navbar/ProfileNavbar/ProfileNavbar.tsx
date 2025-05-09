@@ -42,35 +42,41 @@ const ProfileNavbar = () => {
 		<nav className={ styles.navbar }>
 			<Logo/>
 			<div className={ styles.navbar__wrapper }>
-				<NavLink to="/profile" className={ ({ isActive }) =>
-					`${ styles.navbar__item } ${ isActive ? styles["navbar__item-active"] : "" }` }>
+				<NavLink to="/profile" className={`btn 
+												   tab--secondary 
+												   ${ styles["navbar__item"] }` }>
 					<PulpitIcon/>
 					Pulpit
 				</NavLink>
-				<NavLink to="/" className={ ({ isActive }) =>
-					`${ styles.navbar__item } ${ isActive ? styles["navbar__item-active"] : "" }` }>
+				<NavLink to="/" className={`btn 
+											tab--secondary 
+											${ styles["navbar__item"] }` }>
 					<OrdersIcon/>
 					Zlecenia
 				</NavLink>
-				<NavLink to="/" className={ ({ isActive }) =>
-					`${ styles.navbar__item } ${ isActive ? styles["navbar__item-active"] : "" }` }>
+				<NavLink to="/" className={`btn 
+											tab--secondary 
+											${ styles["navbar__item"] }` }>
 					<ProductsIcon/>
 					Produkty
 				</NavLink>
-				<NavLink to="/" className={ ({ isActive }) =>
-					`${ styles.navbar__item } ${ isActive ? styles["navbar__item-active"] : "" }` }>
+				<NavLink to="/" className={`btn 
+											tab--secondary 
+											${ styles["navbar__item"] }` }>
 					<GuardianIcon/>
 					Opiekun
 				</NavLink>
-				<NavLink to="/" className={ ({ isActive }) =>
-					`${ styles.navbar__item } ${ isActive ? styles["navbar__item-active"] : "" }` }>
+				<NavLink to="/" className={`btn 
+											tab--secondary 
+											${ styles["navbar__item"] } ` }>
 					<PaymentsIcon height={ 14 }/>
 					Płatności
 				</NavLink>
 			</div>
 			<div className={ styles["navbar__add-wrapper"] }>
-				<button className={ `${ styles["navbar__btn"] } 
-									 ${ styles["navbar__btn--order"] }` }>
+				<button className={ `btn 
+									 btn--secondary 
+									 ${ styles["navbar__btn"] }` }>
 					<AddIcon/>
 					Przyjmij zlecenie
 				</button>

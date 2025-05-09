@@ -17,32 +17,15 @@
     display: flex;
     gap: 8px;
     margin-top: 40px;
-
-    &-link {
-      width: 246px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      cursor: pointer;
-      padding: 16px;
-      border-radius: 12px;
-      border: 1px solid vars.$color-gray-border;
-      transition: background-color 0.3s ease-in-out;
-      background-color: #FFFFFF;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 120%;
-      color: vars.$color-black;
-
-      &:hover {
-        background-color: vars.$color-gray-hover;
-      }
-
-      &--disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        pointer-events: none;
-      }
-    }
   }
+
+  &__btn {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 0;
+    gap: 12px;
+    padding: 16px 30px;
+  }
+
 }

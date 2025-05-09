@@ -86,7 +86,9 @@ const OnboardingManager = <T extends OnboardingUserData>({
 		<div className={ styles['manager'] }>
 			<div>
 				<header className={ styles['manager__header'] }>
-					<button className={ styles['manager__back'] }
+					<button className={ `btn 
+										 btn--squared-circle
+										 ${ styles['manager__back']}` }
 					        disabled={ currentStep === 0 }
 					        onClick={ () => setCurrentStep((prevState) => (prevState - 1)) }>
 						<BackIcon width={ 5 } height={ 8 }/>

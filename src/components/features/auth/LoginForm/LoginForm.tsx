@@ -61,7 +61,9 @@ const LoginForm = () => {
 				<Link className={ styles['login-form__link'] } to={ '/reset-password' }>Zapomniałeś hasło?</Link>
 			</div>
 
-			<button className={ styles["login-form__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['login-form__btn'] }` }
 					type={ "submit" }
 					disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Zaloguj się' }

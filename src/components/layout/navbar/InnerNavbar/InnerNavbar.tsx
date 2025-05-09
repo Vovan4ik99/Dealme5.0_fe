@@ -42,10 +42,11 @@ const InnerNavbar = () => {
 			<Link
 				to={ key }
 				smooth={ true }
-				duration={300}
-				offset={-50}
-				className={ styles["navbar__item"]  }
-			>
+				duration={ 300 }
+				offset={ -50 }
+				className={ `btn 
+							 tab--primary 
+							 ${ styles["navbar__item"] }`  }>
 				{ name }
 			</Link>
 			</div>

@@ -1,0 +1,47 @@
+@use "@styles/variables" as vars;
+
+.tab {
+  &--primary {
+    background-color: transparent;
+    border: 1px solid vars.$color-gray-border;
+    color: vars.$color-gray;
+    outline: none !important;
+
+    &:hover,
+    &:active {
+      background-color: vars.$color-primary-pastel;
+      color: vars.$primary-color;
+      border-color: vars.$primary-color;
+
+      svg path {
+        fill: vars.$primary-color;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: transparent;
+      cursor: auto;
+      border: 1px solid vars.$color-gray-border;
+      color: vars.$color-gray;
+
+      svg path {
+        fill: vars.$color-gray;
+      }
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: vars.$color-black;
+    border: 1px solid transparent;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: 1px solid vars.$color-black;
+    }
+
+
+  }
+}

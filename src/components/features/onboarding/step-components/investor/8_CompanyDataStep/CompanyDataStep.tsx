@@ -71,7 +71,9 @@ const CompanyDataStep: React.FC<IStepComponentProps<IInvestorData>> = ({ userDat
 				                onTextChange={ (value: string) => setValue('description', value) }
 				                placeholder={ 'Opisz w kilku zdaniach swoją firmę oraz jej unikalną propozycje wartości' }/>
 			</div>
-			<button className={ styles["company__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['company__btn'] }` }
 					disabled={ !isValid }
 			        onClick={ handleSubmitForm }>
 				Przejdź dalej

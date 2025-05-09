@@ -5,8 +5,10 @@ import styles from "./OnboardingMoreBtn.module.scss";
 const OnboardingMoreBtn: React.FC<IOnboardingMoreBtnProps> = ({ onClick, itemsCount }) => {
 
 	return (
-		<button className={styles['btn']}
-		        onClick={onClick}>
+		<button className={ `btn 
+							 tab--primary 
+							 ${styles['btn']}` }
+		        onClick={ onClick }>
 			Rozwiń wszystkie (+{itemsCount})
 		</button>
 	);

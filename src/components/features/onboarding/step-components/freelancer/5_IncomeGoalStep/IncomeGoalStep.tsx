@@ -53,7 +53,9 @@ const IncomeGoalStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userDa
 			<div className={ styles['goal__content'] }>
 				{ renderGoals() }
 			</div>
-			<button className={ styles["goal__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['goal__btn'] }` }
 			        disabled={ !selectedGoal }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

@@ -86,12 +86,9 @@ const ActionBtn: React.FC<IActionBtnProps> = ({
 		        onClick={ handleClick }
 		        onPointerDown={ handlePointerDown }
 		        disabled={ disabled }
-		        className={
-			        `${ styles['action'] } 
-		            ${ withBorder && styles['action--wb'] } 
-		            ${ isHovered && styles['action--active'] }
-		            ${ disabled && styles['action--disabled'] }`
-		        }>
+		        className={ `btn 
+							btn--circle 
+		             		${ withBorder && styles['action--wb'] }` }>
 			{ getBtnSvg() }
 		</button>
 	);

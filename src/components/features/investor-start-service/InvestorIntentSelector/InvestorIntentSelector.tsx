@@ -42,7 +42,9 @@ const InvestorIntentSelector = () => {
 				<p className={ styles['selector__text'] }>
 					Przejdziesz do definiowania szczegółów usługi
 				</p>
-				<button className={ styles['selector__btn'] }
+				<button className={ `btn 
+									 tab--primary 
+									 ${ styles['selector__btn'] }` }
 				        onClick={ () => redirectLoggedInUser('service') }>
 					<span>Wybierz i przejdź dalej</span>
 					<ArrowRight width={ 5 } height={ 8 }/>
@@ -61,7 +63,9 @@ const InvestorIntentSelector = () => {
 					Przejdziesz do formularza w którym opowiesz nam o swoich potrzebach a
 					pomożemy Ci zdefiniować usługę
 				</p>
-				<button className={ styles['selector__btn'] }
+				<button className={ `btn 
+									 tab--primary 
+									 ${ styles['selector__btn'] }` }
 				        onClick={ () => redirectLoggedInUser('onboarding') }>
 					<span>Wybierz i przejdź dalej</span>
 					<ArrowRight width={ 5 } height={ 8 }/>

@@ -36,7 +36,9 @@ const SalesToolsStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userDa
 			<SalesToolsList tools={ tools }
 			                selectedTools={ selectedTools }
 			                setSelectedTools={ setSelectedTools }/>
-			<button className={ styles["tools__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['tools__btn'] }` }
 			        disabled={ selectedTools.length === 0 }
 			        onClick={ handleSubmit }>
 				Zakończ i przejdź do panelu

@@ -27,16 +27,5 @@
     display: block;
     padding: 14px 16px;
     border-radius: 8px;
-    text-align: center;
-    background-color: inherit;
-    border: 1px solid vars.$color-gray-border;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    color: vars.$color-gray;
-
-    &:hover {
-      outline: none;
-      background-color: vars.$color-gray-hover;
-    }
   }
 }

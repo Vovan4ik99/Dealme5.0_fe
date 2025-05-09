@@ -25,8 +25,9 @@ const StartServiceItemList: FC<IActionListProps> = ({ items,
                         <AddIcon/>
                         { addingMoreBtn }
                     </div>
-                    <button className={ `${styles["list__btn"]} 
-                                         ${styles["list__btn--primary"]}` }
+                    <button className={ `btn 
+                                         btn--primary 
+                                         ${styles["list__btn--primary"] } ` }
                             onClick={ onSubmit }>
                         { isLastPage ? "Przejdź do podsumowania" : "Przejdź dalej" }
                         <RightArrow/>
@@ -38,7 +39,9 @@ const StartServiceItemList: FC<IActionListProps> = ({ items,
                         <div>
                             <p className={ styles["list__description"] } >{ emptyInfo }</p>
                             <p className={ `${ styles["list__description"] } ${ styles["list__description--bold"] }` } >{ boldEmptyInfo }</p>
-                            <button className={ styles["list__btn"] }>
+                            <button className={ `btn 
+                                                 btn--primary-branded 
+                                                 ${ styles["list__btn"] }` }>
                                 <AddIcon />
                                 { btnText }
                             </button>

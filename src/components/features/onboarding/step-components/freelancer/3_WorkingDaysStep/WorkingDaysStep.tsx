@@ -26,7 +26,9 @@ const WorkingDaysStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userD
 				<WorkingDaysList setSelectedDays={ setSelectedDays }
 				                 selectedDays={ selectedDays }/>
 			</div>
-			<button className={ styles["days__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['days__btn'] }` }
 			        disabled={ selectedDays.length === 0 }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

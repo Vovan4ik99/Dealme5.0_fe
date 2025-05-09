@@ -161,7 +161,11 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({
 						<div className={ styles['uploader__prompt'] }>
 							<p className={ styles['uploader__text'] }>Przeciągnij i upuść plik tutaj aby dodać</p>
 							<CustomDivider/>
-							<button className={ styles["uploader__btn"] }>Wybierz z dysku</button>
+							<button className={ `btn 
+												 btn--secondary 
+												 ${ styles['uploader__btn'] }` }>
+								Wybierz z dysku
+							</button>
 						</div>
 					) : (
 							<p className={ styles['uploader__text'] }>Upuść plik tutaj aby dodać</p>

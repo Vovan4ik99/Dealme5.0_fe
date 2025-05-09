@@ -111,28 +111,10 @@
   }
 
   &__btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
     height: 42px;
-    cursor: pointer;
-    background-color: vars.$color-white;
-    border: 1px solid vars.$color-gray-border;
-    color: vars.$color-gray;
     border-radius: 12px;
     padding: 14px 16px;
-
-    svg {
-      fill: vars.$color-gray;
-      height: 8px;
-    }
-
-    &:hover {
-      border-color: vars.$color-black;
-      color: vars.$color-black;
-      transition: color, border-color 0.6s ease, transform 0.6s ease;
-    }
   }
 
   &__separator {

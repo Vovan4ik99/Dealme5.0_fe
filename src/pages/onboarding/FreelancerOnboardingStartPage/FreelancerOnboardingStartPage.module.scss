@@ -42,32 +42,12 @@
 	line-height: 120%;
 	color: vars.$color-gray;
   }
+
   &__btn {
 	margin-top: 8px;
 	width: 100%;
 	max-width: 134px;
-	border-radius: 12px;
-	background-color: vars.$color-black;
-	padding: 16px;
-	text-align: center;
-	color: white;
+	padding: 16px 24px;
 	font-size: 16px;
-	line-height: 120%;
-	cursor: pointer;
-	transition: all 0.3s ease-in-out;
-	outline: none;
-	border: none;
-	&:hover {
-		background-color: vars.$color-black-hover;
-	}
-
-	&:active {
-		background-color: vars.$color-black;
-	}
-
-	&:disabled {
-		opacity: 0.5;
-		background-color: vars.$color-black;
-	}
   }
 }

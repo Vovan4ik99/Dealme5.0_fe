@@ -117,7 +117,9 @@ const OnboardingRegistrationForm = () => {
 					                required: 'Aby kontynuować, musisz zaakceptować regulamin serwisu'
 				                }) }/>
 			</div>
-			<button className={ styles["form__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles[ "form__btn" ]}` }
 					disabled={ (loadingStatus === "loading" || isSent) && true}
 			        onClick={ handleSubmitForm }>
 				{ loadingStatus === "loading" ? "Wysyłanie" : "Załóż konto"}

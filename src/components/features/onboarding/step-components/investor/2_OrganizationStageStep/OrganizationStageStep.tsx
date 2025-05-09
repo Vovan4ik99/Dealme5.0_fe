@@ -52,7 +52,9 @@ const OrganizationStageStep: React.FC<IStepComponentProps<IInvestorData>> = ({ u
 			<div className={ styles['stage__content'] }>
 				{ renderContent() }
 			</div>
-			<button className={ styles['stage__btn'] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['stage__btn'] }` }
 			        disabled={ !selectedStage }
 			        onClick={ handleSubmit }>
 				Przejdź dalej

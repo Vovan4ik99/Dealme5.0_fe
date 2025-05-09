@@ -17,7 +17,9 @@ const FreelancerOnboardingNavbar = () => {
 				return (
 					<>
 						<p className={ styles["navbar__text"] }>Nie masz konta?</p>
-						<Link className={ styles["navbar__link"] }
+						<Link className={ `btn 
+										   btn--tertiary
+										   ${ styles["navbar__link"] }` }
 							  to={ '/registration' }>
 							Załóż konto
 						</Link>
@@ -27,7 +29,9 @@ const FreelancerOnboardingNavbar = () => {
 				return (
 					<>
 						<p className={ styles["navbar__text"] }>Masz konto?</p>
-						<Link className={ styles["navbar__link"] }
+						<Link className={ `btn 
+										   btn--tertiary
+										   ${ styles["navbar__link"] }` }
 							  to={ '/login' }>
 							Zaloguj się
 						</Link>
@@ -37,7 +41,9 @@ const FreelancerOnboardingNavbar = () => {
 				return (
 					<>
 						<p className={ styles["navbar__text"] }>{ `Cześć, ${ user?.firstName } ${ user?.lastName }` }</p>
-						<button className={ styles["navbar__link"] }
+						<button className={ `btn 
+										   	 btn--tertiary
+										   	 ${ styles["navbar__link"] }` }
 								onClick={ () => logout() }>
 							Wyloguj
 						</button>

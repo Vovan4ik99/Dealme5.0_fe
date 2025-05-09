@@ -139,7 +139,9 @@ const RegistrationForm = () => {
 				                              'Użytkownik został zarejestrowany. ' +
 				                              'Za chwilę przekierujemy Ci na stronę logowania.'
 			                              }/> }
-			<button className={ styles["registration-form__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['registration-form__btn'] }` }
 					type="submit"
 					disabled={ loadingStatus === 'loading' }>
 				{ loadingStatus === 'loading' ? 'Ładowanie' : 'Załóż konto' }

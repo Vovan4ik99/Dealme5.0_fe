@@ -98,7 +98,10 @@ const PortfolioEditModalItem: React.FC<IPortfolioEditModalItemProps> = ({ onClos
 			<div className={ styles['item__content'] }>
 				{ renderPortfolioItems() }
 			</div>
-			<button className={ styles["item__btn"] } onClick={ handleAddPortfolioItem }>
+			<button className={ `btn 
+								 btn--tertiary 
+								 ${ styles["item__btn"] }` }
+					onClick={ handleAddPortfolioItem }>
 				<AddIcon/>
 				<span>Dodaj kolejne projekty</span>
 			</button>

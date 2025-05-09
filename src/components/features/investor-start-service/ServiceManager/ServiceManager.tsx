@@ -73,7 +73,9 @@ const ServiceManager = () => {
         <div className={ styles["service"] }>
             <div>
                 <header className={ styles["service__head"] }>
-                        <button className={ styles["service__icon"] }
+                        <button className={ `btn 
+                                             btn--squared-circle 
+                                             ${styles["service__icon"]}` }
                                 onClick={ decrement } >
                             <BackIcon />
                         </button>

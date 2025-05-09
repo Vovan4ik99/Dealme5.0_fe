@@ -38,7 +38,9 @@ const FreelancerOnboardingStartPage = () => {
 					Będziesz mógł zaktualizować te dane później w profilu użytkownika
 				</p>
 				<button onClick={ onSubmit }
-				        className={ styles['start__btn'] }>
+				        className={ `btn 
+									 btn--primary 
+									 ${ styles['start__btn'] }` }>
 					Zaczynajmy
 				</button>
 			</div>

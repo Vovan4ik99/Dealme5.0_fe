@@ -131,7 +131,10 @@ const EdtActivitiesModalItem: React.FC<IEditActivitiesModalItemProps> = ({ regis
 				                      renderItem={ renderActivityItem }
 				                      onItemsChange={ onActivitiesChange }/>
 			</div>
-			<button className={ styles["modal__btn"] } onClick={ onAddNewActivity }>
+			<button className={ `btn 
+								 btn--tertiary 
+								 ${ styles["modal__btn"] }` }
+					onClick={ onAddNewActivity }>
 				<AddIcon/>
 				<span>Dodaj kolejną usługę</span>
 			</button>

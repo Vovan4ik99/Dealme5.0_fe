@@ -43,13 +43,15 @@ const UserMenuBtn: React.FC<IUserMenuBtnProps> = ({
             );
         });
     };
-
+    console.log(isDropdownOpened);
     return (
         <div className={ styles["menu"] }>
             <button
-                className={ ` ${ styles["menu__btn"] } 
+                className={ ` btn 
+                              tab--primary
+                              ${ styles["menu__btn"] }
 					          ${ isDropdownOpened && styles["menu__btn--active"] }` }
-                onClick={ () => setIsDropdownOpened(!isDropdownOpened) }
+                onClick={ () => setIsDropdownOpened((prev) => !prev) }
                 ref={ btnRef }>
                 <div className={ `${ styles["menu__avatar"] }` }>
                     { userAvatar ? <img src={ userAvatar } alt="avatar"/> : <GuardianIcon width={ 22 } height={ 22 }/> }

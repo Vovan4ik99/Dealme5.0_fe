@@ -16,32 +16,6 @@
     margin-bottom: 16px;
   }
 
-  &__icon {
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    transition: all 300ms ease-in-out;
-    color: vars.$color-gray;
-
-
-    &:hover {
-      color: vars.$primary-color;
-      background-color: vars.$color-primary-pastel;
-      border: 1px solid vars.$primary-color;
-    }
-
-    &:active {
-      color: vars.$color-black;
-      border: 1px solid vars.$color-black;
-    }
-  }
-
   &__subtitle {
     background-color: vars.$color-gray-light;
     padding: 9px 12px;

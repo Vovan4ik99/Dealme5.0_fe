@@ -45,7 +45,9 @@ const PipelineItem: React.FC<IPipelineStepProps> = ({   title,
                         <p className={ styles["tile__subtitle"] }>{ subtitle }</p>
                     </div>
                 </div>
-                <button className={ styles["tile__btn"] }
+                <button className={ `btn 
+                                     btn--tertiary 
+                                     ${ styles["tile__btn"] }` }
                         onClick={ () => onSubmit(id) } >
                     Wybierz i przejdź dalej
                     <ArrowDown className={ styles["tile__arrow"] } />

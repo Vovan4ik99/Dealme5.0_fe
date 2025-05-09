@@ -84,7 +84,9 @@ const ActivitiesStep: React.FC<IStepComponentProps<IFreelancerData>> = ({ userDa
 			<div className={ styles['activities__content'] }>
 				{ renderActivities() }
 			</div>
-			<button className={ styles["activities__btn"] }
+			<button className={ `btn 
+								 btn--primary 
+								 ${ styles['activities__btn'] }` }
 			        onClick={ handleSubmit }>
 				Przejdź dalej
 			</button>
